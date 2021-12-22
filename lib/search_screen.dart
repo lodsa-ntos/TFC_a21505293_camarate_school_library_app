@@ -28,36 +28,6 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
       {"id": 11, "name": "Barbara", "age": 12},
       {"id": 12, "name": "Bob", "age": 62},
     ];
-
-    @override
-    initState() {
-      // quando clicar no botão de pesquisa, no início, todos os utilizadores são mostrados
-      _encontrarUtilizadores = _mostrarTodosUtilizadores;
-      super.initState();
-    }
-
-    // Lista de resultados
-    List<Map<String, dynamic>> resultados = [];
-
-    // se o campo de pesquisa estiver vazio, mostramos a lista de todos os utilizadores iniciais
-    if (campoDePesquisa.isEmpty) {
-      // lista resultados recebe todos os utilizadores criados no início
-      resultados = _mostrarTodosUtilizadores;
-    } else {
-      // senão, se escrever no campo de pesquisa, com minusculas ou com as inicias dos nomes,
-      //convertemos para lista e ocultamos os outros nomes e mostramos
-      //o resultado da pesquisa ao nome associado...
-      resultados = _mostrarTodosUtilizadores
-          .where((user) => user["name"]
-              .toLowerCase()
-              .contains(campoDePesquisa.toLowerCase()))
-          .toList();
-    }
-
-    // atualizar a lista inicial, com os novos resultados da pesquisa.
-    setState(() {
-      _encontrarUtilizadores = resultados;
-    });
   }
 
   // Widget de construção da página, conteúdo visual.
@@ -80,7 +50,7 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
           //backgroundColor: Colors.green,
           appBar: AppBar(
             title: Text(
-              'Pesquisa',
+              'Pesquisar',
               style: TextStyle(
                 fontFamily: GoogleFonts.lato().fontFamily, // mudar font...?
                 fontSize: 32.0,
