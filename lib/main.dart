@@ -5,6 +5,7 @@ import 'home_screen.dart';
 
 void main() {
   runApp(MaterialApp(
+    // tirar o debug no ecrã
     debugShowCheckedModeBanner: false,
     home: HomePage(),
   ));
