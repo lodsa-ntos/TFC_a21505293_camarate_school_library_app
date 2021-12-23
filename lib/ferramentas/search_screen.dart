@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:camarate_school_library/guia_de_estilo/color_styles.dart';
 import 'package:camarate_school_library/guia_de_estilo/text_styles.dart';
 
 // ignore: use_key_in_widget_constructors
@@ -10,6 +9,9 @@ class PesquisaScreen extends StatefulWidget {
 }
 
 class _PesquisaScreenState extends State<PesquisaScreen> {
+  List categorias = ['Todos', 'Autor', 'Título', 'Ano'];
+  int selecionarCategorias = 0;
+
   // Widget de construção da página, conteúdo visual.
   @override
   Widget build(BuildContext context) {
@@ -51,36 +53,51 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
             ),
           ),
 
-          // Categorias
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  "categorias aqui",
-                  style: subTitleStyle.copyWith(color: Colors.black),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                const SizedBox(
-                  width: 25,
-                  height: 25,
-                  child: Center(
-                    child: Text(
-                      "5",
-                      style: whiteSubHeadingTextStyle,
-                      textAlign: TextAlign.center,
+          // Botões para as categorias
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+            height: 30,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: categorias.length,
+              itemBuilder: (context, index) => GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selecionarCategorias = index;
+                  });
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(
+                      left: kDefaultPadding,
+                      // No final do artigo adiciona 20 almofadas extra à direita
+                      right:
+                          index == categorias.length - 1 ? kDefaultPadding : 0),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                  decoration: BoxDecoration(
+                    color: index == selecionarCategorias
+                        ? Colors.blue.withOpacity(0.4)
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 2.0,
                     ),
                   ),
+                  child: Text(
+                    categorias[index],
+                    style: const TextStyle(
+                        color: Colors.black, fontFamily: 'Montserrat'),
+                  ),
                 ),
-                const Spacer(),
-              ],
+              ),
             ),
           ),
-          // fim de categorias...
 
-          // Lista de livros
+          // fim botões para as categorias...
+
+          // Lista para os livros
           Expanded(
             child: ListView.builder(
               itemBuilder: (context, index) {
@@ -109,9 +126,6 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
                   ),
                 );
               },
-
-              // Numero de linhas
-              itemCount: 10,
             ),
           ),
         ],

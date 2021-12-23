@@ -39,3 +39,12 @@ const TextStyle actionMenuStyle = TextStyle(
   fontWeight: FontWeight.w600,
   letterSpacing: 5,
 );
+
+const kDefaultPadding = 20.0;
+
+// sombra
+const kDefaultShadow = BoxShadow(
+  offset: Offset(0, 15),
+  blurRadius: 27,
+  color: Colors.black12, // Black color with 12% opacity
+);
