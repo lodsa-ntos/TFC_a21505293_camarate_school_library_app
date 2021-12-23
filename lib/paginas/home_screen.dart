@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:camarate_school_library/search_screen.dart';
+import 'package:camarate_school_library/ferramentas/search_screen.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomeScreen extends StatefulWidget {

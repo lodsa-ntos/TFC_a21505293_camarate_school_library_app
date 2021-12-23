@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:camarate_school_library/home_screen.dart';
-import 'drawer_screen.dart';
-import 'home_screen.dart';
+import 'package:camarate_school_library/paginas/home_screen.dart';
+import 'ferramentas/drawer_screen.dart';
+import 'paginas/home_screen.dart';
 
 void main() {
   runApp(MaterialApp(
