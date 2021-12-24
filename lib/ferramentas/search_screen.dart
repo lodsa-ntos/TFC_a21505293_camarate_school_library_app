@@ -1,3 +1,5 @@
+import 'package:camarate_school_library/lista_livros/books_widget.dart';
+import 'package:camarate_school_library/lista_livros/inventory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:camarate_school_library/guia_de_estilo/text_styles.dart';
@@ -72,7 +74,6 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
                   alignment: Alignment.center,
                   margin: EdgeInsets.only(
                       left: kDefaultPadding,
-                      // No final do artigo adiciona 20 almofadas extra à direita
                       right:
                           index == categorias.length - 1 ? kDefaultPadding : 0),
                   padding:
@@ -98,34 +99,25 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
           ),
           // fim de botões para as categorias...
 
-          // Espaçamento entre linhas
+          // Espaçamento entre botões categorias e a lista de livros
           const SizedBox(
             height: 10,
           ),
+
           // --> Lista para os livros
           Expanded(
             child: ListView.builder(
               // tamanho dos retângulos
               padding: const EdgeInsets.all(7),
+              // tamanho da lista a ser apresentada
+              itemCount: Inventario.books.length,
               itemBuilder: (context, index) {
-                return Stack(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 170.0,
-                      width: double.infinity,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        // sombra
-                        elevation: 4,
-                        // espaçamento entre os retângulos
-                        margin: const EdgeInsets.all(12),
-                      ),
-                    ),
-                  ],
+                // Lista que retorna apenas o titulo | autor | imagem ....
+                return BooksWidget(
+                  // lista contida na classe inventarios --> pasta lista_livros
+                  books: Inventario.books[index],
                 );
-              },
+              }, //itemCount: ,
             ),
           ),
         ],
