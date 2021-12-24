@@ -9,7 +9,7 @@ class PesquisaScreen extends StatefulWidget {
 }
 
 class _PesquisaScreenState extends State<PesquisaScreen> {
-  List categorias = ['Todos', 'Autor', 'Título', 'Ano'];
+  List categorias = ['Todos', 'Autor', 'Título', 'Ano']; // Lista de categorias
   int selecionarCategorias = 0;
 
   // Widget de construção da página, conteúdo visual.
@@ -24,6 +24,8 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
           child: const Icon(Icons.arrow_back, color: Colors.black),
         ),
         backgroundColor: Colors.white,
+        elevation: 0.0,
+        bottomOpacity: 0.0,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -53,10 +55,10 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
             ),
           ),
 
-          // Botões para as categorias
+          // --> Botões para as categorias
           Container(
             margin: const EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
-            height: 30,
+            height: 35, // tamanho dos botões
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: categorias.length,
@@ -94,36 +96,34 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
               ),
             ),
           ),
+          // fim de botões para as categorias...
 
-          // fim botões para as categorias...
-
-          // Lista para os livros
+          // Espaçamento entre linhas
+          const SizedBox(
+            height: 10,
+          ),
+          // --> Lista para os livros
           Expanded(
             child: ListView.builder(
+              // tamanho dos retângulos
+              padding: const EdgeInsets.all(7),
               itemBuilder: (context, index) {
-                return Card(
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: ListTile(
-                    title: const Text(
-                      "Livros",
-                      style: titleStyle,
-                    ),
-                    trailing: SizedBox(
-                      width: 75,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Expanded(
-                            child: Row(),
-                          ),
-                        ],
+                return Stack(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 170.0,
+                      width: double.infinity,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        // sombra
+                        elevation: 4,
+                        // espaçamento entre os retângulos
+                        margin: const EdgeInsets.all(12),
                       ),
                     ),
-                  ),
+                  ],
                 );
               },
             ),
