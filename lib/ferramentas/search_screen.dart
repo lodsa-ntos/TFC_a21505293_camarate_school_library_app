@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:camarate_school_library/lista_livros/books_widget.dart';
 import 'package:camarate_school_library/lista_livros/inventory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:camarate_school_library/guia_de_estilo/text_styles.dart';
+import 'package:flutter/services.dart';
 
 // ignore: use_key_in_widget_constructors
 class PesquisaScreen extends StatefulWidget {
@@ -14,8 +17,24 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
   List categorias = ['Todos', 'Autor', 'Título', 'Ano']; // Lista de categorias
   int selecionarCategorias = 0;
 
-  // quantidade de livros a ser apresentada
-  final listaLivrosFiticia = List.generate(10, (index) => Inventario.books[0]);
+  @override
+  void initState() {
+    super.initState();
+    carregarDados();
+  }
+
+  // sempre que abrir o ecrã de pesquisa carrega a minha lista inicial de livros
+  carregarDados() async {
+    final livrosJSON =
+        await rootBundle.loadString("assets/files/inventario_livros.json");
+    var dadosDecodificados = jsonDecode(livrosJSON);
+    var informacoesDoLivro = dadosDecodificados["livros"];
+
+    Inventario.books = List.from(informacoesDoLivro)
+        .map<RegisterBooks>((books) => RegisterBooks.fromMap(books))
+        .toList();
+    setState(() {});
+  }
 
   // Widget de construção da página, conteúdo visual.
   @override
@@ -109,19 +128,24 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
 
           // --> Lista para os livros
           Expanded(
-            child: ListView.builder(
-              // tamanho dos retângulos
-              padding: const EdgeInsets.all(7),
-              // tamanho da lista a ser apresentada
-              itemCount: listaLivrosFiticia.length,
-              itemBuilder: (context, index) {
-                // Lista que retorna apenas o titulo | autor | imagem ....
-                return BooksWidget(
-                  // lista contida na classe inventarios --> pasta lista_livros
-                  books: listaLivrosFiticia[index],
-                );
-              }, //itemCount: ,
-            ),
+            // ignore: unnecessary_null_comparison
+            child: (Inventario.books != null && Inventario.books.isNotEmpty)
+                ? ListView.builder(
+                    // tamanho dos retângulos
+                    padding: const EdgeInsets.all(7),
+                    // tamanho da lista a ser apresentada
+                    itemCount: Inventario.books.length,
+                    itemBuilder: (context, index) =>
+                        // Lista que retorna apenas o titulo | autor | imagem ....
+                        BooksWidget(
+                      // lista contida na classe inventarios --> pasta lista_livros
+                      books: Inventario.books[index],
+                    ), //itemCount: ,
+                  )
+                : const Center(
+                    // reload page
+                    child: CircularProgressIndicator(),
+                  ),
           ),
         ],
       ),

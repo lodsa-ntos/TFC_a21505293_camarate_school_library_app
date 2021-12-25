@@ -1,39 +1,14 @@
 import 'dart:convert';
 
 class Inventario {
-  static List<RegisterBooks> books = [
-    RegisterBooks(
-        numRegisto: 1,
-        ISBN: 4234,
-        titulo: 'POESIAS',
-        autor: 'Fernando Pessoa',
-        numEdicao: 2,
-        nomeColecao: 'nomeColecao',
-        numColecao: 7,
-        numVolume: 6,
-        cota: 'cota',
-        observacao: 'observacao',
-        imagem:
-            'https://www.lpm.com.br/livros/Imagens/poesias___pocket_9788525405593_g.jpg'),
-    RegisterBooks(
-        numRegisto: 1,
-        ISBN: 4234,
-        titulo: 'Livro do Desassossego | Vol.II',
-        autor: 'Fernando Pessoa',
-        numEdicao: 2,
-        nomeColecao: 'nomeColecao',
-        numColecao: 7,
-        numVolume: 6,
-        cota: 'cota',
-        observacao: 'observacao',
-        imagem:
-            'https://cdn.shopify.com/s/files/1/0450/0717/5837/products/image-1_0645e650-6119-4245-bff4-b13847982f82_1024x1024.jpg?v=1614103731')
-  ];
+  static List<RegisterBooks> books = [];
 
   // Obter os livros pelo número de registo
-  RegisterBooks getById(int id) =>
+  RegisterBooks getById(int numRegisto) =>
       // ignore: null_closures
-      books.firstWhere((element) => element.numRegisto == id, orElse: null);
+      books.firstWhere((element) => element.numRegisto == numRegisto,
+          // ignore: null_closures
+          orElse: null);
 
   // Obter livros por posição
   RegisterBooks getByPosition(int pos) => books[pos];
@@ -56,6 +31,7 @@ class RegisterBooks {
 
   // Construtor
   RegisterBooks({
+    // ignore: non_constant_identifier_names
     required this.numRegisto,
     // ignore: non_constant_identifier_names
     required this.ISBN,
@@ -115,23 +91,19 @@ class RegisterBooks {
     };
   }
 
-  // Devolve uma instância de um subtipo.
   factory RegisterBooks.fromMap(Map<String, dynamic> map) {
-    // ignore: unnecessary_null_comparison
-    if (map == null) {}
-
     return RegisterBooks(
-      numRegisto: map['numRegisto'],
-      ISBN: map['ISBN'],
-      titulo: map['titulo'],
-      autor: map['autor'],
-      numEdicao: map['numEdicao'],
-      nomeColecao: map['nomeColecao'],
-      numColecao: map['numColecao'],
-      numVolume: map['numVolume'],
-      cota: map['cota'],
-      observacao: map['observacao'],
-      imagem: map['imagem'],
+      numRegisto: map['numRegisto']?.toInt() ?? 0,
+      ISBN: map['ISBN'] ?? 0,
+      titulo: map['titulo'] ?? '',
+      autor: map['autor'] ?? '',
+      numEdicao: map['numEdicao'] ?? 0,
+      nomeColecao: map['nomeColecao'] ?? '',
+      numColecao: map['numColecao'] ?? 0,
+      numVolume: map['numVolume'] ?? 0,
+      cota: map['cota'] ?? '',
+      observacao: map['observacao'] ?? '',
+      imagem: map['imagem'] ?? '',
     );
   }
 
@@ -140,32 +112,29 @@ class RegisterBooks {
   factory RegisterBooks.fromJson(String source) =>
       RegisterBooks.fromMap(json.decode(source));
 
-  // ToString
   @override
   String toString() {
-    return 'RegisterBooks(numRegisto: $numRegisto, titulo: $titulo, autor: $autor, imagem: $imagem)';
+    return 'RegisterBooks(numRegisto: $numRegisto, ISBN: $ISBN, titulo: $titulo, autor: $autor, numEdicao: $numEdicao, nomeColecao: $nomeColecao, numColecao: $numColecao, numVolume: $numVolume, cota: $cota, observacao: $observacao, imagem: $imagem)';
   }
 
   @override
-  // ignore: avoid_renaming_method_parameters
-  bool operator ==(Object obj) {
-    if (identical(this, obj)) return true;
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
 
-    return obj is RegisterBooks &&
-        obj.numRegisto == numRegisto &&
-        obj.ISBN == ISBN &&
-        obj.titulo == titulo &&
-        obj.autor == autor &&
-        obj.numEdicao == numEdicao &&
-        obj.nomeColecao == nomeColecao &&
-        obj.numColecao == numColecao &&
-        obj.numVolume == numVolume &&
-        obj.cota == cota &&
-        obj.observacao == observacao &&
-        obj.imagem == imagem;
+    return other is RegisterBooks &&
+        other.numRegisto == numRegisto &&
+        other.ISBN == ISBN &&
+        other.titulo == titulo &&
+        other.autor == autor &&
+        other.numEdicao == numEdicao &&
+        other.nomeColecao == nomeColecao &&
+        other.numColecao == numColecao &&
+        other.numVolume == numVolume &&
+        other.cota == cota &&
+        other.observacao == observacao &&
+        other.imagem == imagem;
   }
 
-  // Devolve um código hash para um valor numérico.
   @override
   int get hashCode {
     return numRegisto.hashCode ^
@@ -179,31 +148,5 @@ class RegisterBooks {
         cota.hashCode ^
         observacao.hashCode ^
         imagem.hashCode;
-  }
-}
-
-// Edição --> Local | Editora | Data de publicação
-class Edition {
-  String local;
-  String editora;
-  DateTime dataPublicacao;
-
-  // Construtor
-  Edition({
-    required this.local,
-    required this.editora,
-    required this.dataPublicacao,
-  });
-
-  Edition copyWith({
-    String? local,
-    String? editora,
-    DateTime? dataPublicacao,
-  }) {
-    return Edition(
-      local: local ?? this.local,
-      editora: editora ?? this.editora,
-      dataPublicacao: dataPublicacao ?? this.dataPublicacao,
-    );
   }
 }
