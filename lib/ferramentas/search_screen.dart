@@ -14,6 +14,9 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
   List categorias = ['Todos', 'Autor', 'Título', 'Ano']; // Lista de categorias
   int selecionarCategorias = 0;
 
+  // quantidade de livros a ser apresentada
+  final listaLivrosFiticia = List.generate(10, (index) => Inventario.books[0]);
+
   // Widget de construção da página, conteúdo visual.
   @override
   Widget build(BuildContext context) {
@@ -110,12 +113,12 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
               // tamanho dos retângulos
               padding: const EdgeInsets.all(7),
               // tamanho da lista a ser apresentada
-              itemCount: Inventario.books.length,
+              itemCount: listaLivrosFiticia.length,
               itemBuilder: (context, index) {
                 // Lista que retorna apenas o titulo | autor | imagem ....
                 return BooksWidget(
                   // lista contida na classe inventarios --> pasta lista_livros
-                  books: Inventario.books[index],
+                  books: listaLivrosFiticia[index],
                 );
               }, //itemCount: ,
             ),

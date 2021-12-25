@@ -23,7 +23,7 @@ class BooksWidget extends StatelessWidget {
         title: Text(books.titulo),
         subtitle: Text(books.autor),
       ),
-      elevation: 12,
+      elevation: 5,
     );
   }
 }

@@ -14,7 +14,20 @@ class Inventario {
         cota: 'cota',
         observacao: 'observacao',
         imagem:
-            'https://www.lpm.com.br/livros/Imagens/poesias___pocket_9788525405593_g.jpg')
+            'https://www.lpm.com.br/livros/Imagens/poesias___pocket_9788525405593_g.jpg'),
+    RegisterBooks(
+        numRegisto: 1,
+        ISBN: 4234,
+        titulo: 'Livro do Desassossego | Vol.II',
+        autor: 'Fernando Pessoa',
+        numEdicao: 2,
+        nomeColecao: 'nomeColecao',
+        numColecao: 7,
+        numVolume: 6,
+        cota: 'cota',
+        observacao: 'observacao',
+        imagem:
+            'https://cdn.shopify.com/s/files/1/0450/0717/5837/products/image-1_0645e650-6119-4245-bff4-b13847982f82_1024x1024.jpg?v=1614103731')
   ];
 
   // Obter os livros pelo número de registo
