@@ -220,6 +220,23 @@ class LivrosNoInventario extends StatelessWidget {
                   style:
                       TextStyle(color: Colors.green, fontFamily: 'Montserrat'),
                 ),
+
+                // espaçamento
+                const SizedBox(
+                  height: 5,
+                ),
+
+                // botao requisitar
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    onSurface: Colors.green,
+                    elevation: 5,
+                    shadowColor: Colors.grey,
+                  ),
+                  child: const Text('Requisitar'),
+                  onPressed: () {},
+                ),
               ],
             ),
           ),
