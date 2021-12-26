@@ -15,3 +15,8 @@ const kSecondaryColor = Color(0xFFFFA41B);
 const kTextColor = Color(0xFF000839);
 const kTextLightColor = Color(0xFF747474);
 const kBlueColor = Color(0xFF40BAD5);
+
+class MyThemeColor {
+  static Color darkBluishColor = const Color(0xff403b58);
+  static Color myGreyStyleColor = const Color(0xFF616161);
+}

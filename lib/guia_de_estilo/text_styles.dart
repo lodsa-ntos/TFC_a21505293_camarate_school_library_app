@@ -1,5 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'color_styles.dart';
+
+class MyTextTheme {
+  static TextStyle tituloLivrosTextStyle = const TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 32.0,
+    color: Colors.white,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 1.1,
+  );
+
+  static TextStyle nomeAutoresTextStyle = const TextStyle(
+    fontFamily: 'Poppins',
+    fontSize: 12.0,
+    color: Colors.grey,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 1.1,
+  );
+}
 
 const TextStyle headingTextStyle = TextStyle(
   fontFamily: 'Gobold',
