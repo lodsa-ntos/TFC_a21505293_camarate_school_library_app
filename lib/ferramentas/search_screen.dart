@@ -234,7 +234,11 @@ class LivrosNoInventario extends StatelessWidget {
                     elevation: 5,
                     shadowColor: Colors.grey,
                   ),
-                  child: const Text('Requisitar'),
+                  child: const Text(
+                    'Requisitar',
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: 'Montserrat'),
+                  ),
                   onPressed: () {},
                 ),
               ],
