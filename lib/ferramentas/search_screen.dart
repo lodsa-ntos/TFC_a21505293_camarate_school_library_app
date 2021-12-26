@@ -193,6 +193,8 @@ class LivrosNoInventario extends StatelessWidget {
               .make()
               .p16()
               .w32(context),
+
+          // o que quero mostrar na lista de livros
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,23 +216,19 @@ class LivrosNoInventario extends StatelessWidget {
                   height: 12,
                 ),
 
-                // Tentar uma outra maneira de implementar
-                const Text(
-                  'Disponível',
-                  style:
-                      TextStyle(color: Colors.green, fontFamily: 'Montserrat'),
-                ),
-
-                // espaçamento
-                const SizedBox(
-                  height: 5,
-                ),
+                // Disponibilidade do livro
+                if (inventario.disponibilidade == 'Disponível') ...[
+                  inventario.disponibilidade.text.xl.color(Colors.green).make(),
+                ] else
+                  inventario.disponibilidade.text.xl
+                      .color(Colors.grey)
+                      .bold
+                      .make(),
 
                 // botao requisitar
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blue,
-                    onSurface: Colors.green,
                     elevation: 5,
                     shadowColor: Colors.grey,
                   ),

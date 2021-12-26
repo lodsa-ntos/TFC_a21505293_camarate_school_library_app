@@ -21,6 +21,7 @@ class RegisterBooks {
   final num ISBN;
   final String titulo;
   final String autor;
+  final String disponibilidade;
   final num numEdicao;
   final String nomeColecao;
   final num numColecao;
@@ -37,6 +38,7 @@ class RegisterBooks {
     required this.ISBN,
     required this.titulo,
     required this.autor,
+    required this.disponibilidade,
     required this.numEdicao,
     required this.nomeColecao,
     required this.numColecao,
@@ -52,6 +54,7 @@ class RegisterBooks {
     num? ISBN,
     String? titulo,
     String? autor,
+    String? disponibilidade,
     num? numEdicao,
     String? nomeColecao,
     num? numColecao,
@@ -65,6 +68,7 @@ class RegisterBooks {
       ISBN: ISBN ?? this.ISBN,
       titulo: titulo ?? this.titulo,
       autor: autor ?? this.autor,
+      disponibilidade: disponibilidade ?? this.disponibilidade,
       numEdicao: numEdicao ?? this.numEdicao,
       nomeColecao: nomeColecao ?? this.nomeColecao,
       numColecao: numColecao ?? this.numColecao,
@@ -81,6 +85,7 @@ class RegisterBooks {
       'ISBN': ISBN,
       'titulo': titulo,
       'autor': autor,
+      'disponibilidade': disponibilidade,
       'numEdicao': numEdicao,
       'nomeColecao': nomeColecao,
       'numColecao': numColecao,
@@ -97,6 +102,7 @@ class RegisterBooks {
       ISBN: map['ISBN'] ?? 0,
       titulo: map['titulo'] ?? '',
       autor: map['autor'] ?? '',
+      disponibilidade: map['disponibilidade'],
       numEdicao: map['numEdicao'] ?? 0,
       nomeColecao: map['nomeColecao'] ?? '',
       numColecao: map['numColecao'] ?? 0,
@@ -114,7 +120,7 @@ class RegisterBooks {
 
   @override
   String toString() {
-    return 'RegisterBooks(numRegisto: $numRegisto, ISBN: $ISBN, titulo: $titulo, autor: $autor, numEdicao: $numEdicao, nomeColecao: $nomeColecao, numColecao: $numColecao, numVolume: $numVolume, cota: $cota, observacao: $observacao, imagem: $imagem)';
+    return 'RegisterBooks(numRegisto: $numRegisto, ISBN: $ISBN, titulo: $titulo, autor: $autor, disponibilidade: $disponibilidade, numEdicao: $numEdicao, nomeColecao: $nomeColecao, numColecao: $numColecao, numVolume: $numVolume, cota: $cota, observacao: $observacao, imagem: $imagem)';
   }
 
   @override
@@ -126,6 +132,7 @@ class RegisterBooks {
         other.ISBN == ISBN &&
         other.titulo == titulo &&
         other.autor == autor &&
+        other.disponibilidade == disponibilidade &&
         other.numEdicao == numEdicao &&
         other.nomeColecao == nomeColecao &&
         other.numColecao == numColecao &&
@@ -141,6 +148,7 @@ class RegisterBooks {
         ISBN.hashCode ^
         titulo.hashCode ^
         autor.hashCode ^
+        disponibilidade.hashCode ^
         numEdicao.hashCode ^
         nomeColecao.hashCode ^
         numColecao.hashCode ^
