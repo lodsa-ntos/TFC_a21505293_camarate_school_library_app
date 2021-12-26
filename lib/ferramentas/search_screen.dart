@@ -1,11 +1,13 @@
 import 'dart:convert';
 
-import 'package:camarate_school_library/lista_livros/books_widget.dart';
+import 'package:camarate_school_library/guia_de_estilo/color_styles.dart';
+import 'package:camarate_school_library/guia_de_estilo/text_styles.dart';
 import 'package:camarate_school_library/lista_livros/inventory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:camarate_school_library/guia_de_estilo/text_styles.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 // ignore: use_key_in_widget_constructors
 class PesquisaScreen extends StatefulWidget {
@@ -24,6 +26,7 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
   }
 
   // sempre que abrir o ecrã de pesquisa carrega a minha lista inicial de livros
+  //do ficheiro .json...
   carregarDados() async {
     final livrosJSON =
         await rootBundle.loadString("assets/files/inventario_livros.json");
@@ -40,6 +43,7 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //backgroundColor: Colors.white,
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
@@ -121,34 +125,111 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
           ),
           // fim de botões para as categorias...
 
-          // Espaçamento entre botões categorias e a lista de livros
-          const SizedBox(
-            height: 10,
-          ),
-
-          // --> Lista para os livros
+          // Se o inventario dos livros forem diferentes de null (sem valor)
+          //e os campos não estiverem vazios vamos expandir a lista,
+          //senão mostra o icon do loading a carregar a pensar....
           Expanded(
             // ignore: unnecessary_null_comparison
-            child: (Inventario.books != null && Inventario.books.isNotEmpty)
-                ? ListView.builder(
-                    // tamanho dos retângulos
-                    padding: const EdgeInsets.all(7),
-                    // tamanho da lista a ser apresentada
-                    itemCount: Inventario.books.length,
-                    itemBuilder: (context, index) =>
-                        // Lista que retorna apenas o titulo | autor | imagem ....
-                        BooksWidget(
-                      // lista contida na classe inventarios --> pasta lista_livros
-                      books: Inventario.books[index],
-                    ), //itemCount: ,
-                  )
-                : const Center(
-                    // reload page
-                    child: CircularProgressIndicator(),
-                  ),
+            child: Container(
+              padding: Vx.m16,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // ignore: unnecessary_null_comparison
+                  if (Inventario.books != null && Inventario.books.isNotEmpty)
+                    const ListaDeInventario().expand()
+                  else
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
     );
+  }
+}
+
+// --> Classe para montar a lista para os livros carregados no ficheiro JSON
+class ListaDeInventario extends StatelessWidget {
+  const ListaDeInventario({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: Inventario.books.length,
+        itemBuilder: (context, index) {
+          final inventario = Inventario.books[index];
+          return LivrosNoInventario(inventario: inventario);
+        });
+  }
+}
+
+// Classe para definir as imagens dos livros
+// ignore: must_be_immutable
+class LivrosNoInventario extends StatelessWidget {
+  RegisterBooks inventario;
+
+  LivrosNoInventario({
+    Key? key,
+    required this.inventario,
+    // ignore: unnecessary_null_comparison
+  })  : assert(inventario != null),
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return VxBox(
+      child: Row(
+        children: [
+          Image.network(inventario.imagem)
+              .box
+              .rounded // borda a volta da imagem
+              .p8 // tamanho da imagem
+              .color(Colors.black12) // cor da caixa
+              .make()
+              .p16()
+              .w32(context),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Título do Livro
+                inventario.titulo.text.xl.lg
+                    .color(MyThemeColor.darkBluishColor)
+                    .bold
+                    .make(),
+
+                // Nome do autor
+                inventario.autor.text
+                    .color(MyThemeColor.myGreyStyleColor)
+                    .make(),
+
+                // espaçamento
+                const SizedBox(
+                  height: 12,
+                ),
+
+                // Tentar uma outra maneira de implementar
+                const Text(
+                  'Disponível',
+                  style:
+                      TextStyle(color: Colors.green, fontFamily: 'Montserrat'),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    )
+        .white // fundo com cor branca nos retangulos
+        .rounded // curva nas bordas dos retangulos
+        .square(150) // tamanho das imagens dos livros
+        .make()
+        .py16(); // espaçamento entre linhas
   }
 }
