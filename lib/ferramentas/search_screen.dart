@@ -216,7 +216,7 @@ class LivrosNoInventario extends StatelessWidget {
                 // Espaçamento
                 10.heightBox,
 
-                // area da disponibilidade e botão requisitar
+                // area da disponibilidade do livro e botão requisitar
                 ButtonBar(
                   alignment: MainAxisAlignment.spaceBetween,
                   buttonPadding: EdgeInsets.zero,
