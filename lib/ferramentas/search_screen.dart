@@ -6,7 +6,6 @@ import 'package:camarate_school_library/lista_livros/inventory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 // ignore: use_key_in_widget_constructors
@@ -43,7 +42,7 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.white,
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
@@ -51,7 +50,7 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
           },
           child: const Icon(Icons.arrow_back, color: Colors.black),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey.shade100,
         elevation: 0.0,
         bottomOpacity: 0.0,
       ),
@@ -65,27 +64,22 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
               style: headingTextStyle.copyWith(color: Colors.black),
             ),
           ),
-          Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  prefixIcon: Icon(Icons.search),
-                  hintText: "Pesquise o seu livro...",
-                ),
-              ),
-            ),
-          ),
+
+          // Campo para fazer a pesquisa do livro
+          CupertinoSearchTextField(
+            backgroundColor: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            itemSize: 25,
+            prefixInsets: const EdgeInsets.only(left: 12),
+            suffixInsets: const EdgeInsets.only(right: 12),
+            autofocus: true,
+            placeholder: "Pesquise o seu livro...",
+            onChanged: (value) {},
+          ).p12(),
 
           // --> Botões para as categorias
           Container(
-            margin: const EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+            margin: const EdgeInsets.symmetric(vertical: kDefaultPadding / 4),
             height: 35, // tamanho dos botões
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -107,10 +101,10 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
                   decoration: BoxDecoration(
                     color: index == selecionarCategorias
                         ? Colors.blue.withOpacity(0.4)
-                        : Colors.transparent,
+                        : Colors.white,
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(
-                      color: Colors.black,
+                      color: Colors.black26,
                       width: 2.0,
                     ),
                   ),
@@ -125,9 +119,6 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
           ),
           // fim de botões para as categorias...
 
-          // Se o inventario dos livros forem diferentes de null (sem valor)
-          //e os campos não estiverem vazios vamos expandir a lista,
-          //senão mostra o icon do loading a carregar a pensar....
           Expanded(
             // ignore: unnecessary_null_comparison
             child: Container(
@@ -135,13 +126,19 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Se o inventario dos livros forem diferentes de null (sem valor)
+                  //e os campos não estiverem vazios vamos expandir a lista,
+                  //senão mostra o icon do loading a carregar a pensar....
                   // ignore: unnecessary_null_comparison
-                  if (Inventario.books != null && Inventario.books.isNotEmpty)
+                  if (Inventario.books != null &&
+                      Inventario.books.isNotEmpty) ...[
                     const ListaDeInventario().expand()
-                  else
-                    const Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                  ] else
+                    // reload icon
+                    const CircularProgressIndicator()
+                        .centered()
+                        .py16()
+                        .expand(),
                 ],
               ),
             ),
@@ -206,39 +203,50 @@ class LivrosNoInventario extends StatelessWidget {
                     .bold
                     .make(),
 
+                // espaçamento
+                const SizedBox(
+                  height: 5,
+                ),
+
                 // Nome do autor
                 inventario.autor.text
                     .color(MyThemeColor.myGreyStyleColor)
                     .make(),
 
-                // espaçamento
-                const SizedBox(
-                  height: 12,
-                ),
+                // Espaçamento
+                10.heightBox,
 
-                // Disponibilidade do livro
-                if (inventario.disponibilidade == 'Disponível') ...[
-                  inventario.disponibilidade.text.xl.color(Colors.green).make(),
-                ] else
-                  inventario.disponibilidade.text.xl
-                      .color(Colors.grey)
-                      .bold
-                      .make(),
+                // area da disponibilidade e botão requisitar
+                ButtonBar(
+                  alignment: MainAxisAlignment.spaceBetween,
+                  buttonPadding: EdgeInsets.zero,
+                  children: [
+                    // Disponibilidade do livro
+                    if (inventario.disponibilidade == 'Disponível') ...[
+                      inventario.disponibilidade.text.xl
+                          .color(Colors.green)
+                          .make(),
+                    ] else
+                      inventario.disponibilidade.text.xl
+                          .color(Colors.grey.shade600)
+                          .bold
+                          .make(),
 
-                // botao requisitar
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
-                    elevation: 5,
-                    shadowColor: Colors.grey,
-                  ),
-                  child: const Text(
-                    'Requisitar',
-                    style: TextStyle(
-                        color: Colors.white, fontFamily: 'Montserrat'),
-                  ),
-                  onPressed: () {},
-                ),
+                    // Botão requisitar
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.blue.shade600),
+                          shape: MaterialStateProperty.all(
+                            const StadiumBorder(),
+                          )),
+                      child: 'Requisitar'.text.make(),
+                    ),
+                  ],
+                ).pOnly(
+                    right:
+                        8.0), // afasta o botão requisitar da margen a direita
               ],
             ),
           ),
@@ -249,6 +257,6 @@ class LivrosNoInventario extends StatelessWidget {
         .rounded // curva nas bordas dos retangulos
         .square(150) // tamanho das imagens dos livros
         .make()
-        .py16(); // espaçamento entre linhas
+        .py12(); // espaçamento entre linhas
   }
 }

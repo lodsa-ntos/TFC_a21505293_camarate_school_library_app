@@ -18,5 +18,6 @@ const kBlueColor = Color(0xFF40BAD5);
 
 class MyThemeColor {
   static Color darkBluishColor = const Color(0xff403b58);
+  static Color myBlueStyleColor = const Color(0x003b5998);
   static Color myGreyStyleColor = const Color(0xFF616161);
 }
