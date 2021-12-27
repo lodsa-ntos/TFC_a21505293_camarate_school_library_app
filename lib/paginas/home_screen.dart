@@ -1,3 +1,6 @@
+import 'package:camarate_school_library/guia_de_estilo/color_styles.dart';
+import 'package:camarate_school_library/lista_livros/borrowed.dart';
+import 'package:camarate_school_library/lista_livros/card_borrowed.dart';
 import 'package:flutter/material.dart';
 import 'package:camarate_school_library/ferramentas/search_screen.dart';
 
@@ -72,6 +75,56 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ],
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          const LivrosRequisitados(),
+        ],
+      ),
+    );
+  }
+}
+
+class LivrosRequisitados extends StatelessWidget {
+  const LivrosRequisitados({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      // tamanho do fundo
+      height: 406 - 150,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(40)),
+        color: Colors.white,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 12,
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            child: Text(
+              'Livros requisitados',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: darkColor,
+                  fontFamily: 'Poppins'),
+            ),
+          ),
+          // Lista de lisvros requisitados
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: emps.map((recent) {
+                int index = emps.indexOf(recent);
+                return CartoesLisvrosEmprestados(recent, index: index);
+              }).toList(),
             ),
           ),
         ],
