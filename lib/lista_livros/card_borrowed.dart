@@ -32,7 +32,7 @@ class CartoesLisvrosEmprestados extends StatelessWidget {
           BoxShadow(
             offset: const Offset(0, 0),
             spreadRadius: 2,
-            color: Colors.blue.shade200,
+            color: Colors.grey.shade300,
           ),
         ],
       ),

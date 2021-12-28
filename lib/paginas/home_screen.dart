@@ -77,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          //Espaçamento entre icone menu e título Livros requisitados
           const SizedBox(
             height: 10,
           ),
@@ -94,8 +95,6 @@ class LivrosRequisitados extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      // tamanho do fundo
-      height: 406 - 150,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
