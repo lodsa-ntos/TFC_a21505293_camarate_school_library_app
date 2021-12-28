@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ..rotateY(isMenuAberto ? -0.5 : 0),
       duration: const Duration(milliseconds: 250),
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: Colors.white,
         borderRadius: BorderRadius.circular(isMenuAberto ? 40 : 0.0),
       ),
       child: Column(
@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const SizedBox(
-            height: 30,
+            height: 10,
           ),
           const LivrosRequisitados(),
         ],
@@ -92,20 +92,13 @@ class LivrosRequisitados extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       // tamanho do fundo
       height: 406 - 150,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(40)),
-        color: Colors.white,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 12,
-          ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             child: Text(
