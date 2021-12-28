@@ -1,6 +1,10 @@
 import 'package:camarate_school_library/guia_de_estilo/color_styles.dart';
-import 'package:camarate_school_library/lista_livros/borrowed.dart';
-import 'package:camarate_school_library/lista_livros/card_borrowed.dart';
+import 'package:camarate_school_library/livros_emprestados_user/borrowed.dart';
+import 'package:camarate_school_library/livros_emprestados_user/card_borrowed.dart';
+import 'package:camarate_school_library/prateleiras/beige_class.dart';
+import 'package:camarate_school_library/prateleiras/detalhes/card_books_beige.dart';
+import 'package:camarate_school_library/prateleiras/detalhes/card_books_yellow.dart';
+import 'package:camarate_school_library/prateleiras/yellow_class.dart';
 import 'package:flutter/material.dart';
 import 'package:camarate_school_library/ferramentas/search_screen.dart';
 
@@ -81,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 10,
           ),
-          const LivrosRequisitados(),
+          LivrosRequisitados(),
         ],
       ),
     );
@@ -89,8 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class LivrosRequisitados extends StatelessWidget {
-  const LivrosRequisitados({Key? key}) : super(key: key);
+  LivrosRequisitados({Key? key}) : super(key: key);
 
+// ignore: unnecessary_new
+  final ScrollController scrollController = new ScrollController();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -104,13 +110,13 @@ class LivrosRequisitados extends StatelessWidget {
               'Livros requisitados',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 18,
                   color: darkColor,
                   fontFamily: 'Poppins'),
             ),
           ),
           const SizedBox(
-            height: 12,
+            height: 5,
           ),
           // Lista de lisvros requisitados
           SingleChildScrollView(
@@ -118,7 +124,103 @@ class LivrosRequisitados extends StatelessWidget {
             child: Row(
               children: livrosEmprestados.map((recent) {
                 int index = livrosEmprestados.indexOf(recent);
-                return CartoesLisvrosEmprestados(recent, index: index);
+                return CartoesLivrosEmprestados(recent, index: index);
+              }).toList(),
+            ),
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            child: Text(
+              'Prateleiras',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  color: darkColor,
+                  fontFamily: 'Poppins'),
+            ),
+          ),
+
+          // Classe 0 - Generabilidade.Dicionários.Enciclopédias.Informática
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 30.0),
+            child: Row(
+              children: const [
+                // Circulo das classes
+                CircleAvatar(
+                  backgroundColor: Colors.yellow,
+                  minRadius: 15,
+                ),
+                Padding(
+                  // espaço entre o circulo e o título da classe
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(
+                    'Generabilidade.Dicionários.\nEnciclopédias.Informática',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: darkColor,
+                        fontFamily: 'Poppins'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: livrosClasseYellow.map((recent) {
+                int index = livrosClasseYellow.indexOf(recent);
+                return CartoesYellowBooks(recent, index: index);
+              }).toList(),
+            ),
+          ),
+
+          // Classe 1 - Filosofia e Psicologia
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 30.0),
+            child: Row(
+              children: const [
+                // Circulo das classes
+                CircleAvatar(
+                  backgroundColor: Colors.amber,
+                  minRadius: 15,
+                ),
+                Padding(
+                  // espaço entre o circulo e o título da classe
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(
+                    'Filosofia . Psicologia',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: darkColor,
+                        fontFamily: 'Poppins'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: livrosClasseBeige.map((recent) {
+                int index = livrosClasseBeige.indexOf(recent);
+                return CartoesBeigeBooks(recent, index: index);
               }).toList(),
             ),
           ),

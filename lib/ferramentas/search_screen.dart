@@ -117,6 +117,7 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
               ),
             ),
           ),
+
           // fim de botões para as categorias...
 
           Expanded(
