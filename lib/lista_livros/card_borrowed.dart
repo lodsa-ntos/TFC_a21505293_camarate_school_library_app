@@ -1,5 +1,7 @@
+import 'package:camarate_school_library/guia_de_estilo/color_styles.dart';
 import 'package:camarate_school_library/lista_livros/borrowed.dart';
 import 'package:flutter/material.dart';
+import 'package:velocity_x/src/extensions/string_ext.dart';
 
 class CartoesLisvrosEmprestados extends StatelessWidget {
   const CartoesLisvrosEmprestados(
@@ -30,7 +32,7 @@ class CartoesLisvrosEmprestados extends StatelessWidget {
           BoxShadow(
             offset: const Offset(0, 0),
             spreadRadius: 2,
-            color: Colors.grey.shade200,
+            color: Colors.blue.shade200,
           ),
         ],
       ),
@@ -42,22 +44,24 @@ class CartoesLisvrosEmprestados extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(
-                emprestado.title,
-                style: const TextStyle(
+              //Titulo
+              emprestado.title.text.xl
+                  .color(MyThemeColor.darkBluishColor)
+                  .bold
+                  .make(),
+              //autor
+              //emprestado.autor.text.xl.lg.color(Colors.black).make(),
+              const SizedBox(width: 44),
+              //Data de entrega
+              const Text(
+                'Entregue em:',
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
               ),
-              Text(
-                emprestado.dataEntrega,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
-              ),
+              emprestado.dataEntrega.text.color(Colors.black).bold.make(),
             ],
           ),
         ],
