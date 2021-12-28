@@ -85,13 +85,18 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 10,
           ),
+
+          // --> Lista dos livros <--
           LivrosRequisitados(),
+          const PrateleirasBiblioteca(),
+          const Sobe(),
         ],
       ),
     );
   }
 }
 
+// Livros Requisitados e devolvidos pelo utilizador
 class LivrosRequisitados extends StatelessWidget {
   LivrosRequisitados({Key? key}) : super(key: key);
 
@@ -128,6 +133,22 @@ class LivrosRequisitados extends StatelessWidget {
               }).toList(),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+// Prateleiras da Biblioteca organizadas por classes e cores
+class PrateleirasBiblioteca extends StatelessWidget {
+  const PrateleirasBiblioteca({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           const SizedBox(
             height: 25,
           ),
@@ -142,7 +163,6 @@ class LivrosRequisitados extends StatelessWidget {
                   fontFamily: 'Poppins'),
             ),
           ),
-
           // Classe 0 - Generabilidade.Dicionários.Enciclopédias.Informática
           const SizedBox(
             height: 15,
@@ -184,6 +204,8 @@ class LivrosRequisitados extends StatelessWidget {
             ),
           ),
 
+          // TERMINA Classe 0
+
           // Classe 1 - Filosofia e Psicologia
           const SizedBox(
             height: 15,
@@ -224,8 +246,19 @@ class LivrosRequisitados extends StatelessWidget {
               }).toList(),
             ),
           ),
+
+          // TERMINA Classe 1
         ],
       ),
     );
+  }
+}
+
+class Sobe extends StatelessWidget {
+  const Sobe({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(resizeToAvoidBottomInset: false);
   }
 }
