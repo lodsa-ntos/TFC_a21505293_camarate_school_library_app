@@ -117,12 +117,15 @@ class LivrosRequisitados extends StatelessWidget {
                   fontFamily: 'Poppins'),
             ),
           ),
+          const SizedBox(
+            height: 12,
+          ),
           // Lista de lisvros requisitados
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: emps.map((recent) {
-                int index = emps.indexOf(recent);
+              children: livrosEmprestados.map((recent) {
+                int index = livrosEmprestados.indexOf(recent);
                 return CartoesLisvrosEmprestados(recent, index: index);
               }).toList(),
             ),

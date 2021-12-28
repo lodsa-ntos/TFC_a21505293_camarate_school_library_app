@@ -14,13 +14,13 @@ class CartoesLisvrosEmprestados extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 228,
-      height: 150,
+      width: 258,
+      height: 145,
       margin: EdgeInsets.only(
         right: 20,
         bottom: 10,
         top: 10,
-        left: index == 0 ? 30 : 0,
+        left: index == 0 ? 30.0 : 0,
       ),
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -36,7 +36,7 @@ class CartoesLisvrosEmprestados extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image.asset(emprestado.image),
+          Image.network(emprestado.image),
           const SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,6 +44,14 @@ class CartoesLisvrosEmprestados extends StatelessWidget {
             children: [
               Text(
                 emprestado.title,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+              Text(
+                emprestado.dataEntrega,
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
