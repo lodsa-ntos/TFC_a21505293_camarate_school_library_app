@@ -14,34 +14,73 @@ class CartoesYellowBooks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 103,
-      height: 218,
-      margin: EdgeInsets.only(
-        right: 12,
-        left: index == 0 ? 30.0 : 0,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: Image.network(prateleira1.image),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          width: 103,
+          height: 248,
+          // espaçamento entre os livros
+          margin: EdgeInsets.only(
+            right: 10,
+            left: index == 0 ? 2.0 : 0,
           ),
-          Text(
-            prateleira1.title,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 12, color: Colors.grey),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 888,
+                  height: 160,
+                  margin: const EdgeInsets.only(
+                    bottom: 10,
+                    top: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.0),
+                    image: DecorationImage(
+                      image: NetworkImage(prateleira1.image),
+                      fit: BoxFit
+                          .cover, // ajuda a ficar do mesmo tamanho (ampliando a imagem)
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    prateleira1.title,
+                    softWrap: false,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    prateleira1.autor,
+                    softWrap: false,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          Text(
-            prateleira1.autor,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 12, color: Colors.black),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

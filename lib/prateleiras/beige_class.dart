@@ -11,31 +11,32 @@ class BeigeClasse {
 List<BeigeClasse> livrosClasseBeige = [
   BeigeClasse(
     image:
-        'https://img.wook.pt/images/deus-nao-precisa-de-ti-esther-maria-magnis/MXwxNTIzNjU0N3wxMDcyNDgyM3wxMzgzNTIzMjAwMDAw/500x',
-    title: "Deus não \nprecisa de ti",
-    autor: "Esther Maria \nMagnis",
+        'https://img.wook.pt/images/o-homem-em-busca-de-um-sentido-viktor-e-frankl/MXwxNDAzOTEyNnw5NjEzMDkxfDEzODM1MjMyMDAwMDA=/500x',
+    title: "O homem em \nbusca de um \nsentido",
+    autor: "Viktor E. \nFrankl",
   ),
   BeigeClasse(
     image:
-        'https://images-na.ssl-images-amazon.com/images/I/41fJkUBmrdS._SX343_BO1,204,203,200_.jpg',
-    title: "English \nThesaurus",
-    autor: "Jane \nAustin",
+        'https://img.wook.pt/images/o-que-estas-a-fazer-com-a-tua-vida-j-krishnamurti/MXwyMzg2OTU5MnwxOTg5MTc0M3wxNTgyMDcwNDAwMDAw/500x',
+    title: "O que estás \na fazer com \na tua vida?",
+    autor: "Jiddu \nKrishnamurti",
   ),
   BeigeClasse(
     image:
-        'https://img.wook.pt/images/informatica-na-educacao-roger-maia/MXwyMzcwNzQwMXwxOTcwNTY3MnwxNTc2MTk1MjAwMDAw/175x',
-    title: "Informática \nna educação",
-    autor: "Roger \nMaia",
-  ),
-  BeigeClasse(
-    image: 'https://images-na.ssl-images-amazon.com/images/I/81blQVIfQwL.jpg',
-    title: "A estrada \ndo futuro",
-    autor: "Bill \nGates",
+        'https://img.wook.pt/images/nao-te-fdas-gary-john-bishop/MXwyMjg4NDgyNHwxODc3MDk3MHwxNTUxMDUyODAwMDAw/500x',
+    title: "Não Te F*das \n- Sai da tua \ncabeça e \nfaz-te à vida",
+    autor: "Gary \nJohn \nBishop",
   ),
   BeigeClasse(
     image:
-        'https://collectionapi.metmuseum.org/api/collection/v1/iiif/716639/1635046/main-image',
-    title: "Encyclopédie",
-    autor: "Raymond \nMurphy",
+        'https://img.wook.pt/images/saber-lidar-com-as-pessoas-antonio-estanqueiro/MXwyMzA2NDE1NHwxODk3MjY4NnwxNTU3NDQyODAwMDAw/500x',
+    title: "Saber Lidar\n com as Pessoas",
+    autor: "António \nEstanqueiro",
+  ),
+  BeigeClasse(
+    image:
+        'https://img.wook.pt/images/um-cerebro-a-prova-de-cansaco-sandra-de-carvalho-martins/MXwyNDcwNTM2NHwyMDg1ODIwMXwxNjE3MjMxNjAwMDAw/500x',
+    title: "Um cérebro \nà prova \nde cansaço",
+    autor: "Sandra de \nCarvalho \nMartins",
   ),
 ];

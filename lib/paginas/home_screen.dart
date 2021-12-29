@@ -7,6 +7,7 @@ import 'package:camarate_school_library/prateleiras/detalhes/card_books_yellow.d
 import 'package:camarate_school_library/prateleiras/yellow_class.dart';
 import 'package:flutter/material.dart';
 import 'package:camarate_school_library/ferramentas/search_screen.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomeScreen extends StatefulWidget {
@@ -39,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 30,
           ),
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 15),
+            margin: const EdgeInsets.symmetric(horizontal: 12),
             child: Row(
               // Ação para o icon do menu lateral
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,7 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
           // --> Lista dos livros <--
           LivrosRequisitados(),
           const PrateleirasBiblioteca(),
-          const Sobe(),
         ],
       ),
     );
@@ -108,9 +108,10 @@ class LivrosRequisitados extends StatelessWidget {
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            padding: EdgeInsets.symmetric(horizontal: 28.0),
             child: Text(
               'Livros requisitados',
               style: TextStyle(
@@ -120,19 +121,19 @@ class LivrosRequisitados extends StatelessWidget {
                   fontFamily: 'Poppins'),
             ),
           ),
-          const SizedBox(
-            height: 5,
-          ),
-          // Lista de lisvros requisitados
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: livrosEmprestados.map((recent) {
-                int index = livrosEmprestados.indexOf(recent);
-                return CartoesLivrosEmprestados(recent, index: index);
-              }).toList(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 26.0),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: livrosEmprestados.map((recent) {
+                  int index = livrosEmprestados.indexOf(recent);
+                  return CartoesLivrosEmprestados(recent, index: index);
+                }).toList(),
+              ),
             ),
           ),
+          // Lista de lisvros requisitados
         ],
       ),
     );
@@ -147,6 +148,7 @@ class PrateleirasBiblioteca extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
@@ -168,7 +170,7 @@ class PrateleirasBiblioteca extends StatelessWidget {
             height: 15,
           ),
           Container(
-            padding: const EdgeInsets.only(left: 30.0),
+            padding: const EdgeInsets.only(left: 26.0),
             child: Row(
               children: const [
                 // Circulo das classes
@@ -192,73 +194,23 @@ class PrateleirasBiblioteca extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: livrosClasseYellow.map((recent) {
-                int index = livrosClasseYellow.indexOf(recent);
-                return CartoesYellowBooks(recent, index: index);
-              }).toList(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 26.0),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: livrosClasseYellow.map((recent) {
+                  int index = livrosClasseYellow.indexOf(recent);
+                  return CartoesYellowBooks(recent, index: index);
+                }).toList(),
+              ),
             ),
+            // TERMINA Classe 0
           ),
-
-          // TERMINA Classe 0
-
-          // Classe 1 - Filosofia e Psicologia
-          const SizedBox(
-            height: 15,
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 30.0),
-            child: Row(
-              children: const [
-                // Circulo das classes
-                CircleAvatar(
-                  backgroundColor: Colors.amber,
-                  minRadius: 15,
-                ),
-                Padding(
-                  // espaço entre o circulo e o título da classe
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Text(
-                    'Filosofia . Psicologia',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: darkColor,
-                        fontFamily: 'Poppins'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: livrosClasseBeige.map((recent) {
-                int index = livrosClasseBeige.indexOf(recent);
-                return CartoesBeigeBooks(recent, index: index);
-              }).toList(),
-            ),
-          ),
-
-          // TERMINA Classe 1
         ],
       ),
     );
-  }
-}
-
-class Sobe extends StatelessWidget {
-  const Sobe({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(resizeToAvoidBottomInset: false);
   }
 }

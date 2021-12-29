@@ -15,67 +15,67 @@ class CartoesLivrosEmprestados extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 238,
-      height: 145,
-      margin: EdgeInsets.only(
-        right: 20,
-        bottom: 10,
-        top: 10,
-        left: index == 0 ? 30.0 : 0,
-      ),
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            offset: const Offset(0, 0),
-            spreadRadius: 2,
-            color: Colors.blue.shade300,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          width: 95,
+          height: 135,
+          margin: const EdgeInsets.only(
+            right: 10,
+            bottom: 10,
+            top: 10,
           ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Image.network(emprestado.image),
-          const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              //Titulo
-              emprestado.title.text.xl
-                  .color(MyThemeColor.darkBluishColor)
-                  .bold
-                  .make(),
-              //autor
-              //emprestado.autor.text.xl.lg.color(Colors.black).make(),
-              const SizedBox(width: 44),
-              const SizedBox(width: 44),
-              const SizedBox(width: 44),
-              //Data de entrega
-              const Text(
-                'Entregue em:',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
-              ),
-              Text(
-                emprestado.dataEntrega,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8.0),
+            image: DecorationImage(
+              image: NetworkImage(emprestado.image),
+              fit: BoxFit
+                  .cover, // ajuda a ficar do mesmo tamanho (ampliando a imagem)
+            ),
+          ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                emprestado.title,
+                maxLines: 1,
+                softWrap: false,
+                overflow: TextOverflow.fade,
                 style: const TextStyle(
                   fontSize: 12,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
-              //emprestado.dataEntrega.text.pink100.color(Colors.black).bold.make(),
-            ],
-          ),
-        ],
-      ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            //Data de entrega
+            const Text(
+              'Data de entrega:',
+              style: TextStyle(
+                fontSize: 12,
+              ),
+            ),
+            Text(
+              emprestado.dataEntrega,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
