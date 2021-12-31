@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:camarate_school_library/guia_de_estilo/color_styles.dart';
 import 'package:camarate_school_library/guia_de_estilo/text_styles.dart';
-import 'package:camarate_school_library/lista_livros/inventory.dart';
+import 'package:camarate_school_library/inventario/inventory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

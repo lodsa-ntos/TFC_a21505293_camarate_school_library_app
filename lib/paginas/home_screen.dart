@@ -1,13 +1,7 @@
-import 'package:camarate_school_library/guia_de_estilo/color_styles.dart';
-import 'package:camarate_school_library/livros_emprestados_user/borrowed.dart';
-import 'package:camarate_school_library/livros_emprestados_user/card_borrowed.dart';
-import 'package:camarate_school_library/prateleiras/beige_class.dart';
-import 'package:camarate_school_library/prateleiras/detalhes/card_books_beige.dart';
-import 'package:camarate_school_library/prateleiras/detalhes/card_books_yellow.dart';
-import 'package:camarate_school_library/prateleiras/yellow_class.dart';
+import 'package:camarate_school_library/livros_emprestados_user/show_attributes_screen.dart';
+import 'package:camarate_school_library/prateleiras/prateleira_yellow/show_yellow_shelf_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:camarate_school_library/ferramentas/search_screen.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomeScreen extends StatefulWidget {
@@ -42,8 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 12),
             child: Row(
-              // Ação para o icon do menu lateral
+              // Espaçamento entre os icones
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // Ação para o icon do menu lateral
               children: [
                 isMenuAberto
                     ? IconButton(
@@ -88,126 +83,18 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           // --> Lista dos livros <--
-          LivrosRequisitados(),
-          const PrateleirasBiblioteca(),
-        ],
-      ),
-    );
-  }
-}
-
-// Livros Requisitados e devolvidos pelo utilizador
-class LivrosRequisitados extends StatelessWidget {
-  LivrosRequisitados({Key? key}) : super(key: key);
-
-// ignore: unnecessary_new
-  final ScrollController scrollController = new ScrollController();
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 28.0),
-            child: Text(
-              'Livros requisitados',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: darkColor,
-                  fontFamily: 'Poppins'),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 26.0),
+          SizedBox(
+            height: 670,
             child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: livrosEmprestados.map((recent) {
-                  int index = livrosEmprestados.indexOf(recent);
-                  return CartoesLivrosEmprestados(recent, index: index);
-                }).toList(),
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: const [
+                  // --> Lista dos livros <--
+                  LivrosRequisitados(),
+                  PrateleirasBiblioteca(),
+                ],
               ),
             ),
-          ),
-          // Lista de lisvros requisitados
-        ],
-      ),
-    );
-  }
-}
-
-// Prateleiras da Biblioteca organizadas por classes e cores
-class PrateleirasBiblioteca extends StatelessWidget {
-  const PrateleirasBiblioteca({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 25,
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
-            child: Text(
-              'Prateleiras',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  color: darkColor,
-                  fontFamily: 'Poppins'),
-            ),
-          ),
-          // Classe 0 - Generabilidade.Dicionários.Enciclopédias.Informática
-          const SizedBox(
-            height: 15,
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 26.0),
-            child: Row(
-              children: const [
-                // Circulo das classes
-                CircleAvatar(
-                  backgroundColor: Colors.yellow,
-                  minRadius: 15,
-                ),
-                Padding(
-                  // espaço entre o circulo e o título da classe
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Text(
-                    'Generabilidade.Dicionários.\nEnciclopédias.Informática',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: darkColor,
-                        fontFamily: 'Poppins'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 26.0),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: livrosClasseYellow.map((recent) {
-                  int index = livrosClasseYellow.indexOf(recent);
-                  return CartoesYellowBooks(recent, index: index);
-                }).toList(),
-              ),
-            ),
-            // TERMINA Classe 0
           ),
         ],
       ),

@@ -1,7 +1,6 @@
-import 'package:camarate_school_library/guia_de_estilo/color_styles.dart';
-import 'package:camarate_school_library/livros_emprestados_user/borrowed.dart';
+import 'package:camarate_school_library/livros_emprestados_user/call_attributes.dart';
 import 'package:flutter/material.dart';
-import 'package:velocity_x/src/extensions/string_ext.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CartoesLivrosEmprestados extends StatelessWidget {
   const CartoesLivrosEmprestados(
@@ -33,7 +32,7 @@ class CartoesLivrosEmprestados extends StatelessWidget {
             image: DecorationImage(
               image: NetworkImage(emprestado.image),
               fit: BoxFit
-                  .cover, // ajuda a ficar do mesmo tamanho (ampliando a imagem)
+                  .fitWidth, // ajuda a ficar do mesmo tamanho (ampliando a imagem)
             ),
           ),
         ),
@@ -48,10 +47,9 @@ class CartoesLivrosEmprestados extends StatelessWidget {
                 maxLines: 1,
                 softWrap: false,
                 overflow: TextOverflow.fade,
-                style: const TextStyle(
-                  fontSize: 12,
+                style: GoogleFonts.catamaran(
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
                 ),
               ),
             ),
@@ -59,18 +57,18 @@ class CartoesLivrosEmprestados extends StatelessWidget {
               height: 5,
             ),
             //Data de entrega
-            const Text(
+            Text(
               'Data de entrega:',
-              style: TextStyle(
+              style: GoogleFonts.catamaran(
                 fontSize: 12,
               ),
             ),
             Text(
               emprestado.dataEntrega,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
+              style: GoogleFonts.catamaran(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
               ),
             ),
           ],

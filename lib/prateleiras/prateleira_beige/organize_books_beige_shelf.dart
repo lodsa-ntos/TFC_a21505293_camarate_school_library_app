@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../beige_class.dart';
-import '../yellow_class.dart';
+import 'call_attributes_beige_shelf.dart';
+import '../prateleira_yellow/call_attributes_yellow_shelf.dart';
 
 class CartoesBeigeBooks extends StatelessWidget {
   const CartoesBeigeBooks(
