@@ -22,7 +22,6 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
   void initState() {
     super.initState();
     carregarDados();
-    mudarStatusBar();
   }
 
   // sempre que abrir o ecrã de pesquisa carrega a minha lista inicial de livros
@@ -37,12 +36,6 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
         .map<RegisterBooks>((books) => RegisterBooks.fromMap(books))
         .toList();
     setState(() {});
-  }
-
-  mudarStatusBar() {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.blueAccent,
-    ));
   }
 
   // Widget de construção da página, conteúdo visual.
