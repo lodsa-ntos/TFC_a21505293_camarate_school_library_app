@@ -1,4 +1,6 @@
 class LivrosEmprestados {
+  static List<LivrosEmprestados> listRequisicao = [];
+
   int numRegisto;
   String imagem;
   String titulo;

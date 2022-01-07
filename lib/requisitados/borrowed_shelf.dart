@@ -36,7 +36,10 @@ Widget prateleiraEmprestados(LivrosEmprestados livrosEmprestados) {
         ),
         Text(
           livrosEmprestados.dataEntrega,
-          style: GoogleFonts.catamaran(fontSize: 16.0, color: Colors.grey),
+          style: GoogleFonts.catamaran(
+            fontSize: 16.0,
+            color: Colors.grey,
+          ),
         ),
       ],
     ),

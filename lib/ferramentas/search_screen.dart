@@ -77,7 +77,7 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
             onChanged: (value) {},
           ).p12(),
 
-          // --> Botões para as categorias
+          // --> Botões das categorias
           Container(
             margin: const EdgeInsets.symmetric(vertical: kDefaultPadding / 4),
             height: 35, // tamanho dos botões
@@ -93,7 +93,7 @@ class _PesquisaScreenState extends State<PesquisaScreen> {
                 child: Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.only(
-                      left: kDefaultPadding,
+                      left: kDefaultPadding, // tamanho do espaçamento
                       right:
                           index == categorias.length - 1 ? kDefaultPadding : 0),
                   padding:

@@ -1,4 +1,6 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_us, deprecated_member_use
+import 'package:camarate_school_library/prateleiras/prateleira_amarela/variables_show_book.dart';
+import 'package:camarate_school_library/requisitados/borrowed_books.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -10,6 +12,8 @@ class BookDetailScreen extends StatefulWidget {
 }
 
 class _BookDetailScreenState extends State<BookDetailScreen> {
+  late DadosListaAmarela livrosNasPrateleiras;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,9 +25,20 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
         child: FlatButton(
           color: const Color.fromRGBO(18, 157, 158, 1),
           onPressed: () {
-            setState(() {
-              //print('sucesso');
-            });
+            // TODO arranjar outrar ideia para chamar o atributo "disponiblidade" da classe DadosListaAmarela
+            if (livrosNasPrateleiras.disponibilidade == "Disponível") {
+              [
+                LivrosEmprestados.listRequisicao
+                    .add(LivrosEmprestados.listRequisicao.first),
+              ];
+              setState(() {
+                print('sucesso');
+              });
+            } else {
+              setState(() {
+                print('não foi possível concluir a requisição');
+              });
+            }
           },
           child: Text(
             'Requisitar',
