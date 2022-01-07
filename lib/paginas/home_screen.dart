@@ -22,9 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
     DadosListaAmarela(
       numRegistoShelf: 1,
       imagem:
-          'https://img.wook.pt/images/deus-nao-precisa-de-ti-esther-maria-magnis/MXwxNTIzNjU0N3wxMDcyNDgyM3wxMzgzNTIzMjAwMDAw/500x',
-      tituloLivro: "Deus não precisa de ti",
-      autor: "Esther Maria Magnis",
+          'https://images-na.ssl-images-amazon.com/images/I/81blQVIfQwL.jpg',
+      tituloLivro: "A estrada do futuro",
+      autor: "Bill Gates",
       disponibilidade: "Disponível",
       descricao: "",
     ),
@@ -49,9 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
     DadosListaAmarela(
       numRegistoShelf: 4,
       imagem:
-          'https://images-na.ssl-images-amazon.com/images/I/81blQVIfQwL.jpg',
-      tituloLivro: "A estrada do futuro",
-      autor: "Bill Gates",
+          'https://images-na.ssl-images-amazon.com/images/I/61JosO2tkdL.jpg',
+      tituloLivro: "Orgulho e Preconceito",
+      autor: "Jane Austen",
       disponibilidade: "Disponível",
       descricao: "",
     ),
@@ -83,6 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 30,
           ),
+
+          // Este container contém os icones do menu lateral e de pesquisa
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 12),
             child: Row(
@@ -127,26 +129,27 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          Container(
-            padding: const EdgeInsets.only(right: 173.0),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 1.0),
-              child: Text(
-                'Prateleiras',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    color: darkColor,
-                    fontFamily: 'Poppins'),
-              ),
-            ),
-          ),
           SizedBox(
-            height: 605,
+            height: 715,
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
                 children: [
+                  Container(
+                    padding: const EdgeInsets.only(right: 189.0),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 1.0),
+                      child: Text(
+                        'Prateleiras',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            color: darkColor,
+                            fontFamily: 'Poppins'),
+                      ),
+                    ),
+                  ),
+
                   // --> MOSTRAR AS LISTAS DOS LIVROS NO ECRÃ <--
                   tituloDaClasse(),
                   const SizedBox(
@@ -162,6 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Este widget apenas irá mostrar os livros da secção amarela
   Widget mostrarLivrosPrateleiraAmarela() {
     return Container(
       width: double.infinity,
@@ -176,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => BookDetailScreen(),
+                    builder: (context) => const BookDetailScreen(),
                   ),
                 );
               },

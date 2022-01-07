@@ -1,9 +1,15 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class BookDetailScreen extends StatelessWidget {
+class BookDetailScreen extends StatefulWidget {
+  const BookDetailScreen({Key? key}) : super(key: key);
+
+  @override
+  _BookDetailScreenState createState() => _BookDetailScreenState();
+}
+
+class _BookDetailScreenState extends State<BookDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,11 +20,15 @@ class BookDetailScreen extends StatelessWidget {
         color: Colors.transparent,
         child: FlatButton(
           color: const Color.fromRGBO(18, 157, 158, 1),
-          onPressed: () {},
+          onPressed: () {
+            setState(() {
+              //print('sucesso');
+            });
+          },
           child: Text(
             'Requisitar',
             style: GoogleFonts.catamaran(
-              fontSize: 14,
+              fontSize: 20,
               fontWeight: FontWeight.w600,
               color: Colors.white,
             ),
@@ -32,6 +42,7 @@ class BookDetailScreen extends StatelessWidget {
       // ---> TERMINA EDIÇÃO BOTÃO REQUISITAR <---
 
       body: SafeArea(
+        // ignore: avoid_unnecessary_containers
         child: Container(
           child: CustomScrollView(
             slivers: <Widget>[
@@ -91,15 +102,26 @@ class BookDetailScreen extends StatelessWidget {
                       child: Text(
                         'Lorem ipsum',
                         style: GoogleFonts.catamaran(
-                          fontSize: 14,
+                          fontSize: 16,
                           fontWeight: FontWeight.w400,
                           color: Colors.grey.shade600,
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 7, left: 25),
+                      child: Text(
+                        'Disponível',
+                        style: GoogleFonts.catamaran(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green.shade600,
+                        ),
+                      ),
+                    ),
                     Container(
                       height: 45,
-                      margin: const EdgeInsets.only(top: 23, bottom: 36),
+                      margin: const EdgeInsets.only(top: 23, bottom: 25),
                       padding: const EdgeInsets.only(left: 25),
                       child: DefaultTabController(
                         length: 1,
@@ -126,14 +148,15 @@ class BookDetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 25, right: 25, bottom: 25),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 25, right: 25, bottom: 25),
                       child: Text(
                         'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: Colors.grey,
+                          color: Colors.grey.shade700,
                           letterSpacing: 1.5,
                           height: 2,
                         ),

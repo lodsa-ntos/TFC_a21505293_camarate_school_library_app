@@ -3,7 +3,7 @@ import 'package:camarate_school_library/prateleiras/prateleira_amarela/variables
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// Conteúdos do Livro a serem apresentados no ecrã
+// Conteúdos do Livro a serem mostrados no ecrã
 Widget prateleiraAmarela(DadosListaAmarela livrosNasPrateleiras) {
   return Container(
     width: 122.0,
@@ -51,15 +51,17 @@ Widget prateleiraAmarela(DadosListaAmarela livrosNasPrateleiras) {
           Text(
             livrosNasPrateleiras.disponibilidade,
             style: GoogleFonts.catamaran(
-                fontSize: 14.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey.shade700),
+              fontSize: 14.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey.shade700,
+            ),
           ),
       ],
     ),
   );
 }
 
+// Apenas o titulo da secção amarela
 Widget tituloDaClasse() {
   return Column(
     children: [
@@ -67,7 +69,7 @@ Widget tituloDaClasse() {
         height: 15,
       ),
       Container(
-        padding: const EdgeInsets.only(left: 26.0),
+        padding: const EdgeInsets.only(left: 28.0),
         child: Row(
           children: const [
             // Circulo das classes
