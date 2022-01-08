@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:camarate_school_library/guia_de_estilo/color_styles.dart';
 import 'package:camarate_school_library/prateleiras/prateleira_amarela/ecra_de_detalhes/book_details.dart';
 import 'package:camarate_school_library/prateleiras/prateleira_amarela/variables_show_book.dart';
@@ -6,6 +8,8 @@ import 'package:camarate_school_library/requisitados/borrowed_books.dart';
 import 'package:camarate_school_library/requisitados/borrowed_shelf.dart';
 import 'package:flutter/material.dart';
 import 'package:camarate_school_library/ferramentas/search_screen.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomeScreen extends StatefulWidget {
@@ -19,6 +23,27 @@ class _HomeScreenState extends State<HomeScreen> {
   double fatorDeEscala = 1;
 
   bool isMenuAberto = false;
+
+  @override
+  void initState() {
+    super.initState();
+    carregarDadosPrateleira();
+  }
+
+  // sempre que abrir o ecrã de pesquisa carrega a minha lista inicial de livros
+  //do ficheiro .json...
+  carregarDadosPrateleira() async {
+    final prateleirasJSON =
+        await rootBundle.loadString("assets/files/livros_prateleiras.json");
+    var dadosDecodificados = jsonDecode(prateleirasJSON);
+    var informacoesDoLivro = dadosDecodificados["prateleira"];
+
+    DadosListaAmarela.livrosNasPrateleiras = List.from(informacoesDoLivro)
+        .map<PrateleirasDaBiblioteca>((livrosNasPrateleiras) =>
+            PrateleirasDaBiblioteca.fromMap(livrosNasPrateleiras))
+        .toList();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,78 +163,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  mostrarLivrosPrateleiraAmarela(),
+                  //mostrarLivrosPrateleiraAmarela(),
+                  //mostrarLivrosEmprestados(),
                 ],
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  // Este widget apenas irá mostrar os livros da secção amarela
-  Widget mostrarLivrosPrateleiraAmarela() {
-    return Container(
-      width: double.infinity,
-      height: 325.0,
-      padding: const EdgeInsets.only(left: 30, right: 30),
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          // ignore: unnecessary_null_comparison
-          if (DadosListaAmarela.livrosNasPrateleiras[0] != null) ...[
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const BookDetailScreen(),
-                  ),
-                );
-              },
-              child: Column(
-                children: [
-                  prateleiraAmarela(DadosListaAmarela.livrosNasPrateleiras[0]),
-                ],
-              ),
-            ),
-          ] else
-            prateleiraAmarela(DadosListaAmarela.livrosNasPrateleiras[0]),
-          prateleiraAmarela(DadosListaAmarela.livrosNasPrateleiras[1]),
-          prateleiraAmarela(DadosListaAmarela.livrosNasPrateleiras[2]),
-          prateleiraAmarela(DadosListaAmarela.livrosNasPrateleiras[3]),
-          prateleiraAmarela(DadosListaAmarela.livrosNasPrateleiras[4]),
-        ],
-      ),
-    );
-  }
-
-  Widget mostrarLivrosEmprestados() {
-    return Container(
-      width: double.infinity,
-      height: 325.0,
-      padding: const EdgeInsets.only(left: 30, right: 30),
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          // ignore: unnecessary_null_comparison
-          if (LivrosEmprestados.listRequisicao[0] != null) ...[
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const BookDetailScreen(),
-                  ),
-                );
-              },
-              child: Column(
-                children: [
-                  prateleiraEmprestados(LivrosEmprestados.listRequisicao[0]),
-                ],
-              ),
-            ),
-          ] else
-            prateleiraEmprestados(LivrosEmprestados.listRequisicao[1]),
         ],
       ),
     );

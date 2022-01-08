@@ -1,65 +1,107 @@
-class DadosListaAmarela {
-  static List<DadosListaAmarela> livrosNasPrateleiras = [
-    DadosListaAmarela(
-      numRegistoShelf: 1,
-      imagem:
-          'https://images-na.ssl-images-amazon.com/images/I/81blQVIfQwL.jpg',
-      tituloLivro: "A estrada do futuro",
-      autor: "Bill Gates",
-      disponibilidade: "Disponível",
-      descricao: "",
-    ),
-    DadosListaAmarela(
-      numRegistoShelf: 2,
-      imagem:
-          'https://images-na.ssl-images-amazon.com/images/I/41fJkUBmrdS._SX343_BO1,204,203,200_.jpg',
-      tituloLivro: "English Thesaurus",
-      autor: "Jane Austin",
-      disponibilidade: "Disponível",
-      descricao: "",
-    ),
-    DadosListaAmarela(
-      numRegistoShelf: 3,
-      imagem:
-          'https://img.wook.pt/images/informatica-na-educacao-roger-maia/MXwyMzcwNzQwMXwxOTcwNTY3MnwxNTc2MTk1MjAwMDAw/175x',
-      tituloLivro: "Informática na educação",
-      autor: "Roger Maia",
-      disponibilidade: "Esgotado",
-      descricao: "",
-    ),
-    DadosListaAmarela(
-      numRegistoShelf: 4,
-      imagem:
-          'https://images-na.ssl-images-amazon.com/images/I/61JosO2tkdL.jpg',
-      tituloLivro: "Orgulho e Preconceito",
-      autor: "Jane Austen",
-      disponibilidade: "Disponível",
-      descricao: "",
-    ),
-    DadosListaAmarela(
-      numRegistoShelf: 5,
-      imagem:
-          'https://collectionapi.metmuseum.org/api/collection/v1/iiif/716639/1635046/main-image',
-      tituloLivro: "Encyclopédie",
-      autor: "Raymond Murphy",
-      disponibilidade: "Esgotado",
-      descricao: "",
-    ),
-  ];
+import 'dart:convert';
 
-  int numRegistoShelf;
-  String tituloLivro;
+class DadosListaAmarela {
+  static List<PrateleirasDaBiblioteca> livrosNasPrateleiras = [];
+
+// Obter os livros pelo número de registo
+  PrateleirasDaBiblioteca getById(int numRegisto) =>
+      // ignore: null_closures
+      livrosNasPrateleiras.firstWhere(
+          (element) => element.numRegisto == numRegisto,
+          // ignore: null_closures
+          orElse: null);
+
+  // Obter livros por posição
+  PrateleirasDaBiblioteca getByPosition(int pos) => livrosNasPrateleiras[pos];
+}
+
+class PrateleirasDaBiblioteca {
+  int numRegisto;
+  String titulo;
   String autor;
   String disponibilidade;
   String descricao;
   String imagem;
 
-  DadosListaAmarela({
-    required this.numRegistoShelf,
-    required this.tituloLivro,
+  PrateleirasDaBiblioteca({
+    required this.numRegisto,
+    required this.titulo,
     required this.autor,
     required this.disponibilidade,
     required this.descricao,
     required this.imagem,
   });
+
+  PrateleirasDaBiblioteca copyWith({
+    int? numRegisto,
+    String? titulo,
+    String? autor,
+    String? disponibilidade,
+    String? descricao,
+    String? imagem,
+  }) {
+    return PrateleirasDaBiblioteca(
+      numRegisto: numRegisto ?? this.numRegisto,
+      titulo: titulo ?? this.titulo,
+      autor: autor ?? this.autor,
+      disponibilidade: disponibilidade ?? this.disponibilidade,
+      descricao: descricao ?? this.descricao,
+      imagem: imagem ?? this.imagem,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'numRegisto': numRegisto,
+      'titulo': titulo,
+      'autor': autor,
+      'disponibilidade': disponibilidade,
+      'descricao': descricao,
+      'imagem': imagem,
+    };
+  }
+
+  factory PrateleirasDaBiblioteca.fromMap(Map<String, dynamic> map) {
+    return PrateleirasDaBiblioteca(
+      numRegisto: map['numRegisto']?.toInt() ?? 0,
+      titulo: map['titulo'] ?? '',
+      autor: map['autor'] ?? '',
+      disponibilidade: map['disponibilidade'] ?? '',
+      descricao: map['descricao'] ?? '',
+      imagem: map['imagem'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory PrateleirasDaBiblioteca.fromJson(String source) =>
+      PrateleirasDaBiblioteca.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'PrateleirasDaBiblioteca(numRegisto: $numRegisto, titulo: $titulo, autor: $autor, disponibilidade: $disponibilidade, descricao: $descricao, imagem: $imagem)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is PrateleirasDaBiblioteca &&
+        other.numRegisto == numRegisto &&
+        other.titulo == titulo &&
+        other.autor == autor &&
+        other.disponibilidade == disponibilidade &&
+        other.descricao == descricao &&
+        other.imagem == imagem;
+  }
+
+  @override
+  int get hashCode {
+    return numRegisto.hashCode ^
+        titulo.hashCode ^
+        autor.hashCode ^
+        disponibilidade.hashCode ^
+        descricao.hashCode ^
+        imagem.hashCode;
+  }
 }
