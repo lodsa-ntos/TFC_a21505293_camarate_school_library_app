@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(
             height: 715,
             child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
+              //scrollDirection: Axis.vertical,
               child: Column(
                 children: [
                   const SizedBox(
@@ -146,6 +146,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     // falta chamar a lista ....
+                    child: Text('Ainda sem livros requisitados...'),
+                  ),
+                  const SizedBox(
+                    height: 15,
                   ),
 
                   Container(
@@ -165,8 +169,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   // --> MOSTRAR AS LISTAS DOS LIVROS NO ECRÃ <--
                   tituloDaClasse(),
+
                   const SizedBox(
                     height: 15,
+                  ),
+                  SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const <Widget>[
+                        Text(
+                          'Headline',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        SizedBox(
+                          height: 666.0,
+                          child: ListasNaPrateleira(),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -185,7 +205,9 @@ class ListasNaPrateleira extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: const ClampingScrollPhysics(),
       shrinkWrap: true,
+      scrollDirection: Axis.horizontal,
       itemCount: DadosListaAmarela.livrosNasPrateleiras.length,
       itemBuilder: (context, index) {
         final prats = DadosListaAmarela.livrosNasPrateleiras[index];

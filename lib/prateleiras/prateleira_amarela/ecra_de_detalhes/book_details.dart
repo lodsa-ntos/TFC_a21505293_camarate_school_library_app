@@ -25,6 +25,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
         child: FlatButton(
           color: const Color.fromRGBO(18, 157, 158, 1),
           onPressed: () {
+            // ignore: todo
             // TODO arranjar outrar ideia para chamar o atributo "disponiblidade" da classe DadosListaAmarela
             if (inventarioPrateleira.disponibilidade == "Disponível") {
               [
