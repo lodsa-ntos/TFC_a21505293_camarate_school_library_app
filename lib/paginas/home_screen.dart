@@ -10,6 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:camarate_school_library/ferramentas/search_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:velocity_x/src/flutter/center.dart';
+import 'package:velocity_x/src/flutter/container.dart';
+import 'package:velocity_x/src/flutter/padding.dart';
+import 'package:velocity_x/src/flutter/sizedbox.dart';
+import 'package:velocity_x/src/flutter/widgets.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomeScreen extends StatefulWidget {
@@ -163,12 +168,98 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  //mostrarLivrosPrateleiraAmarela(),
-                  //mostrarLivrosEmprestados(),
                 ],
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+// --> Classe para montar a lista para os livros carregados no ficheiro JSON
+class ListasNaPrateleira extends StatelessWidget {
+  const ListasNaPrateleira({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: DadosListaAmarela.livrosNasPrateleiras.length,
+      itemBuilder: (context, index) {
+        final prats = DadosListaAmarela.livrosNasPrateleiras[index];
+        return DadosParaAPrateleira(inventarioPrateleira: prats);
+      },
+    );
+  }
+}
+
+// Classe para definir as imagens dos livros
+// ignore: must_be_immutable
+class DadosParaAPrateleira extends StatelessWidget {
+  PrateleirasDaBiblioteca inventarioPrateleira;
+
+  DadosParaAPrateleira({
+    Key? key,
+    required this.inventarioPrateleira,
+    // ignore: unnecessary_null_comparison
+  })  : assert(inventarioPrateleira != null),
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 122.0,
+      margin: const EdgeInsets.only(right: 12.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 121.66,
+            height: 180.5,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0),
+              image: DecorationImage(
+                image: NetworkImage(
+                  inventarioPrateleira.imagem,
+                ),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 12.0,
+          ),
+          Text(
+            inventarioPrateleira.titulo,
+            style: GoogleFonts.catamaran(
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            inventarioPrateleira.autor,
+            style: GoogleFonts.catamaran(fontSize: 16.0, color: Colors.grey),
+          ),
+          if (inventarioPrateleira.disponibilidade == "Disponível") ...[
+            Text(
+              inventarioPrateleira.disponibilidade,
+              style: GoogleFonts.catamaran(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green),
+            ),
+          ] else
+            Text(
+              inventarioPrateleira.disponibilidade,
+              style: GoogleFonts.catamaran(
+                fontSize: 14.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade700,
+              ),
+            ),
         ],
       ),
     );

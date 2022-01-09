@@ -12,7 +12,7 @@ class BookDetailScreen extends StatefulWidget {
 }
 
 class _BookDetailScreenState extends State<BookDetailScreen> {
-  late DadosListaAmarela livrosNasPrateleiras;
+  late PrateleirasDaBiblioteca inventarioPrateleira;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
           color: const Color.fromRGBO(18, 157, 158, 1),
           onPressed: () {
             // TODO arranjar outrar ideia para chamar o atributo "disponiblidade" da classe DadosListaAmarela
-            if (livrosNasPrateleiras.disponibilidade == "Disponível") {
+            if (inventarioPrateleira.disponibilidade == "Disponível") {
               [
                 LivrosEmprestados.listRequisicao
                     .add(LivrosEmprestados.listRequisicao.first),
