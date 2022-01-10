@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 
 import 'package:camarate_school_library/guia_de_estilo/color_styles.dart';
@@ -146,10 +148,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     // falta chamar a lista ....
-                    child: Text('Ainda sem livros requisitados...'),
+                    child: SizedBox(
+                      width: 355,
+                      height: 85.0,
+                      child: Text('Ainda sem livros requisitados...'),
+                    ),
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 50,
                   ),
 
                   Container(
@@ -176,13 +182,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      children: const <Widget>[
+                      children: const [
                         Text(
-                          'Headline',
-                          style: TextStyle(fontSize: 18),
+                          '',
                         ),
                         SizedBox(
-                          height: 666.0,
+                          width: 355,
+                          height: 350.0,
                           child: ListasNaPrateleira(),
                         ),
                       ],
@@ -205,11 +211,23 @@ class ListasNaPrateleira extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      physics: const ClampingScrollPhysics(),
+      // ignore: prefer_const_constructors
+      physics: ClampingScrollPhysics(),
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       itemCount: DadosListaAmarela.livrosNasPrateleiras.length,
       itemBuilder: (context, index) {
+        if (DadosListaAmarela.livrosNasPrateleiras[index] != null) {
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const BookDetailScreen(),
+                ),
+              );
+            },
+          );
+        }
         final prats = DadosListaAmarela.livrosNasPrateleiras[index];
         return DadosParaAPrateleira(inventarioPrateleira: prats);
       },
@@ -217,7 +235,7 @@ class ListasNaPrateleira extends StatelessWidget {
   }
 }
 
-// Classe para definir as imagens dos livros
+// Classe para definir o conteúdo dos livros
 // ignore: must_be_immutable
 class DadosParaAPrateleira extends StatelessWidget {
   PrateleirasDaBiblioteca inventarioPrateleira;
