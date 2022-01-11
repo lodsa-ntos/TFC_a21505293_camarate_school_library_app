@@ -1,4 +1,4 @@
-import 'package:camarate_school_library/paginas/login_screen.dart';
+import 'package:camarate_school_library/paginas/authLogin/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:camarate_school_library/paginas/home_screen.dart';
 import 'ferramentas/drawer_screen.dart';
