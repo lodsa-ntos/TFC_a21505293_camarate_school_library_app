@@ -53,7 +53,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 key: formKey,
                 child: Column(
                   children: [
-                    TextFormField(),
+                    TextFormField(
+                      validator: (value) {
+                        if (value!.length < 5) {
+                          return "E-mail muito curto";
+                        } else if (!value.contains("@")) {
+                          return "Siga o exemplo --> @gmail.com";
+                        }
+                        return null;
+                      },
+                    ),
                   ],
                 ),
               ),
