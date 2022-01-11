@@ -22,3 +22,31 @@ class MyThemeColor {
   static Color myBlueStyleColor = const Color(0x003b5998);
   static Color myGreyStyleColor = const Color(0xFF616161);
 }
+
+class CustomColors {
+  static Color activePrimaryButton = const Color.fromARGB(255, 63, 81, 181);
+  static Color activeSecondaryButton = const Color.fromARGB(255, 230, 230, 255);
+  static Color gradientMainColor = const Color(0xff00ADFA);
+  static Color gradientSecColor = const Color(0xff00E6FD);
+  static Color appBarMainColor = const Color(0xff0A6D92);
+
+  Color getActivePrimaryButtonColor() {
+    return activePrimaryButton;
+  }
+
+  Color getActiveSecondaryButton() {
+    return activeSecondaryButton;
+  }
+
+  Color getGradientMainColor() {
+    return gradientMainColor;
+  }
+
+  Color getGradientSecondaryColor() {
+    return gradientSecColor;
+  }
+
+  Color getAppBarMainColor() {
+    return appBarMainColor;
+  }
+}

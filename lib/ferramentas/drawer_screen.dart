@@ -65,7 +65,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 'Sair',
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              )
+              ),
             ],
           ),
         ],

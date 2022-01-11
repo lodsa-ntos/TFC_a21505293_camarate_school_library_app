@@ -3,6 +3,7 @@ import 'package:camarate_school_library/prateleiras/prateleira_amarela/variables
 import 'package:camarate_school_library/requisitados/borrowed_books.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BookDetailScreen extends StatefulWidget {
   const BookDetailScreen({Key? key}) : super(key: key);
@@ -24,22 +25,10 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
         color: Colors.transparent,
         child: FlatButton(
           color: const Color.fromRGBO(18, 157, 158, 1),
-          onPressed: () {
-            // ignore: todo
-            // TODO arranjar outrar ideia para chamar o atributo "disponiblidade" da classe DadosListaAmarela
-            if (inventarioPrateleira.disponibilidade == "Disponível") {
-              [
-                LivrosEmprestados.listRequisicao
-                    .add(LivrosEmprestados.listRequisicao.first),
-              ];
-              setState(() {
-                print('sucesso');
-              });
-            } else {
-              setState(() {
-                print('não foi possível concluir a requisição');
-              });
-            }
+          onPressed: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setString('gddgd', 'fhfgh');
+            setState(() {});
           },
           child: Text(
             'Requisitar',

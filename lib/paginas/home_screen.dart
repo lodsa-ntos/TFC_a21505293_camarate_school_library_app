@@ -204,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-// --> Classe para montar a lista para os livros carregados no ficheiro JSON
+// --> Classe para chamar o index do ficheiro JSON
 class ListasNaPrateleira extends StatelessWidget {
   const ListasNaPrateleira({Key? key}) : super(key: key);
 
@@ -217,7 +217,7 @@ class ListasNaPrateleira extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemCount: DadosListaAmarela.livrosNasPrateleiras.length,
       itemBuilder: (context, index) {
-        if (DadosListaAmarela.livrosNasPrateleiras[index] != null) {
+        if (DadosListaAmarela.livrosNasPrateleiras[0] != null) {
           GestureDetector(
             onTap: () {
               Navigator.of(context).push(
@@ -228,8 +228,8 @@ class ListasNaPrateleira extends StatelessWidget {
             },
           );
         }
-        final prats = DadosListaAmarela.livrosNasPrateleiras[index];
-        return DadosParaAPrateleira(inventarioPrateleira: prats);
+        final prats = DadosListaAmarela.livrosNasPrateleiras[2];
+        return DadosParaAPrateleira(elementoNaPrateleira: prats);
       },
     );
   }
@@ -238,13 +238,13 @@ class ListasNaPrateleira extends StatelessWidget {
 // Classe para definir o conteúdo dos livros
 // ignore: must_be_immutable
 class DadosParaAPrateleira extends StatelessWidget {
-  PrateleirasDaBiblioteca inventarioPrateleira;
+  PrateleirasDaBiblioteca elementoNaPrateleira;
 
   DadosParaAPrateleira({
     Key? key,
-    required this.inventarioPrateleira,
+    required this.elementoNaPrateleira,
     // ignore: unnecessary_null_comparison
-  })  : assert(inventarioPrateleira != null),
+  })  : assert(elementoNaPrateleira != null),
         super(key: key);
 
   @override
@@ -263,7 +263,7 @@ class DadosParaAPrateleira extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.0),
               image: DecorationImage(
                 image: NetworkImage(
-                  inventarioPrateleira.imagem,
+                  elementoNaPrateleira.imagem,
                 ),
                 fit: BoxFit.cover,
               ),
@@ -273,19 +273,19 @@ class DadosParaAPrateleira extends StatelessWidget {
             height: 12.0,
           ),
           Text(
-            inventarioPrateleira.titulo,
+            elementoNaPrateleira.titulo,
             style: GoogleFonts.catamaran(
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
-            inventarioPrateleira.autor,
+            elementoNaPrateleira.autor,
             style: GoogleFonts.catamaran(fontSize: 16.0, color: Colors.grey),
           ),
-          if (inventarioPrateleira.disponibilidade == "Disponível") ...[
+          if (elementoNaPrateleira.disponibilidade == "Disponível") ...[
             Text(
-              inventarioPrateleira.disponibilidade,
+              elementoNaPrateleira.disponibilidade,
               style: GoogleFonts.catamaran(
                   fontSize: 14.0,
                   fontWeight: FontWeight.bold,
@@ -293,7 +293,7 @@ class DadosParaAPrateleira extends StatelessWidget {
             ),
           ] else
             Text(
-              inventarioPrateleira.disponibilidade,
+              elementoNaPrateleira.disponibilidade,
               style: GoogleFonts.catamaran(
                 fontSize: 14.0,
                 fontWeight: FontWeight.bold,
