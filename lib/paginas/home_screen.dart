@@ -12,11 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:camarate_school_library/ferramentas/search_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:velocity_x/src/flutter/center.dart';
-import 'package:velocity_x/src/flutter/container.dart';
-import 'package:velocity_x/src/flutter/padding.dart';
-import 'package:velocity_x/src/flutter/sizedbox.dart';
-import 'package:velocity_x/src/flutter/widgets.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomeScreen extends StatefulWidget {

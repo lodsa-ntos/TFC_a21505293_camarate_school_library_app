@@ -1,3 +1,4 @@
+import 'package:camarate_school_library/paginas/authLogin/login_screen.dart';
 import 'package:flutter/material.dart';
 
 // ignore: use_key_in_widget_constructors
@@ -61,10 +62,20 @@ class _DrawerScreenState extends State<DrawerScreen> {
               const SizedBox(
                 width: 10,
               ),
-              const Text(
-                'Sair',
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Sair',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
               ),
             ],
           ),

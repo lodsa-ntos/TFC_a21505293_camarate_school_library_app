@@ -23,7 +23,7 @@ class CamarateSchoolLibraryApp extends StatelessWidget {
             // Menu lateral
             DrawerScreen(),
             // Login screen (ainda nao implementado)
-            const LoginScreen(),
+            HomeScreen(),
           ],
         ),
         // recommended to set this to false
