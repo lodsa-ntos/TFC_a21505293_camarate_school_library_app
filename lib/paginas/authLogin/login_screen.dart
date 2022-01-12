@@ -1,4 +1,3 @@
-import 'package:camarate_school_library/guia_de_estilo/color_styles.dart';
 import 'package:camarate_school_library/paginas/home_screen.dart';
 import 'package:camarate_school_library/paginas/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +12,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailInputController = TextEditingController();
-  final TextEditingController passwordInputController = TextEditingController();
+  TextEditingController emailInputController = TextEditingController();
+  TextEditingController passwordInputController = TextEditingController();
   bool obscurePassword = true;
 
   final formKey = GlobalKey<FormState>();
@@ -170,9 +169,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     doLogin();
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => HomeScreen(),
-                      ),
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return HomeScreen();
+                      }),
                     );
                   },
                   child: const Text(

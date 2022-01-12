@@ -19,11 +19,9 @@ class CamarateSchoolLibraryApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Stack(
-          children: [
-            // Menu lateral
-            DrawerScreen(),
-            // Login screen (ainda nao implementado)
-            HomeScreen(),
+          children: const [
+            // Login screen
+            LoginScreen(),
           ],
         ),
         // recommended to set this to false
