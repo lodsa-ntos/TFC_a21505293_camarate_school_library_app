@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
       //
       body: Container(
         height: MediaQuery.of(context).size.height,
-        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
         margin: const EdgeInsets.only(top: 45),
         color: Colors.white,
         child: SingleChildScrollView(
@@ -76,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontFamily: 'Montserrat',
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
+                        height: 2.0,
                       ),
                       decoration: const InputDecoration(
                         labelText: "E-mail ou número do cartão de aluno",
@@ -111,6 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontFamily: 'Montserrat',
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
+                        height: 2.0,
                       ),
                       decoration: InputDecoration(
                         labelText: "Palavra-passe",

@@ -68,6 +68,7 @@ flutter:
      - assets/images/esther.jpg
      - assets/inventario_livros.json
      - assets/files/livros_prateleiras.json
+     - assets/icons/logotipo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
