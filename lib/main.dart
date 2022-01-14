@@ -1,8 +1,9 @@
-import 'package:camarate_school_library/paginas/authLogin/login_screen.dart';
+import 'dart:async';
+
+import 'package:camarate_school_library/Autenticacao/Login/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:camarate_school_library/paginas/home_screen.dart';
-import 'ferramentas/drawer_screen.dart';
-import 'paginas/home_screen.dart';
+
+import 'Autenticacao/Registo/signup_screen.dart';
 
 void main() {
   runApp(
@@ -20,13 +21,80 @@ class CamarateSchoolLibraryApp extends StatelessWidget {
       home: Scaffold(
         body: Stack(
           children: const [
-            // Login screen
-            LoginScreen(),
+            // Abertura da página
+            EcraDeAberturaDaApp(),
           ],
         ),
-        // recommended to set this to false
-        // so user keyboard doesn't trigger resize
+        // para que o teclado do utilizador não acione o redimensionamento
+        //da página
         resizeToAvoidBottomInset: false,
+      ),
+    );
+  }
+}
+
+class EcraDeAberturaDaApp extends StatefulWidget {
+  const EcraDeAberturaDaApp({Key? key}) : super(key: key);
+
+  @override
+  _EcraDeAberturaDaAppState createState() => _EcraDeAberturaDaAppState();
+}
+
+class _EcraDeAberturaDaAppState extends State<EcraDeAberturaDaApp> {
+  // Duração da página de ecrã de abertura da app
+  @override
+  void initState() {
+    super.initState();
+    Timer(const Duration(seconds: 2), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => const SignUpScreen(),
+        ),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            // Logotipo
+            Image.asset(
+              'assets/images/logotipos/logotipo.png',
+              height: 259.0,
+            ),
+            const Text(
+              'Camarate',
+              style: TextStyle(
+                fontFamily: 'Gobold',
+                fontWeight: FontWeight.w300,
+                fontSize: 30,
+                color: Color.fromRGBO(51, 51, 51, 2),
+              ),
+            ),
+            const Text(
+              'School Library',
+              style: TextStyle(
+                fontFamily: 'Gobold',
+                fontWeight: FontWeight.w300,
+                fontSize: 36,
+                color: Color.fromRGBO(51, 51, 51, 2),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }

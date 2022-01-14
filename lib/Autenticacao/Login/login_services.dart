@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:camarate_school_library/paginas/authLogin/routes.dart';
+import 'package:camarate_school_library/Autenticacao/Routes/routes.dart';
 import 'package:http/http.dart' as http;
 
 class LoginService {

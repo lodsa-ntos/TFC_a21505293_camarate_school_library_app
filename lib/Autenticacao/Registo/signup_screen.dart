@@ -1,8 +1,18 @@
-import 'package:camarate_school_library/paginas/authLogin/login_screen.dart';
+import 'dart:convert';
+
+import 'package:camarate_school_library/Autenticacao/Login/login_screen.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'home_screen.dart';
+import '../../Home/home_screen.dart';
+import 'models/modelo_registo.dart';
+import 'servico_registo_user.dart';
+
+class PreferencesKeys {
+  static const activeUser = "IFORMACAO_UTILIZADOR_LOGIN";
+}
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -23,6 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       TextEditingController();
 
   bool showPassword = true;
+  bool isProcessData = false;
 
   final formKey = GlobalKey<FormState>();
 
@@ -40,6 +51,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Logotipo
+              Image.asset(
+                'assets/images/logotipos/logotipo.png',
+                height: 139.0,
+                alignment: Alignment.centerLeft,
+              ),
+              // Espaçamento
+              const SizedBox(
+                height: 15,
+              ),
               const Text(
                 "Regista-te",
                 textAlign: TextAlign.left,
@@ -82,6 +103,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     // --> Primeiro nome <--
                     TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Este nome de utilizador não existe. Tenta outro.";
+                        }
+                        return null;
+                      },
                       controller: nameInputController,
                       autofocus: true,
                       style: const TextStyle(
@@ -94,7 +121,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         labelText: "Primeiro nome",
                         labelStyle: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 14,
+                          fontSize: 15,
                           fontWeight: FontWeight.w700,
                           color: Color.fromRGBO(127, 127, 127, 2),
                         ),
@@ -113,6 +140,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                     // --> Último nome <--
                     TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty || value.length > 10) {
+                          return "Coloque o seu apelido.";
+                        }
+                        return null;
+                      },
                       controller: lastNameInputController,
                       autofocus: true,
                       style: const TextStyle(
@@ -125,7 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         labelText: "Último nome",
                         labelStyle: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 14,
+                          fontSize: 15,
                           fontWeight: FontWeight.w700,
                           color: Color.fromRGBO(127, 127, 127, 2),
                         ),
@@ -146,9 +179,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     TextFormField(
                       validator: (value) {
                         if (value!.length < 5) {
-                          return "E-mail muito curto";
+                          return "E-mail muito curto...";
                         } else if (!value.contains("@")) {
-                          return "Siga o exemplo --> @gmail.com";
+                          return "Siga o exemplo --> exemplo@gmail.com | exemplo@hotmail.com";
+                        } else if (value.isEmpty) {
+                          return "O nome de utilizador que inseriste não pertence a nenhuma conta. Verifica o teu nome de utilizador e tenta novamente.";
                         }
                         return null;
                       },
@@ -165,7 +200,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         labelText: "E-mail ou número do cartão de aluno",
                         labelStyle: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 14,
+                          fontSize: 15,
                           fontWeight: FontWeight.w700,
                           color: Color.fromRGBO(127, 127, 127, 2),
                         ),
@@ -187,6 +222,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       validator: (value) {
                         if (value!.length < 8) {
                           return "A palavra-passe deve conter pelo menos 8 caracteres";
+                        } else if (value == null || value.isEmpty) {
+                          return "Desculpa, mas a tua palavra-passe está incorreta. Verifica-a novamente.";
                         }
                         return null;
                       },
@@ -203,7 +240,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         labelText: "Palavra-passe",
                         labelStyle: const TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 14,
+                          fontSize: 15,
                           fontWeight: FontWeight.w700,
                           color: Color.fromRGBO(127, 127, 127, 2),
                         ),
@@ -263,7 +300,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   labelText: "Número de aluno",
                   labelStyle: TextStyle(
                     fontFamily: 'Montserrat',
-                    fontSize: 14,
+                    fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: Color.fromRGBO(127, 127, 127, 2),
                   ),
@@ -300,7 +337,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   labelText: "Ano/Turma",
                   labelStyle: TextStyle(
                     fontFamily: 'Montserrat',
-                    fontSize: 14,
+                    fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: Color.fromRGBO(127, 127, 127, 2),
                   ),
@@ -337,7 +374,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   labelText: "Diretor/a de Turma",
                   labelStyle: TextStyle(
                     fontFamily: 'Montserrat',
-                    fontSize: 14,
+                    fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: Color.fromRGBO(127, 127, 127, 2),
                   ),
@@ -378,7 +415,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   labelText: 'Sobre mim',
                   labelStyle: TextStyle(
                     fontFamily: 'Montserrat',
-                    fontSize: 14,
+                    fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: Color.fromRGBO(127, 127, 127, 2),
                   ),
@@ -401,22 +438,52 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: 335.0,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (BuildContext context) {
-                        return HomeScreen();
-                      }),
-                    );
+                    if (formKey.currentState!.validate()) {
+                      setState(() {
+                        isProcessData = true;
+                      });
+
+                      Future.delayed(
+                        const Duration(seconds: 3),
+                        () {
+                          setState(
+                            () {
+                              isProcessData = false;
+                            },
+                          );
+                          registarUtilizador();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const LoginScreen()));
+                        },
+                      );
+                    } else {
+                      // ignore: avoid_print
+                      print("Utilizador invalido");
+                    }
                   },
-                  child: const Text(
-                    "Criar Conta",
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
+                  child: isProcessData
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            SizedBox(
+                              width: 10,
+                            ),
+                            CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          ],
+                        )
+                      : const Text(
+                          "Iniciar sessão",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
               ),
 
@@ -425,43 +492,66 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
 
               // --> Navegar para a página de LOGIN <--
-              const Text(
-                "Já tens uma conta? ",
+              RichText(
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 5),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ),
-                  );
-                },
-                child: const Text(
-                  "Inicia sessão.",
-                  style: TextStyle(
+                text: TextSpan(
+                  text: "Já tens uma conta? ",
+                  style: const TextStyle(
                     fontFamily: 'Montserrat',
-                    color: Colors.blue,
+                    color: Colors.black,
                     fontSize: 14,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                   ),
-                  textAlign: TextAlign.center,
+                  children: <TextSpan>[
+                    TextSpan(
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                          );
+                        },
+                      text: ' Inicia sessão.',
+                      style: const TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: Colors.blue,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void registarUtilizador() {
+    ModeloRegistoUtilizador novoUtilizador = ModeloRegistoUtilizador(
+      primeiroNome: nameInputController.text,
+      ultimoNome: lastNameInputController.text,
+      email: emailInputController.text,
+      password: passwordInputController.text,
+      numeroAluno: studentNumberInputController.text,
+      anoTurma: yearAndClassStudentInputController.text,
+      diretorTurma: directorNameInputController.text,
+      textoSobreUtilizador: aboutUserInputController.text,
+    );
+
+    guardarDadosUtilizador(novoUtilizador);
+  }
+
+  void guardarDadosUtilizador(ModeloRegistoUtilizador utilizador) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Salvo o texto do utilizador com o setString da função SharedPreferences
+    prefs.setString(
+      PreferencesKeys.activeUser,
+      json.encode(utilizador.toJson()),
     );
   }
 }

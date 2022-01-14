@@ -63,12 +63,13 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
      - assets/files/
-     - assets/images/will_smith.jpg
-     - assets/images/sem_imagem.jpg
-     - assets/images/esther.jpg
+     - assets/images/livros/will_smith.jpg
+     - assets/images/livros/sem_imagem.jpg
+     - assets/images/livros/esther.jpg
      - assets/inventario_livros.json
      - assets/files/livros_prateleiras.json
-     - assets/icons/logotipo.png
+     - assets/images/logotipos/logotipo.png
+     - assets/images/logotipos/logo_entidade.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -86,6 +87,7 @@ flutter:
        fonts:
          - asset: assets/fonts/Gobold Bold.otf
          - asset: assets/fonts/Gobold Regular.otf
+         - asset: assets/fonts/Gobold Light.otf
          
      - family: Montserrat
        fonts:

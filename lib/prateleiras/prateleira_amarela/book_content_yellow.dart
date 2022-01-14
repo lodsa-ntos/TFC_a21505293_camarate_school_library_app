@@ -1,4 +1,4 @@
-import 'package:camarate_school_library/guia_de_estilo/color_styles.dart';
+import 'package:camarate_school_library/Home/guia_de_estilos/color_styles.dart';
 import 'package:flutter/material.dart';
 
 // Apenas o titulo da secção amarela

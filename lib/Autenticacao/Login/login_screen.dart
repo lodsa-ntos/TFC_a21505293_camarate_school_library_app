@@ -1,8 +1,17 @@
-import 'package:camarate_school_library/paginas/home_screen.dart';
-import 'package:camarate_school_library/paginas/signup_screen.dart';
+import 'dart:convert';
+
+import 'package:camarate_school_library/Autenticacao/Registo/models/modelo_registo.dart';
+import 'package:camarate_school_library/Autenticacao/Registo/signup_screen.dart';
+import 'package:camarate_school_library/Home/home_screen.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login_services.dart';
+
+class PreferencesKeys {
+  static const ativarUtilizador = "INFORMACAO_UTILIZADOR_LOGIN";
+}
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -14,8 +23,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailInputController = TextEditingController();
   TextEditingController passwordInputController = TextEditingController();
-  bool obscurePassword = true;
 
+  bool esconderPassword = true;
+  bool isProcessData = false;
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -32,6 +42,16 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Logotipo
+              Image.asset(
+                'assets/images/logotipos/logotipo.png',
+                height: 139.0,
+                alignment: Alignment.centerLeft,
+              ),
+              // Espaçamento
+              const SizedBox(
+                height: 15,
+              ),
               const Text(
                 "Bem Vindo",
                 textAlign: TextAlign.left,
@@ -53,19 +73,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(
-                height: 66,
+                height: 45,
               ),
               Form(
                 key: formKey,
                 child: Column(
                   children: [
-                    // --> Campo do e-mail <--
+                    // --> Campo do E-mail <--
                     TextFormField(
                       validator: (value) {
                         if (value!.length < 5) {
-                          return "E-mail muito curto";
+                          return "E-mail muito curto...";
                         } else if (!value.contains("@")) {
-                          return "Siga o exemplo --> @gmail.com";
+                          return "Siga o exemplo --> exemplo@gmail.com | exemplo@hotmail.com";
+                        } else if (value.isEmpty) {
+                          return "O nome de utilizador que inseriste não pertence a nenhuma conta. Verifica o teu nome de utilizador e tenta novamente.";
                         }
                         return null;
                       },
@@ -82,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: "E-mail ou número do cartão de aluno",
                         labelStyle: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 14,
+                          fontSize: 15,
                           fontWeight: FontWeight.w700,
                           color: Color.fromRGBO(127, 127, 127, 2),
                         ),
@@ -102,10 +124,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       validator: (value) {
                         if (value!.length < 8) {
                           return "A palavra-passe deve conter pelo menos 8 caracteres";
+                        } else if (value == null || value.isEmpty) {
+                          return "Desculpa, mas a tua palavra-passe está incorreta. Verifica-a novamente.";
                         }
                         return null;
                       },
-                      obscureText: obscurePassword,
+                      obscureText: esconderPassword,
                       controller: passwordInputController,
                       // Estilo dentro do campo da palavra-passe
                       style: const TextStyle(
@@ -118,18 +142,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: "Palavra-passe",
                         labelStyle: const TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 14,
+                          fontSize: 15,
                           fontWeight: FontWeight.w700,
                           color: Color.fromRGBO(127, 127, 127, 2),
                         ),
                         suffixIcon: GestureDetector(
                           onTap: () {
                             setState(() {
-                              obscurePassword = !obscurePassword;
+                              esconderPassword = !esconderPassword;
                             });
                           },
                           child: Icon(
-                            obscurePassword
+                            esconderPassword
                                 ? Icons.visibility_off
                                 : Icons.visibility,
                           ),
@@ -154,70 +178,102 @@ class _LoginScreenState extends State<LoginScreen> {
                   "Esqueceste-te da palavra-passe?",
                   style: TextStyle(
                     fontFamily: 'Montserrat',
-                    color: Colors.black,
-                    fontSize: 14,
+                    color: Color.fromRGBO(28, 142, 221, 2),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
                   ),
                   textAlign: TextAlign.right,
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(bottom: 45),
+                padding: EdgeInsets.only(bottom: 50),
               ),
+
+              // --> botao [Iniciar Sessão] <--
               SizedBox(
                 height: 65.0,
                 width: 335.0,
                 child: ElevatedButton(
                   onPressed: () {
-                    doLogin();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (BuildContext context) {
-                        return HomeScreen();
-                      }),
-                    );
+                    if (formKey.currentState!.validate()) {
+                      setState(() {
+                        isProcessData = true;
+                      });
+
+                      Future.delayed(
+                        const Duration(seconds: 3),
+                        () {
+                          setState(
+                            () {
+                              isProcessData = false;
+                            },
+                          );
+                          fazerLogin();
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => HomeScreen()));
+                        },
+                      );
+                    } else {
+                      // ignore: avoid_print
+                      print("invalido");
+                    }
                   },
-                  child: const Text(
-                    "Iniciar sessão",
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
+                  child: isProcessData
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            SizedBox(
+                              width: 10,
+                            ),
+                            CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          ],
+                        )
+                      : const Text(
+                          "Iniciar sessão",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
               ),
               const Padding(
                 padding: EdgeInsets.only(bottom: 35),
               ),
-              const Text(
-                "Não tens uma conta?",
+              RichText(
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SignUpScreen(),
-                    ),
-                  );
-                },
-                child: const Text(
-                  "Regista-te.",
-                  style: TextStyle(
+                text: TextSpan(
+                  text: "Não tens uma conta? ",
+                  style: const TextStyle(
                     fontFamily: 'Montserrat',
-                    color: Colors.blue,
+                    color: Colors.black,
                     fontSize: 14,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                   ),
-                  textAlign: TextAlign.center,
+                  children: <TextSpan>[
+                    TextSpan(
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignUpScreen(),
+                            ),
+                          );
+                        },
+                      text: ' Regista-te.',
+                      style: const TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: Colors.blue,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -227,12 +283,32 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void doLogin() async {
-    if (formKey.currentState!.validate()) {
-      LoginService()
-          .login(emailInputController.text, passwordInputController.text);
+  void fazerLogin() async {
+    String emailDoUtilizador = emailInputController.text;
+    String passwordDoUtilizador = passwordInputController.text;
+
+    ModeloRegistoUtilizador dadosUtilizadorInseridos =
+        await getDadosGuardadosDoUtilizador();
+
+    if (emailDoUtilizador == dadosUtilizadorInseridos.email &&
+        passwordDoUtilizador == dadosUtilizadorInseridos.password) {
+      // ignore: avoid_print
+      print('Login efetuado com sucesso');
     } else {
-      print("invalido");
+      // ignore: avoid_print
+      print('Falha ao tentar iniciar sessão');
     }
+  }
+
+  Future<ModeloRegistoUtilizador> getDadosGuardadosDoUtilizador() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jsonUtilizador = prefs.getString(PreferencesKeys.ativarUtilizador);
+    // ignore: avoid_print
+    print(jsonUtilizador);
+
+    Map<String, dynamic> mapUtilizador = json.decode(jsonUtilizador!);
+    ModeloRegistoUtilizador utilizador =
+        ModeloRegistoUtilizador.fromJson(mapUtilizador);
+    return utilizador;
   }
 }
