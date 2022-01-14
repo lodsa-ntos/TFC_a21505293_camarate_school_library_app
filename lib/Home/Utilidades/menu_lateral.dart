@@ -1,13 +1,13 @@
-import 'package:camarate_school_library/Autenticacao/Login/login_screen.dart';
+import 'package:camarate_school_library/Autenticacao/Login/ecra_login.dart';
 import 'package:flutter/material.dart';
 
 // ignore: use_key_in_widget_constructors
-class DrawerScreen extends StatefulWidget {
+class MenuLateral extends StatefulWidget {
   @override
-  _DrawerScreenState createState() => _DrawerScreenState();
+  _MenuLateralState createState() => _MenuLateralState();
 }
 
-class _DrawerScreenState extends State<DrawerScreen> {
+class _MenuLateralState extends State<MenuLateral> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -67,7 +67,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
+                      builder: (context) => const PaginaLogin(),
                     ),
                   );
                 },

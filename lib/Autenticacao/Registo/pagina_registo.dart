@@ -1,27 +1,28 @@
 import 'dart:convert';
 
-import 'package:camarate_school_library/Autenticacao/Login/login_screen.dart';
+import 'package:camarate_school_library/Autenticacao/Login/ecra_login.dart';
+import 'package:camarate_school_library/Home/layout/layout_pagina_utilizador.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../Home/home_screen.dart';
 import 'models/modelo_registo.dart';
-import 'servico_registo_user.dart';
 
 class PreferencesKeys {
   static const activeUser = "IFORMACAO_UTILIZADOR_LOGIN";
 }
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+class PaginaRegistoUtilizador extends StatefulWidget {
+  const PaginaRegistoUtilizador({Key? key}) : super(key: key);
 
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  _PaginaRegistoUtilizadorState createState() =>
+      _PaginaRegistoUtilizadorState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _PaginaRegistoUtilizadorState extends State<PaginaRegistoUtilizador> {
+  // Controladores para guardar informação do formulário
   TextEditingController nameInputController = TextEditingController();
   TextEditingController lastNameInputController = TextEditingController();
   TextEditingController studentNumberInputController = TextEditingController();
@@ -45,7 +46,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
         margin: const EdgeInsets.only(top: 45),
         color: Colors.white,
-        // assets/icons/logotipo.png
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -455,7 +455,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => const LoginScreen()));
+                                  builder: (_) =>
+                                      const LayoutPaginaPrincipalUtilizador()));
                         },
                       );
                     } else {
@@ -509,7 +510,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const LoginScreen(),
+                              builder: (context) => const PaginaLogin(),
                             ),
                           );
                         },
@@ -531,6 +532,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
+  // funçao para guardar os dados inseridos pelo utilizador
   void registarUtilizador() {
     ModeloRegistoUtilizador novoUtilizador = ModeloRegistoUtilizador(
       primeiroNome: nameInputController.text,

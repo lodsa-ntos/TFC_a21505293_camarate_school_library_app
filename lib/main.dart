@@ -1,9 +1,11 @@
 import 'dart:async';
 
-import 'package:camarate_school_library/Autenticacao/Login/login_screen.dart';
+import 'package:camarate_school_library/Autenticacao/Login/ecra_login.dart';
+import 'package:camarate_school_library/Home/home_screen.dart';
+import 'package:camarate_school_library/Home/layout/layout_pagina_utilizador.dart';
 import 'package:flutter/material.dart';
 
-import 'Autenticacao/Registo/signup_screen.dart';
+import 'Autenticacao/Registo/pagina_registo.dart';
 
 void main() {
   runApp(
@@ -41,14 +43,14 @@ class EcraDeAberturaDaApp extends StatefulWidget {
 }
 
 class _EcraDeAberturaDaAppState extends State<EcraDeAberturaDaApp> {
-  // Duração da página de ecrã de abertura da app
   @override
   void initState() {
     super.initState();
+    // Duração da página de ecrã de abertura da app
     Timer(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (_) => const SignUpScreen(),
+          builder: (_) => const PaginaLogin(),
         ),
       );
     });

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'color_styles.dart';
+import 'cores.dart';
 
 class MyTextTheme {
   static TextStyle tituloLivrosTextStyle = const TextStyle(

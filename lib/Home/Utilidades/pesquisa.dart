@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:camarate_school_library/Home/guia_de_estilos/color_styles.dart';
-import 'package:camarate_school_library/Home/guia_de_estilos/text_styles.dart';
+import 'package:camarate_school_library/Home/guia_de_estilos/cores.dart';
+import 'package:camarate_school_library/Home/guia_de_estilos/estilo_texto.dart';
 import 'package:camarate_school_library/inventario_ecra_pesquisa/inventory_search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +9,12 @@ import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 // ignore: use_key_in_widget_constructors
-class PesquisaScreen extends StatefulWidget {
+class Pesquisa extends StatefulWidget {
   @override
-  _PesquisaScreenState createState() => _PesquisaScreenState();
+  _PesquisaState createState() => _PesquisaState();
 }
 
-class _PesquisaScreenState extends State<PesquisaScreen> {
+class _PesquisaState extends State<Pesquisa> {
   List categorias = ['Todos', 'Autor', 'Título', 'Ano']; // Lista de categorias
   int selecionarCategorias = 0;
 

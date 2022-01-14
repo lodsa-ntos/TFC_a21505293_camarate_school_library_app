@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class SignUpService {
   signUp(String email, String password) async {
     http.Response response = await http.post(
-      Uri.parse(Routes().signIn()),
+      Uri.parse(Routes().signUp()),
       body: json.encode(
         {
           "email": email,
@@ -16,6 +16,7 @@ class SignUpService {
       ),
     );
 
+    // ignore: avoid_print
     print(response.body);
   }
 }

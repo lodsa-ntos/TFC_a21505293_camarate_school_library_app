@@ -1,26 +1,25 @@
 import 'dart:convert';
 
 import 'package:camarate_school_library/Autenticacao/Registo/models/modelo_registo.dart';
-import 'package:camarate_school_library/Autenticacao/Registo/signup_screen.dart';
+import 'package:camarate_school_library/Autenticacao/Registo/pagina_Registo.dart';
 import 'package:camarate_school_library/Home/home_screen.dart';
+import 'package:camarate_school_library/Home/layout/layout_pagina_utilizador.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'login_services.dart';
 
 class PreferencesKeys {
   static const ativarUtilizador = "INFORMACAO_UTILIZADOR_LOGIN";
 }
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class PaginaLogin extends StatefulWidget {
+  const PaginaLogin({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _PaginaLoginState createState() => _PaginaLoginState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _PaginaLoginState extends State<PaginaLogin> {
   TextEditingController emailInputController = TextEditingController();
   TextEditingController passwordInputController = TextEditingController();
 
@@ -209,8 +208,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           );
                           fazerLogin();
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => HomeScreen()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                      const LayoutPaginaPrincipalUtilizador()));
                         },
                       );
                     } else {
@@ -261,7 +263,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const SignUpScreen(),
+                              builder: (context) =>
+                                  const PaginaRegistoUtilizador(),
                             ),
                           );
                         },
