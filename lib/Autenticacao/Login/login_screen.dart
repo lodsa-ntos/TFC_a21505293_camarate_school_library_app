@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:camarate_school_library/Autenticacao/Registo/models/modelo_registo.dart';
-import 'package:camarate_school_library/Autenticacao/Registo/pagina_Registo.dart';
-import 'package:camarate_school_library/Home/home_screen.dart';
+import 'package:camarate_school_library/Autenticacao/Registo/registo.dart';
 import 'package:camarate_school_library/Home/layout/layout_pagina_utilizador.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -263,8 +262,7 @@ class _PaginaLoginState extends State<PaginaLogin> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  const PaginaRegistoUtilizador(),
+                              builder: (context) => const Registo(),
                             ),
                           );
                         },

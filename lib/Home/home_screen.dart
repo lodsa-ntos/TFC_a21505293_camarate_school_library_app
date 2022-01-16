@@ -3,12 +3,12 @@
 import 'dart:convert';
 
 import 'package:camarate_school_library/Home/guia_de_estilos/cores.dart';
-import 'package:camarate_school_library/prateleiras/prateleira_amarela/variables_show_book.dart';
 import 'package:flutter/material.dart';
-import 'package:camarate_school_library/Home/Utilidades/pesquisa.dart';
+import 'package:camarate_school_library/Home/Pesquisa/pesquisa.dart';
 import 'package:flutter/services.dart';
 
-import 'Utilidades/pesquisa.dart';
+import 'Pesquisa/pesquisa.dart';
+import 'Prateleiras/Lista_amarela/livros_lista_amarela.dart';
 import 'guia_de_estilos/cores.dart';
 
 // ignore: use_key_in_widget_constructors
@@ -23,27 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
   double fatorDeEscala = 1.0;
 
   bool isMenuAberto = false;
-
-  @override
-  void initState() {
-    super.initState();
-    carregarDadosPrateleira();
-  }
-
-  // sempre que abrir o ecrã de pesquisa carrega a minha lista inicial de livros
-  //do ficheiro .json...
-  carregarDadosPrateleira() async {
-    final prateleirasJSON =
-        await rootBundle.loadString("assets/files/livros_prateleiras.json");
-    var dadosDecodificados = jsonDecode(prateleirasJSON);
-    var informacoesDoLivro = dadosDecodificados["prateleira"];
-
-    DadosListaAmarela.livrosNasPrateleiras = List.from(informacoesDoLivro)
-        .map<PrateleirasDaBiblioteca>((livrosNasPrateleiras) =>
-            PrateleirasDaBiblioteca.fromMap(livrosNasPrateleiras))
-        .toList();
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -180,13 +159,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: const [
-                        Text(
-                          '',
-                        ),
                         SizedBox(
                           width: 355,
                           height: 350.0,
-                          // lista
+                          // ---> Lista de livros Amarela <---
                         ),
                       ],
                     ),

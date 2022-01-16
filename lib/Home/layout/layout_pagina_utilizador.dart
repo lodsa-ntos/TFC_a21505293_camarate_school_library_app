@@ -1,4 +1,4 @@
-import 'package:camarate_school_library/Home/Utilidades/menu_lateral.dart';
+import 'package:camarate_school_library/Home/Menu/menu_lateral.dart';
 import 'package:camarate_school_library/Home/home_screen.dart';
 import 'package:flutter/material.dart';
 

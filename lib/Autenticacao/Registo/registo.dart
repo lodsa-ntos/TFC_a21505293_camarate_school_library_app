@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:camarate_school_library/Autenticacao/Login/ecra_login.dart';
+import 'package:camarate_school_library/Autenticacao/Login/login_screen.dart';
 import 'package:camarate_school_library/Home/layout/layout_pagina_utilizador.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +13,14 @@ class PreferencesKeys {
   static const activeUser = "IFORMACAO_UTILIZADOR_LOGIN";
 }
 
-class PaginaRegistoUtilizador extends StatefulWidget {
-  const PaginaRegistoUtilizador({Key? key}) : super(key: key);
+class Registo extends StatefulWidget {
+  const Registo({Key? key}) : super(key: key);
 
   @override
-  _PaginaRegistoUtilizadorState createState() =>
-      _PaginaRegistoUtilizadorState();
+  _RegistoState createState() => _RegistoState();
 }
 
-class _PaginaRegistoUtilizadorState extends State<PaginaRegistoUtilizador> {
+class _RegistoState extends State<Registo> {
   // Controladores para guardar informação do formulário
   TextEditingController nameInputController = TextEditingController();
   TextEditingController lastNameInputController = TextEditingController();

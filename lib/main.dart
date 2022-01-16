@@ -1,11 +1,7 @@
 import 'dart:async';
 
-import 'package:camarate_school_library/Autenticacao/Login/ecra_login.dart';
-import 'package:camarate_school_library/Home/home_screen.dart';
-import 'package:camarate_school_library/Home/layout/layout_pagina_utilizador.dart';
+import 'package:camarate_school_library/Autenticacao/Login/login_screen.dart';
 import 'package:flutter/material.dart';
-
-import 'Autenticacao/Registo/pagina_registo.dart';
 
 void main() {
   runApp(

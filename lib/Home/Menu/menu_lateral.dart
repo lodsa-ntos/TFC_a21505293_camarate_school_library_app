@@ -1,4 +1,4 @@
-import 'package:camarate_school_library/Autenticacao/Login/ecra_login.dart';
+import 'package:camarate_school_library/Autenticacao/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 
 // ignore: use_key_in_widget_constructors
