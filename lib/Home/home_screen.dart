@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
     DadosListaAmarela(
       numRegisto: 4,
-      titulo: "Luís De Camõe",
+      titulo: "Luís De Camões",
       autor: "J. M. Latino Coelho",
       disponibilidade: "Esgotado",
       descricao: "descricao",

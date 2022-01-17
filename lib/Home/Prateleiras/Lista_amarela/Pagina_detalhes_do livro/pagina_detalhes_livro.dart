@@ -27,7 +27,7 @@ class PaginaDetalhesLivro extends StatelessWidget {
           child: Text(
             'Requisitar',
             style: GoogleFonts.catamaran(
-              fontSize: 14,
+              fontSize: 23,
               fontWeight: FontWeight.w600,
               color: Colors.white,
             ),
@@ -98,6 +98,32 @@ class PaginaDetalhesLivro extends StatelessWidget {
                               color: Colors.grey.shade600,
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 3.0, left: 25.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (livros.disponibilidade == "Disponível") ...[
+                            Text(
+                              livros.disponibilidade,
+                              style: GoogleFonts.catamaran(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ] else
+                            Text(
+                              livros.disponibilidade,
+                              style: GoogleFonts.catamaran(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
                         ],
                       ),
                     ),
