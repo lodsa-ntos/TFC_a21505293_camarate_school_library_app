@@ -1,11 +1,12 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Pagina_detalhes_do%20livro/pagina_detalhes_livro.dart';
+import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Dados/dados_livros_requisitados.dart';
+import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Detalhes/pagina_detalhes_livro.dart';
 import 'package:flutter/material.dart';
 import 'package:camarate_school_library/Home/Pesquisa/pesquisa.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'Guias_de_estilos/cores.dart';
+import '../Components/cores.dart';
 import 'Pesquisa/pesquisa.dart';
 import 'Prateleiras/Lista_amarela/Dados/dados_lista_amarela.dart';
 
@@ -91,106 +92,109 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           // --> MOSTRAR AS LISTAS DOS LIVROS NO ECRÃ <--
-          SizedBox(
-            height: 715,
-            child: SingleChildScrollView(
-              //scrollDirection: Axis.vertical,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 15,
-                  ),
-
-                  Container(
-                    padding: const EdgeInsets.only(left: 13.0, right: 189.0),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 1.0),
-                      child: Text(
-                        'Livros Requisitados',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: darkColor,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
+          Expanded(
+            flex: 3,
+            child: SizedBox(
+              height: 715,
+              child: SingleChildScrollView(
+                //scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 15,
                     ),
-                  ),
 
-                  const SizedBox(
-                    height: 12,
-                  ),
-
-                  // --> LIVROS REQUISITADOS <--
-
-                  SingleChildScrollView(
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 80.0,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: const [
-                            Text('Ainda sem livros requisitados...'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  // --> TERMINA SECÇÃO LIVROS REQUISITADOS <--
-
-                  const SizedBox(
-                    height: 50,
-                  ),
-
-                  // --> PRATELEIRAS <--
-                  Container(
-                    padding: const EdgeInsets.only(right: 189.0),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 1.0),
-                      child: Text(
-                        'Prateleiras',
-                        style: TextStyle(
+                    Container(
+                      padding: const EdgeInsets.only(left: 13.0, right: 189.0),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 1.0),
+                        child: Text(
+                          'Livros Requisitados',
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 30,
+                            fontSize: 18,
                             color: darkColor,
-                            fontFamily: 'Poppins'),
-                      ),
-                    ),
-                  ),
-
-                  // --> INICIO DA LISTA AMARELA <--
-                  tituloDaClasseAmarela(),
-
-                  const SizedBox(
-                    height: 18.0,
-                  ),
-
-                  SingleChildScrollView(
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 350.0,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            livrosListaAmarela(dadosListaAmarela[0]),
-                            livrosListaAmarela(dadosListaAmarela[1]),
-                            livrosListaAmarela(dadosListaAmarela[2]),
-                            livrosListaAmarela(dadosListaAmarela[3]),
-                            livrosListaAmarela(dadosListaAmarela[4]),
-                            livrosListaAmarela(dadosListaAmarela[5]),
-                          ],
+                            fontFamily: 'Poppins',
+                          ),
                         ),
                       ),
                     ),
-                  ),
 
-                  // --> TERMINA SECÇÃO LISTA AMARELA <--
-                ],
+                    const SizedBox(
+                      height: 12,
+                    ),
+
+                    // --> LIVROS REQUISITADOS <--
+
+                    SingleChildScrollView(
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 80.0,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: const [
+                              Text('Ainda sem livros requisitados...'),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // --> TERMINA SECÇÃO LIVROS REQUISITADOS <--
+
+                    const SizedBox(
+                      height: 50,
+                    ),
+
+                    // --> PRATELEIRAS <--
+                    Container(
+                      padding: const EdgeInsets.only(right: 189.0),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 1.0),
+                        child: Text(
+                          'Prateleiras',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                              color: darkColor,
+                              fontFamily: 'Poppins'),
+                        ),
+                      ),
+                    ),
+
+                    // --> INICIO DA LISTA AMARELA <--
+                    tituloDaClasseAmarela(),
+
+                    const SizedBox(
+                      height: 18.0,
+                    ),
+
+                    SingleChildScrollView(
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 350.0,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              livrosListaAmarela(dadosListaAmarela[0]),
+                              livrosListaAmarela(dadosListaAmarela[1]),
+                              livrosListaAmarela(dadosListaAmarela[2]),
+                              livrosListaAmarela(dadosListaAmarela[3]),
+                              livrosListaAmarela(dadosListaAmarela[4]),
+                              livrosListaAmarela(dadosListaAmarela[5]),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // --> TERMINA SECÇÃO LISTA AMARELA <--
+                  ],
+                ),
               ),
             ),
           ),
@@ -199,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // FUNÇÃO QUE CARREGA A LISTA DE LIVROS DA SECÇAO AMARELA
+  // FUNÇÃO QUE CARREGA OS DADOS DOS LIVROS PARA A SECÇAO AMARELA
   Widget livrosListaAmarela(DadosListaAmarela dadosListaAmarela) {
     return GestureDetector(
       onTap: () {

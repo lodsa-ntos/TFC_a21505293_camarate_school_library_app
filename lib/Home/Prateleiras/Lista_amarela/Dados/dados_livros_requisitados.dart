@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-class ModeloLivrosRequisitados {
+class DadosLivrosRequisitados {
   String titulo;
   String descricao;
   String dataEntrega;
   String imagem;
 
-  ModeloLivrosRequisitados({
+  DadosLivrosRequisitados({
     required this.titulo,
     required this.descricao,
     required this.dataEntrega,
@@ -22,8 +22,8 @@ class ModeloLivrosRequisitados {
     };
   }
 
-  factory ModeloLivrosRequisitados.fromMap(Map<String, dynamic> map) {
-    return ModeloLivrosRequisitados(
+  factory DadosLivrosRequisitados.fromMap(Map<String, dynamic> map) {
+    return DadosLivrosRequisitados(
       titulo: map['titulo'] ?? '',
       descricao: map['descricao'] ?? '',
       dataEntrega: map['dataEntrega'] ?? '',
@@ -33,6 +33,6 @@ class ModeloLivrosRequisitados {
 
   String toJson() => json.encode(toMap());
 
-  factory ModeloLivrosRequisitados.fromJson(String source) =>
-      ModeloLivrosRequisitados.fromMap(json.decode(source));
+  factory DadosLivrosRequisitados.fromJson(String source) =>
+      DadosLivrosRequisitados.fromMap(json.decode(source));
 }

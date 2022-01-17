@@ -17,7 +17,6 @@ class PaginaDetalhesLivro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<ModeloLivrosRequisitados> emprestar = [];
     return Scaffold(
 // ---> BOTÃO REQUISITAR <---
       bottomNavigationBar: Container(
@@ -32,6 +31,7 @@ class PaginaDetalhesLivro extends StatelessWidget {
                 for (var i = 0; i >= dadosListaAmarela.length; i++)
                   {
                     // guardar na lista de livros requisitados
+                    requisitados[0] = livros.imagem as DadosLivrosRequisitados
                   },
                 Navigator.push(
                   context,
@@ -185,7 +185,7 @@ class PaginaDetalhesLivro extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: Colors.grey,
+                          color: Color(0xFF171717),
                           letterSpacing: 1.5,
                           height: 2,
                         ),

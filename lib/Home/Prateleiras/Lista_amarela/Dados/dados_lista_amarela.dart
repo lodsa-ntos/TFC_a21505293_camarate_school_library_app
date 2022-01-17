@@ -9,7 +9,7 @@ class DadosListaAmarela {
   String disponibilidade;
   String descricao;
   String imagem;
-  List<ModeloLivrosRequisitados> requisitados = [];
+  List<DadosLivrosRequisitados> requisitados = [];
 
   DadosListaAmarela({
     required this.numRegisto,
@@ -41,8 +41,8 @@ class DadosListaAmarela {
       disponibilidade: map['disponibilidade'] ?? '',
       descricao: map['descricao'] ?? '',
       imagem: map['imagem'] ?? '',
-      requisitados: List<ModeloLivrosRequisitados>.from(
-          map['requisitados']?.map((x) => ModeloLivrosRequisitados.fromMap(x))),
+      requisitados: List<DadosLivrosRequisitados>.from(
+          map['requisitados']?.map((x) => DadosLivrosRequisitados.fromMap(x))),
     );
   }
 
@@ -112,4 +112,4 @@ List<DadosListaAmarela> dadosListaAmarela = [
   ),
 ];
 
-List<ModeloLivrosRequisitados> requisitados = [];
+List<DadosLivrosRequisitados> requisitados = [];

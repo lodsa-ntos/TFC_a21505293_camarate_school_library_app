@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:camarate_school_library/Home/Guias_de_estilos/cores.dart';
-import 'package:camarate_school_library/Home/Guias_de_estilos/estilo_texto.dart';
+import 'package:camarate_school_library/Components/cores.dart';
+import 'package:camarate_school_library/Components/estilo_texto.dart';
 import 'package:camarate_school_library/Home/Pesquisa/models/inventario.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
