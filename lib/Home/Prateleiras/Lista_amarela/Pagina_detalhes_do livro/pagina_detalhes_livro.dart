@@ -2,7 +2,6 @@
 
 import 'package:camarate_school_library/Home/Layout/layout_pagina_utilizador.dart';
 import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Dados/dados_lista_amarela.dart';
-import 'package:camarate_school_library/Home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
