@@ -2,6 +2,7 @@
 
 import 'package:camarate_school_library/Home/Layout/layout_pagina_utilizador.dart';
 import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Dados/dados_lista_amarela.dart';
+import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Dados/dados_livros_requisitados.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
@@ -16,6 +17,7 @@ class PaginaDetalhesLivro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<ModeloLivrosRequisitados> emprestar = [];
     return Scaffold(
 // ---> BOTÃO REQUISITAR <---
       bottomNavigationBar: Container(
@@ -25,12 +27,23 @@ class PaginaDetalhesLivro extends StatelessWidget {
         child: FlatButton(
           color: const Color.fromRGBO(18, 157, 158, 1),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const LayoutPaginaPrincipalUtilizador(),
-              ),
-            );
+            if (livros.disponibilidade == "Disponível") {
+              [
+                for (var i = 0; i >= dadosListaAmarela.length; i++)
+                  {
+                    // guardar na lista de livros requisitados
+                  },
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const LayoutPaginaPrincipalUtilizador(),
+                  ),
+                )
+              ];
+            } else {
+              print('Erro: a requisicao falhou');
+            }
           },
           child: Text(
             'Requisitar',
