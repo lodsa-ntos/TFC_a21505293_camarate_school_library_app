@@ -1,17 +1,13 @@
 // ignore_for_file: unused_local_variable
 
-import 'dart:convert';
-
 import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Pagina_detalhes_do%20livro/pagina_detalhes_livro.dart';
-import 'package:camarate_school_library/Home/guia_de_estilos/cores.dart';
 import 'package:flutter/material.dart';
 import 'package:camarate_school_library/Home/Pesquisa/pesquisa.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'Guias_de_estilos/cores.dart';
 import 'Pesquisa/pesquisa.dart';
 import 'Prateleiras/Lista_amarela/Dados/dados_lista_amarela.dart';
-import 'guia_de_estilos/cores.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomeScreen extends StatefulWidget {
