@@ -182,16 +182,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 12,
                   ),
 
-                  // Lista de livros requisitados
-                  const SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    // falta chamar a lista ....
+                  // --> LIVROS REQUISITADOS <--
+
+                  SingleChildScrollView(
                     child: SizedBox(
-                      width: 355,
-                      height: 85.0,
-                      child: Text('Ainda sem livros requisitados...'),
+                      width: double.infinity,
+                      height: 80.0,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: const [
+                            Text('Ainda sem livros requisitados...'),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
+
+                  // --> TERMINA SECÇÃO LIVROS REQUISITADOS <--
+
                   const SizedBox(
                     height: 50,
                   ),
@@ -212,8 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
 
-                  // --> LISTA AMARELA <--
-
+                  // --> INICIO DA LISTA AMARELA <--
                   tituloDaClasseAmarela(),
 
                   const SizedBox(
@@ -240,6 +249,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+
+                  // --> TERMINA SECÇÃO LISTA AMARELA <--
                 ],
               ),
             ),
@@ -249,6 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // FUNÇÃO QUE CARREGA A LISTA DE LIVROS DA SECÇAO AMARELA
   Widget livrosListaAmarela(DadosListaAmarela dadosListaAmarela) {
     return GestureDetector(
       onTap: () {

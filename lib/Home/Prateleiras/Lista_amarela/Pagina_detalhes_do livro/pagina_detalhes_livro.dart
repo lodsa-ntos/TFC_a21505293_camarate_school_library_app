@@ -1,6 +1,8 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:camarate_school_library/Home/Layout/layout_pagina_utilizador.dart';
 import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Dados/dados_lista_amarela.dart';
+import 'package:camarate_school_library/Home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
@@ -23,7 +25,14 @@ class PaginaDetalhesLivro extends StatelessWidget {
         color: Colors.transparent,
         child: FlatButton(
           color: const Color.fromRGBO(18, 157, 158, 1),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LayoutPaginaPrincipalUtilizador(),
+              ),
+            );
+          },
           child: Text(
             'Requisitar',
             style: GoogleFonts.catamaran(
@@ -102,7 +111,7 @@ class PaginaDetalhesLivro extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 3.0, left: 25.0),
+                      padding: const EdgeInsets.only(top: 5.0, left: 25.0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
