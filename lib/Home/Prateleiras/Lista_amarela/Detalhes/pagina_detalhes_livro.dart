@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'package:camarate_school_library/Home/Layout/layout_pagina_utilizador.dart';
 import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Models/dados_lista_amarela.dart';
+import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Models/dados_livros_requisitados.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
@@ -89,8 +90,8 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                                 );
                               });
 
-                              // Adicionar na lista de livros requisitados
-                              adicionarLivroRequisitado();
+                              // livro requisitado = SIM
+                              widget.livros.livroRequisitado = true;
 
                               Navigator.push(
                                 context,
@@ -339,8 +340,24 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
   }
 
   void adicionarLivroRequisitado() {
-    // pensar como colocar o livro na lista List<DadosLivrosRequisitados> requisitados = [];
-    // recarregar a lista no ecrã principal
-    //e mostrar no utilizador o livro que requisitou
+    if (widget.livros.livroRequisitado == true) {
+      for (var i = 0; i < requisitados.length; i++) {
+        if (requisitados.isEmpty) {
+          requisitados.add(
+            DadosLivrosRequisitados(
+              titulo: "A estrada do futuro",
+              dataEntrega: "Disponível",
+              descricao:
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+              imagem:
+                  "https://images-na.ssl-images-amazon.com/images/I/81blQVIfQwL.jpg",
+            ),
+          );
+        }
+      }
+    } else {
+      // ignore: avoid_print
+      print('ERRO: não foi possível requisitar o livro');
+    }
   }
 }

@@ -166,5 +166,3 @@ List<DadosListaAmarela> dadosListaAmarela = [
     livroRequisitado: false,
   ),
 ];
-
-List<DadosLivrosRequisitados> requisitados = [];

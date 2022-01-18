@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../Components/cores.dart';
 import 'Pesquisa/pesquisa.dart';
 import 'Prateleiras/Lista_amarela/Models/dados_lista_amarela.dart';
+import 'Prateleiras/Lista_amarela/Models/dados_livros_requisitados.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomeScreen extends StatefulWidget {
@@ -125,29 +126,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     // --> LIVROS REQUISITADOS <--
 
-                    SingleChildScrollView(
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 80.0,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: const [
-                              // se o user fez pedido para requisitar um livro disponível
-                              // e o livro foi requisitado
-                              //
-                              Text('Ainda sem livros requisitados...'),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    mostrarLivrosRequisitados(),
 
                     // --> TERMINA SECÇÃO LIVROS REQUISITADOS <--
 
                     const SizedBox(
-                      height: 50,
+                      height: 12,
                     ),
 
                     // --> PRATELEIRAS <--
@@ -167,32 +151,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
 
                     // --> INICIO DA LISTA AMARELA <--
+
                     tituloDaClasseAmarela(),
 
                     const SizedBox(
                       height: 18.0,
                     ),
 
-                    SingleChildScrollView(
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 350.0,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              livrosListaAmarela(dadosListaAmarela[0]),
-                              livrosListaAmarela(dadosListaAmarela[1]),
-                              livrosListaAmarela(dadosListaAmarela[2]),
-                              livrosListaAmarela(dadosListaAmarela[3]),
-                              livrosListaAmarela(dadosListaAmarela[4]),
-                              livrosListaAmarela(dadosListaAmarela[5]),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    mostrarLivrosListaAmarela(),
 
                     // --> TERMINA SECÇÃO LISTA AMARELA <--
                   ],
@@ -284,7 +250,31 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-// Apenas o titulo da secção amarela
+  // FUNÇÃO QUE IRÁ CARREGAR CADA POSICÃO DA LISTA AMARELA E MOSTRAR NO ECRÃ
+  Widget mostrarLivrosListaAmarela() {
+    return SingleChildScrollView(
+      child: SizedBox(
+        width: double.infinity,
+        height: 350.0,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              livrosListaAmarela(dadosListaAmarela[0]),
+              livrosListaAmarela(dadosListaAmarela[1]),
+              livrosListaAmarela(dadosListaAmarela[2]),
+              livrosListaAmarela(dadosListaAmarela[3]),
+              livrosListaAmarela(dadosListaAmarela[4]),
+              livrosListaAmarela(dadosListaAmarela[5]),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Apenas o titulo da secção amarela
   Widget tituloDaClasseAmarela() {
     return Column(
       children: [
@@ -316,6 +306,98 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  // FUNÇÃO QUE CARREGA OS DADOS DOS LIVROS PARA A SECÇAO REQUISITADOS
+  Widget livrosRequsitados(DadosLivrosRequisitados dadosLivrosRequisitados) {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: 122.0,
+        margin: const EdgeInsets.only(right: 12.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 100.66,
+              height: 150.5,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(8.0),
+                image: DecorationImage(
+                  image: NetworkImage(dadosLivrosRequisitados.imagem),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 12.0,
+            ),
+            Text(
+              dadosLivrosRequisitados.titulo,
+              style: const TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w700,
+                fontSize: 14.0,
+              ),
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Text(
+              "Data entrega:",
+              style: GoogleFonts.catamaran(
+                textStyle: const TextStyle(
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF757575),
+                  letterSpacing: 1.5,
+                ),
+              ),
+            ),
+            Text(
+              dadosLivrosRequisitados.dataEntrega,
+              style: GoogleFonts.catamaran(
+                textStyle: const TextStyle(
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xFF171717),
+                  letterSpacing: 1.5,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+// FUNÇÃO QUE IRÁ CARREGAR CADA POSICÃO DA LISTA DOS LIVROS REQUISITADOS
+// E MOSTRAR NO ECRÃ
+  Widget mostrarLivrosRequisitados() {
+    return SingleChildScrollView(
+      child: SizedBox(
+        width: double.infinity,
+        height: 250.0,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: <Widget>[
+              livrosRequsitados(requisitados[0]),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
