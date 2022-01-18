@@ -17,6 +17,8 @@ class PaginaDetalhesLivro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const isRequisitado = false;
+
     return Scaffold(
 // ---> BOTÃO REQUISITAR <---
       bottomNavigationBar: Container(
@@ -26,23 +28,28 @@ class PaginaDetalhesLivro extends StatelessWidget {
         child: FlatButton(
           color: const Color.fromRGBO(18, 157, 158, 1),
           onPressed: () {
-            if (livros.disponibilidade == "Disponível") {
-              [
-                for (var i = 0; i >= dadosListaAmarela.length; i++)
-                  {
-                    // guardar na lista de livros requisitados
-                    requisitados[0] = livros.imagem as DadosLivrosRequisitados
-                  },
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        const LayoutPaginaPrincipalUtilizador(),
+            for (int i = 0; i < dadosListaAmarela.length; i++) {
+              if (dadosListaAmarela[i].disponibilidade == "Disponível") {
+                [
+                  // O livro é adicionado a lista dos livros requisitados...
+
+                  // Dizemos que o livro está requisitado...
+                  livros.livroRequisitado = true,
+
+                  // A disponibilidade do livro passa a ser "Esgotado"...
+                  Text(
+                    livros.disponibilidade = "Esgotado",
+                    style: GoogleFonts.catamaran(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade600,
+                    ),
                   ),
-                )
-              ];
-            } else {
-              print('Erro: a requisicao falhou');
+                ];
+                print('O livro requisitado com sucesso');
+              } else {
+                print('Erro: a requisicao falhou');
+              }
             }
           },
           child: Text(
@@ -116,7 +123,7 @@ class PaginaDetalhesLivro extends StatelessWidget {
                             style: GoogleFonts.catamaran(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: Colors.grey.shade600,
+                              color: const Color(0xFF171717),
                             ),
                           ),
                         ],
@@ -178,11 +185,12 @@ class PaginaDetalhesLivro extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 25, right: 25, bottom: 25),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 25, right: 25, bottom: 25),
                       child: Text(
-                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-                        style: TextStyle(
+                        livros.descricao,
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                           color: Color(0xFF171717),

@@ -135,6 +135,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: const [
+                              // se o user fez pedido para requisitar um livro disponível
+                              // e o livro foi requisitado
+                              //
                               Text('Ainda sem livros requisitados...'),
                             ],
                           ),
@@ -314,6 +317,56 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ],
+    );
+  }
+
+// FUNÇÃO QUE CARREGA OS DADOS DOS LIVROS PARA A SECÇAO AMARELA
+  Widget livrosRequisitados(DadosLivrosRequisitados emprestimo) {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: 122.0,
+        margin: const EdgeInsets.only(right: 12.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 121.66,
+              height: 190.5,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                image: DecorationImage(
+                  image: NetworkImage(emprestimo.imagem),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 12.0,
+            ),
+            Text(
+              emprestimo.titulo,
+              style: const TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w700,
+                fontSize: 14.0,
+              ),
+            ),
+            const SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              emprestimo.dataEntrega,
+              style: GoogleFonts.catamaran(
+                textStyle: const TextStyle(
+                  fontSize: 13.0,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
