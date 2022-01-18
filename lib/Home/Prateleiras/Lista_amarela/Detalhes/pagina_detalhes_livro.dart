@@ -35,7 +35,9 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
               setState(() {
                 isRequisitado = true;
               });
+
               Future.delayed(
+                // Processo que depois será mudado para a confirmação do administrador
                 const Duration(seconds: 3),
                 () {
                   setState(
@@ -60,7 +62,10 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                           ),
                         ),
                         content: const Text(
-                          'Dirija-se a biblioteca para fazer o levantamento do seu livro. \n\nObrigado!',
+                          // ignore: prefer_adjacent_string_concatenation
+                          "Dirija-se a biblioteca para fazer o levantamento do seu livro. \n" +
+                              "O prazo de devolução é de 10 dias.\n\n" +
+                              "Obrigado!",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,
@@ -96,6 +101,7 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
+                                color: Color.fromRGBO(18, 157, 158, 1),
                               ),
                             ),
                           ),
@@ -105,7 +111,50 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                   );
                 },
               );
-            } else {
+            } else if (widget.livros.disponibilidade == "Esgotado") {
+              showDialog<String>(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    elevation: 16,
+                    title: const Text(
+                      'Pedido recusado',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    content: const Text(
+                      // ignore: prefer_adjacent_string_concatenation
+                      "O livro encontra-se esgotado.",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF171717),
+                        height: 2,
+                      ),
+                      textAlign: TextAlign.justify,
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'OK'),
+                        child: const Text(
+                          'OK',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(18, 157, 158, 1),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
               // ignore: avoid_print
               print(
                   'Erro: a requisicao falhou, porque o livro encontra-se esgotado');
