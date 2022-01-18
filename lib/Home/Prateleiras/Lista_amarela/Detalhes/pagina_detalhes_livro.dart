@@ -43,6 +43,8 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                       isRequisitado = false;
                     },
                   );
+
+                  // Mostra mensagem ao utilizador que a requisicao foi efetuado com sucesso
                   showDialog<String>(
                     context: context,
                     builder: (context) {
@@ -70,6 +72,17 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                         actions: <Widget>[
                           TextButton(
                             onPressed: () {
+                              setState(() {
+                                // A disponibilidade do livro passa a estar "Esgotado"...
+                                Text(
+                                  widget.livros.disponibilidade = "Esgotado",
+                                  style: GoogleFonts.catamaran(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                );
+                              });
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
