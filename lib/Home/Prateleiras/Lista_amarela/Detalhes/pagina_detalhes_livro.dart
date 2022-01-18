@@ -79,7 +79,7 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                                   style: GoogleFonts.catamaran(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.grey.shade600,
+                                    color: Colors.red.shade700,
                                   ),
                                 );
                               });
@@ -221,7 +221,7 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                               style: GoogleFonts.catamaran(
                                 fontSize: 14.0,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.grey.shade600,
+                                color: Colors.red.shade700,
                               ),
                             ),
                         ],
