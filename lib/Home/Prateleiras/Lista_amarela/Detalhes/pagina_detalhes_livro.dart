@@ -88,6 +88,10 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                                   ),
                                 );
                               });
+
+                              // Adicionar na lista de livros requisitados
+                              adicionarLivroRequisitado();
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -111,7 +115,10 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                   );
                 },
               );
+
+              // Se o utilizador tentar requisitar um livro que esteja esgotado
             } else if (widget.livros.disponibilidade == "Esgotado") {
+              // É apresentado a mensagem de pedido recusado
               showDialog<String>(
                 context: context,
                 builder: (context) {
@@ -329,5 +336,11 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
         ),
       ),
     );
+  }
+
+  void adicionarLivroRequisitado() {
+    // pensar como colocar o livro na lista List<DadosLivrosRequisitados> requisitados = [];
+    // recarregar a lista no ecrã principal
+    //e mostrar no utilizador o livro que requisitou
   }
 }

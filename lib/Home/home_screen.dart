@@ -8,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../Components/cores.dart';
 import 'Pesquisa/pesquisa.dart';
 import 'Prateleiras/Lista_amarela/Models/dados_lista_amarela.dart';
-import 'Prateleiras/Lista_amarela/Models/dados_livros_requisitados.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomeScreen extends StatefulWidget {
@@ -317,56 +316,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ],
-    );
-  }
-
-// FUNÇÃO QUE CARREGA OS DADOS DOS LIVROS PARA A SECÇAO AMARELA
-  Widget livrosRequisitados(DadosLivrosRequisitados emprestimo) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        width: 122.0,
-        margin: const EdgeInsets.only(right: 12.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 121.66,
-              height: 190.5,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                image: DecorationImage(
-                  image: NetworkImage(emprestimo.imagem),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 12.0,
-            ),
-            Text(
-              emprestimo.titulo,
-              style: const TextStyle(
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w700,
-                fontSize: 14.0,
-              ),
-            ),
-            const SizedBox(
-              height: 5.0,
-            ),
-            Text(
-              emprestimo.dataEntrega,
-              style: GoogleFonts.catamaran(
-                textStyle: const TextStyle(
-                  fontSize: 13.0,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
