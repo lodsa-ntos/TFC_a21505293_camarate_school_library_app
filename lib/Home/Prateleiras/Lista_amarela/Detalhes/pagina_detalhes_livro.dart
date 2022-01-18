@@ -94,7 +94,8 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
               );
             } else {
               // ignore: avoid_print
-              print('Erro: a requisicao falhou');
+              print(
+                  'Erro: a requisicao falhou, porque o livro encontra-se esgotado');
             }
           },
           child: isRequisitado
