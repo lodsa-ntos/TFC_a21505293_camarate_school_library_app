@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:camarate_school_library/Autenticacao/Login/login_screen.dart';
+import 'package:camarate_school_library/Authentication/Login/login_screen.dart';
 import 'package:camarate_school_library/Home/layout/layout_pagina_utilizador.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

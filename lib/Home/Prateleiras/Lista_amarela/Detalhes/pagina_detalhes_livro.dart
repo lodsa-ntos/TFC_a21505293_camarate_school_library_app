@@ -1,13 +1,11 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:camarate_school_library/Home/Layout/layout_pagina_utilizador.dart';
-import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Dados/dados_lista_amarela.dart';
-import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Dados/dados_livros_requisitados.dart';
+import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Models/dados_lista_amarela.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
-class PaginaDetalhesLivro extends StatelessWidget {
+class PaginaDetalhesLivro extends StatefulWidget {
   const PaginaDetalhesLivro({
     Key? key,
     required this.livros,
@@ -16,9 +14,14 @@ class PaginaDetalhesLivro extends StatelessWidget {
   final DadosListaAmarela livros;
 
   @override
-  Widget build(BuildContext context) {
-    const isRequisitado = false;
+  State<PaginaDetalhesLivro> createState() => _PaginaDetalhesLivroState();
+}
 
+class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
+  bool isRequisitado = false;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
 // ---> BOTÃO REQUISITAR <---
       bottomNavigationBar: Container(
@@ -28,38 +31,92 @@ class PaginaDetalhesLivro extends StatelessWidget {
         child: FlatButton(
           color: const Color.fromRGBO(18, 157, 158, 1),
           onPressed: () {
-            for (int i = 0; i < dadosListaAmarela.length; i++) {
-              if (dadosListaAmarela[i].disponibilidade == "Disponível") {
-                [
-                  // O livro é adicionado a lista dos livros requisitados...
-
-                  // Dizemos que o livro está requisitado...
-                  livros.livroRequisitado = true,
-
-                  // A disponibilidade do livro passa a ser "Esgotado"...
-                  Text(
-                    livros.disponibilidade = "Esgotado",
-                    style: GoogleFonts.catamaran(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                ];
-                print('O livro requisitado com sucesso');
-              } else {
-                print('Erro: a requisicao falhou');
-              }
+            if (widget.livros.disponibilidade == "Disponível") {
+              setState(() {
+                isRequisitado = true;
+              });
+              Future.delayed(
+                const Duration(seconds: 3),
+                () {
+                  setState(
+                    () {
+                      isRequisitado = false;
+                    },
+                  );
+                  showDialog<String>(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        elevation: 16,
+                        title: const Text(
+                          'Pedido efetuado com sucesso',
+                          style: TextStyle(
+                            color: Colors.green,
+                          ),
+                        ),
+                        content: const Text(
+                          'Dirija-se a biblioteca para fazer o levantamento do seu livro. \n\nObrigado!',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFF171717),
+                            height: 2,
+                          ),
+                          textAlign: TextAlign.justify,
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      const LayoutPaginaPrincipalUtilizador(),
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              'Confirmar',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              );
+            } else {
+              // ignore: avoid_print
+              print('Erro: a requisicao falhou');
             }
           },
-          child: Text(
-            'Requisitar',
-            style: GoogleFonts.catamaran(
-              fontSize: 23,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-          ),
+          child: isRequisitado
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  ],
+                )
+              : Text(
+                  'Requisitar',
+                  style: GoogleFonts.catamaran(
+                    fontSize: 23,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -89,7 +146,7 @@ class PaginaDetalhesLivro extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: NetworkImage(
-                                livros.imagem,
+                                widget.livros.imagem,
                               ),
                             ),
                             borderRadius: BorderRadius.circular(10.0),
@@ -106,7 +163,7 @@ class PaginaDetalhesLivro extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 24.0, left: 25.0),
                       child: Text(
-                        livros.titulo,
+                        widget.livros.titulo,
                         style: GoogleFonts.catamaran(
                           fontSize: 27,
                           fontWeight: FontWeight.w600,
@@ -119,7 +176,7 @@ class PaginaDetalhesLivro extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            livros.autor,
+                            widget.livros.autor,
                             style: GoogleFonts.catamaran(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -134,9 +191,10 @@ class PaginaDetalhesLivro extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (livros.disponibilidade == "Disponível") ...[
+                          if (widget.livros.disponibilidade ==
+                              "Disponível") ...[
                             Text(
-                              livros.disponibilidade,
+                              widget.livros.disponibilidade,
                               style: GoogleFonts.catamaran(
                                 fontSize: 14.0,
                                 fontWeight: FontWeight.bold,
@@ -145,7 +203,7 @@ class PaginaDetalhesLivro extends StatelessWidget {
                             ),
                           ] else
                             Text(
-                              livros.disponibilidade,
+                              widget.livros.disponibilidade,
                               style: GoogleFonts.catamaran(
                                 fontSize: 14.0,
                                 fontWeight: FontWeight.bold,
@@ -189,7 +247,7 @@ class PaginaDetalhesLivro extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           left: 25, right: 25, bottom: 25),
                       child: Text(
-                        livros.descricao,
+                        widget.livros.descricao,
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,

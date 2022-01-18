@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:camarate_school_library/Autenticacao/Login/login_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'Authentication/Login/login_screen.dart';
 
 void main() {
   runApp(
