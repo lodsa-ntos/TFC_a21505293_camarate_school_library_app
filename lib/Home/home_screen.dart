@@ -171,7 +171,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // FUNÇÃO QUE CARREGA OS DADOS DOS LIVROS PARA A SECÇAO AMARELA
+  // FUNÇÃO QUE IRÁ CARREGAR A FORMA COMO OS DADOS DOS LIVROS DA SECÇAO AMARELA
+  //DEVEM SER APRESENTADOS
   Widget livrosListaAmarela(DadosListaAmarela dadosListaAmarela) {
     return GestureDetector(
       onTap: () {
@@ -309,7 +310,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // FUNÇÃO QUE CARREGA OS DADOS DOS LIVROS PARA A SECÇAO REQUISITADOS
+  // FUNÇÃO QUE IRÁ CARREGAR A FORMA COMO OS DADOS DOS LIVROS PARA A
+  //SECÇAO LIVROS REQUISITADOS DEVEM SER APRESENTADOS
   Widget livrosRequsitados(DadosLivrosRequisitados dadosLivrosRequisitados) {
     return GestureDetector(
       onTap: () {},

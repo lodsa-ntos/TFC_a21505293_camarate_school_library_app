@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "701175903648",
+    "project_id": "camarateschoollibrary",
+    "storage_bucket": "camarateschoollibrary.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701175903648:android:ecd56422c33d2fb15160c5",
+        "android_client_info": {
+          "package_name": "com.example.camarate_school_library"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701175903648-noifhq3lsv2r7ncb8ho7d829jbguqgsb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.camarate_school_library",
+            "certificate_hash": "75bc63135f6f063efa1ccc0fec439bcaf529f345"
+          }
+        },
+        {
+          "client_id": "701175903648-j5uv1jg51634vdojj99om77mci8jenf6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHIhYA6Sy4LeQ4cLyXfK_jW-MtpqrRNeA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701175903648-j5uv1jg51634vdojj99om77mci8jenf6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
