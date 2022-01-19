@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:camarate_school_library/Authentication/Login/login_screen.dart';
+import 'package:camarate_school_library/Authentication/Models/modelo_utilizador.dart';
 import 'package:camarate_school_library/Home/layout/layout_pagina_utilizador.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'models/modelo_registo.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class PreferencesKeys {
   static const activeUser = "IFORMACAO_UTILIZADOR_LOGIN";
@@ -29,27 +30,37 @@ class _RegistoState extends State<Registo> {
   TextEditingController aboutUserInputController = TextEditingController();
   TextEditingController emailInputController = TextEditingController();
   TextEditingController passwordInputController = TextEditingController();
+  TextEditingController confirmarPasswordInputController =
+      TextEditingController();
   TextEditingController yearAndClassStudentInputController =
       TextEditingController();
 
-  bool showPassword = true;
+  bool mostrarPalavraPasse = true;
+  bool mostrarPalavraPasseDaConfirmacao = true;
   bool isProcessData = false;
 
   final formKey = GlobalKey<FormState>();
+
+  final auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     //
     // --> Primeiro nome <--
     final primeiroNome = TextFormField(
+      controller: nameInputController,
+      keyboardType: TextInputType.name,
+      autofocus: false,
       validator: (value) {
+        RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
-          return "Este nome de utilizador não existe. Tenta outro.";
+          return ("O nome não pode ser vazio");
+        }
+        if (!regex.hasMatch(value)) {
+          return ("Introduza um nome válido (Min. 3 caracteres)");
         }
         return null;
       },
-      controller: nameInputController,
-      autofocus: true,
       style: const TextStyle(
         fontFamily: 'Montserrat',
         fontSize: 16,
@@ -75,14 +86,15 @@ class _RegistoState extends State<Registo> {
 
     // --> Último nome <--
     final ultimoNome = TextFormField(
+      controller: lastNameInputController,
+      keyboardType: TextInputType.name,
+      autofocus: false,
       validator: (value) {
-        if (value!.isEmpty || value.length > 10) {
-          return "Coloque o seu apelido.";
+        if (value!.isEmpty) {
+          return ("O seu apelido não pode ser vazio");
         }
         return null;
       },
-      controller: lastNameInputController,
-      autofocus: true,
       style: const TextStyle(
         fontFamily: 'Montserrat',
         fontSize: 16,
@@ -108,18 +120,24 @@ class _RegistoState extends State<Registo> {
 
     // --> E-mail ou número do cartão de aluno <--
     final emailDoRegisto = TextFormField(
+      controller: emailInputController,
+      autofocus: false,
+      keyboardType: TextInputType.emailAddress,
       validator: (value) {
-        if (value!.length < 5) {
+        if (value!.isEmpty) {
+          // ignore: prefer_adjacent_string_concatenation
+          return "O nome de utilizador que inseriste não pertence a nenhuma \nconta. \nVerifica o teu nome de utilizador e tenta novamente.";
+        }
+
+        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
+          return "Siga os exemplos: \nexemplo@gmail.com | exemplo@hotmail.com";
+        }
+
+        if (value.length < 5) {
           return "E-mail muito curto...";
-        } else if (!value.contains("@")) {
-          return "Siga o exemplo --> exemplo@gmail.com | exemplo@hotmail.com";
-        } else if (value.isEmpty) {
-          return "O nome de utilizador que inseriste não pertence a nenhuma conta. Verifica o teu nome de utilizador e tenta novamente.";
         }
         return null;
       },
-      controller: emailInputController,
-      autofocus: true,
       // Estilo dentro do campo de e-mail
       style: const TextStyle(
         fontFamily: 'Montserrat',
@@ -146,16 +164,21 @@ class _RegistoState extends State<Registo> {
 
     // --> Palavra-passe <--
     final passwordDoRegisto = TextFormField(
-      validator: (value) {
-        if (value!.length < 8) {
-          return "A palavra-passe deve conter pelo menos 8 caracteres";
-        } else if (value.isEmpty) {
-          return "Desculpa, mas a tua palavra-passe está incorreta. Verifica-a novamente.";
-        }
-        return null;
-      },
-      obscureText: showPassword,
+      obscureText: mostrarPalavraPasse,
       controller: passwordInputController,
+      validator: (value) {
+        // ignore: unnecessary_new
+        RegExp regex = new RegExp(
+            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+
+        if (value!.isEmpty) {
+          return "A palavra-passe é necessária para fazeres login";
+        }
+
+        if (regex.hasMatch(value)) {
+          return "Tens de introduzir uma palavra-passe válida. \nA palavra-passe deve conter pelo menos 8 caracteres";
+        }
+      },
       // Estilo dentro do campo da palavra-passe
       style: const TextStyle(
         fontFamily: 'Montserrat',
@@ -174,11 +197,62 @@ class _RegistoState extends State<Registo> {
         suffixIcon: GestureDetector(
           onTap: () {
             setState(() {
-              showPassword = !showPassword;
+              mostrarPalavraPasse = !mostrarPalavraPasse;
             });
           },
           child: Icon(
-            showPassword ? Icons.visibility_off : Icons.visibility,
+            mostrarPalavraPasse ? Icons.visibility_off : Icons.visibility,
+          ),
+        ),
+        enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            width: 2.0,
+            color: Color.fromRGBO(204, 204, 204, 2),
+          ),
+        ),
+      ),
+    );
+
+    // --> Confirmar a palavra-passe <--
+    final confirmarPasswordDoRegisto = TextFormField(
+      obscureText: mostrarPalavraPasseDaConfirmacao,
+      controller: confirmarPasswordInputController,
+      validator: (value) {
+        if (confirmarPasswordInputController.text !=
+            passwordInputController.text) {
+          return "A palavra-passe não corresponde";
+        }
+        return null;
+      },
+      onSaved: (value) {
+        confirmarPasswordInputController.text = value!;
+      },
+      // Estilo dentro do campo da palavra-passe
+      style: const TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        height: 2.0,
+      ),
+      decoration: InputDecoration(
+        labelText: "Confirmar palavra-passe",
+        labelStyle: const TextStyle(
+          fontFamily: 'Montserrat',
+          fontSize: 15,
+          fontWeight: FontWeight.w700,
+          color: Color.fromRGBO(127, 127, 127, 2),
+        ),
+        suffixIcon: GestureDetector(
+          onTap: () {
+            setState(() {
+              mostrarPalavraPasseDaConfirmacao =
+                  !mostrarPalavraPasseDaConfirmacao;
+            });
+          },
+          child: Icon(
+            mostrarPalavraPasseDaConfirmacao
+                ? Icons.visibility_off
+                : Icons.visibility,
           ),
         ),
         enabledBorder: const UnderlineInputBorder(
@@ -193,7 +267,12 @@ class _RegistoState extends State<Registo> {
     // --> Número de aluno <--
     final numeroAluno = TextFormField(
       controller: studentNumberInputController,
-      autofocus: true,
+      autofocus: false,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "O seu número de aluno não pode ser vazio";
+        }
+      },
       style: const TextStyle(
         fontFamily: 'Montserrat',
         fontSize: 16,
@@ -226,7 +305,12 @@ class _RegistoState extends State<Registo> {
     // --> Ano/Turma <--
     final anoETurma = TextFormField(
       controller: yearAndClassStudentInputController,
-      autofocus: true,
+      autofocus: false,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "O seu ano e a sua turma não podem ser vazios";
+        }
+      },
       style: const TextStyle(
         fontFamily: 'Montserrat',
         fontSize: 16,
@@ -259,7 +343,12 @@ class _RegistoState extends State<Registo> {
     // --> Diretor/a de Turma <--
     final diretorTurma = TextFormField(
       controller: directorNameInputController,
-      autofocus: true,
+      autofocus: false,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "O nome do seu/sua Diretor/a de turma não pode ser vazio";
+        }
+      },
       style: const TextStyle(
         fontFamily: 'Montserrat',
         fontSize: 16,
@@ -286,6 +375,7 @@ class _RegistoState extends State<Registo> {
     // --> Sobre o utilizador <--
     final textoSobreUtilizador = TextFormField(
       controller: aboutUserInputController,
+      autofocus: false,
       keyboardType: TextInputType.multiline,
       maxLines: 8,
       maxLength: 500,
@@ -327,7 +417,10 @@ class _RegistoState extends State<Registo> {
                     isProcessData = false;
                   },
                 );
-                registarUtilizador();
+                registarUtilizador(
+                  emailInputController.text,
+                  passwordInputController.text,
+                );
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -337,7 +430,7 @@ class _RegistoState extends State<Registo> {
             );
           } else {
             // ignore: avoid_print
-            print("Utilizador invalido");
+            print("Utilizador inválido");
           }
         },
         child: isProcessData
@@ -353,7 +446,7 @@ class _RegistoState extends State<Registo> {
                 ],
               )
             : const Text(
-                "Iniciar sessão",
+                "Criar Conta",
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 18,
@@ -501,7 +594,12 @@ class _RegistoState extends State<Registo> {
                     const SizedBox(height: 20),
 
                     // --> Palavra-passe <--
-                    passwordDoRegisto
+                    passwordDoRegisto,
+
+                    const SizedBox(height: 20),
+
+                    // --> Confirmar palavra-passe <--
+                    confirmarPasswordDoRegisto,
                   ],
                 ),
               ),
@@ -559,28 +657,46 @@ class _RegistoState extends State<Registo> {
     );
   }
 
-  // funçao para guardar os dados inseridos pelo utilizador
-  void registarUtilizador() {
-    ModeloRegistoUtilizador novoUtilizador = ModeloRegistoUtilizador(
-      primeiroNome: nameInputController.text,
-      ultimoNome: lastNameInputController.text,
-      email: emailInputController.text,
-      password: passwordInputController.text,
-      numeroAluno: studentNumberInputController.text,
-      anoTurma: yearAndClassStudentInputController.text,
-      diretorTurma: directorNameInputController.text,
-      textoSobreUtilizador: aboutUserInputController.text,
-    );
-
-    guardarDadosUtilizador(novoUtilizador);
+  void registarUtilizador(String email, String password) async {
+    if (formKey.currentState!.validate()) {
+      await auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) => {
+                postDetailsToFirestore(),
+              })
+          .catchError((e) {
+        Fluttertoast.showToast(msg: e!.message);
+      });
+    }
   }
 
-  void guardarDadosUtilizador(ModeloRegistoUtilizador utilizador) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Salvo o texto do utilizador com o setString da função SharedPreferences
-    prefs.setString(
-      PreferencesKeys.activeUser,
-      json.encode(utilizador.toJson()),
-    );
+  postDetailsToFirestore() async {
+    // chamar a base de dados firestore
+    // chamar o modelo de utilizador
+    // guardar os valores introduzidos pelo utilizador
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? utilizador = auth.currentUser;
+
+    ModeloUtilizador modeloRegistoUtilizador = ModeloUtilizador();
+
+    // registar todos os valores
+    modeloRegistoUtilizador.uid = utilizador!.uid;
+    modeloRegistoUtilizador.nomeProprio = nameInputController.text;
+    modeloRegistoUtilizador.ultimoNome = lastNameInputController.text;
+    modeloRegistoUtilizador.email = utilizador.email;
+
+    await firebaseFirestore
+        .collection("Utilizadores")
+        .doc(utilizador.uid)
+        .set(modeloRegistoUtilizador.toMap());
+    Fluttertoast.showToast(msg: "Conta criada com sucesso :)");
+
+    Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(
+          builder: (context) => const LayoutPaginaPrincipalUtilizador(),
+        ),
+        (route) => false);
   }
 }

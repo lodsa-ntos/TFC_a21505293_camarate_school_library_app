@@ -23,6 +23,7 @@ class ModeloUtilizador {
     this.sobreMim,
   });
 
+  // Envia os dados para o servidor
   Map<String, dynamic> toMap() {
     return {
       'uid': uid,
@@ -37,6 +38,7 @@ class ModeloUtilizador {
     };
   }
 
+  // recebe os dados do servidor
   factory ModeloUtilizador.fromMap(Map<String, dynamic> map) {
     return ModeloUtilizador(
       uid: map['uid'],
