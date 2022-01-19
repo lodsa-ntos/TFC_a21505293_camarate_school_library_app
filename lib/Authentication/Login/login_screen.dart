@@ -46,7 +46,7 @@ class _PaginaLoginState extends State<PaginaLogin> {
         if (RegExp(
                 r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
             .hasMatch(value)) {
-          return "Siga o exemplo: \n exemplo@gmail.com | exemplo@hotmail.com";
+          return "Siga os exemplos: \n exemplo@gmail.com | exemplo@hotmail.com";
         }
 
         if (value.length < 5) {
@@ -97,7 +97,7 @@ class _PaginaLoginState extends State<PaginaLogin> {
         }
 
         if (!regex.hasMatch(value)) {
-          return "Tens de introduzir uma palavra-passe válida. \nA palavra-passe deve conter pelo menos 8 caracteres";
+          return "Tens de introduzir uma palavra-passe válida. \nA palavra-passe deve conter pelo menos 8 caracteres.";
         }
       },
       onSaved: (value) {
@@ -154,10 +154,12 @@ class _PaginaLoginState extends State<PaginaLogin> {
     );
 
     // ---> botao [Iniciar Sessão] <---
-    final botaoIniciarSessao = SizedBox(
-      height: 65.0,
-      width: 335.0,
-      child: ElevatedButton(
+    final botaoIniciarSessao = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(5),
+      color: Colors.blue,
+      child: MaterialButton(
+        height: 65,
         onPressed: () {
           if (formKey.currentState!.validate()) {
             setState(() {
@@ -173,7 +175,9 @@ class _PaginaLoginState extends State<PaginaLogin> {
                   },
                 );
                 fazerLogin(
-                    emailInputController.text, passwordInputController.text);
+                  emailInputController.text,
+                  passwordInputController.text,
+                );
                 Navigator.push(
                     context,
                     MaterialPageRoute(
