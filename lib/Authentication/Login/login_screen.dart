@@ -40,13 +40,11 @@ class _PaginaLoginState extends State<PaginaLogin> {
       validator: (value) {
         if (value!.isEmpty) {
           // ignore: prefer_adjacent_string_concatenation
-          return "O nome de utilizador que inseriste não pertence a nenhuma conta. \n\nVerifica o teu nome de utilizador e tenta novamente.";
+          return "O nome de utilizador que inseriste não pertence a nenhuma \nconta. \nVerifica o teu nome de utilizador e tenta novamente.";
         }
 
-        if (RegExp(
-                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-            .hasMatch(value)) {
-          return "Siga os exemplos: \n exemplo@gmail.com | exemplo@hotmail.com";
+        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
+          return "Siga os exemplos: \nexemplo@gmail.com | exemplo@hotmail.com";
         }
 
         if (value.length < 5) {
@@ -96,8 +94,8 @@ class _PaginaLoginState extends State<PaginaLogin> {
           return "Desculpe, mas a sua palavra-passe está incorreta. \nVerifica-a novamente.";
         }
 
-        if (!regex.hasMatch(value)) {
-          return "Tens de introduzir uma palavra-passe válida. \nA palavra-passe deve conter pelo menos 8 caracteres.";
+        if (regex.hasMatch(value)) {
+          return "Tens de introduzir uma palavra-passe válida. \nA palavra-passe deve conter pelo menos 8 caracteres";
         }
       },
       onSaved: (value) {
@@ -346,7 +344,10 @@ class _PaginaLoginState extends State<PaginaLogin> {
                         const LayoutPaginaPrincipalUtilizador(),
                   ),
                 ),
-              });
+              })
+          .catchError((e) {
+        Fluttertoast.showToast(msg: e!.mensagem);
+      });
     }
   }
 }
