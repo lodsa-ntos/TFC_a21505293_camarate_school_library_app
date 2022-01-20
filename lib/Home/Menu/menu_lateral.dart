@@ -1,5 +1,9 @@
 import 'package:camarate_school_library/Authentication/Login/login_screen.dart';
+import 'package:camarate_school_library/Authentication/Models/modelo_utilizador.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ignore: use_key_in_widget_constructors
 class MenuLateral extends StatefulWidget {
@@ -8,6 +12,22 @@ class MenuLateral extends StatefulWidget {
 }
 
 class _MenuLateralState extends State<MenuLateral> {
+  User? utilizador = FirebaseAuth.instance.currentUser;
+  ModeloUtilizador utilizadorLogado = ModeloUtilizador();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("Utilizadores")
+        .doc(utilizador!.uid)
+        .get()
+        .then((value) {
+      utilizadorLogado = ModeloUtilizador.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,15 +44,21 @@ class _MenuLateralState extends State<MenuLateral> {
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    'Gustavo Simões',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                    "${utilizadorLogado.nomeProprio} ${utilizadorLogado.ultimoNome}",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  Text('9ºano | turma D | nº 15',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold))
+                  Text(
+                    "${utilizadorLogado.email}",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
                 ],
               )
             ],
@@ -46,10 +72,12 @@ class _MenuLateralState extends State<MenuLateral> {
               const SizedBox(
                 width: 10,
               ),
-              const Text(
+              Text(
                 'Definições',
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: GoogleFonts.catamaran(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(
                 width: 10,
@@ -59,22 +87,17 @@ class _MenuLateralState extends State<MenuLateral> {
                 height: 20,
                 color: Colors.white,
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PaginaLogin(),
-                    ),
-                  );
+                  sair(context);
                 },
-                child: const Text(
+                child: Text(
                   'Sair',
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.catamaran(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
@@ -82,5 +105,12 @@ class _MenuLateralState extends State<MenuLateral> {
         ],
       ),
     );
+  }
+
+  // the logout function
+  Future<void> sair(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const PaginaLogin()));
   }
 }

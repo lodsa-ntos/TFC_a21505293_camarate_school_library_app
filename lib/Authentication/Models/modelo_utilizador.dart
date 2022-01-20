@@ -39,7 +39,7 @@ class ModeloUtilizador {
   }
 
   // recebe os dados do servidor
-  factory ModeloUtilizador.fromMap(Map<String, dynamic> map) {
+  factory ModeloUtilizador.fromMap(map) {
     return ModeloUtilizador(
       uid: map['uid'],
       nomeProprio: map['nomeProprio'],
