@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'Configuracao/configuracao.dart';
+
 // ignore: use_key_in_widget_constructors
 class MenuLateral extends StatefulWidget {
   @override
@@ -30,84 +32,125 @@ class _MenuLateralState extends State<MenuLateral> {
 
   @override
   Widget build(BuildContext context) {
+    // Identificação do utilizador
+    final iconPerfilDoUtilizador = Row(
+      children: [
+        const CircleAvatar(),
+        const SizedBox(width: 13),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "${utilizadorLogado.nomeProprio} ${utilizadorLogado.ultimoNome}",
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+            const Padding(padding: EdgeInsets.only(bottom: 5)),
+            Text(
+              "${utilizadorLogado.email}",
+              style: const TextStyle(
+                color: Colors.white,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.w400,
+                fontSize: 12,
+                letterSpacing: 0.5,
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+
+    // Conteudo do menu lateral
+    final conteudo = Column(
+      children: conteudoDoMenu
+          .map((element) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Icon(
+                      element['icone'],
+                      color: Colors.white,
+                      size: 23,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      element['titulo'],
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
+              ))
+          .toList(),
+    );
+
+    // Definicoes e logout da app
+    final definicoesELogout = Row(
+      children: [
+        const Icon(
+          Icons.settings,
+          color: Colors.white,
+          size: 23,
+        ),
+        const SizedBox(width: 10),
+        Text(
+          'Definições',
+          style: GoogleFonts.catamaran(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+        ),
+        const SizedBox(width: 20),
+        Container(
+          width: 2,
+          height: 20,
+          color: Colors.white,
+        ),
+        const SizedBox(width: 20),
+        GestureDetector(
+          onTap: () {
+            sair(context);
+          },
+          child: Text(
+            'Sair',
+            style: GoogleFonts.catamaran(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
+      ],
+    );
+
     return Container(
       color: Colors.blueAccent,
-      padding: const EdgeInsets.only(top: 50, bottom: 70, left: 10),
+      padding: const EdgeInsets.only(top: 50, bottom: 70, left: 15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              const CircleAvatar(),
-              const SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${utilizadorLogado.nomeProprio} ${utilizadorLogado.ultimoNome}",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "${utilizadorLogado.email}",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-          Row(
-            children: [
-              const Icon(
-                Icons.settings,
-                color: Colors.white,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                'Definições',
-                style: GoogleFonts.catamaran(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Container(
-                width: 2,
-                height: 20,
-                color: Colors.white,
-              ),
-              const SizedBox(width: 10),
-              GestureDetector(
-                onTap: () {
-                  sair(context);
-                },
-                child: Text(
-                  'Sair',
-                  style: GoogleFonts.catamaran(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          // Identificação do utilizador
+          iconPerfilDoUtilizador,
+
+          // Conteudo do menu lateral
+          conteudo,
+
+          // Definicoes e logout da app
+          definicoesELogout,
         ],
       ),
     );
   }
 
-  // the logout function
+  // Função sair da aplicação
   Future<void> sair(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacement(

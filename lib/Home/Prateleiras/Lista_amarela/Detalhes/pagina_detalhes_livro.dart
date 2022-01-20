@@ -64,7 +64,7 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                         ),
                         content: const Text(
                           // ignore: prefer_adjacent_string_concatenation
-                          "Dirija-se a biblioteca para fazer o levantamento do seu livro. \n" +
+                          "Confirme e dirigi-se a biblioteca para fazer o levantamento do seu livro. \n" +
                               "O prazo de devolução é de 10 dias.\n\n" +
                               "Obrigado!",
                           style: TextStyle(

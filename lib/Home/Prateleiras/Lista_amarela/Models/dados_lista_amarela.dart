@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'dados_livros_requisitados.dart';
-
 class DadosListaAmarela {
   int numRegisto;
   String titulo;
@@ -66,7 +64,7 @@ class DadosListaAmarela {
       disponibilidade: disponibilidade ?? this.disponibilidade,
       descricao: descricao ?? this.descricao,
       imagem: imagem ?? this.imagem,
-      livroRequisitado: estaRequisitado ?? this.livroRequisitado,
+      livroRequisitado: estaRequisitado ?? livroRequisitado,
     );
   }
 
