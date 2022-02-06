@@ -25,6 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isTecladoDoUtilizador = MediaQuery.of(context).viewInsets.bottom != 0;
+
     // ---> Campo do E-mail <---
     final campoEmail = TextFormField(
       autofocus: false,
@@ -57,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
         height: 2.0,
       ),
       decoration: const InputDecoration(
-        labelText: "E-mail ou número do cartão de aluno",
+        labelText: "Nome de utilizador",
         labelStyle: TextStyle(
           fontFamily: 'Montserrat',
           fontSize: 15,
@@ -246,13 +248,14 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     return Scaffold(
-      //
+      //resizeToAvoidBottomInset: false,
       body: Container(
         height: MediaQuery.of(context).size.height,
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
         margin: const EdgeInsets.only(top: 45),
         color: Colors.white,
         child: SingleChildScrollView(
+          reverse: true,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
