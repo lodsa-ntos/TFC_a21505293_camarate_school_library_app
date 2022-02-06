@@ -1,100 +1,30 @@
 import 'dart:async';
 
+import 'package:camarate_school_library/Screens/Abertura%20da%20app/abertura_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'Authentication/Login/login_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(CamarateSchoolLibraryApp());
+  runApp(const CamarateSchoolLibraryApp());
 }
 
-// ignore: use_key_in_widget_constructors
 class CamarateSchoolLibraryApp extends StatelessWidget {
+  const CamarateSchoolLibraryApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // tirar o debug no ecrã
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, // tira o debug do ecrã
       home: Scaffold(
         body: Stack(
           children: const [
-            // Abertura da página
-            EcraDeAberturaDaApp(),
+            AberturaScreen(), // Abertura da página
           ],
         ),
-        // para que o teclado do utilizador não acione o redimensionamento
-        //da página
+        // para que o teclado do utilizador não redimensione a página
         resizeToAvoidBottomInset: false,
-      ),
-    );
-  }
-}
-
-class EcraDeAberturaDaApp extends StatefulWidget {
-  const EcraDeAberturaDaApp({Key? key}) : super(key: key);
-
-  @override
-  _EcraDeAberturaDaAppState createState() => _EcraDeAberturaDaAppState();
-}
-
-class _EcraDeAberturaDaAppState extends State<EcraDeAberturaDaApp> {
-  @override
-  void initState() {
-    super.initState();
-    // Duração da página de ecrã de abertura da app
-    Timer(const Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => const PaginaLogin(),
-        ),
-      );
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // Logotipo
-            Image.asset(
-              'assets/images/logotipos/logotipo.png',
-              height: 259.0,
-            ),
-            const Text(
-              'Camarate',
-              style: TextStyle(
-                fontFamily: 'Gobold',
-                fontWeight: FontWeight.w300,
-                fontSize: 30,
-                color: Color.fromRGBO(51, 51, 51, 2),
-              ),
-            ),
-            const Text(
-              'School Library',
-              style: TextStyle(
-                fontFamily: 'Gobold',
-                fontWeight: FontWeight.w300,
-                fontSize: 36,
-                color: Color.fromRGBO(51, 51, 51, 2),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
       ),
     );
   }

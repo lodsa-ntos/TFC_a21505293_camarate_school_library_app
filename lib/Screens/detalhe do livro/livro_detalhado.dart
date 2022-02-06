@@ -1,24 +1,24 @@
 // ignore_for_file: deprecated_member_use
-import 'package:camarate_school_library/Home/Layout/layout_pagina_utilizador.dart';
-import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Models/dados_lista_amarela.dart';
-import 'package:camarate_school_library/Home/Prateleiras/Lista_amarela/Models/dados_livros_requisitados.dart';
+
+import 'package:camarate_school_library/Layout/layout_pagina_principal.dart';
+import 'package:camarate_school_library/Models/livro.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
-class PaginaDetalhesLivro extends StatefulWidget {
-  const PaginaDetalhesLivro({
+class LivroDetalhado extends StatefulWidget {
+  const LivroDetalhado({
     Key? key,
-    required this.livros,
+    required this.livro,
   }) : super(key: key);
 
-  final DadosListaAmarela livros;
+  final Livro livro;
 
   @override
-  State<PaginaDetalhesLivro> createState() => _PaginaDetalhesLivroState();
+  State<LivroDetalhado> createState() => _LivroDetalhadoState();
 }
 
-class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
+class _LivroDetalhadoState extends State<LivroDetalhado> {
   bool isRequisitado = false;
 
   @override
@@ -32,7 +32,7 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
         child: FlatButton(
           color: const Color.fromRGBO(18, 157, 158, 1),
           onPressed: () {
-            if (widget.livros.disponibilidade == "Disponível") {
+            if (widget.livro.disponibilidade == "Disponível") {
               setState(() {
                 isRequisitado = true;
               });
@@ -81,7 +81,7 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                               setState(() {
                                 // A disponibilidade do livro passa a estar "Esgotado"...
                                 Text(
-                                  widget.livros.disponibilidade = "Esgotado",
+                                  widget.livro.disponibilidade = 'Esgotado',
                                   style: GoogleFonts.catamaran(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.bold,
@@ -90,14 +90,10 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                                 );
                               });
 
-                              // livro requisitado = SIM
-                              widget.livros.livroRequisitado = true;
-
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) =>
-                                      const LayoutPaginaPrincipalUtilizador(),
+                                  builder: (_) => const LayoutPaginaPrincipal(),
                                 ),
                               );
                             },
@@ -118,7 +114,7 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
               );
 
               // Se o utilizador tentar requisitar um livro que esteja esgotado
-            } else if (widget.livros.disponibilidade == "Esgotado") {
+            } else if (widget.livro.disponibilidade == "Esgotado") {
               // É apresentado a mensagem de pedido recusado
               showDialog<String>(
                 context: context,
@@ -217,7 +213,7 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: NetworkImage(
-                                widget.livros.imagem,
+                                widget.livro.imagemCapa,
                               ),
                             ),
                             borderRadius: BorderRadius.circular(10.0),
@@ -234,7 +230,7 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                     Padding(
                       padding: const EdgeInsets.only(top: 24.0, left: 25.0),
                       child: Text(
-                        widget.livros.titulo,
+                        widget.livro.titulo,
                         style: GoogleFonts.catamaran(
                           fontSize: 27,
                           fontWeight: FontWeight.w600,
@@ -247,7 +243,7 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.livros.autor,
+                            widget.livro.autor,
                             style: GoogleFonts.catamaran(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -262,10 +258,9 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (widget.livros.disponibilidade ==
-                              "Disponível") ...[
+                          if (widget.livro.disponibilidade == "Disponível") ...[
                             Text(
-                              widget.livros.disponibilidade,
+                              widget.livro.disponibilidade,
                               style: GoogleFonts.catamaran(
                                 fontSize: 14.0,
                                 fontWeight: FontWeight.bold,
@@ -274,7 +269,7 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                             ),
                           ] else
                             Text(
-                              widget.livros.disponibilidade,
+                              widget.livro.disponibilidade,
                               style: GoogleFonts.catamaran(
                                 fontSize: 14.0,
                                 fontWeight: FontWeight.bold,
@@ -318,7 +313,7 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
                       padding: const EdgeInsets.only(
                           left: 25, right: 25, bottom: 25),
                       child: Text(
-                        widget.livros.descricao,
+                        widget.livro.descricao,
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -337,27 +332,5 @@ class _PaginaDetalhesLivroState extends State<PaginaDetalhesLivro> {
         ),
       ),
     );
-  }
-
-  void adicionarLivroRequisitado() {
-    if (widget.livros.livroRequisitado == true) {
-      for (var i = 0; i < requisitados.length; i++) {
-        if (requisitados.isEmpty) {
-          requisitados.add(
-            DadosLivrosRequisitados(
-              titulo: "A estrada do futuro",
-              dataEntrega: "Disponível",
-              descricao:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-              imagem:
-                  "https://images-na.ssl-images-amazon.com/images/I/81blQVIfQwL.jpg",
-            ),
-          );
-        }
-      }
-    } else {
-      // ignore: avoid_print
-      print('ERRO: não foi possível requisitar o livro');
-    }
   }
 }

@@ -72,7 +72,7 @@ flutter:
      - assets/images/livros/will_smith.jpg
      - assets/images/livros/sem_imagem.jpg
      - assets/images/livros/esther.jpg
-     - assets/inventario_livros.json
+     - assets/livros.json
      - assets/files/livros_prateleiras.json
      - assets/images/logotipos/logotipo.png
      - assets/images/logotipos/logo_entidade.jpg

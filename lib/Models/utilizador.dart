@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class ModeloUtilizador {
+class Utilizador {
   String? uid;
   String? nomeProprio;
   String? ultimoNome;
@@ -11,7 +11,7 @@ class ModeloUtilizador {
   String? nomeDiretorTurma;
   String? sobreMim;
 
-  ModeloUtilizador({
+  Utilizador({
     this.uid,
     this.nomeProprio,
     this.ultimoNome,
@@ -39,8 +39,8 @@ class ModeloUtilizador {
   }
 
   // recebe os dados do servidor
-  factory ModeloUtilizador.fromMap(map) {
-    return ModeloUtilizador(
+  factory Utilizador.fromMap(map) {
+    return Utilizador(
       uid: map['uid'],
       nomeProprio: map['nomeProprio'],
       ultimoNome: map['ultimoNome'],
@@ -55,6 +55,6 @@ class ModeloUtilizador {
 
   String toJson() => json.encode(toMap());
 
-  factory ModeloUtilizador.fromJson(String source) =>
-      ModeloUtilizador.fromMap(json.decode(source));
+  factory Utilizador.fromJson(String source) =>
+      Utilizador.fromMap(json.decode(source));
 }

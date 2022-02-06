@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:camarate_school_library/Authentication/Login/login_screen.dart';
-import 'package:camarate_school_library/Authentication/Models/modelo_utilizador.dart';
-import 'package:camarate_school_library/Home/layout/layout_pagina_utilizador.dart';
+import 'package:camarate_school_library/Layout/layout_pagina_principal.dart';
+import 'package:camarate_school_library/Screens/login/login_screen.dart';
+import 'package:camarate_school_library/Models/utilizador.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -14,14 +14,14 @@ class PreferencesKeys {
   static const activeUser = "IFORMACAO_UTILIZADOR_LOGIN";
 }
 
-class Registo extends StatefulWidget {
-  const Registo({Key? key}) : super(key: key);
+class RegistoScreen extends StatefulWidget {
+  const RegistoScreen({Key? key}) : super(key: key);
 
   @override
-  _RegistoState createState() => _RegistoState();
+  _RegistoScreenState createState() => _RegistoScreenState();
 }
 
-class _RegistoState extends State<Registo> {
+class _RegistoScreenState extends State<RegistoScreen> {
   // Controladores para guardar informação do formulário
   TextEditingController nameInputController = TextEditingController();
   TextEditingController lastNameInputController = TextEditingController();
@@ -424,8 +424,7 @@ class _RegistoState extends State<Registo> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (_) =>
-                            const LayoutPaginaPrincipalUtilizador()));
+                        builder: (_) => const LayoutPaginaPrincipal()));
               },
             );
           } else {
@@ -475,7 +474,7 @@ class _RegistoState extends State<Registo> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PaginaLogin(),
+                    builder: (context) => const LoginScreen(),
                   ),
                 );
               },
@@ -678,7 +677,7 @@ class _RegistoState extends State<Registo> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? utilizador = auth.currentUser;
 
-    ModeloUtilizador modeloRegistoUtilizador = ModeloUtilizador();
+    Utilizador modeloRegistoUtilizador = Utilizador();
 
     // registar todos os valores
     modeloRegistoUtilizador.uid = utilizador!.uid;
@@ -695,7 +694,7 @@ class _RegistoState extends State<Registo> {
     Navigator.pushAndRemoveUntil(
         (context),
         MaterialPageRoute(
-          builder: (context) => const LayoutPaginaPrincipalUtilizador(),
+          builder: (context) => const LayoutPaginaPrincipal(),
         ),
         (route) => false);
   }

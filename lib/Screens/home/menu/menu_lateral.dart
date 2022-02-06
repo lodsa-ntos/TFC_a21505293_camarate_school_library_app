@@ -1,11 +1,10 @@
-import 'package:camarate_school_library/Authentication/Login/login_screen.dart';
-import 'package:camarate_school_library/Authentication/Models/modelo_utilizador.dart';
+import 'package:camarate_school_library/Models/utilizador.dart';
+import 'package:camarate_school_library/Screens/home/Menu/settings/configuracao.dart';
+import 'package:camarate_school_library/Screens/login/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'Configuracao/configuracao.dart';
 
 // ignore: use_key_in_widget_constructors
 class MenuLateral extends StatefulWidget {
@@ -15,7 +14,7 @@ class MenuLateral extends StatefulWidget {
 
 class _MenuLateralState extends State<MenuLateral> {
   User? utilizador = FirebaseAuth.instance.currentUser;
-  ModeloUtilizador utilizadorLogado = ModeloUtilizador();
+  Utilizador utilizadorLogado = Utilizador();
 
   @override
   void initState() {
@@ -25,7 +24,7 @@ class _MenuLateralState extends State<MenuLateral> {
         .doc(utilizador!.uid)
         .get()
         .then((value) {
-      utilizadorLogado = ModeloUtilizador.fromMap(value.data());
+      utilizadorLogado = Utilizador.fromMap(value.data());
       setState(() {});
     });
   }
@@ -154,6 +153,6 @@ class _MenuLateralState extends State<MenuLateral> {
   Future<void> sair(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const PaginaLogin()));
+        MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
 }

@@ -1,22 +1,18 @@
-import 'package:camarate_school_library/Authentication/Registo/registo.dart';
-import 'package:camarate_school_library/Home/layout/layout_pagina_utilizador.dart';
+import 'package:camarate_school_library/Layout/layout_pagina_principal.dart';
+import 'package:camarate_school_library/Screens/registo/registo_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class PreferencesKeys {
-  static const ativarUtilizador = "INFORMACAO_UTILIZADOR_LOGIN";
-}
-
-class PaginaLogin extends StatefulWidget {
-  const PaginaLogin({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  _PaginaLoginState createState() => _PaginaLoginState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _PaginaLoginState extends State<PaginaLogin> {
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailInputController = TextEditingController();
   TextEditingController passwordInputController = TextEditingController();
 
@@ -26,9 +22,6 @@ class _PaginaLoginState extends State<PaginaLogin> {
 
   // Autenticação com o firebase
   final _auth = FirebaseAuth.instance;
-
-  // string para mostrar a mensagem de erro
-  String? mensagemDeErro;
 
   @override
   Widget build(BuildContext context) {
@@ -179,8 +172,7 @@ class _PaginaLoginState extends State<PaginaLogin> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (_) =>
-                            const LayoutPaginaPrincipalUtilizador()));
+                        builder: (_) => const LayoutPaginaPrincipal()));
               },
             );
           } else {
@@ -230,7 +222,7 @@ class _PaginaLoginState extends State<PaginaLogin> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Registo(),
+                    builder: (context) => const RegistoScreen(),
                   ),
                 );
               },
@@ -331,7 +323,8 @@ class _PaginaLoginState extends State<PaginaLogin> {
     );
   }
 
-  // incompleto
+  // assim que o utilizador fizer login, se os dados forem válidos, vai para
+  //home e recebe a mensagem 'Login efetuado com sucesso'....
   void fazerLogin(String email, String password) async {
     if (formKey.currentState!.validate()) {
       await _auth
@@ -340,8 +333,7 @@ class _PaginaLoginState extends State<PaginaLogin> {
                 Fluttertoast.showToast(msg: "Login efetuado com sucesso"),
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) =>
-                        const LayoutPaginaPrincipalUtilizador(),
+                    builder: (context) => const LayoutPaginaPrincipal(),
                   ),
                 ),
               })

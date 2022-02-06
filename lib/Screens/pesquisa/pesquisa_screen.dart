@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:camarate_school_library/Components/cores.dart';
-import 'package:camarate_school_library/Components/estilo_texto.dart';
-import 'package:camarate_school_library/Home/Pesquisa/models/inventario.dart';
+import 'package:camarate_school_library/Models/livro.dart';
+import 'package:camarate_school_library/Utils/cores.dart';
+import 'package:camarate_school_library/Utils/estilo_texto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,13 +27,12 @@ class _PesquisaState extends State<Pesquisa> {
   // sempre que abrir o ecrã de pesquisa carrega a minha lista inicial de livros
   //do ficheiro .json...
   carregarDados() async {
-    final livrosJSON =
-        await rootBundle.loadString("assets/files/inventario_livros.json");
+    final livrosJSON = await rootBundle.loadString("assets/files/livros.json");
     var dadosDecodificados = jsonDecode(livrosJSON);
     var informacoesDoLivro = dadosDecodificados["livros"];
 
-    Inventario.books = List.from(informacoesDoLivro)
-        .map<RegisterBooks>((books) => RegisterBooks.fromMap(books))
+    Livros.livros = List.from(informacoesDoLivro)
+        .map<Livro>((livros) => Livro.fromMap(livros))
         .toList();
     setState(() {});
   }
@@ -131,8 +130,7 @@ class _PesquisaState extends State<Pesquisa> {
                   //e os campos não estiverem vazios vamos expandir a lista,
                   //senão mostra o icon do loading a carregar a pensar....
                   // ignore: unnecessary_null_comparison
-                  if (Inventario.books != null &&
-                      Inventario.books.isNotEmpty) ...[
+                  if (Livros.livros != null && Livros.livros.isNotEmpty) ...[
                     const ListaDeInventario().expand()
                   ] else
                     // reload icon
@@ -158,9 +156,9 @@ class ListaDeInventario extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: Inventario.books.length,
+        itemCount: Livros.livros.length,
         itemBuilder: (context, index) {
-          final inventario = Inventario.books[index];
+          final inventario = Livros.livros[index];
           return LivrosNoInventario(inventario: inventario);
         });
   }
@@ -169,7 +167,7 @@ class ListaDeInventario extends StatelessWidget {
 // Classe para definir as imagens dos livros
 // ignore: must_be_immutable
 class LivrosNoInventario extends StatelessWidget {
-  RegisterBooks inventario;
+  Livro inventario;
 
   LivrosNoInventario({
     Key? key,
@@ -183,7 +181,7 @@ class LivrosNoInventario extends StatelessWidget {
     return VxBox(
       child: Row(
         children: [
-          Image.network(inventario.imagem)
+          Image.network(inventario.imagemCapa)
               .box
               .rounded // borda a volta da imagem
               .p8 // tamanho da imagem

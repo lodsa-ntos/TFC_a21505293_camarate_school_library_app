@@ -1,12 +1,11 @@
 import 'dart:convert';
-
-import 'package:camarate_school_library/Authentication/Routes/routes.dart';
+import 'package:camarate_school_library/Services/Routes/routes.dart';
 import 'package:http/http.dart' as http;
 
-class SignUpService {
-  signUp(String email, String password) async {
+class ServicoLogin {
+  login(String email, String password) async {
     http.Response response = await http.post(
-      Uri.parse(Routes().signUp()),
+      Uri.parse(Routes().signIn()),
       body: json.encode(
         {
           "email": email,
@@ -16,7 +15,6 @@ class SignUpService {
       ),
     );
 
-    // ignore: avoid_print
     print(response.body);
   }
 }
