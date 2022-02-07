@@ -19,7 +19,7 @@ class Livro {
   final int numRegisto;
   final String titulo;
   final String autor;
-  final num anoDePublicacao;
+  final String editora;
   final String isbn;
   final String imagemCapa;
   String disponibilidade;
@@ -30,7 +30,7 @@ class Livro {
     required this.numRegisto,
     required this.titulo,
     required this.autor,
-    required this.anoDePublicacao,
+    required this.editora,
     required this.isbn,
     required this.imagemCapa,
     required this.disponibilidade,
@@ -42,7 +42,7 @@ class Livro {
       'numRegisto': numRegisto,
       'titulo': titulo,
       'autor': autor,
-      'anoDePublicacao': anoDePublicacao,
+      'editora': editora,
       'isbn': isbn,
       'imagemCapa': imagemCapa,
       'disponibilidade': disponibilidade,
@@ -55,7 +55,7 @@ class Livro {
       numRegisto: map['numRegisto']?.toInt() ?? 0,
       titulo: map['titulo'] ?? '',
       autor: map['autor'] ?? '',
-      anoDePublicacao: map['anoDePublicacao'] ?? 0,
+      editora: map['editora'] ?? '',
       isbn: map['isbn'] ?? '',
       imagemCapa: map['imagemCapa'] ?? '',
       disponibilidade: map['disponibilidade'] ?? '',
@@ -75,7 +75,7 @@ class Livro {
         other.numRegisto == numRegisto &&
         other.titulo == titulo &&
         other.autor == autor &&
-        other.anoDePublicacao == anoDePublicacao &&
+        other.editora == editora &&
         other.isbn == isbn &&
         other.imagemCapa == imagemCapa &&
         other.disponibilidade == disponibilidade &&
@@ -87,7 +87,7 @@ class Livro {
     return numRegisto.hashCode ^
         titulo.hashCode ^
         autor.hashCode ^
-        anoDePublicacao.hashCode ^
+        editora.hashCode ^
         isbn.hashCode ^
         imagemCapa.hashCode ^
         disponibilidade.hashCode ^
@@ -96,14 +96,14 @@ class Livro {
 
   @override
   String toString() {
-    return 'Livro(numRegisto: $numRegisto, titulo: $titulo, autor: $autor, anoDePublicacao: $anoDePublicacao, isbn: $isbn, imagemCapa: $imagemCapa, disponibilidade: $disponibilidade, descricao: $descricao)';
+    return 'Livro(numRegisto: $numRegisto, titulo: $titulo, autor: $autor, editora: $editora, isbn: $isbn, imagemCapa: $imagemCapa, disponibilidade: $disponibilidade, descricao: $descricao)';
   }
 
   Livro copyWith({
     int? numRegisto,
     String? titulo,
     String? autor,
-    num? anoDePublicacao,
+    String? editora,
     String? isbn,
     String? imagemCapa,
     String? disponibilidade,
@@ -113,7 +113,7 @@ class Livro {
       numRegisto: numRegisto ?? this.numRegisto,
       titulo: titulo ?? this.titulo,
       autor: autor ?? this.autor,
-      anoDePublicacao: anoDePublicacao ?? this.anoDePublicacao,
+      editora: editora ?? this.editora,
       isbn: isbn ?? this.isbn,
       imagemCapa: imagemCapa ?? this.imagemCapa,
       disponibilidade: disponibilidade ?? this.disponibilidade,
@@ -128,7 +128,7 @@ List<Livro> gerarLivrosAleatorios() {
       numRegisto: 0,
       titulo: 'O Alquimista',
       autor: 'Paulo Coelho',
-      anoDePublicacao: 1111,
+      editora: '11 X 17',
       isbn: '9789722524223',
       imagemCapa:
           'https://img.wook.pt/images/o-alquimista-paulo-coelho/MXwxNTIzNzEzOXwxMDcyNTQ3NXwxMzgzNTIzMjAwMDAwfHdlYnA=/502x',
@@ -140,7 +140,7 @@ List<Livro> gerarLivrosAleatorios() {
       numRegisto: 1,
       titulo: 'Que número é este',
       autor: 'Ricardo Garcia, Luísa Barbosa e Maria João Valente Rosa',
-      anoDePublicacao: 1111,
+      editora: 'Fundação Francisco Manuel dos Santos',
       isbn: '9789898838889',
       imagemCapa:
           'https://img.wook.pt/images/que-numero-e-este-ricardo-garcia/MXwyNDAwNjIyNHwyMDA1MjUxN3wxNTg3NDIzNjAwMDAwfHdlYnA=/502x',
@@ -152,7 +152,7 @@ List<Livro> gerarLivrosAleatorios() {
       numRegisto: 2,
       titulo: '14 - Uma Vida nos Tectos do Mundo',
       autor: 'João Garcia',
-      anoDePublicacao: 1111,
+      editora: 'Lua de Papel',
       isbn: '9789892326153',
       imagemCapa:
           'https://img.wook.pt/images/14-uma-vida-nos-tectos-do-mundo-joao-garcia/MXwxNTcyNDIwNXwxMTIxOTMwMnwxMzk4OTg1MjAwMDAwfHdlYnA=/502x',
@@ -164,7 +164,7 @@ List<Livro> gerarLivrosAleatorios() {
       numRegisto: 3,
       titulo: 'Planisfério Pessoal',
       autor: 'Gonçalo Cadilhe',
-      anoDePublicacao: 1111,
+      editora: 'Clube do Autor',
       isbn: '9789897242915',
       imagemCapa:
           'https://img.wook.pt/images/planisferio-pessoal-goncalo-cadilhe/MXwxNzgxNzY4M3wxMzQ1ODk0NnwxNDYwNDE1NjAwMDAwfHdlYnA=/502x',

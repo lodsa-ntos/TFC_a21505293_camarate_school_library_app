@@ -243,10 +243,42 @@ class _LivroDetalhadoState extends State<LivroDetalhado> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.livro.autor,
+                            "De: " + widget.livro.autor,
                             style: GoogleFonts.catamaran(
                               fontSize: 14,
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF171717),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 7.0, left: 25.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "ISBN: " + widget.livro.isbn,
+                            style: GoogleFonts.catamaran(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF171717),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 25.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Editora: " + widget.livro.editora,
+                            style: GoogleFonts.catamaran(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
                               color: const Color(0xFF171717),
                             ),
                           ),

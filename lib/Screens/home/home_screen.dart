@@ -1,6 +1,8 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Screens/Pesquisa/pesquisa_screen.dart';
+import 'package:camarate_school_library/Screens/lista%20de%20livros/lista_de_livros.dart';
 import 'package:camarate_school_library/Utils/cores.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +17,50 @@ class _HomeScreenState extends State<HomeScreen> {
   double fatorDeEscala = 1.0;
 
   bool isMenuAberto = false;
+
+  final livros = gerarLivrosAleatorios();
+
+  final espacamentoVertical = const SizedBox(
+    height: 14,
+  );
+
+  final prateleiras = Container(
+    padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 30),
+    child: const Text(
+      'Prateleiras',
+      style: TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.bold,
+        fontSize: 28,
+        color: darkColor,
+      ),
+    ),
+  );
+
+  final seccaoAmarela = Container(
+    padding: const EdgeInsets.only(left: 27.0),
+    child: Row(
+      children: const [
+        // Circulo das classes
+        CircleAvatar(
+          backgroundColor: Colors.yellow,
+          minRadius: 15,
+        ),
+        Padding(
+          // espaço entre o circulo e o título da classe
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          child: Text(
+            'Generabilidade.Dicionários.\nEnciclopédias.Informática',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: darkColor,
+                fontFamily: 'Poppins'),
+          ),
+        ),
+      ],
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +127,39 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ],
+            ),
+          ),
+
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  espacamentoVertical,
+                  prateleiras,
+                  seccaoAmarela,
+                  espacamentoVertical,
+                  SingleChildScrollView(
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 350.0,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            ListaDeLivros(livros: livros[0]),
+                            ListaDeLivros(livros: livros[1]),
+                            ListaDeLivros(livros: livros[2]),
+                            ListaDeLivros(livros: livros[3]),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
