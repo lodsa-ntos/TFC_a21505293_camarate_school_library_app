@@ -192,175 +192,193 @@ class _LivroDetalhadoState extends State<LivroDetalhado> {
 
       // ---> TERMINA EDIÇÃO BOTÃO REQUISITAR <---
 
-      body: SafeArea(
-        child: Container(
-          child: CustomScrollView(
-            slivers: <Widget>[
-              SliverAppBar(
-                backgroundColor: Colors.blue,
-                expandedHeight: MediaQuery.of(context).size.height * 0.5,
-                flexibleSpace: Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  color: const Color.fromRGBO(18, 157, 158, 1),
-                  child: Stack(
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 62.0),
-                          width: 225.0,
-                          height: 282.0,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                widget.livro.imagemCapa,
-                              ),
-                            ),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: AppBar(
+            elevation: 0.0,
+            backgroundColor: Colors.white,
+            // ação voltar para trás
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              // seta voltar para trás
+              child: const Icon(
+                Icons.arrow_back_ios_new,
+                color: Colors.black87,
+                size: 20,
               ),
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 24.0, left: 25.0),
-                      child: Text(
-                        widget.livro.titulo,
-                        style: GoogleFonts.catamaran(
-                          fontSize: 27,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+            ),
+          ),
+        ),
+      ),
+      body: BodyDaPaginaLivroDetalhado(livro: widget.livro),
+      //bottomNavigationBar: BottomBar(widget.livro),
+    );
+  }
+}
+
+class BodyDaPaginaLivroDetalhado extends StatefulWidget {
+  final Livro livro;
+  const BodyDaPaginaLivroDetalhado({
+    Key? key,
+    required this.livro,
+  }) : super(key: key);
+
+  @override
+  State<BodyDaPaginaLivroDetalhado> createState() =>
+      _BodyDaPaginaLivroDetalhadoState();
+}
+
+class _BodyDaPaginaLivroDetalhadoState
+    extends State<BodyDaPaginaLivroDetalhado> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListView(
+        children: [
+          Stack(
+            children: [
+              Column(
+                children: [
+                  TopContainer(widget: widget), // Titulo do livro
+                  AutorContainer(widget: widget), // Nome autor
+                  const Padding(
+                    padding: EdgeInsets.only(top: 140),
+                  ),
+                ],
+              ),
+              Positioned(
+                left: 25,
+                top: 10,
+                child: Container(
+                  height: 260,
+                  width: MediaQuery.of(context).size.width / 2 - 30,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(
+                      widget.livro.imagemCapa,
+                      fit: BoxFit.contain,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 7.0, left: 25.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "De: " + widget.livro.autor,
-                            style: GoogleFonts.catamaran(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0xFF171717),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 7.0, left: 25.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "ISBN: " + widget.livro.isbn,
-                            style: GoogleFonts.catamaran(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0xFF171717),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 25.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Editora: " + widget.livro.editora,
-                            style: GoogleFonts.catamaran(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0xFF171717),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5.0, left: 25.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (widget.livro.disponibilidade == "Disponível") ...[
-                            Text(
-                              widget.livro.disponibilidade,
-                              style: GoogleFonts.catamaran(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green,
-                              ),
-                            ),
-                          ] else
-                            Text(
-                              widget.livro.disponibilidade,
-                              style: GoogleFonts.catamaran(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red.shade700,
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 28.0,
-                      margin: const EdgeInsets.only(top: 23.0, bottom: 20.0),
-                      padding: const EdgeInsets.only(left: 27.0),
-                      child: DefaultTabController(
-                        length: 1,
-                        child: TabBar(
-                          labelPadding: const EdgeInsets.all(0),
-                          indicatorPadding: const EdgeInsets.all(0),
-                          isScrollable: true,
-                          labelColor: Colors.black,
-                          labelStyle: GoogleFonts.catamaran(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                          ),
-                          indicator: MaterialIndicator(
-                            height: 3,
-                            tabPosition: TabPosition.bottom,
-                          ),
-                          tabs: [
-                            Tab(
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 23.0),
-                                child: const Text('Descrição'),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 25, right: 25, bottom: 25),
-                      child: Text(
-                        widget.livro.descricao,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF171717),
-                          letterSpacing: 1.5,
-                          height: 2,
-                        ),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               )
             ],
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class TopContainer extends StatelessWidget {
+  final BodyDaPaginaLivroDetalhado widget;
+  const TopContainer({
+    Key? key,
+    required this.widget,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.only(top: 5, bottom: 55),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+          colors: [
+            Color(0xfff8f8f8),
+            Colors.white,
+          ],
+        ),
+
+        // Linha horizontal por baixo do livro
+        border: Border(
+          bottom: BorderSide(
+            color: Color(0xfff0f0f0),
+            width: 2,
+          ),
+        ),
+      ),
+      child: Column(
+        children: <Widget>[
+          const SizedBox(
+            height: 50,
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              padding: const EdgeInsets.only(
+                left: 10,
+              ),
+              width: MediaQuery.of(context).size.width / 2,
+              child: Text(
+                widget.livro.titulo,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xff333333),
+                  fontSize: 18,
+                  fontFamily: 'Montserrat',
+                ),
+                softWrap: true,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class AutorContainer extends StatelessWidget {
+  const AutorContainer({
+    Key? key,
+    required this.widget,
+  }) : super(key: key);
+
+  final BodyDaPaginaLivroDetalhado widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Container(
+        padding: const EdgeInsets.only(
+          top: 20,
+          left: 10,
+          right: 10,
+          bottom: 0,
+        ),
+        width: MediaQuery.of(context).size.width / 2,
+        height: 110,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: <Widget>[
+            SizedBox(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        widget.livro.autor,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
