@@ -4,7 +4,6 @@ import 'package:camarate_school_library/Layout/layout_pagina_principal.dart';
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 class LivroDetalhado extends StatefulWidget {
   const LivroDetalhado({
@@ -215,7 +214,6 @@ class _LivroDetalhadoState extends State<LivroDetalhado> {
         ),
       ),
       body: BodyDaPaginaLivroDetalhado(livro: widget.livro),
-      //bottomNavigationBar: BottomBar(widget.livro),
     );
   }
 }
@@ -243,11 +241,13 @@ class _BodyDaPaginaLivroDetalhadoState
             children: [
               Column(
                 children: [
-                  TituloDoLivro(widget: widget), // Titulo do livro
+                  TituloDoLivro(widget: widget), // Titulo , ISBN, Editora...
                   AutorDoLivro(widget: widget), // Nome autor
-                  TabBarContainer(widget: widget),
+                  DescricaoDoLivro(widget: widget), // Descricão Do Livro
                 ],
               ),
+
+              // IMAGEM CAPA DO LIVRO
               Positioned(
                 left: 25,
                 top: 10,
@@ -447,8 +447,8 @@ class AutorDoLivro extends StatelessWidget {
   }
 }
 
-class TabBarContainer extends StatelessWidget {
-  const TabBarContainer({
+class DescricaoDoLivro extends StatelessWidget {
+  const DescricaoDoLivro({
     Key? key,
     required this.widget,
   }) : super(key: key);
@@ -457,19 +457,40 @@ class TabBarContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 30),
-      child: Text(
-        widget.livro.descricao,
-        style: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-          color: Color(0xFF171717),
-          letterSpacing: 1.5,
-          height: 2,
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Container(
+            padding: const EdgeInsets.only(left: 27),
+            width: MediaQuery.of(context).size.width / 2,
+            child: const Text(
+              'Descrição',
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color(0xff333333),
+                fontSize: 18,
+                fontFamily: 'Montserrat',
+              ),
+              softWrap: true,
+            ),
+          ),
         ),
-        textAlign: TextAlign.justify,
-      ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 30),
+          child: Text(
+            widget.livro.descricao,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: Color(0xFF171717),
+              letterSpacing: 1.5,
+              height: 2,
+            ),
+            textAlign: TextAlign.justify,
+          ),
+        ),
+      ],
     );
   }
 }
