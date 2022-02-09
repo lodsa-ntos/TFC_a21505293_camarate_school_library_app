@@ -236,24 +236,22 @@ class _BodyDaPaginaLivroDetalhadoState
     extends State<BodyDaPaginaLivroDetalhado> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       child: ListView(
         children: [
           Stack(
             children: [
               Column(
                 children: [
-                  TopContainer(widget: widget), // Titulo do livro
+                  TituloDoLivro(widget: widget), // Titulo do livro
                   AutorDoLivro(widget: widget), // Nome autor
-                  const Padding(
-                    padding: EdgeInsets.only(top: 140),
-                  ),
+                  TabBarContainer(widget: widget),
                 ],
               ),
               Positioned(
                 left: 25,
                 top: 10,
-                child: Container(
+                child: SizedBox(
                   height: 260,
                   width: MediaQuery.of(context).size.width / 2 - 30,
                   child: ClipRRect(
@@ -273,9 +271,9 @@ class _BodyDaPaginaLivroDetalhadoState
   }
 }
 
-class TopContainer extends StatelessWidget {
+class TituloDoLivro extends StatelessWidget {
   final BodyDaPaginaLivroDetalhado widget;
-  const TopContainer({
+  const TituloDoLivro({
     Key? key,
     required this.widget,
   }) : super(key: key);
@@ -295,7 +293,7 @@ class TopContainer extends StatelessWidget {
           ],
         ),
 
-        // Linha horizontal por baixo do livro
+        // Linha horizontal por de trás do livro
         border: Border(
           bottom: BorderSide(
             color: Color(0xfff0f0f0),
@@ -306,14 +304,12 @@ class TopContainer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           const SizedBox(
-            height: 50,
+            height: 25,
           ),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              padding: const EdgeInsets.only(
-                left: 10,
-              ),
+              padding: const EdgeInsets.only(left: 10),
               width: MediaQuery.of(context).size.width / 2,
               child: Text(
                 widget.livro.titulo,
@@ -326,7 +322,58 @@ class TopContainer extends StatelessWidget {
                 softWrap: true,
               ),
             ),
-          )
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              padding: const EdgeInsets.only(left: 10, top: 5),
+              width: MediaQuery.of(context).size.width / 2,
+              child: Text(
+                "ISBN: " + widget.livro.isbn,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey,
+                  fontSize: 12,
+                  fontFamily: 'Montserrat',
+                ),
+                softWrap: true,
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              padding: const EdgeInsets.only(left: 10, top: 5),
+              width: MediaQuery.of(context).size.width / 2,
+              child: Text(
+                "Editora: " + widget.livro.editora,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey,
+                  fontSize: 12,
+                  fontFamily: 'Montserrat',
+                ),
+                softWrap: true,
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              padding: const EdgeInsets.only(left: 10, top: 25),
+              width: MediaQuery.of(context).size.width / 2,
+              child: Text(
+                widget.livro.disponibilidade,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green,
+                  fontSize: 16.0,
+                  fontFamily: 'Montserrat',
+                ),
+                softWrap: true,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -384,7 +431,7 @@ class AutorDoLivro extends StatelessWidget {
                         widget.livro.autor,
                         style: GoogleFonts.catamaran(
                           textStyle: const TextStyle(
-                            fontSize: 18.0,
+                            fontSize: 17.5,
                           ),
                         ),
                       ),
@@ -395,6 +442,33 @@ class AutorDoLivro extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TabBarContainer extends StatelessWidget {
+  const TabBarContainer({
+    Key? key,
+    required this.widget,
+  }) : super(key: key);
+
+  final BodyDaPaginaLivroDetalhado widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 30),
+      child: Text(
+        widget.livro.descricao,
+        style: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+          color: Color(0xFF171717),
+          letterSpacing: 1.5,
+          height: 2,
+        ),
+        textAlign: TextAlign.justify,
       ),
     );
   }

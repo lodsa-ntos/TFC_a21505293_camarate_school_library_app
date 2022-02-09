@@ -149,7 +149,7 @@ List<Livro> gerarLivrosAleatorios() {
     Livro(
       numRegisto: 1,
       titulo: 'Que número é este',
-      autor: 'Ricardo Garcia, Luísa Barbosa e Maria João Valente Rosa',
+      autor: 'Ricardo Garcia',
       editora: 'Fundação Francisco Manuel dos Santos',
       isbn: '9789898838889',
       imagemCapa:
@@ -157,7 +157,8 @@ List<Livro> gerarLivrosAleatorios() {
       disponibilidade: 'Disponível',
       descricao:
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      imagemAutor: '',
+      imagemAutor:
+          'https://imagens.publico.pt/imagens.aspx/737891?tp=UH&db=IMAGENS&type=JPG&w=334&h=334&act=cropResize',
     ),
     Livro(
       numRegisto: 2,
@@ -170,7 +171,8 @@ List<Livro> gerarLivrosAleatorios() {
       disponibilidade: 'Esgostado',
       descricao:
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      imagemAutor: '',
+      imagemAutor:
+          'https://imagens.publico.pt/imagens.aspx/274255?tp=UH&db=IMAGENS&type=JPG&share=1&o=BarraFacebook_Publico.png',
     ),
     Livro(
       numRegisto: 3,
@@ -183,7 +185,8 @@ List<Livro> gerarLivrosAleatorios() {
       disponibilidade: 'Esgotado',
       descricao:
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      imagemAutor: '',
+      imagemAutor:
+          'https://images.trustinnews.pt/uploads/sites/5/2019/10/goncalo-cadilhe-2.png',
     ),
   ];
 }
