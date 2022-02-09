@@ -244,7 +244,7 @@ class _BodyDaPaginaLivroDetalhadoState
               Column(
                 children: [
                   TopContainer(widget: widget), // Titulo do livro
-                  AutorContainer(widget: widget), // Nome autor
+                  AutorDoLivro(widget: widget), // Nome autor
                   const Padding(
                     padding: EdgeInsets.only(top: 140),
                   ),
@@ -333,8 +333,8 @@ class TopContainer extends StatelessWidget {
   }
 }
 
-class AutorContainer extends StatelessWidget {
-  const AutorContainer({
+class AutorDoLivro extends StatelessWidget {
+  const AutorDoLivro({
     Key? key,
     required this.widget,
   }) : super(key: key);
@@ -356,23 +356,38 @@ class AutorContainer extends StatelessWidget {
         height: 110,
         child: ListView(
           scrollDirection: Axis.horizontal,
-          children: <Widget>[
+          children: [
             SizedBox(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
+                children: [
                   Row(
-                    children: <Widget>[
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        height: 35,
+                        width: 35,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.network(
+                            widget.livro.imagemAutor,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                       const SizedBox(
                         width: 10,
                       ),
                       Text(
                         widget.livro.autor,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
+                        style: GoogleFonts.catamaran(
+                          textStyle: const TextStyle(
+                            fontSize: 18.0,
+                          ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],

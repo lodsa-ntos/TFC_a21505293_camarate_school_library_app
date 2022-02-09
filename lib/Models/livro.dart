@@ -24,7 +24,7 @@ class Livro {
   final String imagemCapa;
   String disponibilidade;
   final String descricao;
-  final String fotoAutor;
+  final String imagemAutor;
 
   // Construtor
   Livro({
@@ -36,7 +36,7 @@ class Livro {
     required this.imagemCapa,
     required this.disponibilidade,
     required this.descricao,
-    required this.fotoAutor,
+    required this.imagemAutor,
   });
 
   Map<String, dynamic> toMap() {
@@ -49,7 +49,7 @@ class Livro {
       'imagemCapa': imagemCapa,
       'disponibilidade': disponibilidade,
       'descricao': descricao,
-      'fotoAutor': fotoAutor,
+      'imagemAutor': imagemAutor,
     };
   }
 
@@ -63,7 +63,7 @@ class Livro {
       imagemCapa: map['imagemCapa'] ?? '',
       disponibilidade: map['disponibilidade'] ?? '',
       descricao: map['descricao'] ?? '',
-      fotoAutor: map['fotoAutor'] ?? '',
+      imagemAutor: map['imagemAutor'] ?? '',
     );
   }
 
@@ -84,7 +84,7 @@ class Livro {
         other.imagemCapa == imagemCapa &&
         other.disponibilidade == disponibilidade &&
         other.descricao == descricao &&
-        other.fotoAutor == fotoAutor;
+        other.imagemAutor == imagemAutor;
   }
 
   @override
@@ -97,12 +97,12 @@ class Livro {
         imagemCapa.hashCode ^
         disponibilidade.hashCode ^
         descricao.hashCode ^
-        fotoAutor.hashCode;
+        imagemAutor.hashCode;
   }
 
   @override
   String toString() {
-    return 'Livro(numRegisto: $numRegisto, titulo: $titulo, autor: $autor, editora: $editora, isbn: $isbn, imagemCapa: $imagemCapa, disponibilidade: $disponibilidade, descricao: $descricao, fotoAutor: $fotoAutor)';
+    return 'Livro(numRegisto: $numRegisto, titulo: $titulo, autor: $autor, editora: $editora, isbn: $isbn, imagemCapa: $imagemCapa, disponibilidade: $disponibilidade, descricao: $descricao, imagemAutor: $imagemAutor)';
   }
 
   Livro copyWith({
@@ -114,7 +114,7 @@ class Livro {
     String? imagemCapa,
     String? disponibilidade,
     String? descricao,
-    String? fotoAutor,
+    String? imagemAutor,
   }) {
     return Livro(
       numRegisto: numRegisto ?? this.numRegisto,
@@ -125,7 +125,7 @@ class Livro {
       imagemCapa: imagemCapa ?? this.imagemCapa,
       disponibilidade: disponibilidade ?? this.disponibilidade,
       descricao: descricao ?? this.descricao,
-      fotoAutor: fotoAutor ?? this.fotoAutor,
+      imagemAutor: imagemAutor ?? this.imagemAutor,
     );
   }
 }
@@ -143,8 +143,8 @@ List<Livro> gerarLivrosAleatorios() {
       disponibilidade: 'Disponível',
       descricao:
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      fotoAutor:
-          'https://br.web.img3.acsta.net/c_310_420/pictures/21/08/12/15/16/2533433.jpg',
+      imagemAutor:
+          'https://br.web.img3.acsta.net/pictures/21/08/12/15/16/2533433.jpg',
     ),
     Livro(
       numRegisto: 1,
@@ -157,8 +157,7 @@ List<Livro> gerarLivrosAleatorios() {
       disponibilidade: 'Disponível',
       descricao:
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      fotoAutor:
-          'https://imagens.publico.pt/imagens.aspx/737891?tp=UH&db=IMAGENS&type=JPG&w=334&h=334&act=cropResize',
+      imagemAutor: '',
     ),
     Livro(
       numRegisto: 2,
@@ -171,8 +170,7 @@ List<Livro> gerarLivrosAleatorios() {
       disponibilidade: 'Esgostado',
       descricao:
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      fotoAutor:
-          'https://imagens.publico.pt/imagens.aspx/274255?tp=UH&db=IMAGENS&type=JPG&share=1&o=BarraFacebook_Publico.png',
+      imagemAutor: '',
     ),
     Livro(
       numRegisto: 3,
@@ -185,8 +183,7 @@ List<Livro> gerarLivrosAleatorios() {
       disponibilidade: 'Esgotado',
       descricao:
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      fotoAutor:
-          'https://www.maratonadeleitura.pt/media/1678/goncalo-cadilhe.png?crop=0.20789473684210527,0.0038834951456310682,0.31374707515187722,0.29018985847655671&cropmode=percentage&width=600&height=600&rnd=132012881220000000',
+      imagemAutor: '',
     ),
   ];
 }
