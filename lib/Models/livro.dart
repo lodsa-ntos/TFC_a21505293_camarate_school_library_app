@@ -177,7 +177,7 @@ List<Livro> gerarLivrosAleatorios() {
     Livro(
       numRegisto: 3,
       titulo: 'Planisfério Pessoal',
-      autor: 'Gonçalo Cadilhe',
+      autor: 'Gonçalo\nCadilhe',
       editora: 'Clube do Autor',
       isbn: '9789897242915',
       imagemCapa:

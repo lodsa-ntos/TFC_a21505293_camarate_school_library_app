@@ -23,178 +23,10 @@ class _LivroDetalhadoState extends State<LivroDetalhado> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-// ---> BOTÃO REQUISITAR <---
-      bottomNavigationBar: Container(
-        margin: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
-        height: 49,
-        color: Colors.transparent,
-        child: FlatButton(
-          color: const Color.fromRGBO(18, 157, 158, 1),
-          onPressed: () {
-            if (widget.livro.disponibilidade == "Disponível") {
-              setState(() {
-                isRequisitado = true;
-              });
-
-              Future.delayed(
-                // Processo que depois será mudado para a confirmação do administrador
-                const Duration(seconds: 3),
-                () {
-                  setState(
-                    () {
-                      isRequisitado = false;
-                    },
-                  );
-
-                  // Mostra mensagem ao utilizador que a requisicao foi efetuado com sucesso
-                  showDialog<String>(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        elevation: 16,
-                        title: const Text(
-                          'Pedido efetuado com sucesso',
-                          style: TextStyle(
-                            color: Colors.green,
-                          ),
-                        ),
-                        content: const Text(
-                          // ignore: prefer_adjacent_string_concatenation
-                          "Confirme e dirigi-se a biblioteca para fazer o levantamento do seu livro. \n" +
-                              "O prazo de devolução é de 10 dias.\n\n" +
-                              "Obrigado!",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xFF171717),
-                            height: 2,
-                          ),
-                          textAlign: TextAlign.justify,
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              setState(() {
-                                // A disponibilidade do livro passa a estar "Esgotado"...
-                                Text(
-                                  widget.livro.disponibilidade = 'Esgotado',
-                                  style: GoogleFonts.catamaran(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red.shade700,
-                                  ),
-                                );
-                              });
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const LayoutPaginaPrincipal(),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              'Confirmar',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromRGBO(18, 157, 158, 1),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-              );
-
-              // Se o utilizador tentar requisitar um livro que esteja esgotado
-            } else if (widget.livro.disponibilidade == "Esgotado") {
-              // É apresentado a mensagem de pedido recusado
-              showDialog<String>(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    elevation: 16,
-                    title: const Text(
-                      'Pedido recusado',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    content: const Text(
-                      // ignore: prefer_adjacent_string_concatenation
-                      "O livro encontra-se esgotado.",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xFF171717),
-                        height: 2,
-                      ),
-                      textAlign: TextAlign.justify,
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'OK'),
-                        child: const Text(
-                          'OK',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(18, 157, 158, 1),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              );
-              // ignore: avoid_print
-              print(
-                  'Erro: a requisicao falhou, porque o livro encontra-se esgotado');
-            }
-          },
-          child: isRequisitado
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    SizedBox(
-                      width: 10,
-                    ),
-                    CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  ],
-                )
-              : Text(
-                  'Requisitar',
-                  style: GoogleFonts.catamaran(
-                    fontSize: 23,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
-
-      // ---> TERMINA EDIÇÃO BOTÃO REQUISITAR <---
-
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(30),
         child: Padding(
-          padding: const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 0),
           child: AppBar(
             elevation: 0.0,
             backgroundColor: Colors.white,
@@ -213,7 +45,10 @@ class _LivroDetalhadoState extends State<LivroDetalhado> {
           ),
         ),
       ),
+      // Mostra todo o conteudo da página de detalhes
       body: BodyDaPaginaLivroDetalhado(livro: widget.livro),
+      // Botao para requisitar o Livro
+      bottomNavigationBar: BotaoRequisitar(livro: widget.livro),
     );
   }
 }
@@ -271,6 +106,7 @@ class _BodyDaPaginaLivroDetalhadoState
   }
 }
 
+// Titulo , ISBN, Editora e disponibilidade do Livro
 class TituloDoLivro extends StatelessWidget {
   final BodyDaPaginaLivroDetalhado widget;
   const TituloDoLivro({
@@ -380,6 +216,7 @@ class TituloDoLivro extends StatelessWidget {
   }
 }
 
+// Autor do Livro
 class AutorDoLivro extends StatelessWidget {
   const AutorDoLivro({
     Key? key,
@@ -447,6 +284,7 @@ class AutorDoLivro extends StatelessWidget {
   }
 }
 
+// Descricao para o Livro
 class DescricaoDoLivro extends StatelessWidget {
   const DescricaoDoLivro({
     Key? key,
@@ -476,8 +314,15 @@ class DescricaoDoLivro extends StatelessWidget {
             ),
           ),
         ),
+        const Divider(
+          height: 20,
+          thickness: 4,
+          indent: 27,
+          endIndent: 250,
+          color: Colors.black,
+        ),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 15),
           child: Text(
             widget.livro.descricao,
             style: const TextStyle(
@@ -491,6 +336,49 @@ class DescricaoDoLivro extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+// Botao para Requisitar
+class BotaoRequisitar extends StatefulWidget {
+  const BotaoRequisitar({
+    Key? key,
+    required this.livro,
+  }) : super(key: key);
+
+  final Livro livro;
+
+  @override
+  _BotaoRequisitarState createState() => _BotaoRequisitarState();
+}
+
+class _BotaoRequisitarState extends State<BotaoRequisitar> {
+  bool isRequisitado = false;
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      elevation: 0.0,
+      child: Container(
+        margin: const EdgeInsets.only(left: 25, right: 25, bottom: 20),
+        height: 49,
+        color: Colors.transparent,
+        child: FlatButton(
+          color: Colors.black87,
+          onPressed: () {},
+          child: Text(
+            'Requisitar',
+            style: GoogleFonts.catamaran(
+              fontSize: 23,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
     );
   }
 }

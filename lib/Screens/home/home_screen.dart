@@ -7,6 +7,8 @@ import 'package:camarate_school_library/Utils/cores.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -24,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     height: 14,
   );
 
-  final prateleiras = Container(
+  final tituloPrateleiras = Container(
     padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 30),
     child: const Text(
       'Prateleiras',
@@ -80,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           const SizedBox(
-            height: 30,
+            height: 45,
           ),
 
           // Este container contém os icones do menu lateral e de pesquisa
@@ -137,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   espacamentoVertical,
-                  prateleiras,
+                  tituloPrateleiras,
                   seccaoAmarela,
                   espacamentoVertical,
                   SingleChildScrollView(
