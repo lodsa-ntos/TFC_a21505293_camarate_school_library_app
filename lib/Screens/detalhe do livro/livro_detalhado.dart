@@ -22,9 +22,9 @@ class _LivroDetalhadoState extends State<LivroDetalhado> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(30),
+        preferredSize: const Size.fromHeight(55),
         child: Padding(
-          padding: const EdgeInsets.only(top: 0),
+          padding: const EdgeInsets.only(left: 2, top: 12),
           child: AppBar(
             elevation: 0.0,
             backgroundColor: Colors.white,
