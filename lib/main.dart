@@ -1,12 +1,13 @@
-import 'dart:async';
-
 import 'package:camarate_school_library/Screens/Abertura%20da%20app/abertura_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+//Future<void> main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//  await Firebase.initializeApp();
+//  runApp(const CamarateSchoolLibraryApp());
+//}
+
+void main() {
   runApp(const CamarateSchoolLibraryApp());
 }
 

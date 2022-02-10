@@ -1,8 +1,5 @@
 import 'package:camarate_school_library/Models/utilizador.dart';
 import 'package:camarate_school_library/Screens/home/Menu/settings/configuracao.dart';
-import 'package:camarate_school_library/Screens/login/login_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,21 +10,21 @@ class MenuLateral extends StatefulWidget {
 }
 
 class _MenuLateralState extends State<MenuLateral> {
-  User? utilizador = FirebaseAuth.instance.currentUser;
+  // User? utilizador = FirebaseAuth.instance.currentUser;
   Utilizador utilizadorLogado = Utilizador();
 
-  @override
-  void initState() {
-    super.initState();
-    FirebaseFirestore.instance
-        .collection("Utilizadores")
-        .doc(utilizador!.uid)
-        .get()
-        .then((value) {
-      utilizadorLogado = Utilizador.fromMap(value.data());
-      setState(() {});
-    });
-  }
+  //@override
+  // void initState() {
+  //  super.initState();
+  //  FirebaseFirestore.instance
+  //      .collection("Utilizadores")
+  //      .doc(utilizador!.uid)
+  //      .get()
+  //     .then((value) {
+  //    utilizadorLogado = Utilizador.fromMap(value.data());
+  //    setState(() {});
+  //  });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +113,7 @@ class _MenuLateralState extends State<MenuLateral> {
         const SizedBox(width: 20),
         GestureDetector(
           onTap: () {
-            sair(context);
+            //sair(context);
           },
           child: Text(
             'Sair',
@@ -150,9 +147,9 @@ class _MenuLateralState extends State<MenuLateral> {
   }
 
   // Função sair da aplicação
-  Future<void> sair(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const LoginScreen()));
-  }
+  // Future<void> sair(BuildContext context) async {
+  //  await FirebaseAuth.instance.signOut();
+  //  Navigator.of(context).pushReplacement(
+  //      MaterialPageRoute(builder: (context) => const LoginScreen()));
+  //}
 }

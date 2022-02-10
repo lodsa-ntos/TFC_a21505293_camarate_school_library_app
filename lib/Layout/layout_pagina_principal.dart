@@ -16,7 +16,7 @@ class _LayoutPaginaPrincipalState extends State<LayoutPaginaPrincipal> {
       body: Stack(
         children: [
           MenuLateral(),
-          HomeScreen(),
+          const HomeScreen(),
         ],
       ),
     );
