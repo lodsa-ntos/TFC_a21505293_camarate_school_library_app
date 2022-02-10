@@ -81,8 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
       child: Column(
         children: [
+          // Altura dos icones
           const SizedBox(
-            height: 45,
+            height: 35,
           ),
 
           // Este container contém os icones do menu lateral e de pesquisa
