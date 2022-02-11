@@ -198,16 +198,28 @@ class TituloDoLivro extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.only(left: 10, top: 25),
               width: MediaQuery.of(context).size.width / 2,
-              child: Text(
-                widget.livro.disponibilidade,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green,
-                  fontSize: 16.0,
-                  fontFamily: 'Montserrat',
-                ),
-                softWrap: true,
-              ),
+              // Se a disponibilidade for true, mostra Diponível senão Esgotado
+              child: widget.livro.disponibilidade
+                  ? const Text(
+                      'Diponível',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
+                        fontSize: 16.0,
+                        fontFamily: 'Montserrat',
+                      ),
+                      softWrap: true,
+                    )
+                  : const Text(
+                      'Esgotado',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                        fontSize: 16.0,
+                        fontFamily: 'Montserrat',
+                      ),
+                      softWrap: true,
+                    ),
             ),
           ),
         ],
@@ -354,7 +366,14 @@ class BotaoRequisitar extends StatefulWidget {
 }
 
 class _BotaoRequisitarState extends State<BotaoRequisitar> {
-  bool isRequisitado = false;
+  bool isBotaoHabilitado = false;
+
+  @override
+  void initState() {
+    isBotaoHabilitado = true;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -363,9 +382,7 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
         margin: const EdgeInsets.only(left: 25, right: 25, bottom: 20),
         height: 49,
         color: Colors.transparent,
-        child: FlatButton(
-          color: Colors.black87,
-          onPressed: () {},
+        child: ElevatedButton(
           child: Text(
             'Requisitar',
             style: GoogleFonts.catamaran(
@@ -374,9 +391,16 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
               color: Colors.white,
             ),
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+          style: ElevatedButton.styleFrom(
+            onSurface: Colors.black87,
           ),
+          onPressed: widget.livro.disponibilidade
+              ? () {
+                  setState(
+                    () => widget.livro.disponibilidade = false,
+                  );
+                }
+              : null,
         ),
       ),
     );

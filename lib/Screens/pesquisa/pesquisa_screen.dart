@@ -220,17 +220,6 @@ class LivrosNoInventario extends StatelessWidget {
                   alignment: MainAxisAlignment.spaceBetween,
                   buttonPadding: EdgeInsets.zero,
                   children: [
-                    // Disponibilidade do livro
-                    if (inventario.disponibilidade == 'Disponível') ...[
-                      inventario.disponibilidade.text.xl
-                          .color(Colors.green)
-                          .make(),
-                    ] else
-                      inventario.disponibilidade.text.xl
-                          .color(Colors.grey.shade600)
-                          .bold
-                          .make(),
-
                     // Botão requisitar
                     ElevatedButton(
                       onPressed: () {},
