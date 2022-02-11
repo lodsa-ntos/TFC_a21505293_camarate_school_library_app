@@ -22,9 +22,10 @@ class Livro {
   final String editora;
   final String isbn;
   final String imagemCapa;
-  bool disponibilidade;
   final String descricao;
   final String imagemAutor;
+  bool disponibilidade;
+  bool isRequisitado;
 
   // Construtor
   Livro({
@@ -34,9 +35,10 @@ class Livro {
     required this.editora,
     required this.isbn,
     required this.imagemCapa,
-    required this.disponibilidade,
     required this.descricao,
     required this.imagemAutor,
+    required this.disponibilidade,
+    required this.isRequisitado,
   });
 
   Map<String, dynamic> toMap() {
@@ -47,9 +49,10 @@ class Livro {
       'editora': editora,
       'isbn': isbn,
       'imagemCapa': imagemCapa,
-      'disponibilidade': disponibilidade,
       'descricao': descricao,
       'imagemAutor': imagemAutor,
+      'disponibilidade': disponibilidade,
+      'isRequisitado': isRequisitado,
     };
   }
 
@@ -61,9 +64,10 @@ class Livro {
       editora: map['editora'] ?? '',
       isbn: map['isbn'] ?? '',
       imagemCapa: map['imagemCapa'] ?? '',
-      disponibilidade: map['disponibilidade'] ?? false,
       descricao: map['descricao'] ?? '',
       imagemAutor: map['imagemAutor'] ?? '',
+      disponibilidade: map['disponibilidade'] ?? false,
+      isRequisitado: map['isRequisitado'] ?? false,
     );
   }
 
@@ -82,9 +86,10 @@ class Livro {
         other.editora == editora &&
         other.isbn == isbn &&
         other.imagemCapa == imagemCapa &&
-        other.disponibilidade == disponibilidade &&
         other.descricao == descricao &&
-        other.imagemAutor == imagemAutor;
+        other.imagemAutor == imagemAutor &&
+        other.disponibilidade == disponibilidade &&
+        other.isRequisitado == isRequisitado;
   }
 
   @override
@@ -95,14 +100,15 @@ class Livro {
         editora.hashCode ^
         isbn.hashCode ^
         imagemCapa.hashCode ^
-        disponibilidade.hashCode ^
         descricao.hashCode ^
-        imagemAutor.hashCode;
+        imagemAutor.hashCode ^
+        disponibilidade.hashCode ^
+        isRequisitado.hashCode;
   }
 
   @override
   String toString() {
-    return 'Livro(numRegisto: $numRegisto, titulo: $titulo, autor: $autor, editora: $editora, isbn: $isbn, imagemCapa: $imagemCapa, disponibilidade: $disponibilidade, descricao: $descricao, imagemAutor: $imagemAutor)';
+    return 'Livro(numRegisto: $numRegisto, titulo: $titulo, autor: $autor, editora: $editora, isbn: $isbn, imagemCapa: $imagemCapa, descricao: $descricao, imagemAutor: $imagemAutor, disponibilidade: $disponibilidade, isRequisitado: $isRequisitado)';
   }
 
   Livro copyWith({
@@ -112,9 +118,10 @@ class Livro {
     String? editora,
     String? isbn,
     String? imagemCapa,
-    bool? disponibilidade,
     String? descricao,
     String? imagemAutor,
+    bool? disponibilidade,
+    bool? isRequisitado,
   }) {
     return Livro(
       numRegisto: numRegisto ?? this.numRegisto,
@@ -123,9 +130,10 @@ class Livro {
       editora: editora ?? this.editora,
       isbn: isbn ?? this.isbn,
       imagemCapa: imagemCapa ?? this.imagemCapa,
-      disponibilidade: disponibilidade ?? this.disponibilidade,
       descricao: descricao ?? this.descricao,
       imagemAutor: imagemAutor ?? this.imagemAutor,
+      disponibilidade: disponibilidade ?? this.disponibilidade,
+      isRequisitado: isRequisitado ?? this.isRequisitado,
     );
   }
 }
@@ -145,6 +153,7 @@ List<Livro> gerarLivrosAleatorios() {
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
       imagemAutor:
           'https://br.web.img3.acsta.net/pictures/21/08/12/15/16/2533433.jpg',
+      isRequisitado: false,
     ),
     Livro(
       numRegisto: 1,
@@ -159,6 +168,7 @@ List<Livro> gerarLivrosAleatorios() {
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
       imagemAutor:
           'https://imagens.publico.pt/imagens.aspx/737891?tp=UH&db=IMAGENS&type=JPG&w=334&h=334&act=cropResize',
+      isRequisitado: false,
     ),
     Livro(
       numRegisto: 2,
@@ -173,6 +183,7 @@ List<Livro> gerarLivrosAleatorios() {
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
       imagemAutor:
           'https://imagens.publico.pt/imagens.aspx/274255?tp=UH&db=IMAGENS&type=JPG&share=1&o=BarraFacebook_Publico.png',
+      isRequisitado: true,
     ),
     Livro(
       numRegisto: 3,
@@ -187,6 +198,7 @@ List<Livro> gerarLivrosAleatorios() {
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
       imagemAutor:
           'https://images.trustinnews.pt/uploads/sites/5/2019/10/goncalo-cadilhe-2.png',
+      isRequisitado: true,
     ),
   ];
 }

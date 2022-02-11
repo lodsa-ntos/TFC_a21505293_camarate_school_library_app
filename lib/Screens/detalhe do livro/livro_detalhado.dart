@@ -392,14 +392,20 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
             ),
           ),
           style: ElevatedButton.styleFrom(
-            onSurface: Colors.black87,
+            primary: Colors.black87,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10), // <-- Radius
+            ),
           ),
+
+          // Se o livro estiver disponivel o botao vai estar habilitado
           onPressed: widget.livro.disponibilidade
               ? () {
                   setState(
                     () => widget.livro.disponibilidade = false,
                   );
                 }
+              // senão estiver disponivel, o botao vai estar desabilitado
               : null,
         ),
       ),
