@@ -22,8 +22,10 @@ class _LivroDetalhadoState extends State<LivroDetalhado> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
+        // Altura do livro
         preferredSize: const Size.fromHeight(55),
         child: Padding(
+          // Altura do icone para voltar para trás
           padding: const EdgeInsets.only(left: 2, top: 12),
           child: AppBar(
             elevation: 0.0,
@@ -116,7 +118,7 @@ class TituloDoLivro extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.only(top: 5, bottom: 55),
+      padding: const EdgeInsets.only(top: 0, bottom: 55),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.bottomCenter,
