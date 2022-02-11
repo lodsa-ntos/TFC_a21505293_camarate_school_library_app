@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use
+import 'package:camarate_school_library/Layout/layout_pagina_principal.dart';
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
@@ -396,8 +397,11 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
               ? () {
                   setState(() {
                     widget.livro.disponibilidade = false;
+                    // o livro fica requisitado
                     widget.livro.isRequisitado = true;
+                    // Redireciona o utilizador para a página principal
                     Navigator.pop(context);
+                    // Adiciona o livro na lista de requisitados
                     addNaListaLivrosRequisitados;
                   });
                 }
@@ -408,7 +412,9 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
     );
   }
 
-  addNaListaLivrosRequisitados() {
-    // A pensar....
+  // A pensar...
+  addNaListaLivrosRequisitados() async {
+    final dados = await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const LayoutPaginaPrincipal()));
   }
 }
