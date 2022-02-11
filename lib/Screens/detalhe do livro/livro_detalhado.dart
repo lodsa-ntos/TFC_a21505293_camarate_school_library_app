@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:camarate_school_library/Models/livro.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -366,14 +367,6 @@ class BotaoRequisitar extends StatefulWidget {
 }
 
 class _BotaoRequisitarState extends State<BotaoRequisitar> {
-  bool isBotaoHabilitado = false;
-
-  @override
-  void initState() {
-    isBotaoHabilitado = true;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -398,17 +391,24 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
             ),
           ),
 
-          // Se o livro estiver disponivel o botao vai estar habilitado
+          // Se o livro estiver disponível o botao vai estar habilitado
           onPressed: widget.livro.disponibilidade
               ? () {
-                  setState(
-                    () => widget.livro.disponibilidade = false,
-                  );
+                  setState(() {
+                    widget.livro.disponibilidade = false;
+                    widget.livro.isRequisitado = true;
+                    Navigator.pop(context);
+                    addNaListaLivrosRequisitados;
+                  });
                 }
-              // senão estiver disponivel, o botao vai estar desabilitado
+              // senão estiver disponível, o botao vai estar desabilitado
               : null,
         ),
       ),
     );
+  }
+
+  addNaListaLivrosRequisitados() {
+    // A pensar....
   }
 }
