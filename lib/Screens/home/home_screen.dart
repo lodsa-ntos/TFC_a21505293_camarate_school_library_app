@@ -1,5 +1,7 @@
 // ignore_for_file: unused_local_variable
 
+import 'dart:convert';
+
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Screens/Pesquisa/pesquisa_screen.dart';
 import 'package:camarate_school_library/Screens/lista%20de%20livros/lista_de_livros.dart';
@@ -22,8 +24,37 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final livros = gerarLivrosAleatorios();
 
+  List<Livro> livroRequisitado = [];
+
   final espacamentoVertical = const SizedBox(
     height: 14,
+  );
+
+  final tituloLivrosRequisitados = Container(
+    padding: const EdgeInsets.symmetric(horizontal: 26.0),
+    child: const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 1.0),
+      child: Text(
+        'Livros Requisitados',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+          color: darkColor,
+          fontFamily: 'Poppins',
+        ),
+      ),
+    ),
+  );
+
+  final areaVazia = CustomPaint(
+    child: Container(
+      margin: const EdgeInsets.only(left: 26.0, right: 26.0),
+      height: 250,
+      color: Colors.white,
+      child: const Center(
+        child: Text('<vazio>'),
+      ),
+    ),
   );
 
   final tituloPrateleiras = Container(
@@ -39,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
   );
 
-  final seccaoAmarela = Container(
+  final tituloSeccaoAmarela = Container(
     padding: const EdgeInsets.only(left: 27.0),
     child: Row(
       children: const [
@@ -139,9 +170,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  // Espaço
                   espacamentoVertical,
+                  tituloLivrosRequisitados,
+
+                  // Espaço
+                  espacamentoVertical,
+
+                  // Área para livros requisitados .--> por enquanto ainda vazia
+                  areaVazia,
+
+                  // Titulos
                   tituloPrateleiras,
-                  seccaoAmarela,
+                  tituloSeccaoAmarela,
+
+                  // Espaço
                   espacamentoVertical,
                   SingleChildScrollView(
                     child: SizedBox(
@@ -149,14 +192,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 350.0,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: ListView(
+                        child: ListView.builder(
+                          // carregar até ao último indice
+                          itemCount: livros.length,
                           scrollDirection: Axis.horizontal,
-                          children: [
-                            ListaDeLivros(livros: livros[0]),
-                            ListaDeLivros(livros: livros[1]),
-                            ListaDeLivros(livros: livros[2]),
-                            ListaDeLivros(livros: livros[3]),
-                          ],
+                          // comportamento para que a ListView só ocupe o espaço de que necessita
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) =>
+                              ListaDeLivros(livros: livros[index]),
                         ),
                       ),
                     ),

@@ -368,6 +368,8 @@ class BotaoRequisitar extends StatefulWidget {
 }
 
 class _BotaoRequisitarState extends State<BotaoRequisitar> {
+  List<Livro> livroRequisitado = [];
+
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -420,6 +422,8 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
         builder: (context) => const LayoutPaginaPrincipal(), // alterar
       ),
     );
+
+    livroRequisitado.add(dados); // ação imcompleta
 
     ///
   }
