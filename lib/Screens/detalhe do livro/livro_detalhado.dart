@@ -402,10 +402,8 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
                     widget.livro.isDisponivel = false;
                     // o livro fica requisitado
                     widget.livro.isRequisitado = true;
-                    // Adiciona o livro na lista de requisitados
-                    addLivroRequisitado(0, livros.first);
                     // Redireciona o utilizador para a página principal
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pop('');
                   });
                 }
               // se o livro não estiver disponível, o botao vai estar desabilitado
@@ -413,11 +411,5 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
         ),
       ),
     );
-  }
-
-  // A pensar...
-  void addLivroRequisitado(int index, Livro livro) {
-    livros.insert(index, livro);
-    key.currentState!.insertItem(index);
   }
 }

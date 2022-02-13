@@ -178,12 +178,12 @@ List<Livro> gerarLivrosAleatorios() {
       isbn: '9789892326153',
       imagemCapa:
           'https://img.wook.pt/images/14-uma-vida-nos-tectos-do-mundo-joao-garcia/MXwxNTcyNDIwNXwxMTIxOTMwMnwxMzk4OTg1MjAwMDAwfHdlYnA=/502x',
-      isDisponivel: false,
+      isDisponivel: true,
       descricao:
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
       imagemAutor:
           'https://imagens.publico.pt/imagens.aspx/274255?tp=UH&db=IMAGENS&type=JPG&share=1&o=BarraFacebook_Publico.png',
-      isRequisitado: true,
+      isRequisitado: false,
     ),
     Livro(
       numRegisto: 3,
@@ -193,12 +193,12 @@ List<Livro> gerarLivrosAleatorios() {
       isbn: '9789897242915',
       imagemCapa:
           'https://img.wook.pt/images/planisferio-pessoal-goncalo-cadilhe/MXwxNzgxNzY4M3wxMzQ1ODk0NnwxNDYwNDE1NjAwMDAwfHdlYnA=/502x',
-      isDisponivel: false,
+      isDisponivel: true,
       descricao:
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
       imagemAutor:
           'https://images.trustinnews.pt/uploads/sites/5/2019/10/goncalo-cadilhe-2.png',
-      isRequisitado: true,
+      isRequisitado: false,
     ),
   ];
 }

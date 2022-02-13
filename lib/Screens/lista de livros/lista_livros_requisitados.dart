@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ListaLivrosRequisitados extends StatelessWidget {
+  final Livro livros;
+
   const ListaLivrosRequisitados({Key? key, required this.livros})
       : super(key: key);
-
-  final Livro livros;
 
   @override
   Widget build(BuildContext context) {

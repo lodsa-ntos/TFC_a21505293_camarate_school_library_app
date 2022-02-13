@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 final livros = gerarLivrosAleatorios();
 
-List<Livro> livroRequisitado = [];
+final key = GlobalKey<AnimatedListState>();
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
