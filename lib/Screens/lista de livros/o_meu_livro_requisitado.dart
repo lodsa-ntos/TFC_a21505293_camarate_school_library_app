@@ -1,12 +1,12 @@
 import 'package:camarate_school_library/Models/livro.dart';
-import 'package:camarate_school_library/Screens/Detalhe%20do%20livro/livro_detalhado.dart';
+import 'package:camarate_school_library/Screens/detalhe%20do%20livro/livro_detalhado_requisitado.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ListaLivrosRequisitados extends StatelessWidget {
+class OMeuLivroRequisitado extends StatelessWidget {
   final Livro livros;
 
-  const ListaLivrosRequisitados({Key? key, required this.livros})
+  const OMeuLivroRequisitado({Key? key, required this.livros})
       : super(key: key);
 
   @override
@@ -16,7 +16,7 @@ class ListaLivrosRequisitados extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => LivroDetalhado(
+            builder: (context) => MeuLivroRequisitadoEDetalhado(
               livro: livros,
             ),
           ),

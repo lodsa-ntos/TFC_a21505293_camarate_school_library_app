@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Screens/Pesquisa/pesquisa_screen.dart';
 import 'package:camarate_school_library/Screens/lista%20de%20livros/lista_de_livros.dart';
-import 'package:camarate_school_library/Screens/lista%20de%20livros/lista_livros_requisitados.dart';
+import 'package:camarate_school_library/Screens/lista%20de%20livros/o_meu_livro_requisitado.dart';
 import 'package:camarate_school_library/Utils/cores.dart';
 import 'package:flutter/material.dart';
 
@@ -49,8 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final areaVazia = CustomPaint(
     child: Container(
-      margin: const EdgeInsets.only(left: 26.0, right: 26.0),
-      height: 250,
+      margin: const EdgeInsets.only(
+        left: 26.0,
+        right: 26.0,
+      ),
       color: Colors.white,
       child: const Center(
         child: Text('<vazio>'),
@@ -182,15 +184,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   espacamentoVertical,
 
                   // Área para livros requisitados .--> por enquanto ainda vazia
-
-                  for (var i = 0; i < livros.length; i++) ...[
-                    if (livros[i].isRequisitado == true) ...[
-                      const Text('requisitado')
-                    ] else ...[
-                      const Text('nepia')
-                    ]
-                  ],
-
+                  SingleChildScrollView(
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 285.0,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            if (livros[0].isRequisitado == true) ...[
+                              OMeuLivroRequisitado(livros: livros[0]),
+                            ] else ...[
+                              const Text(
+                                '<vazio>',
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                   const Divider(),
                   // Titulos
                   tituloPrateleiras,
