@@ -416,8 +416,8 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
   }
 
   // A pensar...
-  void addLivroRequisitado(int index, Livro item) {
-    livros.insert(index, item);
+  void addLivroRequisitado(int index, Livro livro) {
+    livros.insert(index, livro);
     key.currentState!.insertItem(index);
   }
 }
