@@ -5,8 +5,13 @@ import 'dart:convert';
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Screens/Pesquisa/pesquisa_screen.dart';
 import 'package:camarate_school_library/Screens/lista%20de%20livros/lista_de_livros.dart';
+import 'package:camarate_school_library/Screens/lista%20de%20livros/lista_livros_requisitados.dart';
 import 'package:camarate_school_library/Utils/cores.dart';
 import 'package:flutter/material.dart';
+
+final livros = gerarLivrosAleatorios();
+
+List<Livro> livroRequisitado = [];
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,10 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
   double fatorDeEscala = 1.0;
 
   bool isMenuAberto = false;
-
-  final livros = gerarLivrosAleatorios();
-
-  List<Livro> livroRequisitado = [];
 
   final espacamentoVertical = const SizedBox(
     height: 14,
@@ -152,7 +153,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 // Ação para o icon da pesquisa
                 IconButton(
-                  icon: const Icon(Icons.search),
+                  icon: const Icon(
+                    Icons.search,
+                    color: Colors.black,
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -178,8 +182,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   espacamentoVertical,
 
                   // Área para livros requisitados .--> por enquanto ainda vazia
-                  areaVazia,
 
+                  for (var i = 0; i < livros.length; i++) ...[
+                    if (livros[i].isRequisitado == true) ...[
+                      const Text('requisitado')
+                    ] else ...[
+                      const Text('nepia')
+                    ]
+                  ],
+
+                  const Divider(),
                   // Titulos
                   tituloPrateleiras,
                   tituloSeccaoAmarela,

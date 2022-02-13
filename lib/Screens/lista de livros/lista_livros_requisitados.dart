@@ -3,8 +3,9 @@ import 'package:camarate_school_library/Screens/Detalhe%20do%20livro/livro_detal
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ListaDeLivros extends StatelessWidget {
-  const ListaDeLivros({Key? key, required this.livros}) : super(key: key);
+class ListaLivrosRequisitados extends StatelessWidget {
+  const ListaLivrosRequisitados({Key? key, required this.livros})
+      : super(key: key);
 
   final Livro livros;
 
@@ -22,7 +23,7 @@ class ListaDeLivros extends StatelessWidget {
         );
       },
       child: Container(
-        width: 122.0,
+        width: 111.0,
         margin: const EdgeInsets.only(right: 12.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -30,7 +31,7 @@ class ListaDeLivros extends StatelessWidget {
           children: [
             Container(
               width: 121.66,
-              height: 195.5,
+              height: 165.5,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
@@ -54,7 +55,7 @@ class ListaDeLivros extends StatelessWidget {
               height: 5.0,
             ),
             Text(
-              livros.autor,
+              'Data de Entrega: 13/02/2022',
               style: GoogleFonts.catamaran(
                 textStyle: const TextStyle(
                   fontSize: 13.0,

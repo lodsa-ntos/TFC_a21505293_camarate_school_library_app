@@ -18,8 +18,6 @@ class LivroDetalhado extends StatefulWidget {
 }
 
 class _LivroDetalhadoState extends State<LivroDetalhado> {
-  bool isRequisitado = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,11 +89,13 @@ class _BodyDaPaginaLivroDetalhadoState
                 child: SizedBox(
                   height: 260,
                   width: MediaQuery.of(context).size.width / 2 - 30,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
+                  child: Material(
+                    //borderRadius: BorderRadius.circular(10),
+                    elevation: 15.0,
+                    shadowColor: Colors.grey.shade900,
                     child: Image.network(
                       widget.livro.imagemCapa,
-                      fit: BoxFit.contain,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -201,7 +201,7 @@ class TituloDoLivro extends StatelessWidget {
               padding: const EdgeInsets.only(left: 10, top: 25),
               width: MediaQuery.of(context).size.width / 2,
               // Se a disponibilidade for true, mostra Diponível senão Esgotado
-              child: widget.livro.disponibilidade
+              child: widget.livro.isDisponivel
                   ? const Text(
                       'Diponível',
                       style: TextStyle(
@@ -213,7 +213,7 @@ class TituloDoLivro extends StatelessWidget {
                       softWrap: true,
                     )
                   : const Text(
-                      'Esgotado',
+                      'Requisitado',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.red,
@@ -368,7 +368,8 @@ class BotaoRequisitar extends StatefulWidget {
 }
 
 class _BotaoRequisitarState extends State<BotaoRequisitar> {
-  List<Livro> livroRequisitado = [];
+  final key = GlobalKey<AnimatedListState>();
+  final livros = gerarLivrosAleatorios();
 
   @override
   Widget build(BuildContext context) {
@@ -395,19 +396,19 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
           ),
 
           // Se o livro estiver disponível o botao vai estar habilitado
-          onPressed: widget.livro.disponibilidade
+          onPressed: widget.livro.isDisponivel
               ? () {
                   setState(() {
-                    widget.livro.disponibilidade = false;
+                    widget.livro.isDisponivel = false;
                     // o livro fica requisitado
                     widget.livro.isRequisitado = true;
-                    // Redireciona o utilizador para a página principal
-                    Navigator.pop(context);
                     // Adiciona o livro na lista de requisitados
-                    addNaListaLivrosRequisitados;
+                    addLivroRequisitado(0, livros.first);
+                    // Redireciona o utilizador para a página principal
+                    Navigator.of(context).pop();
                   });
                 }
-              // senão estiver disponível, o botao vai estar desabilitado
+              // se o livro não estiver disponível, o botao vai estar desabilitado
               : null,
         ),
       ),
@@ -415,16 +416,8 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
   }
 
   // A pensar...
-  addNaListaLivrosRequisitados() async {
-    final dados = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const LayoutPaginaPrincipal(), // alterar
-      ),
-    );
-
-    livroRequisitado.add(dados); // ação imcompleta
-
-    ///
+  void addLivroRequisitado(int index, Livro item) {
+    livros.insert(index, item);
+    key.currentState!.insertItem(index);
   }
 }

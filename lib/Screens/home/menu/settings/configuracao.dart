@@ -12,7 +12,7 @@ List<Map> conteudoDoMenu = [
   },
   {
     'icone': Icons.history,
-    'titulo': 'Estatísticas/Histórico',
+    'titulo': 'Livros Requisitados',
   },
   {
     'icone': FontAwesomeIcons.userAlt,
