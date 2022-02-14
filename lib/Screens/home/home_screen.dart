@@ -193,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: [
-                            // Por enquanto atualizar a pagina
+                            // Por enquanto assim...
                             if (livros[0].isRequisitado == true) ...[
                               OMeuLivroRequisitado(livros: livros[0]),
                             ] else ...[
