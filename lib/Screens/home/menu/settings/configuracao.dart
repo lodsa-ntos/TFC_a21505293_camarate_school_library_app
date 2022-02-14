@@ -7,6 +7,10 @@ List<BoxShadow> shadowList = [
 
 List<Map> conteudoDoMenu = [
   {
+    'icone': FontAwesomeIcons.bookOpen,
+    'titulo': 'Adicionados recentemente',
+  },
+  {
     'icone': FontAwesomeIcons.book,
     'titulo': 'Consultar requisição',
   },

@@ -77,10 +77,11 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
           child: Text(
             'Generabilidade.Dicionários.\nEnciclopédias.Informática',
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                color: darkColor,
-                fontFamily: 'Poppins'),
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+              color: darkColor,
+              fontFamily: 'Poppins',
+            ),
           ),
         ),
       ],
@@ -137,6 +138,7 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
                           textAlign: TextAlign.center,
                         ),
                       ],
+                      //
                       if (livros[3].isRequisitado == true) ...[
                         ListaLivroRequisitado(livros: livros[3]),
                       ] else ...[
