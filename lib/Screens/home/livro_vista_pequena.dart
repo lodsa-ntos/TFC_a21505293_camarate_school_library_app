@@ -87,8 +87,8 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
               height: 20,
             ),
 
-            tituloSeccaoAmarela,
-            _buildLSeccaoTitulosClassesDaPrateleira(1),
+            //tituloSeccaoAmarela,
+            _buildLSeccaoTitulosClassesDaPrateleira(0),
 
             // Espaço
             espacamentoVertical,
@@ -212,253 +212,54 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
       ),
     );
   }
-}
 
-_buildLSeccaoTitulosClassesDaPrateleira(int seccao) {
-  switch (seccao) {
-    case 0:
-      Container(
+  _buildLSeccaoTitulosClassesDaPrateleira(int seccao) {
+    return Container(
         padding: const EdgeInsets.only(left: 27.0),
-        child: Row(
-          children: const [
-            // Circulo das classes
-            CircleAvatar(
-              backgroundColor: Colors.yellow,
-              minRadius: 15,
-            ),
-            Padding(
-              // espaço entre o circulo e o título da classe
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
-              child: Text(
-                'Generabilidade.Dicionários.\nEnciclopédias.Informática',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: darkColor,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-      break;
-    case 1:
-      Container(
-        padding: const EdgeInsets.only(left: 27.0),
-        child: Row(
-          children: const [
-            // Circulo das classes
-            CircleAvatar(
-              backgroundColor: Colors.yellow,
-              minRadius: 15,
-            ),
-            Padding(
-              // espaço entre o circulo e o título da classe
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
-              child: Text(
-                'Filosofia. Psicologia',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: darkColor,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-      break;
-    case 2:
-      Container(
-        padding: const EdgeInsets.only(left: 27.0),
-        child: Row(
-          children: const [
-            // Circulo das classes
-            CircleAvatar(
-              backgroundColor: Colors.yellow,
-              minRadius: 15,
-            ),
-            Padding(
-              // espaço entre o circulo e o título da classe
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
-              child: Text(
-                'Religião. Teologia',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: darkColor,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-      break;
-    case 3:
-      Container(
-        padding: const EdgeInsets.only(left: 27.0),
-        child: Row(
-          children: const [
-            // Circulo das classes
-            CircleAvatar(
-              backgroundColor: Colors.yellow,
-              minRadius: 15,
-            ),
-            Padding(
-              // espaço entre o circulo e o título da classe
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
-              child: Text(
-                'Ciências Sociais',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: darkColor,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-      break;
-    case 5:
-      Container(
-        padding: const EdgeInsets.only(left: 27.0),
-        child: Row(
-          children: const [
-            // Circulo das classes
-            CircleAvatar(
-              backgroundColor: Colors.yellow,
-              minRadius: 15,
-            ),
-            Padding(
-              // espaço entre o circulo e o título da classe
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
-              child: Text(
-                'Ciências Exatas. Matemática. Biologia',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: darkColor,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-      break;
-    case 6:
-      Container(
-        padding: const EdgeInsets.only(left: 27.0),
-        child: Row(
-          children: const [
-            // Circulo das classes
-            CircleAvatar(
-              backgroundColor: Colors.yellow,
-              minRadius: 15,
-            ),
-            Padding(
-              // espaço entre o circulo e o título da classe
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
-              child: Text(
-                'Ciências Aplicadas. Medicina. Tecnologia',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: darkColor,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-      break;
-    case 7:
-      Container(
-        padding: const EdgeInsets.only(left: 27.0),
-        child: Row(
-          children: const [
-            // Circulo das classes
-            CircleAvatar(
-              backgroundColor: Colors.yellow,
-              minRadius: 15,
-            ),
-            Padding(
-              // espaço entre o circulo e o título da classe
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
-              child: Text(
-                'Arte. Desporto',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: darkColor,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-      break;
-    case 8:
-      Container(
-        padding: const EdgeInsets.only(left: 27.0),
-        child: Row(
-          children: const [
-            // Circulo das classes
-            CircleAvatar(
-              backgroundColor: Colors.yellow,
-              minRadius: 15,
-            ),
-            Padding(
-              // espaço entre o circulo e o título da classe
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
-              child: Text(
-                'Língua. Linguística. Literatura',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: darkColor,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-      break;
-    case 9:
-      Container(
-        padding: const EdgeInsets.only(left: 27.0),
-        child: Row(
-          children: const [
-            // Circulo das classes
-            CircleAvatar(
-              backgroundColor: Colors.yellow,
-              minRadius: 15,
-            ),
-            Padding(
-              // espaço entre o circulo e o título da classe
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
-              child: Text(
-                'História. Geografia. Biografia',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: darkColor,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-      break;
-    default:
+        child: seccao == 0
+            ? Row(
+                children: const [
+                  // Circulo das classes
+                  CircleAvatar(
+                    backgroundColor: Colors.yellow,
+                    minRadius: 15,
+                  ),
+                  Padding(
+                    // espaço entre o circulo e o título da classe
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Text(
+                      'Generabilidade.Dicionários.\nEnciclopédias.Informática',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        color: darkColor,
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : Row(
+                children: const [
+                  // Circulo das classes
+                  CircleAvatar(
+                    backgroundColor: Colors.yellow,
+                    minRadius: 15,
+                  ),
+                  Padding(
+                    // espaço entre o circulo e o título da classe
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Text(
+                      'Filosofia. Psicologia',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        color: darkColor,
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+                  ),
+                ],
+              ));
   }
 }
