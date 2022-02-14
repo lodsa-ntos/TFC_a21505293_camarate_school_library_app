@@ -2,6 +2,7 @@ import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Screens/detalhe%20do%20livro/livro_detalhado_requisitado.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class OMeuLivroRequisitado extends StatelessWidget {
   final Livro livros;
@@ -11,6 +12,10 @@ class OMeuLivroRequisitado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var dataDeHoje = DateTime.now();
+    var formato = DateFormat('dd-MM-yyyy');
+    String data = formato.format(dataDeHoje);
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -55,7 +60,7 @@ class OMeuLivroRequisitado extends StatelessWidget {
               height: 5.0,
             ),
             Text(
-              'Data de Entrega: 13/02/2022',
+              'Data de Entrega: ' + data,
               style: GoogleFonts.catamaran(
                 textStyle: const TextStyle(
                   fontSize: 13.0,

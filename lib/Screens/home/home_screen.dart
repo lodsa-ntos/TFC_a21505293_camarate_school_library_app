@@ -193,6 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: [
+                            // Por enquanto atualizar a pagina
                             if (livros[0].isRequisitado == true) ...[
                               OMeuLivroRequisitado(livros: livros[0]),
                             ] else ...[
@@ -201,12 +202,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                 textAlign: TextAlign.center,
                               ),
                             ],
+                            if (livros[1].isRequisitado == true) ...[
+                              OMeuLivroRequisitado(livros: livros[1]),
+                            ] else ...[
+                              const Text(
+                                '',
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                            if (livros[2].isRequisitado == true) ...[
+                              OMeuLivroRequisitado(livros: livros[2]),
+                            ] else ...[
+                              const Text(
+                                '',
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                            if (livros[3].isRequisitado == true) ...[
+                              OMeuLivroRequisitado(livros: livros[3]),
+                            ] else ...[
+                              const Text(
+                                '',
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ],
                         ),
                       ),
                     ),
                   ),
-                  const Divider(),
+                  //const Divider(),
                   // Titulos
                   tituloPrateleiras,
                   tituloSeccaoAmarela,
