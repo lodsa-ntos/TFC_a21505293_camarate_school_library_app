@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Screens/Pesquisa/pesquisa_screen.dart';
 import 'package:camarate_school_library/Screens/lista%20de%20livros/lista_de_livros.dart';
-import 'package:camarate_school_library/Screens/lista%20de%20livros/o_meu_livro_requisitado.dart';
+import 'package:camarate_school_library/Screens/lista%20de%20livros/lista_livro_requisitado.dart';
 import 'package:camarate_school_library/Utils/cores.dart';
 import 'package:flutter/material.dart';
 
@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             // Por enquanto assim...
                             if (livros[0].isRequisitado == true) ...[
-                              OMeuLivroRequisitado(livros: livros[0]),
+                              ListaLivroRequisitado(livros: livros[0]),
                             ] else ...[
                               const Text(
                                 '',
@@ -203,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                             if (livros[1].isRequisitado == true) ...[
-                              OMeuLivroRequisitado(livros: livros[1]),
+                              ListaLivroRequisitado(livros: livros[1]),
                             ] else ...[
                               const Text(
                                 '',
@@ -211,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                             if (livros[2].isRequisitado == true) ...[
-                              OMeuLivroRequisitado(livros: livros[2]),
+                              ListaLivroRequisitado(livros: livros[2]),
                             ] else ...[
                               const Text(
                                 '',
@@ -219,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                             if (livros[3].isRequisitado == true) ...[
-                              OMeuLivroRequisitado(livros: livros[3]),
+                              ListaLivroRequisitado(livros: livros[3]),
                             ] else ...[
                               const Text(
                                 '',

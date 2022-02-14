@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-class OMeuLivroRequisitado extends StatelessWidget {
+class ListaLivroRequisitado extends StatelessWidget {
   final Livro livros;
 
-  const OMeuLivroRequisitado({Key? key, required this.livros})
+  const ListaLivroRequisitado({Key? key, required this.livros})
       : super(key: key);
 
   @override
