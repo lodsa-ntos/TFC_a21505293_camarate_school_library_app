@@ -270,6 +270,33 @@ _buildListItem(int seccao) {
         ),
       );
       break;
+    case 1:
+      Container(
+        padding: const EdgeInsets.only(left: 27.0),
+        child: Row(
+          children: const [
+            // Circulo das classes
+            CircleAvatar(
+              backgroundColor: Colors.yellow,
+              minRadius: 15,
+            ),
+            Padding(
+              // espaço entre o circulo e o título da classe
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text(
+                'Filosofia. Psicologia',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: darkColor,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+      break;
     default:
   }
 }
