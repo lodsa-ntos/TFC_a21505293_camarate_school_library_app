@@ -198,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               OMeuLivroRequisitado(livros: livros[0]),
                             ] else ...[
                               const Text(
-                                '<vazio>',
+                                '',
                                 textAlign: TextAlign.center,
                               ),
                             ],
