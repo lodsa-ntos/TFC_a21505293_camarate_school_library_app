@@ -124,7 +124,7 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
     );
   }
 
-  _buildSeccaoTitulo(String title) {
+  _buildSeccaoTitulo(String titulo) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
@@ -135,9 +135,9 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
             child: Container(
               padding: const EdgeInsets.only(left: 7),
               width: MediaQuery.of(context).size.width / 2,
-              child: title == 'Prateleiras'
+              child: titulo == 'Prateleiras'
                   ? Text(
-                      title,
+                      titulo,
                       style: const TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.bold,
@@ -146,7 +146,7 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
                       ),
                     )
                   : Text(
-                      title,
+                      titulo,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -210,5 +210,66 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
         ),
       ),
     );
+  }
+
+  _buildSeccaoTitulosClassesDaPrateleira(int classes) {
+    return Container(
+      padding: const EdgeInsets.only(left: 27.0),
+      child: Row(
+        children: const [
+          // Circulo das classes
+          CircleAvatar(
+            backgroundColor: Colors.yellow,
+            minRadius: 15,
+          ),
+          Padding(
+            // espaço entre o circulo e o título da classe
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: Text(
+              'Generabilidade.Dicionários.\nEnciclopédias.Informática',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                color: darkColor,
+                fontFamily: 'Poppins',
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+_buildListItem(int seccao) {
+  switch (seccao) {
+    case 0:
+      Container(
+        padding: const EdgeInsets.only(left: 27.0),
+        child: Row(
+          children: const [
+            // Circulo das classes
+            CircleAvatar(
+              backgroundColor: Colors.yellow,
+              minRadius: 15,
+            ),
+            Padding(
+              // espaço entre o circulo e o título da classe
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text(
+                'Generabilidade.Dicionários.\nEnciclopédias.Informática',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: darkColor,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+      break;
+    default:
   }
 }
