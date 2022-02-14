@@ -17,23 +17,7 @@ class LivroVistaPequena extends StatefulWidget {
 
 class _LivroVistaPequenaState extends State<LivroVistaPequena> {
   final espacamentoVertical = const SizedBox(
-    height: 14,
-  );
-
-  final tituloLivrosRequisitados = Container(
-    padding: const EdgeInsets.symmetric(horizontal: 26.0),
-    child: const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 1.0),
-      child: Text(
-        'Livros Requisitados',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 18,
-          color: darkColor,
-          fontFamily: 'Poppins',
-        ),
-      ),
-    ),
+    height: 15,
   );
 
   final areaVazia = CustomPaint(
@@ -45,19 +29,6 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
       color: Colors.white,
       child: const Center(
         child: Text('<vazio>'),
-      ),
-    ),
-  );
-
-  final tituloPrateleiras = Container(
-    padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 30),
-    child: const Text(
-      'Prateleiras',
-      style: TextStyle(
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.bold,
-        fontSize: 28,
-        color: darkColor,
       ),
     ),
   );
@@ -98,63 +69,24 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
           children: [
             // Espaço
             espacamentoVertical,
-            tituloLivrosRequisitados,
+            _buildSeccaoTitulo('Livros Requisitados'),
+            _buildLinhaADividir(),
+
+            const SizedBox(
+              height: 20,
+            ),
+
+            // Área que vai apresentar livros requisitados
+            _buildApresentarLivrosRequisitados(),
+
+            // Titulos
+            _buildSeccaoTitulo('Prateleiras'),
 
             // Espaço
-            espacamentoVertical,
-
-            // Área para livros requisitados .--> por enquanto ainda vazia
-            SingleChildScrollView(
-              child: SizedBox(
-                width: double.infinity,
-                height: 285.0,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      // Por enquanto assim...
-                      if (livros[0].isRequisitado == true) ...[
-                        ListaLivroRequisitado(livros: livros[0]),
-                      ] else ...[
-                        const Text(
-                          '',
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                      if (livros[1].isRequisitado == true) ...[
-                        ListaLivroRequisitado(livros: livros[1]),
-                      ] else ...[
-                        const Text(
-                          '',
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                      if (livros[2].isRequisitado == true) ...[
-                        ListaLivroRequisitado(livros: livros[2]),
-                      ] else ...[
-                        const Text(
-                          '',
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                      //
-                      if (livros[3].isRequisitado == true) ...[
-                        ListaLivroRequisitado(livros: livros[3]),
-                      ] else ...[
-                        const Text(
-                          '',
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-              ),
+            const SizedBox(
+              height: 20,
             ),
-            //const Divider(),
-            // Titulos
-            tituloPrateleiras,
+
             tituloSeccaoAmarela,
 
             // Espaço
@@ -178,6 +110,103 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  _buildLinhaADividir() {
+    return Divider(
+      //thickness: 4,
+      indent: 27,
+      endIndent: 29,
+      color: Theme.of(context).textTheme.caption!.color,
+    );
+  }
+
+  _buildSeccaoTitulo(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              padding: const EdgeInsets.only(left: 7),
+              width: MediaQuery.of(context).size.width / 2,
+              child: title == 'Prateleiras'
+                  ? Text(
+                      title,
+                      style: const TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28,
+                        color: darkColor,
+                      ),
+                    )
+                  : Text(
+                      title,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: darkColor,
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _buildApresentarLivrosRequisitados() {
+    return SingleChildScrollView(
+      child: SizedBox(
+        width: double.infinity,
+        height: 285.0,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              // Por enquanto assim...
+              if (livros[0].isRequisitado == true) ...[
+                ListaLivroRequisitado(livros: livros[0]),
+              ] else ...[
+                const Text(
+                  '',
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              if (livros[1].isRequisitado == true) ...[
+                ListaLivroRequisitado(livros: livros[1]),
+              ] else ...[
+                const Text(
+                  '',
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              if (livros[2].isRequisitado == true) ...[
+                ListaLivroRequisitado(livros: livros[2]),
+              ] else ...[
+                const Text(
+                  '',
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              //
+              if (livros[3].isRequisitado == true) ...[
+                ListaLivroRequisitado(livros: livros[3]),
+              ] else ...[
+                const Text(
+                  '',
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ],
+          ),
         ),
       ),
     );

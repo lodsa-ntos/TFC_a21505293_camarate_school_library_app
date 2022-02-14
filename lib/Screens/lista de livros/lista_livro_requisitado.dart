@@ -1,5 +1,4 @@
 import 'package:camarate_school_library/Models/livro.dart';
-import 'package:camarate_school_library/Screens/detalhe%20do%20livro/livro_detalhado_requisitado.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -17,16 +16,7 @@ class ListaLivroRequisitado extends StatelessWidget {
     String data = formato.format(dataDeHoje);
 
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MeuLivroRequisitadoEDetalhado(
-              livro: livros,
-            ),
-          ),
-        );
-      },
+      onTap: () {},
       child: Container(
         width: 111.0,
         margin: const EdgeInsets.only(right: 12.0),

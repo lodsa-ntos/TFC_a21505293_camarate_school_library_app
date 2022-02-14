@@ -1,12 +1,5 @@
-// ignore_for_file: unused_local_variable
-
-import 'dart:convert';
-
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Screens/Pesquisa/pesquisa_screen.dart';
-import 'package:camarate_school_library/Screens/lista%20de%20livros/lista_de_livros.dart';
-import 'package:camarate_school_library/Screens/lista%20de%20livros/lista_livro_requisitado.dart';
-import 'package:camarate_school_library/Utils/cores.dart';
 import 'package:flutter/material.dart';
 
 import 'livro_vista_pequena.dart';

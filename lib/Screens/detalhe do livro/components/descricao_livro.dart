@@ -59,13 +59,7 @@ class _DescricaoDoLivroState extends State<DescricaoDoLivro> {
             ),
           ),
         ),
-        const Divider(
-          height: 20,
-          thickness: 4,
-          indent: 27,
-          endIndent: 250,
-          color: Colors.black,
-        ),
+        _buildLinhaADividir(),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 15),
           child: segundaMetadeDoTexto.isEmpty
@@ -126,6 +120,15 @@ class _DescricaoDoLivroState extends State<DescricaoDoLivro> {
                 ),
         ),
       ],
+    );
+  }
+
+  _buildLinhaADividir() {
+    return Divider(
+      //thickness: 4,
+      indent: 27,
+      endIndent: 29,
+      color: Theme.of(context).textTheme.caption!.color,
     );
   }
 }
