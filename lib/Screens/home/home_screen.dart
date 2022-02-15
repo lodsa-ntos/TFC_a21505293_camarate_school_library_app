@@ -2,7 +2,7 @@ import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Screens/Pesquisa/pesquisa_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'Vista_pequena.dart';
+import 'vista_pequena.dart';
 
 final livros = gerarLivrosAleatorios();
 

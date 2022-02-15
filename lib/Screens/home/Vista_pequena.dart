@@ -5,7 +5,6 @@ import 'package:camarate_school_library/Utils/cores.dart';
 import 'package:flutter/material.dart';
 
 final livros = gerarLivrosAleatorios();
-final livrosRecentes = gerarLivrosAdicionados();
 
 final key = GlobalKey<AnimatedListState>();
 
@@ -19,6 +18,10 @@ class VistaPequena extends StatefulWidget {
 class _VistaPequenaState extends State<VistaPequena> {
   final espacamentoVertical = const SizedBox(
     height: 15,
+  );
+
+  final espacoTituloELivros = const SizedBox(
+    height: 12,
   );
 
   final areaVazia = CustomPaint(
@@ -71,10 +74,7 @@ class _VistaPequenaState extends State<VistaPequena> {
             // Espaço
             espacamentoVertical,
             _buildSeccaoTitulo('Livros requisitados'),
-
-            const SizedBox(
-              height: 12,
-            ),
+            espacoTituloELivros,
 
             // Livro que foi requisitado
             _buildApresentarLivrosRequisitados(),
@@ -110,6 +110,8 @@ class _VistaPequenaState extends State<VistaPequena> {
                 ),
               ),
             ),
+
+            // Titulos
             _buildLSeccaoTitulosClassesDaPrateleira(1),
           ],
         ),
@@ -227,6 +229,24 @@ class _VistaPequenaState extends State<VistaPequena> {
                   fontSize: 12,
                   color: darkColor,
                   fontFamily: 'Poppins',
+                ),
+              ),
+            ),
+            SingleChildScrollView(
+              child: SizedBox(
+                width: double.infinity,
+                height: 320.0,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: ListView.builder(
+                    // carregar até ao último indice
+                    itemCount: livros.length,
+                    scrollDirection: Axis.horizontal,
+                    // comportamento para que a ListView só ocupe o espaço de que necessita
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) =>
+                        ListaDeLivros(livros: livros[index]),
+                  ),
                 ),
               ),
             ),
