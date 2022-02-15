@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-class ListaLivroRequisitado extends StatelessWidget {
+class OMeuLivroRequisitado extends StatelessWidget {
   final Livro livros;
 
-  const ListaLivroRequisitado({Key? key, required this.livros})
+  const OMeuLivroRequisitado({Key? key, required this.livros})
       : super(key: key);
 
   @override
@@ -42,8 +42,19 @@ class ListaLivroRequisitado extends StatelessWidget {
               livros.titulo,
               style: const TextStyle(
                 fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w700,
                 fontSize: 14.0,
+              ),
+            ),
+            const SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              'Data de Entrega: ' + data,
+              style: GoogleFonts.catamaran(
+                textStyle: const TextStyle(
+                  fontSize: 13.0,
+                ),
               ),
             ),
           ],

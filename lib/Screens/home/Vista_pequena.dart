@@ -9,14 +9,14 @@ final livrosRecentes = gerarLivrosAdicionados();
 
 final key = GlobalKey<AnimatedListState>();
 
-class LivroVistaPequena extends StatefulWidget {
-  const LivroVistaPequena({Key? key}) : super(key: key);
+class VistaPequena extends StatefulWidget {
+  const VistaPequena({Key? key}) : super(key: key);
 
   @override
-  _LivroVistaPequenaState createState() => _LivroVistaPequenaState();
+  _VistaPequenaState createState() => _VistaPequenaState();
 }
 
-class _LivroVistaPequenaState extends State<LivroVistaPequena> {
+class _VistaPequenaState extends State<VistaPequena> {
   final espacamentoVertical = const SizedBox(
     height: 15,
   );
@@ -70,31 +70,14 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
           children: [
             // Espaço
             espacamentoVertical,
-            _buildSeccaoTitulo('Adicionados recentemente'),
+            _buildSeccaoTitulo('Livros requisitados'),
 
             const SizedBox(
               height: 12,
             ),
 
-            // Área que vai apresentar livros requisitados
-            SingleChildScrollView(
-              child: SizedBox(
-                width: double.infinity,
-                height: 250.0,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: ListView.builder(
-                    // carregar até ao último indice
-                    itemCount: livros.length,
-                    scrollDirection: Axis.horizontal,
-                    // comportamento para que a ListView só ocupe o espaço de que necessita
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) =>
-                        ListaLivroRequisitado(livros: livrosRecentes[index]),
-                  ),
-                ),
-              ),
-            ),
+            // Livro que foi requisitado
+            _buildApresentarLivrosRequisitados(),
 
             // Titulos
             _buildSeccaoTitulo('Prateleiras'),
@@ -104,7 +87,7 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
               height: 20,
             ),
 
-            //tituloSeccaoAmarela,
+            // Titulos
             _buildLSeccaoTitulosClassesDaPrateleira(0),
 
             // Espaço
@@ -131,15 +114,6 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
           ],
         ),
       ),
-    );
-  }
-
-  _buildLinhaADividir() {
-    return Divider(
-      //thickness: 4,
-      indent: 27,
-      endIndent: 29,
-      color: Theme.of(context).textTheme.caption!.color,
     );
   }
 
@@ -193,7 +167,7 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
             children: [
               // Por enquanto assim...
               if (livros[0].isRequisitado == true) ...[
-                ListaLivroRequisitado(livros: livros[0]),
+                OMeuLivroRequisitado(livros: livros[0]),
               ] else ...[
                 const Text(
                   '',
@@ -201,7 +175,7 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
                 ),
               ],
               if (livros[1].isRequisitado == true) ...[
-                ListaLivroRequisitado(livros: livros[1]),
+                OMeuLivroRequisitado(livros: livros[1]),
               ] else ...[
                 const Text(
                   '',
@@ -209,7 +183,7 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
                 ),
               ],
               if (livros[2].isRequisitado == true) ...[
-                ListaLivroRequisitado(livros: livros[2]),
+                OMeuLivroRequisitado(livros: livros[2]),
               ] else ...[
                 const Text(
                   '',
@@ -218,7 +192,7 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
               ],
               //
               if (livros[3].isRequisitado == true) ...[
-                ListaLivroRequisitado(livros: livros[3]),
+                OMeuLivroRequisitado(livros: livros[3]),
               ] else ...[
                 const Text(
                   '',

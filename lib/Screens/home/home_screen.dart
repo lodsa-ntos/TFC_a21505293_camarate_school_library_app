@@ -2,7 +2,7 @@ import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Screens/Pesquisa/pesquisa_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'livro_vista_pequena.dart';
+import 'Vista_pequena.dart';
 
 final livros = gerarLivrosAleatorios();
 
@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           // Livros no home em vista pequena....
-          const LivroVistaPequena(),
+          const VistaPequena(),
         ],
       ),
     );
