@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Routes {
   // route simulado (fetício)
   static const String authService =
@@ -11,5 +13,18 @@ class Routes {
 
   String signUp() {
     return authService + "accounts:signUp?key=" + apiKey;
+  }
+
+  static Future pushPaginaSeguinte(BuildContext context, Widget page) {
+    var val = Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return page;
+        },
+      ),
+    );
+
+    return val;
   }
 }

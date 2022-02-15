@@ -202,3 +202,67 @@ List<Livro> gerarLivrosAleatorios() {
     ),
   ];
 }
+
+List<Livro> gerarLivrosAdicionados() {
+  return [
+    Livro(
+      numRegisto: 0,
+      titulo: 'Livro do Desassossego | Vol.II',
+      autor: 'Fernando Pessoa',
+      editora: '11 X 17',
+      isbn: '9789722524223',
+      imagemCapa:
+          'https://cdn.shopify.com/s/files/1/0450/0717/5837/products/image-1_0645e650-6119-4245-bff4-b13847982f82_1024x1024.jpg?v=1614103731',
+      isDisponivel: true,
+      descricao:
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+      imagemAutor:
+          'https://www.portaldaliteratura.com/assets/files_autores/339.jpg',
+      isRequisitado: false,
+    ),
+    Livro(
+      numRegisto: 1,
+      titulo: 'O Eu profundo e os outros Eus',
+      autor: 'Fernando Pessoa',
+      editora: 'Fundação Francisco Manuel dos Santos',
+      isbn: '9789898838889',
+      imagemCapa:
+          'https://blog.estantevirtual.com.br/wp-content/uploads/fernandopessoa-euprofundoeoutroseus.jpg',
+      isDisponivel: true,
+      descricao:
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+      imagemAutor:
+          'https://imagens.publico.pt/imagens.aspx/737891?tp=UH&db=IMAGENS&type=JPG&w=334&h=334&act=cropResize',
+      isRequisitado: false,
+    ),
+    Livro(
+      numRegisto: 2,
+      titulo: 'Um perito em busca da verdade',
+      autor: 'Ana Maria Magalhães | Isabel Alçada',
+      editora: 'Lua de Papel',
+      isbn: '9789892326153',
+      imagemCapa: 'https://oriscoespreita.sapo.pt/imagens/perito_verdade.png',
+      isDisponivel: true,
+      descricao:
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+      imagemAutor:
+          'https://imagens.publico.pt/imagens.aspx/274255?tp=UH&db=IMAGENS&type=JPG&share=1&o=BarraFacebook_Publico.png',
+      isRequisitado: false,
+    ),
+    Livro(
+      numRegisto: 3,
+      titulo: 'Luís De Camões',
+      autor: 'J. M. Latino Coelho',
+      editora: 'Clube do Autor',
+      isbn: '9789897242915',
+      imagemCapa:
+          'http://www.livrosusados.pt/wp-content/uploads/2016/03/figuras-do-passado-luis-de-camoes.jpg',
+      isDisponivel: true,
+      descricao:
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+      imagemAutor:
+          'https://images.trustinnews.pt/uploads/sites/5/2019/10/goncalo-cadilhe-2.png',
+      isRequisitado: false,
+    ),
+  ];
+}

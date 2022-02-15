@@ -42,19 +42,8 @@ class ListaLivroRequisitado extends StatelessWidget {
               livros.titulo,
               style: const TextStyle(
                 fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
                 fontSize: 14.0,
-              ),
-            ),
-            const SizedBox(
-              height: 5.0,
-            ),
-            Text(
-              'Data de Entrega: ' + data,
-              style: GoogleFonts.catamaran(
-                textStyle: const TextStyle(
-                  fontSize: 13.0,
-                ),
               ),
             ),
           ],

@@ -5,6 +5,7 @@ import 'package:camarate_school_library/Utils/cores.dart';
 import 'package:flutter/material.dart';
 
 final livros = gerarLivrosAleatorios();
+final livrosRecentes = gerarLivrosAdicionados();
 
 final key = GlobalKey<AnimatedListState>();
 
@@ -69,15 +70,31 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
           children: [
             // Espaço
             espacamentoVertical,
-            _buildSeccaoTitulo('Livros Requisitados'),
-            _buildLinhaADividir(),
+            _buildSeccaoTitulo('Adicionados recentemente'),
 
             const SizedBox(
-              height: 20,
+              height: 12,
             ),
 
             // Área que vai apresentar livros requisitados
-            _buildApresentarLivrosRequisitados(),
+            SingleChildScrollView(
+              child: SizedBox(
+                width: double.infinity,
+                height: 250.0,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: ListView.builder(
+                    // carregar até ao último indice
+                    itemCount: livros.length,
+                    scrollDirection: Axis.horizontal,
+                    // comportamento para que a ListView só ocupe o espaço de que necessita
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) =>
+                        ListaLivroRequisitado(livros: livrosRecentes[index]),
+                  ),
+                ),
+              ),
+            ),
 
             // Titulos
             _buildSeccaoTitulo('Prateleiras'),
@@ -95,7 +112,7 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
             SingleChildScrollView(
               child: SizedBox(
                 width: double.infinity,
-                height: 350.0,
+                height: 320.0,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: ListView.builder(
@@ -110,6 +127,7 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
                 ),
               ),
             ),
+            _buildLSeccaoTitulosClassesDaPrateleira(1),
           ],
         ),
       ),
@@ -135,7 +153,6 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
             alignment: Alignment.centerLeft,
             child: Container(
               padding: const EdgeInsets.only(left: 7),
-              width: MediaQuery.of(context).size.width / 2,
               child: titulo == 'Prateleiras'
                   ? Text(
                       titulo,
@@ -144,6 +161,7 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
                         fontWeight: FontWeight.bold,
                         fontSize: 28,
                         color: darkColor,
+                        letterSpacing: -1.5,
                       ),
                     )
                   : Text(
@@ -153,6 +171,7 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
                         fontSize: 18,
                         color: darkColor,
                         fontFamily: 'Poppins',
+                        letterSpacing: 0.25,
                       ),
                     ),
             ),
@@ -215,51 +234,183 @@ class _LivroVistaPequenaState extends State<LivroVistaPequena> {
 
   _buildLSeccaoTitulosClassesDaPrateleira(int seccao) {
     return Container(
-        padding: const EdgeInsets.only(left: 27.0),
-        child: seccao == 0
-            ? Row(
-                children: const [
-                  // Circulo das classes
-                  CircleAvatar(
-                    backgroundColor: Colors.yellow,
-                    minRadius: 15,
-                  ),
-                  Padding(
-                    // espaço entre o circulo e o título da classe
-                    padding: EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Text(
-                      'Generabilidade.Dicionários.\nEnciclopédias.Informática',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: darkColor,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            : Row(
-                children: const [
-                  // Circulo das classes
-                  CircleAvatar(
-                    backgroundColor: Colors.yellow,
-                    minRadius: 15,
-                  ),
-                  Padding(
-                    // espaço entre o circulo e o título da classe
-                    padding: EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Text(
-                      'Filosofia. Psicologia',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: darkColor,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
-                  ),
-                ],
-              ));
+      padding: const EdgeInsets.only(left: 27.0),
+      child: Row(
+        children: [
+          if (seccao == 0) ...[
+            // Circulo das classes
+            const CircleAvatar(
+              backgroundColor: Colors.yellow,
+              minRadius: 15,
+            ),
+            const Padding(
+              // espaço entre o circulo e o título da classe
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text(
+                'Generabilidade.Dicionários.\nEnciclopédias.Informática',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: darkColor,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ),
+          ] else if (seccao == 1) ...[
+            // Circulo das classes
+            const CircleAvatar(
+              backgroundColor: Color(0xffC3A47D),
+              minRadius: 15,
+            ),
+            const Padding(
+              // espaço entre o circulo e o título da classe
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text(
+                'Filosofia. Psicologia',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: darkColor,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ),
+          ] else if (seccao == 2) ...[
+            // Circulo das classes
+            const CircleAvatar(
+              backgroundColor: Color(0xffF59A23),
+              minRadius: 15,
+            ),
+            const Padding(
+              // espaço entre o circulo e o título da classe
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text(
+                'Religião. Teologia',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: darkColor,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ),
+          ] else if (seccao == 3) ...[
+            // Circulo das classes
+            const CircleAvatar(
+              backgroundColor: Color(0xff7B4D12),
+              minRadius: 15,
+            ),
+            const Padding(
+              // espaço entre o circulo e o título da classe
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text(
+                'Ciências Sociais',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: darkColor,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ),
+          ] else if (seccao == 5) ...[
+            // Circulo das classes
+            const CircleAvatar(
+              backgroundColor: Color(0xffD9001B),
+              minRadius: 15,
+            ),
+            const Padding(
+              // espaço entre o circulo e o título da classe
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text(
+                'Ciências Exatas. Matemática. Biologia',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: darkColor,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ),
+          ] else if (seccao == 6) ...[
+            // Circulo das classes
+            const CircleAvatar(
+              backgroundColor: Color(0xffEC808D),
+              minRadius: 15,
+            ),
+            const Padding(
+              // espaço entre o circulo e o título da classe
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text(
+                'Ciências Aplicadas. Medicina. Tecnologia',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: darkColor,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ),
+          ] else if (seccao == 7) ...[
+            // Circulo das classes
+            const CircleAvatar(
+              backgroundColor: Color(0xff1C8EDD),
+              minRadius: 15,
+            ),
+            const Padding(
+              // espaço entre o circulo e o título da classe
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text(
+                'Arte. Desporto',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: darkColor,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ),
+          ] else if (seccao == 8) ...[
+            // Circulo das classes
+            const CircleAvatar(
+              backgroundColor: Color(0xff000000),
+              minRadius: 15,
+            ),
+            const Padding(
+              // espaço entre o circulo e o título da classe
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text(
+                'Língua. Linguística. Literatura',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: darkColor,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ),
+          ] else if (seccao == 9) ...[
+            // Circulo das classes
+            const CircleAvatar(
+              backgroundColor: Color(0xff02790E),
+              minRadius: 15,
+            ),
+            const Padding(
+              // espaço entre o circulo e o título da classe
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text(
+                'História. Geografia. Biografia',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: darkColor,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ),
+          ]
+        ],
+      ),
+    );
   }
 }

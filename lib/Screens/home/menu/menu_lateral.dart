@@ -1,6 +1,8 @@
 import 'package:camarate_school_library/Models/utilizador.dart';
-import 'package:camarate_school_library/Screens/home/Menu/settings/configuracao.dart';
+import 'package:camarate_school_library/Screens/Historico%20livro%20requisitado/historico.dart';
+import 'package:camarate_school_library/Services/Routes/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ignore: use_key_in_widget_constructors
@@ -25,6 +27,28 @@ class _MenuLateralState extends State<MenuLateral> {
   //    setState(() {});
   //  });
   // }
+
+  List<Map> conteudoDoMenu = [];
+
+  @override
+  void initState() {
+    super.initState();
+    conteudoDoMenu = [
+      {
+        'icone': Icons.history,
+        'titulo': 'Historico',
+        'Redicionar Pagina': () => _redicionaParaPagina(const Historico()),
+      },
+      {
+        'icone': FontAwesomeIcons.userAlt,
+        'titulo': 'Perfil',
+      },
+      {
+        'icone': Icons.notifications,
+        'titulo': 'Notificação',
+      },
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,30 +85,32 @@ class _MenuLateralState extends State<MenuLateral> {
     );
 
     // Conteudo do menu lateral
-    final conteudo = Column(
-      children: conteudoDoMenu
-          .map((element) => Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Icon(
-                      element['icone'],
-                      color: Colors.white,
-                      size: 23,
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      element['titulo'],
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ],
-                ),
-              ))
-          .toList(),
+    final conteudo = ListView.separated(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: conteudoDoMenu.length,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+          onTap: conteudoDoMenu[index]['Redicionar Pagina'],
+          leading: Icon(
+            conteudoDoMenu[index]['icone'],
+            color: Colors.white,
+            size: 25,
+          ),
+          title: Text(
+            conteudoDoMenu[index]['titulo'],
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return const SizedBox();
+      },
     );
 
     // Definicoes e logout da app
@@ -144,6 +170,10 @@ class _MenuLateralState extends State<MenuLateral> {
         ],
       ),
     );
+  }
+
+  _redicionaParaPagina(Widget novaPagina) {
+    Routes.pushPaginaSeguinte(context, novaPagina);
   }
 
   // Função sair da aplicação
