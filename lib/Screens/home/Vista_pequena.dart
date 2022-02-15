@@ -232,24 +232,6 @@ class _VistaPequenaState extends State<VistaPequena> {
                 ),
               ),
             ),
-            SingleChildScrollView(
-              child: SizedBox(
-                width: double.infinity,
-                height: 320.0,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: ListView.builder(
-                    // carregar até ao último indice
-                    itemCount: livros.length,
-                    scrollDirection: Axis.horizontal,
-                    // comportamento para que a ListView só ocupe o espaço de que necessita
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) =>
-                        ListaDeLivros(livros: livros[index]),
-                  ),
-                ),
-              ),
-            ),
           ] else if (seccao == 1) ...[
             // Circulo das classes
             const CircleAvatar(

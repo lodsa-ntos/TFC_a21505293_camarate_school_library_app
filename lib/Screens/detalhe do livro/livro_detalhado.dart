@@ -1,4 +1,5 @@
 import 'package:camarate_school_library/Models/livro.dart';
+import 'package:camarate_school_library/Screens/Historico%20livro%20requisitado/historico.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -103,7 +104,12 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
                     // o livro fica requisitado
                     widget.livro.isRequisitado = true;
                     // Redireciona o utilizador para a página principal
-                    Navigator.of(context).pop('');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Historico(),
+                      ),
+                    );
                   });
                 }
               // se o livro não estiver disponível, o botao vai estar desabilitado
