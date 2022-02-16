@@ -45,6 +45,8 @@ dependencies:
   cool_alert: ^1.1.0
   intl: ^0.17.0
   objectdb: ^1.2.1+1
+  provider: ^6.0.2
+  consumer: ^2.3.1
 
 
 dev_dependencies:

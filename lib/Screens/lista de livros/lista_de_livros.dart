@@ -57,7 +57,8 @@ class ListaDeLivros extends StatelessWidget {
               livros.autor,
               style: GoogleFonts.catamaran(
                 textStyle: const TextStyle(
-                  fontSize: 13.0,
+                  fontSize: 14.0,
+                  color: Color(0xff6a6b6a),
                 ),
               ),
             ),

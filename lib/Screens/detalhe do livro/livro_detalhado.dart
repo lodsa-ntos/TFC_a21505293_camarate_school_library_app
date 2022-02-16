@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'components/autor_do_livro.dart';
 import 'components/descricao_livro.dart';
 import 'components/titulo_e_conteudo.dart';
+import 'components/verificar_livro_detalhado.dart';
 
 class LivroDetalhado extends StatefulWidget {
   const LivroDetalhado({
@@ -69,8 +70,16 @@ class BotaoRequisitar extends StatefulWidget {
 }
 
 class _BotaoRequisitarState extends State<BotaoRequisitar> {
-  final key = GlobalKey<AnimatedListState>();
+  final chave = GlobalKey<AnimatedListState>();
   final livros = gerarLivrosAleatorios();
+
+  List<Livro> livroRequisitado = [];
+
+  addUser(Livro livro) {
+    setState(() {
+      livroRequisitado.add(livro);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,17 +108,11 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
           // Se o livro estiver disponível o botao vai estar habilitado
           onPressed: widget.livro.isDisponivel
               ? () {
-                  setState(() {
+                  setState(() async {
                     widget.livro.isDisponivel = false;
                     // o livro fica requisitado
                     widget.livro.isRequisitado = true;
                     // Redireciona o utilizador para a página principal
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Historico(),
-                      ),
-                    );
                   });
                 }
               // se o livro não estiver disponível, o botao vai estar desabilitado
