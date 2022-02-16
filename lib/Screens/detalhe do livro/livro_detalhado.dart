@@ -75,7 +75,7 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
 
   List<Livro> livroRequisitado = [];
 
-  addUser(Livro livro) {
+  addLivro(Livro livro) {
     setState(() {
       livroRequisitado.add(livro);
     });
@@ -114,6 +114,7 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
                     widget.livro.isRequisitado = true;
                     // Redireciona o utilizador para a página principal
                   });
+                  if (widget.livro.isRequisitado = true) {}
                 }
               // se o livro não estiver disponível, o botao vai estar desabilitado
               : null,
