@@ -1,7 +1,12 @@
+import 'package:camarate_school_library/Models/livro.dart';
+import 'package:camarate_school_library/Screens/home/home_screen.dart';
+import 'package:camarate_school_library/Screens/lista%20de%20livros/lista_livro_requisitado.dart';
 import 'package:flutter/material.dart';
 
 class Historico extends StatefulWidget {
-  const Historico({Key? key}) : super(key: key);
+  final List<Livro> livros;
+
+  Historico(this.livros);
 
   @override
   _HistoricoState createState() => _HistoricoState();
@@ -13,7 +18,8 @@ class _HistoricoState extends State<Historico> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Histórico',
+          'Historico',
+          style: TextStyle(color: Colors.white),
         ),
       ),
     );

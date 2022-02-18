@@ -1,3 +1,4 @@
+import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Models/utilizador.dart';
 import 'package:camarate_school_library/Screens/Historico%20livro%20requisitado/historico.dart';
 import 'package:camarate_school_library/Services/Routes/routes.dart';
@@ -29,6 +30,7 @@ class _MenuLateralState extends State<MenuLateral> {
   // }
 
   List<Map> conteudoDoMenu = [];
+  List<Livro> liv = [];
 
   @override
   void initState() {
@@ -37,7 +39,7 @@ class _MenuLateralState extends State<MenuLateral> {
       {
         'icone': Icons.history,
         'titulo': 'Historico',
-        'Redicionar Pagina': () => _redicionaParaPagina(const Historico()),
+        //'Redicionar Pagina': () => _redicionaParaPagina(Historico(liv)),
       },
       {
         'icone': FontAwesomeIcons.userAlt,
@@ -170,10 +172,6 @@ class _MenuLateralState extends State<MenuLateral> {
         ],
       ),
     );
-  }
-
-  _redicionaParaPagina(Widget novaPagina) {
-    Routes.pushPaginaSeguinte(context, novaPagina);
   }
 
   // Função sair da aplicação

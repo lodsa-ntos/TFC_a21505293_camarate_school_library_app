@@ -13,9 +13,13 @@ class VistaPequena extends StatefulWidget {
 
   @override
   _VistaPequenaState createState() => _VistaPequenaState();
+
+  void add(Set<String?> livro) {}
 }
 
 class _VistaPequenaState extends State<VistaPequena> {
+  List<Livro> livroRequisitado = [];
+
   final espacamentoVertical = const SizedBox(
     height: 15,
   );
@@ -110,9 +114,6 @@ class _VistaPequenaState extends State<VistaPequena> {
                 ),
               ),
             ),
-
-            // Titulos
-            _buildLSeccaoTitulosClassesDaPrateleira(1),
           ],
         ),
       ),

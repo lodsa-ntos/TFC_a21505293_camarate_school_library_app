@@ -2,11 +2,13 @@ import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Screens/Historico%20livro%20requisitado/historico.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import 'components/autor_do_livro.dart';
 import 'components/descricao_livro.dart';
 import 'components/titulo_e_conteudo.dart';
 import 'components/verificar_livro_detalhado.dart';
+import 'function/verificar_requisicao.dart';
 
 class LivroDetalhado extends StatefulWidget {
   const LivroDetalhado({
@@ -72,14 +74,8 @@ class BotaoRequisitar extends StatefulWidget {
 class _BotaoRequisitarState extends State<BotaoRequisitar> {
   final chave = GlobalKey<AnimatedListState>();
   final livros = gerarLivrosAleatorios();
-
-  List<Livro> livroRequisitado = [];
-
-  addLivro(Livro livro) {
-    setState(() {
-      livroRequisitado.add(livro);
-    });
-  }
+  Livro? livro;
+  VerificarRequisico? verificarRequisico;
 
   @override
   Widget build(BuildContext context) {
@@ -108,13 +104,15 @@ class _BotaoRequisitarState extends State<BotaoRequisitar> {
           // Se o livro estiver disponível o botao vai estar habilitado
           onPressed: widget.livro.isDisponivel
               ? () {
-                  setState(() async {
+                  setState(() {
                     widget.livro.isDisponivel = false;
                     // o livro fica requisitado
                     widget.livro.isRequisitado = true;
                     // Redireciona o utilizador para a página principal
+                    if (widget.livro.isRequisitado = true) {
+                      verificarRequisico?.addLivroRequisitado();
+                    }
                   });
-                  if (widget.livro.isRequisitado = true) {}
                 }
               // se o livro não estiver disponível, o botao vai estar desabilitado
               : null,
