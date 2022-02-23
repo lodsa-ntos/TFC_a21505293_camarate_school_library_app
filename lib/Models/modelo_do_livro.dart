@@ -48,7 +48,7 @@ class ModeloDoLivro {
       /// Aqui, a lista de livros é infinita, vai fazer um loop sobre [gerarLivrosAleatorios].
       gerarLivrosAleatorios.firstWhere(
         (element) => element.id == id,
-        //orElse: () => gerarLivrosAleatorios[0],
+        orElse: () => gerarLivrosAleatorios[id % gerarLivrosAleatorios.length],
       );
 
   /// Obter o livro pela sua posição na lista.
