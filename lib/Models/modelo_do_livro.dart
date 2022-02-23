@@ -47,13 +47,8 @@ class ModeloDoLivro {
 
       /// Aqui, a lista de livros é infinita, vai fazer um loop sobre [gerarLivrosAleatorios].
       gerarLivrosAleatorios.firstWhere(
-          (element) => element.id == id); // ERRO DO BAD STATE: NO ELEMENT
-
-  /// A ideia abaixo para obter os livros pelo id, mas que não funciona com o tipo de lista que tenho
-  /// porque requer apenas dois elemntos no construtor e assim para o quero não
-  /// funiona, e sem isto pode estar a causar o  ERRO DO BAD STATE: NO ELEMENT
-  ///
-  /// Item getById(int id) => Item(id, itemNames[id % itemNames.length]);
+        (element) => element.id == id % gerarLivrosAleatorios.length,
+      );
 
   /// Obter o livro pela sua posição na lista.
   Livro getPorPosicao(int posicao) {
