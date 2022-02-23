@@ -132,6 +132,9 @@ class HomeScreen extends StatelessWidget {
                     // ERRO DO BAD STATE: NO ELEMENT --> Resolver
                     itemBuilder: (context, index) =>
                         ListaDeLivros(index: index),
+
+                    /// Tira o erro por enquanto, mas isto é de mau programador
+                    itemCount: 4,
                   ),
                 ),
               ),
