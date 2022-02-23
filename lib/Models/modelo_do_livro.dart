@@ -46,6 +46,7 @@ class ModeloDoLivro {
   Livro getPorId(int id) =>
 
       /// Aqui, a lista de livros é infinita, vai fazer um loop sobre [gerarLivrosAleatorios].
+      /// O que é errado para o que se quer....
       gerarLivrosAleatorios.firstWhere((element) => element.id == id);
 
   /// Obter o livro pela sua posição na lista.
