@@ -19,7 +19,7 @@ class ModeloInformacaoLivro extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Lista de livros no histórico.
+  /// Lista de livros para o histórico.
   List<Livro> get livros =>
       _idsDoslivros.map((id) => _livro.getPorId(id)).toList();
 
@@ -27,7 +27,7 @@ class ModeloInformacaoLivro extends ChangeNotifier {
   void add(Livro livro) {
     _idsDoslivros.add(livro.id);
     // Esta linha diz ao [ModeloDoLivro] que ele deve reconstruir os widgets que
-    // depende disso --> notifyListeners.
+    // dependem do --> notifyListeners.
     notifyListeners();
   }
 
