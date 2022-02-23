@@ -114,9 +114,6 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            // Espaçmento vertical
-            espacamento,
-
             // Título
             prateleiras,
             //

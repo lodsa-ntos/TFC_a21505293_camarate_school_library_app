@@ -88,8 +88,8 @@ class _BotaoRequisitar extends StatelessWidget {
               // O context.read(), aqui retorna uma chamada
               // e é executado sempre que o utilizador pressiona o botão de requisitar.
               // Em outras palavras, o context.read() é executado fora do método build.
-              var cart = context.read<ModeloInformacaoLivro>();
-              cart.add(requisitarLivro);
+              var historicoRequisicao = context.read<ModeloInformacaoLivro>();
+              historicoRequisicao.add(requisitarLivro);
               requisitarLivro.isRequisitado = true;
             },
       style: ButtonStyle(
