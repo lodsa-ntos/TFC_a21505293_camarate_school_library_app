@@ -44,6 +44,8 @@ dependencies:
   font_awesome_flutter: ^9.2.0
   provider: ^6.0.2
   consumer: ^2.3.1
+  cached_network_image: ^3.1.0
+  uuid: ^3.0.4
 
 
 dev_dependencies:
@@ -79,6 +81,7 @@ flutter:
      - assets/files/livros_prateleiras.json
      - assets/images/logotipos/logotipo.png
      - assets/images/logotipos/logo_entidade.jpg
+     - assets/images/vazio.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

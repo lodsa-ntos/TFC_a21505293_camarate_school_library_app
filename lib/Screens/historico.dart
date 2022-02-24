@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:camarate_school_library/Models/modelo_informacao_livro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart'; // DateFormat
+import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart'; // DateFormat
 
 class Historico extends StatelessWidget {
   const Historico({Key? key}) : super(key: key);
@@ -19,10 +21,10 @@ class Historico extends StatelessWidget {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 0.0),
                 child:
                     // Aqui apresento o livro requisitado no ecrã do histórico
-                    _FormatoLivroRequisitadoDoHistorico(),
+                    _FormatoLivroRequisitadoNoHistorico(),
               ),
             ),
           ],
@@ -34,7 +36,7 @@ class Historico extends StatelessWidget {
 
 /// Esta classe representa o formato de como quero que os livros requisitados
 /// apareçam no ecrã para o utilizador
-class _FormatoLivroRequisitadoDoHistorico extends StatelessWidget {
+class _FormatoLivroRequisitadoNoHistorico extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Um pequeno tema para o texto(titulo, subTitulo, etc)
@@ -56,17 +58,19 @@ class _FormatoLivroRequisitadoDoHistorico extends StatelessWidget {
       itemCount: requisicao.livros.length,
       itemBuilder: (context, index) => ListTile(
         title: Row(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 122.0,
-              margin: const EdgeInsets.only(right: 12.0),
+              width: 122.0, // alargar a capa do livro
+              margin: const EdgeInsets.only(right: 12.0, top: 20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 121.66,
-                    height: 190.5,
+                    width: 100.66,
+                    height: 150.5,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       image: DecorationImage(
@@ -75,26 +79,20 @@ class _FormatoLivroRequisitadoDoHistorico extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 12.0,
-                  ),
+                  const SizedBox(height: 12.0),
                   Text(
-                    requisicao.livros[index].titulo,
+                    requisicao.livros[index].titulo, // Titulo do livro
                     style: itemNameStyle,
                   ),
-                  const SizedBox(
-                    height: 5.0,
-                  ),
-                  Text(
-                    'Data de Entrega: ' + data,
-                  ),
+                  const SizedBox(height: 5.0),
+                  Text('Data de Entrega: ' + data),
                 ],
               ),
             ),
           ],
         ),
 
-        // Aqui permito ao utilizador eliminar o livro requisitado do seu historcio
+        // Aqui permito ao utilizador eliminar o livro requisitado do seu histórico
         trailing: IconButton(
           icon: const Icon(Icons.remove_circle_outline),
           onPressed: () {
