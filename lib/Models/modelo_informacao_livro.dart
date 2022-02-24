@@ -35,7 +35,7 @@ class ModeloInformacaoLivro extends ChangeNotifier {
   void remove(Livro livro) {
     _idsDoslivros.remove(livro.id);
     // Esta linha diz aos widgets dependentes para reconstruir toda vez_
-    // o modelo alterado.
+    // que o modelo alterado.
     notifyListeners();
   }
 }

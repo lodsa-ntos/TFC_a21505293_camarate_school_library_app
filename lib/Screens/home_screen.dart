@@ -63,14 +63,11 @@ class HomeScreen extends StatelessWidget {
           // Importante: Remove qualquer preenchimento a mais do ListView.
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              decoration: const BoxDecoration(
+            const DrawerHeader(
+              decoration: BoxDecoration(
                 color: Colors.blue,
               ),
-              child: Text(
-                'Menu Lateral',
-                style: textTheme,
-              ),
+              child: null,
             ),
             ListTile(
               title: Text(
