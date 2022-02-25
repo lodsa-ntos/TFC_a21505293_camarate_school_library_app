@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:camarate_school_library/Models/modelo_informacao_livro.dart';
+import 'package:camarate_school_library/view_models/modelo_informacao_livro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
