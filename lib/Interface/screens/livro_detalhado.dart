@@ -1,5 +1,5 @@
-import 'package:camarate_school_library/Models/modelo_do_livro.dart';
-import 'package:camarate_school_library/view_models/modelo_informacao_livro.dart';
+import 'package:camarate_school_library/Models/livro.dart';
+import 'package:camarate_school_library/View_models/repositorio_livros_requisitados.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 
@@ -75,7 +75,7 @@ class _BotaoRequisitar extends StatelessWidget {
     // este widget, a menos que essa parte específica do modelo seja alterada.
     //
     // Isso pode levar a melhorias significativas de desempenho.
-    var isInHistorico = context.select<ModeloInformacaoLivro, bool>(
+    var isInHistorico = context.select<RepositorioLivrosRequisitados, bool>(
       // Aqui, apenas interessa saber se o [livro] está ou não no historico.
       (hist) => hist.livros.contains(requisitarLivro),
     );
@@ -88,7 +88,8 @@ class _BotaoRequisitar extends StatelessWidget {
               // O context.read(), aqui retorna uma chamada
               // e é executado sempre que o utilizador pressiona o botão de requisitar.
               // Em outras palavras, o context.read() é executado fora do método build.
-              var historicoRequisicao = context.read<ModeloInformacaoLivro>();
+              var historicoRequisicao =
+                  context.read<RepositorioLivrosRequisitados>();
               historicoRequisicao.add(requisitarLivro);
               requisitarLivro.isRequisitado = true;
             },

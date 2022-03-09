@@ -1,4 +1,4 @@
-class ModeloDoLivro {
+class GerarLivro {
   List<Livro> gerarLivrosAleatorios = [
     Livro(
       id: 0,

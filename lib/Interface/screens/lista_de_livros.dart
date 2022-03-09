@@ -1,4 +1,4 @@
-import 'package:camarate_school_library/Models/modelo_do_livro.dart';
+import 'package:camarate_school_library/Models/livro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 
@@ -11,7 +11,7 @@ class ListaDeLivros extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var livros = context.select<ModeloDoLivro, Livro>(
+    var livros = context.select<GerarLivro, Livro>(
       // Aqui, apenas interessa o livro a partir do [index].
       (livro) => livro.getPorPosicao(index),
     );

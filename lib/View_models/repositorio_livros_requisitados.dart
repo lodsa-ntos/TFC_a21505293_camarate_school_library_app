@@ -1,17 +1,17 @@
-import 'package:camarate_school_library/Models/modelo_do_livro.dart';
+import 'package:camarate_school_library/Models/livro.dart';
 import 'package:flutter/material.dart';
 
-class ModeloInformacaoLivro extends ChangeNotifier {
+class RepositorioLivrosRequisitados extends ChangeNotifier {
   /// O campo privado de apoio ao [livro].
-  late ModeloDoLivro _livro;
+  late GerarLivro _livro;
 
   /// Interno, estado privado da minha lista de livros. Armazena os ids de cada livro.
   final List<int> _idsDoslivros = [];
 
   /// O livro atual. Usado para construir os livros de ids numéricos.
-  ModeloDoLivro get livro => _livro;
+  GerarLivro get livro => _livro;
 
-  set livro(ModeloDoLivro novoLivro) {
+  set livro(GerarLivro novoLivro) {
     _livro = novoLivro;
     // Notifica, caso um livro forneça informações
     // diferente do anterior. Por exemplo, a disponibilidade de um livro

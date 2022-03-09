@@ -1,15 +1,11 @@
-import 'package:camarate_school_library/view_models/modelo_informacao_livro.dart';
-import 'package:camarate_school_library/Screens/historico.dart';
-import 'package:camarate_school_library/Screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'Common/temaAppBar.dart';
-import 'Models/modelo_do_livro.dart';
+import 'Interface/screens/home.dart';
+import 'Models/livro.dart';
+import 'View_models/repositorio_livros_requisitados.dart';
 
-void main() {
-  runApp(const CamarateSchoolLibraryApp());
-}
+void main() => runApp(const CamarateSchoolLibraryApp());
 
 class CamarateSchoolLibraryApp extends StatelessWidget {
   const CamarateSchoolLibraryApp({Key? key}) : super(key: key);
@@ -20,32 +16,23 @@ class CamarateSchoolLibraryApp extends StatelessWidget {
     return MultiProvider(
       // Simples Provider é o suficiente para uma lista que não terá mudanças
       providers: [
-        Provider(create: (context) => ModeloDoLivro()),
-        // ModeloDeInformacaoLivro() é implementado como um ChangeNotifier num outro ficheiro a parte,
-        // que vai depois chamar o ChangeNotifierProvider que está aqui abaixo. Além disso, o ControlarInformacaoLivro()
-        // vai depender do ModeloDeLivro, portanto, é necessário um ProxyProvider.
-        ChangeNotifierProxyProvider<ModeloDoLivro, ModeloInformacaoLivro>(
-          create: (context) => ModeloInformacaoLivro(),
-          update: (context, livro, informacaoDoLivro) {
-            if (informacaoDoLivro == null)
-              // ignore: curly_braces_in_flow_control_structures
-              throw ArgumentError.notNull('Sem informacao do Livro');
-            informacaoDoLivro.livro = livro;
-            return informacaoDoLivro;
-          },
-        )
+        // GerarLivro = Livros Prateleiras
+        Provider(create: (context) => GerarLivro()),
+
+        // Depende do provider acima ... Funciona, mas porquê?
+        // Na primeira caixa(GerarLivro), quero tirar um livro (requisicao),
+        // e colocar esse livro numa outra caixa (RepositorioLivrosRequisitados)
+        // O provider dá o valor e o consumer consome esse valor
+        ChangeNotifierProvider(
+          create: (context) => RepositorioLivrosRequisitados(),
+        ),
       ],
       child: MaterialApp(
-        theme: temaDoApp,
-        initialRoute:
-            '/home', // Por enquanto, o home será o ecrã inicial da app
+        // Por enquanto, o home será o ecrã inicial da app
+        initialRoute: '/home',
         // tira o debug do ecrã
         debugShowCheckedModeBanner: false,
-        routes: {
-          //'/': (context) => const MyLogin(), --> por enquanto não será preciso login
-          '/home': (context) => const HomeScreen(),
-          '/historico': (context) => const Historico(),
-        },
+        routes: {'/home': (context) => const Home()},
       ),
     );
   }

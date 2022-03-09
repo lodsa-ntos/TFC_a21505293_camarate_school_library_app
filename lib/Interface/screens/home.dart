@@ -1,4 +1,4 @@
-import 'package:camarate_school_library/view_models/modelo_informacao_livro.dart';
+import 'package:camarate_school_library/View_models/repositorio_livros_requisitados.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +11,7 @@ const espacamento = SizedBox(
   height: 14,
 );
 
-// Apenas o titulo --> Prateleiras no ecrã
+// Variável do titulo [Prateleiras]
 const prateleiras = Padding(
   padding: EdgeInsets.all(16.0),
   child: Text(
@@ -20,7 +20,7 @@ const prateleiras = Padding(
   ),
 );
 
-// Apenas o titulo --> Livros Requisitados no ecrã
+// Variável do titulo [Livros Requisitados]
 const livrosRequisitados = Padding(
   padding: EdgeInsets.all(16.0),
   child: Text(
@@ -32,19 +32,20 @@ const livrosRequisitados = Padding(
 //
 //
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     //
-    // Um pequeno tema para o texto(titulo, subTitulo, etc)
-    var textTheme = Theme.of(context).textTheme.headline6;
 
     /// Página Home
     return Scaffold(
       appBar: AppBar(
         title: const Text('Livros'), // Título
+
+        backgroundColor: Colors.indigo,
+
         actions: <Widget>[
           /// Icone de pesquisa
           IconButton(
@@ -55,28 +56,10 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {},
           ),
         ],
-      ),
 
-      /// Menu Lateral
-      drawer: Drawer(
-        child: ListView(
-          // Importante: Remove qualquer preenchimento a mais do ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: null,
-            ),
-            ListTile(
-              title: Text(
-                'Histórico',
-                style: textTheme,
-              ), // Titulo dentro do menu lateral
-              onTap: () => Navigator.pushNamed(context, '/historico'),
-            ),
-          ],
+        leading: IconButton(
+          icon: const Icon(Icons.menu_outlined),
+          onPressed: () {},
         ),
       ),
 
@@ -150,66 +133,63 @@ class HomeScreen extends StatelessWidget {
 class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Isto (context.watch<ModeloInformacaoLivro>();) obtém o estado atual do ModeloInformacaoLivro e também informa ao Flutter
-    // para reconstruir este widget quando o ModeloInformacaoLivro notificar
-    // aos utilizadores (em outras palavras, quando muda).
-    var requisicao = context.watch<ModeloInformacaoLivro>();
-
     // Aqui obtenho a data do dia atual
     // E guardo o formato de como quero que a data apareça para o utilizador
     var dataDeHoje = DateTime.now();
     var formato = DateFormat('dd-MM-yyyy');
     String data = formato.format(dataDeHoje);
 
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: requisicao.livros.length,
-      itemBuilder: (context, index) => Row(
-        children: [
-          Container(
-            width: 111.0,
-            margin: const EdgeInsets.only(right: 12.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 121.66,
-                  height: 165.5,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: DecorationImage(
-                      image: NetworkImage(requisicao.livros[index].imagePath),
-                      fit: BoxFit.cover,
+    return Consumer<RepositorioLivrosRequisitados>(
+      builder: (context, livro, child) => ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: livro.livros.length,
+        itemBuilder: (context, index) => Row(
+          children: [
+            Container(
+              width: 111.0,
+              margin: const EdgeInsets.only(right: 12.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 121.66,
+                    height: 165.5,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      image: DecorationImage(
+                        image: NetworkImage(livro.livros[index].imagePath),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 12.0,
-                ),
-                Text(
-                  requisicao.livros[index].titulo,
-                  style: const TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14.0,
+                  const SizedBox(
+                    height: 12.0,
                   ),
-                ),
-                const SizedBox(
-                  height: 5.0,
-                ),
-                Text(
-                  'Data de Entrega: ' + data,
-                  style: GoogleFonts.catamaran(
-                    textStyle: const TextStyle(
-                      fontSize: 13.0,
+                  Text(
+                    livro.livros[index].titulo,
+                    style: const TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14.0,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    'Data de Entrega: ' + data,
+                    style: GoogleFonts.catamaran(
+                      textStyle: const TextStyle(
+                        fontSize: 13.0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
