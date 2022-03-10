@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 import 'Models/livro.dart';
 import 'View_models/home_requisitar_provider.dart';
 import 'screens/home.dart';
@@ -11,6 +10,8 @@ void main() {
     MultiProvider(
       providers: [
         Provider(create: (_) => GerarLivro()),
+
+        //**Dependência = GerarLivro --> HomeRequisitarProvider*/
         ChangeNotifierProxyProvider<GerarLivro, HomeRequisitarProvider>(
           create: (context) => HomeRequisitarProvider(),
           update: (context, livro, informacaoDoLivro) {
@@ -22,6 +23,8 @@ void main() {
           },
         )
       ],
+
+      //** APLICAÇÃO */
       child: const CamarateSchoolLibraryApp(),
     ),
   );
@@ -32,13 +35,10 @@ class CamarateSchoolLibraryApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Usar MultiProvider para fornecer vários objetos de uma lista
-    return MaterialApp(
-      // Por enquanto, o home será o ecrã inicial da app
-      initialRoute: '/home',
+    return const MaterialApp(
       // tira o debug do ecrã
       debugShowCheckedModeBanner: false,
-      routes: {'/home': (context) => const Home()},
+      home: Home(),
     );
   }
 }

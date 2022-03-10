@@ -13,7 +13,7 @@ class ListaDeLivros extends StatelessWidget {
   Widget build(BuildContext context) {
     var livros = context.select<GerarLivro, Livro>(
       // Aqui, apenas interessa o livro a partir do [index].
-      (livro) => livro.getPorPosicao(index),
+      (livro) => livro.getPorId(index),
     );
 
     // Um pequeno tema para o texto(titulo, subTitulo, etc)

@@ -44,7 +44,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     //
-    var livro = context.read<HomeRequisitarProvider>();
 
     /// Página Home
     return Scaffold(
