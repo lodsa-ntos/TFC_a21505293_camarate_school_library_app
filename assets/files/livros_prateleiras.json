@@ -1,76 +1,40 @@
 {
-    "amarela": [
+    "gerarLivrosAleatorios": [
         {
-            "numRegisto": 1,
+            "id": 0,
             "titulo": "A estrada do futuro",
             "autor": "Bill Gates",
-            "disponibilidade": "Disponível",
-            "descricao": "descricao",
-            "dataEntrega": "dataEntrega",
-            "imagem": "https://images-na.ssl-images-amazon.com/images/I/81blQVIfQwL.jpg"
+            "editora": "Disponível",
+            "isbn": "isbn",
+            "imagem": "https://images-na.ssl-images-amazon.com/images/I/81blQVIfQwL.jpg",
+            "isRequisitado": false
         },
         {
-            "numRegisto": 2,
+            "id": 1,
             "titulo": "Livro do Desassossego | Vol.II",
             "autor": "Fernando Pessoa",
-            "disponibilidade": "Disponível",
-            "descricao": "descricao",
-            "dataEntrega": "dataEntrega",
-            "imagem": "https://cdn.shopify.com/s/files/1/0450/0717/5837/products/image-1_0645e650-6119-4245-bff4-b13847982f82_1024x1024.jpg?v=1614103731"
+            "editora": "Disponível",
+            "isbn": "isbn",
+            "imagem": "https://cdn.shopify.com/s/files/1/0450/0717/5837/products/image-1_0645e650-6119-4245-bff4-b13847982f82_1024x1024.jpg?v=1614103731",
+            "isRequisitado": false
         },
         {
-            "numRegisto": 3,
+            "id": 2,
             "titulo": "O Eu profundo e os outros Eus",
             "autor": "Fernando Pessoa",
-            "disponibilidade": "Esgotado",
-            "descricao": "descricao",
-            "dataEntrega": "dataEntrega",
-            "imagem": "https://blog.estantevirtual.com.br/wp-content/uploads/fernandopessoa-euprofundoeoutroseus.jpg"
+            "editora": "Esgotado",
+            "isbn": "isbn",
+            "imagem": "https://blog.estantevirtual.com.br/wp-content/uploads/fernandopessoa-euprofundoeoutroseus.jpg",
+            "isRequisitado": false
         },
         {
-            "numRegisto": 4,
+            "id": 3,
             "titulo": "Luís De Camões",
             "autor": "J. M. Latino Coelho",
-            "disponibilidade": "Disponível",
-            "descricao": "descricao",
-            "dataEntrega": "dataEntrega",
-            "imagem": "http://www.livrosusados.pt/wp-content/uploads/2016/03/figuras-do-passado-luis-de-camoes.jpg"
-        },
-        {
-            "numRegisto": 5,
-            "titulo": "Um perito em busca da verdade",
-            "autor": "Ana Maria Magalhães | Isabel Alçada",
-            "disponibilidade": "Esgotado",
-            "descricao": "descricao",
-            "dataEntrega": "dataEntrega",
-            "imagem": "https://oriscoespreita.sapo.pt/imagens/perito_verdade.png"
-        },
-        {
-            "numRegisto": 6,
-            "titulo": "Talvez uma App",
-            "autor": "Ana Maria Magalhães | Isabel Alçada",
-            "disponibilidade": "Esgotado",
-            "descricao": "descricao",
-            "dataEntrega": "dataEntrega",
-            "imagem": "https://oriscoespreita.sapo.pt/imagens/talvez_app.png"
-        },
-        {
-            "numRegisto": 7,
-            "titulo": "Alerta máximo",
-            "autor": "Ana Maria Magalhães | Isabel Alçada",
-            "disponibilidade": "Esgotado",
-            "descricao": "descricao",
-            "dataEntrega": "dataEntrega",
-            "imagem": "https://oriscoespreita.sapo.pt/imagens/alerta_maximo.png"
-        },
-        {
-            "numRegisto": 8,
-            "titulo": "O Discípulo | Série Sebastian Bergman | Vol. II",
-            "autor": "Hjorth | Rosenfeldt ",
-            "disponibilidade": "Disponível",
-            "descricao": "descricao",
-            "dataEntrega": "dataEntrega",
-            "imagem": "https://img.wook.pt/images/o-discipulo-hjorth/MXwxNzQ1MjAyNHwxMzA4Nzc5M3wxNDU4MDAwMDAwMDAwfHdlYnA=/502x"
+            "editora": "Disponível",
+            "isbn": "isbn",
+            "imagem": "http://www.livrosusados.pt/wp-content/uploads/2016/03/figuras-do-passado-luis-de-camoes.jpg",
+            "isRequisitado": false
         }
     ]
 }

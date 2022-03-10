@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'Interface/screens/home.dart';
+
 import 'Models/livro.dart';
-import 'View_models/home_provider.dart';
+import 'View_models/home_requisitar_provider.dart';
+import 'screens/home.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => HomeProvider()),
+        Provider(create: (_) => GerarLivro()),
+        ChangeNotifierProxyProvider<GerarLivro, HomeRequisitarProvider>(
+          create: (context) => HomeRequisitarProvider(),
+          update: (context, livro, informacaoDoLivro) {
+            if (informacaoDoLivro == null)
+              // ignore: curly_braces_in_flow_control_structures
+              throw ArgumentError.notNull('Sem informacao do Livro');
+            informacaoDoLivro.livro = livro;
+            return informacaoDoLivro;
+          },
+        )
       ],
       child: const CamarateSchoolLibraryApp(),
     ),

@@ -1,4 +1,5 @@
-import 'package:camarate_school_library/View_models/home_provider.dart';
+import 'package:camarate_school_library/Models/livro.dart';
+import 'package:camarate_school_library/View_models/home_requisitar_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -32,12 +33,18 @@ const livrosRequisitados = Padding(
 //
 //
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
   Widget build(BuildContext context) {
     //
+    var livro = context.read<HomeRequisitarProvider>();
 
     /// Página Home
     return Scaffold(
@@ -139,7 +146,7 @@ class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
     var formato = DateFormat('dd-MM-yyyy');
     String data = formato.format(dataDeHoje);
 
-    return Consumer<HomeProvider>(
+    return Consumer<HomeRequisitarProvider>(
       builder: (context, conteudo, child) => ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: conteudo.livros.length,

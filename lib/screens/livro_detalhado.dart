@@ -1,6 +1,7 @@
 import 'package:camarate_school_library/Models/livro.dart';
-import 'package:camarate_school_library/View_models/home_provider.dart';
+import 'package:camarate_school_library/View_models/home_requisitar_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:provider/src/provider.dart';
 
 class LivroDetalhado extends StatelessWidget {
@@ -68,39 +69,21 @@ class _BotaoRequisitar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isInHistorico = context.select<HomeProvider, bool>(
-      // Aqui, apenas interessa saber se o [livro] está ou não no historico.
-      (hist) => hist.livros.contains(requisitarLivro),
-    );
-
-    return ElevatedButton(
-      onPressed: isInHistorico
-          ? null
-          : () {
-              // Se o livro não estiver no histórico, deixo o utilizador adicioná-lo.
-              // O context.read(), aqui retorna uma chamada
-              // e é executado sempre que o utilizador pressiona o botão de requisitar.
-              // Em outras palavras, o context.read() é executado fora do método build.
-              var historicoRequisicao = context.read<HomeProvider>();
-              historicoRequisicao.add(requisitarLivro);
-              requisitarLivro.isRequisitado = true;
-              const SnackBar(
-                  content: Text("Redirecting to payment gateway..."));
-            },
-      style: ButtonStyle(
-        overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
-          if (states.contains(MaterialState.pressed)) {
-            return Theme.of(context).primaryColor;
-          }
-          return null; // Adiar para o padrão do widget.
-        }),
+    return Consumer<HomeRequisitarProvider>(
+      builder: (context, historicoRequisicao, child) => ElevatedButton(
+        onPressed: requisitarLivro.isRequisitado
+            ? null
+            : () {
+                historicoRequisicao.addLivroRequisitado(requisitarLivro);
+                requisitarLivro.isRequisitado = true;
+              },
+        child: requisitarLivro.isRequisitado
+            ? const Text('Devolver', style: TextStyle(fontSize: 18))
+            : const Text(
+                'Requisitar',
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
       ),
-      child: isInHistorico
-          ? const Icon(Icons.check, semanticLabel: 'Adicionado ao historico')
-          : const Text(
-              'Requisitar',
-              style: TextStyle(color: Colors.white, fontSize: 18),
-            ),
     );
   }
 }
