@@ -146,9 +146,9 @@ class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
     String data = formato.format(dataDeHoje);
 
     return Consumer<HomeRequisitarProvider>(
-      builder: (context, conteudo, child) => ListView.builder(
+      builder: (context, requisicao, child) => ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: conteudo.livros.length,
+        itemCount: requisicao.livros.length,
         itemBuilder: (context, index) => Row(
           children: [
             Container(
@@ -164,7 +164,7 @@ class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       image: DecorationImage(
-                        image: NetworkImage(conteudo.livros[index].imagePath),
+                        image: NetworkImage(requisicao.livros[index].imagePath),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -173,7 +173,7 @@ class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
                     height: 12.0,
                   ),
                   Text(
-                    conteudo.livros[index].titulo,
+                    requisicao.livros[index].titulo,
                     style: const TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
@@ -184,7 +184,7 @@ class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
                     height: 5.0,
                   ),
                   Text(
-                    'Data de Entrega: ' + data,
+                    'Data de requisição: ' + data,
                     style: GoogleFonts.catamaran(
                       textStyle: const TextStyle(
                         fontSize: 13.0,
