@@ -68,7 +68,7 @@ class _BotaoRequisitar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isInHistorico = context.select<RepositorioLivrosRequisitados, bool>(
+    var isInHistorico = context.select<HomeProvider, bool>(
       // Aqui, apenas interessa saber se o [livro] está ou não no historico.
       (hist) => hist.livros.contains(requisitarLivro),
     );
@@ -81,8 +81,7 @@ class _BotaoRequisitar extends StatelessWidget {
               // O context.read(), aqui retorna uma chamada
               // e é executado sempre que o utilizador pressiona o botão de requisitar.
               // Em outras palavras, o context.read() é executado fora do método build.
-              var historicoRequisicao =
-                  context.read<RepositorioLivrosRequisitados>();
+              var historicoRequisicao = context.read<HomeProvider>();
               historicoRequisicao.add(requisitarLivro);
               requisitarLivro.isRequisitado = true;
               const SnackBar(

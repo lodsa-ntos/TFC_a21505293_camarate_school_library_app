@@ -10,11 +10,9 @@ void main() {
     MultiProvider(
       providers: [
         // GerarLivro = Livros Prateleiras
-        Provider(create: (context) => GerarLivro()),
+        Provider(create: (_) => GerarLivro()),
 
-        ChangeNotifierProvider(
-          create: (context) => RepositorioLivrosRequisitados(),
-        ),
+        ChangeNotifierProvider(create: (_) => HomeProvider()),
       ],
       child: const CamarateSchoolLibraryApp(),
     ),

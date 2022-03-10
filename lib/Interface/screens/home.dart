@@ -139,7 +139,7 @@ class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
     var formato = DateFormat('dd-MM-yyyy');
     String data = formato.format(dataDeHoje);
 
-    return Consumer<RepositorioLivrosRequisitados>(
+    return Consumer<HomeProvider>(
       builder: (context, conteudo, child) => ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: conteudo.livros.length,
