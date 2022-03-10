@@ -23,6 +23,8 @@ class HomeRequisitarProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //** Importante para o usar o ChangeNotifierProxyProvider
+  //** para atualizar a informacao de um novo livro */
   set livro(GerarLivro novoLivro) {
     _livro = novoLivro;
 

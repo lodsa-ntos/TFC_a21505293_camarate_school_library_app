@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/src/provider.dart';
 
+//** Classe para apresentar os widgets que compoêm o formato para representarem
+//** os detalhes dos livros */
+
 class LivroDetalhado extends StatelessWidget {
-  //Se um construtor pode ser invocado como const para produzir uma instância
-  //canonizada, é preferível fazê-lo.
   const LivroDetalhado({Key? key, required this.livro}) : super(key: key);
 
   final Livro livro;
@@ -15,6 +16,7 @@ class LivroDetalhado extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //** Titulo do livro na barra */
         title: Text(
           livro.titulo,
           style: const TextStyle(fontWeight: FontWeight.bold),
@@ -25,14 +27,13 @@ class LivroDetalhado extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              livro.autor,
-              style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
+            //** Autor */
+            Text(livro.autor,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 20.0)),
+
+            const SizedBox(height: 8),
+
             Text(
               "ISBN: " + livro.isbn,
               style: const TextStyle(color: Colors.grey),
@@ -41,18 +42,17 @@ class LivroDetalhado extends StatelessWidget {
               "Editora: " + livro.editora,
               style: const TextStyle(color: Colors.grey),
             ),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 16),
+
+            //** Capa */
             SizedBox(
               height: 350,
               child: Image.network(livro.imagePath),
             ),
-            const SizedBox(
-              height: 12,
-            ),
-            /*
-             *  _Botão Requisitar */
+
+            const SizedBox(height: 12),
+
+            //*  _Botão Requisitar */
             _BotaoRequisitar(requisitarLivro: livro)
           ],
         ),
@@ -70,16 +70,28 @@ class _BotaoRequisitar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeRequisitarProvider>(
-      builder: (context, historicoRequisicao, child) => ElevatedButton(
+      builder: (context, HomeRequisitarProvider historicoRequisicao, child) =>
+          ElevatedButton(
+        //** Se o livro está disponivel... */
         onPressed: requisitarLivro.isDisponivel
             ? () {
+                //** Aidiciona-mos o livro na lista de livros requisitados */
                 historicoRequisicao.addLivroRequisitado(requisitarLivro);
+
+                //** fica requisitado */
                 requisitarLivro.isRequisitado = true;
+                //** Deixa de estar disponível */
                 requisitarLivro.isDisponivel = false;
               }
+
+            //** Aqui o botão fica desabilitado */
             : null,
+
+        //** Se o livro foi requisitado  */
         child: requisitarLivro.isRequisitado
-            ? const Icon(Icons.check, semanticLabel: 'Adicionado ao historico')
+
+            //** O botão é transformado no icon check */
+            ? const Icon(Icons.check, semanticLabel: 'Livro requisitado')
             : const Text(
                 'Requisitar',
                 style: TextStyle(color: Colors.white, fontSize: 18),
