@@ -9,9 +9,13 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
+        //** Exponho o primeiro valor da minha lista na página home (Livros da prateleira) */
         Provider(create: (_) => GerarLivro()),
 
-        //**Dependência = GerarLivro --> HomeRequisitarProvider*/
+        //** Dependência = GerarLivro --> HomeRequisitarProvider
+        //** Ao carregar no botao requisitar, consumo o primeiro valor livro da
+        //** lista na classe GerarLivro e guardo na funcao da classe HomeRequisitarProvider
+        //** que é o addLivrosRequisitados*/
         ChangeNotifierProxyProvider<GerarLivro, HomeRequisitarProvider>(
           create: (context) => HomeRequisitarProvider(),
           update: (context, livro, informacaoDoLivro) {
