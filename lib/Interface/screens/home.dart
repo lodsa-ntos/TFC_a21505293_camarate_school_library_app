@@ -140,9 +140,9 @@ class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
     String data = formato.format(dataDeHoje);
 
     return Consumer<RepositorioLivrosRequisitados>(
-      builder: (context, livro, child) => ListView.builder(
+      builder: (context, conteudo, child) => ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: livro.livros.length,
+        itemCount: conteudo.livros.length,
         itemBuilder: (context, index) => Row(
           children: [
             Container(
@@ -158,7 +158,7 @@ class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       image: DecorationImage(
-                        image: NetworkImage(livro.livros[index].imagePath),
+                        image: NetworkImage(conteudo.livros[index].imagePath),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -167,7 +167,7 @@ class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
                     height: 12.0,
                   ),
                   Text(
-                    livro.livros[index].titulo,
+                    conteudo.livros[index].titulo,
                     style: const TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,

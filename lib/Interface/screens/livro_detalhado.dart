@@ -50,6 +50,8 @@ class LivroDetalhado extends StatelessWidget {
             const SizedBox(
               height: 12,
             ),
+            /*
+             *  _Botão Requisitar */
             _BotaoRequisitar(requisitarLivro: livro)
           ],
         ),
@@ -66,21 +68,12 @@ class _BotaoRequisitar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Um pequeno tema para o texto(titulo, subTitulo, etc)
-    var textTheme = Theme.of(context).textTheme.headline6;
-
-    // O método context.select() permitirá ver as alterações de
-    // uma *parte* do modelo. Defini uma função que "seleciona" (ou seja, retorna)
-    // a parte que interessa e o pacote do providor não será reconstruído
-    // este widget, a menos que essa parte específica do modelo seja alterada.
-    //
-    // Isso pode levar a melhorias significativas de desempenho.
     var isInHistorico = context.select<RepositorioLivrosRequisitados, bool>(
       // Aqui, apenas interessa saber se o [livro] está ou não no historico.
       (hist) => hist.livros.contains(requisitarLivro),
     );
 
-    return TextButton(
+    return ElevatedButton(
       onPressed: isInHistorico
           ? null
           : () {
@@ -92,6 +85,8 @@ class _BotaoRequisitar extends StatelessWidget {
                   context.read<RepositorioLivrosRequisitados>();
               historicoRequisicao.add(requisitarLivro);
               requisitarLivro.isRequisitado = true;
+              const SnackBar(
+                  content: Text("Redirecting to payment gateway..."));
             },
       style: ButtonStyle(
         overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
@@ -103,9 +98,9 @@ class _BotaoRequisitar extends StatelessWidget {
       ),
       child: isInHistorico
           ? const Icon(Icons.check, semanticLabel: 'Adicionado ao historico')
-          : Text(
+          : const Text(
               'Requisitar',
-              style: textTheme,
+              style: TextStyle(color: Colors.white, fontSize: 18),
             ),
     );
   }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class RepositorioLivrosRequisitados extends ChangeNotifier {
   /// O campo privado de apoio ao [livro].
-  late GerarLivro _livro;
+  GerarLivro _livro;
 
   /// Interno, estado privado da minha lista de livros. Armazena os ids de cada livro.
   final List<int> _idsDoslivros = [];
