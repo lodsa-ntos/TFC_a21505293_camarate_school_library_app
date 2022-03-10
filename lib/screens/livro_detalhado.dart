@@ -71,14 +71,15 @@ class _BotaoRequisitar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<HomeRequisitarProvider>(
       builder: (context, historicoRequisicao, child) => ElevatedButton(
-        onPressed: requisitarLivro.isRequisitado
-            ? null
-            : () {
+        onPressed: requisitarLivro.isDisponivel
+            ? () {
                 historicoRequisicao.addLivroRequisitado(requisitarLivro);
                 requisitarLivro.isRequisitado = true;
-              },
+                requisitarLivro.isDisponivel = false;
+              }
+            : null,
         child: requisitarLivro.isRequisitado
-            ? const Text('Devolver', style: TextStyle(fontSize: 18))
+            ? const Icon(Icons.check, semanticLabel: 'Adicionado ao historico')
             : const Text(
                 'Requisitar',
                 style: TextStyle(color: Colors.white, fontSize: 18),
