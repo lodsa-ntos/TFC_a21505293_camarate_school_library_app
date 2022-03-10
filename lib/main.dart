@@ -3,15 +3,12 @@ import 'package:provider/provider.dart';
 
 import 'Interface/screens/home.dart';
 import 'Models/livro.dart';
-import 'View_models/repositorio_livros_requisitados.dart';
+import 'View_models/home_provider.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
-        // GerarLivro = Livros Prateleiras
-        Provider(create: (_) => GerarLivro()),
-
         ChangeNotifierProvider(create: (_) => HomeProvider()),
       ],
       child: const CamarateSchoolLibraryApp(),
