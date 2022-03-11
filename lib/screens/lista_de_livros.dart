@@ -4,9 +4,11 @@ import 'package:provider/src/provider.dart';
 
 import 'livro_detalhado.dart';
 
+//** Classe para apresentar os livros na página home*/
 class ListaDeLivros extends StatelessWidget {
   const ListaDeLivros({Key? key, required this.index}) : super(key: key);
 
+  //** Variável para alcançar os livros por id na lista que gera livros */
   final int index;
 
   @override
@@ -19,20 +21,21 @@ class ListaDeLivros extends StatelessWidget {
     // Um pequeno tema para o texto(titulo, subTitulo, etc)
     var textTheme = Theme.of(context).textTheme.headline6;
 
-    // Aqui o utilizador consegue carregar em cima do livro e ser direcionado para o ecrã de livro detalhado
     return GestureDetector(
+      //** Aqui o utilizador consegue carregar em cima do livro
+      //** e ser direcionado para o ecrã de livro detalhado */
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => LivroDetalhado(
-              livro: livros,
-            ),
+            //** Redirecionado para a página de detalhes do livro */
+            builder: (context) => LivroDetalhado(livro: livros),
           ),
         );
       },
 
-      // O formato dos livros a ser representado antes de entrar no ecrã do livro detalhado
+      //** Widgets que vão desenvolver formato dos livros a serem apresentados
+      //** no página home */
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 8),
         child: LimitedBox(
@@ -52,21 +55,21 @@ class ListaDeLivros extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
                         image: DecorationImage(
+                          //** Capa */
                           image: NetworkImage(livros.imagePath),
                           fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 12.0,
-                    ),
-                    Text(
-                      livros.titulo,
-                      style: textTheme,
-                    ),
-                    const SizedBox(
-                      height: 5.0,
-                    ),
+
+                    const SizedBox(height: 12.0),
+
+                    //** Titulo */
+                    Text(livros.titulo, style: textTheme),
+
+                    const SizedBox(height: 5.0),
+
+                    //** Autor */
                     Text(livros.autor),
                   ],
                 ),

@@ -15,7 +15,7 @@ class HomeRequisitarProvider extends ChangeNotifier {
   List<Livro> get livros =>
       _idsDoslivros.map((id) => _livro.getPorId(id)).toList();
 
-  //** Adicionar o [livro requisitado]. */
+  //** Adicionar o [livro requisitado] na lista com os seus ids. */
   void addLivroRequisitado(Livro livro) {
     _idsDoslivros.add(livro.id);
 

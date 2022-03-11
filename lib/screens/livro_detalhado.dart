@@ -69,6 +69,7 @@ class _BotaoRequisitar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //** Consumer */
     return Consumer<HomeRequisitarProvider>(
       builder: (context, HomeRequisitarProvider historicoRequisicao, child) =>
           ElevatedButton(

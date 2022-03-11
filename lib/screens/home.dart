@@ -1,18 +1,18 @@
 import 'package:camarate_school_library/Models/livro.dart';
-import 'package:camarate_school_library/View_models/home_requisitar_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart'; // DateFormat
 
 import 'lista_de_livros.dart';
+import 'lista_livro_requisitado.dart';
 
-// Espaçamento para algumas áreas
+//** VARIÁVEIS GLOBAIS */
+// Espaçamento
 const espacamento = SizedBox(
   height: 14,
 );
 
-// Variável do titulo [Prateleiras]
+// TÍtulo [Prateleiras]
 const prateleiras = Padding(
   padding: EdgeInsets.all(16.0),
   child: Text(
@@ -21,7 +21,7 @@ const prateleiras = Padding(
   ),
 );
 
-// Variável do titulo [Livros Requisitados]
+// TÍtulo [Livros Requisitados]
 const livrosRequisitados = Padding(
   padding: EdgeInsets.all(16.0),
   child: Text(
@@ -30,12 +30,9 @@ const livrosRequisitados = Padding(
   ),
 );
 
-//
-//
-
+//** PÁGINA HOME */
+// ignore: use_key_in_widget_constructors
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
-
   @override
   State<Home> createState() => _HomeState();
 }
@@ -50,10 +47,8 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: const Text('Livros'), // Título
 
-        backgroundColor: Colors.indigo,
-
         actions: <Widget>[
-          /// Icone de pesquisa
+          //** Icone de pesquisa */
           IconButton(
             icon: const Icon(
               Icons.search,
@@ -63,6 +58,7 @@ class _HomeState extends State<Home> {
           ),
         ],
 
+        //** Icone Menu lateral */
         leading: IconButton(
           icon: const Icon(Icons.menu_outlined),
           onPressed: () {},
@@ -79,9 +75,9 @@ class _HomeState extends State<Home> {
             //
             // Título
             livrosRequisitados,
-            //
-            // Este SingleChildScrollView na horizontal apresenta a Área dos
-            //livros que foram requisitados
+
+            //** Este SingleChildScrollView vai fazer scroll na horizontal
+            //** vai apresentar os livros que foram requisitados */
             SingleChildScrollView(
               child: SizedBox(
                 width: double.infinity,
@@ -91,8 +87,8 @@ class _HomeState extends State<Home> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
-                        // apresenta o livro requisitado no ecrã
-                        child: _FormatoLivroRequisitadoParaUtilizador(),
+                        //** Apresenta o livro requisitado no ecrã */
+                        child: FormatoLivroRequisitadoParaUtilizador(),
                       ),
                     ),
                   ],
@@ -103,8 +99,8 @@ class _HomeState extends State<Home> {
             // Título
             prateleiras,
             //
-            // Este SingleChildScrollView faz scroll apenas na horizontal
-            //e irá apresentar a Área dos livros das prateleiras
+            //** Este SingleChildScrollView vai fazer scroll na horizontal
+            //** e irá apresentar os livros das prateleiras */
             SingleChildScrollView(
               child: SizedBox(
                 width: double.infinity,
@@ -113,85 +109,19 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.all(16.0),
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    // comportamento para que a ListView só ocupe o espaço que precisa
+                    //** comportamento para que a ListView só ocupe o espaço que precisa */
                     shrinkWrap: true,
-                    // ERRO DO BAD STATE: NO ELEMENT --> Resolver
                     itemBuilder: (context, index) =>
+                        //** Livros da prateleira na página home */
                         ListaDeLivros(index: index),
 
-                    /// Tira o erro por enquanto, mas isto é de mau programador
-                    itemCount: 4,
+                    //** Obter o tamanho maximo da minha lista, os valores
+                    //** da lista estão contidos na classe GerarLivro */ */
+                    itemCount: Provider.of<GerarLivro>(context, listen: false)
+                        .gerarLivrosAleatorios
+                        .length,
                   ),
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Esta classe está aqui apenas para espelhar o que aparece no ecrã do histórico
-//
-/// Esta classe representa o formato de como quero que os livros requisitados
-/// apareçam no ecrã para o utilizador
-class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // Aqui obtenho a data do dia atual
-    // E guardo o formato de como quero que a data apareça para o utilizador
-    var dataDeHoje = DateTime.now();
-    var formato = DateFormat('dd-MM-yyyy');
-    String data = formato.format(dataDeHoje);
-
-    return Consumer<HomeRequisitarProvider>(
-      builder: (context, requisicao, child) => ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: requisicao.livros.length,
-        itemBuilder: (context, index) => Row(
-          children: [
-            Container(
-              width: 111.0,
-              margin: const EdgeInsets.only(right: 12.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 121.66,
-                    height: 165.5,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: NetworkImage(requisicao.livros[index].imagePath),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 12.0,
-                  ),
-                  Text(
-                    requisicao.livros[index].titulo,
-                    style: const TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14.0,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5.0,
-                  ),
-                  Text(
-                    'Data de requisição: ' + data,
-                    style: GoogleFonts.catamaran(
-                      textStyle: const TextStyle(
-                        fontSize: 13.0,
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ),
           ],
