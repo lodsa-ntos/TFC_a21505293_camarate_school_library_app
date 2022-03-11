@@ -31,8 +31,9 @@ const livrosRequisitados = Padding(
 );
 
 //** PÁGINA HOME */
-// ignore: use_key_in_widget_constructors
 class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
   @override
   State<Home> createState() => _HomeState();
 }
