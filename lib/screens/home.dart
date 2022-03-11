@@ -1,7 +1,6 @@
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart'; // DateFormat
 
 import 'lista_de_livros.dart';
 import 'lista_livro_requisitado.dart';

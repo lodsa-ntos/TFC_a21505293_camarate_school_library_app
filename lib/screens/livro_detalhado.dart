@@ -2,6 +2,7 @@ import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/View_models/home_requisitar_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+// ignore: unused_import, implementation_imports
 import 'package:provider/src/provider.dart';
 
 //** Classe para apresentar os widgets que compoêm o formato para representarem
@@ -16,7 +17,7 @@ class LivroDetalhado extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //** Titulo do livro na barra */
+        //** Titulo do livro */
         title: Text(
           livro.titulo,
           style: const TextStyle(fontWeight: FontWeight.bold),
@@ -42,6 +43,7 @@ class LivroDetalhado extends StatelessWidget {
               "Editora: " + livro.editora,
               style: const TextStyle(color: Colors.grey),
             ),
+
             const SizedBox(height: 16),
 
             //** Capa */
@@ -50,10 +52,19 @@ class LivroDetalhado extends StatelessWidget {
               child: Image.network(livro.imagePath),
             ),
 
+            const SizedBox(height: 8),
+
+            if (livro.isRequisitado == true) ...[
+              const Text(
+                'requisitado',
+                style: TextStyle(color: Colors.indigo),
+              ),
+            ],
+
             const SizedBox(height: 12),
 
             //*  _Botão Requisitar */
-            _BotaoRequisitar(requisitarLivro: livro)
+            _BotaoRequisitar(livroARequisitar: livro)
           ],
         ),
       ),
@@ -62,9 +73,9 @@ class LivroDetalhado extends StatelessWidget {
 }
 
 class _BotaoRequisitar extends StatelessWidget {
-  final Livro requisitarLivro;
+  final Livro livroARequisitar;
 
-  const _BotaoRequisitar({required this.requisitarLivro, Key? key})
+  const _BotaoRequisitar({required this.livroARequisitar, Key? key})
       : super(key: key);
 
   @override
@@ -74,22 +85,22 @@ class _BotaoRequisitar extends StatelessWidget {
       builder: (context, HomeRequisitarProvider historicoRequisicao, child) =>
           ElevatedButton(
         //** Se o livro está disponivel... */
-        onPressed: requisitarLivro.isDisponivel
+        onPressed: livroARequisitar.isDisponivel
             ? () {
                 //** Aidiciona-mos o livro na lista de livros requisitados */
-                historicoRequisicao.addLivroRequisitado(requisitarLivro);
+                historicoRequisicao.addLivroRequisitado(livroARequisitar);
 
                 //** fica requisitado */
-                requisitarLivro.isRequisitado = true;
+                livroARequisitar.isRequisitado = true;
                 //** Deixa de estar disponível */
-                requisitarLivro.isDisponivel = false;
+                livroARequisitar.isDisponivel = false;
               }
 
             //** Aqui o botão fica desabilitado */
             : null,
 
         //** Se o livro foi requisitado  */
-        child: requisitarLivro.isRequisitado
+        child: livroARequisitar.isRequisitado
 
             //** O botão é transformado no icon check */
             ? const Icon(Icons.check, semanticLabel: 'Livro requisitado')

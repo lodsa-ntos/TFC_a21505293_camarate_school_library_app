@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 //** apareçam no ecrã para o utilizador */
 
 class FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
+  const FormatoLivroRequisitadoParaUtilizador({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     //** Consumer dos livros que vão ser requisitados */

@@ -1,5 +1,6 @@
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:flutter/material.dart';
+// ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
 import 'livro_detalhado.dart';
