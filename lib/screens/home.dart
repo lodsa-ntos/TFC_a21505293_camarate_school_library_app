@@ -1,5 +1,5 @@
 import 'package:camarate_school_library/Models/livro.dart';
-import 'package:camarate_school_library/Models/livros_requisitados_model.dart';
+import 'package:camarate_school_library/Models/livro_requisitado_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -137,7 +137,7 @@ class ListaDeLivrosRequisitados extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //** Consumer dos livros que vão ser requisitados */
-    return Consumer<LivrosRequisitadosModel>(
+    return Consumer<LivroRequisitadoModel>(
       //** (context, requisicao, child) --> variaveis */
       builder: (context, requisicao, child) => ListView.builder(
         scrollDirection: Axis.horizontal,

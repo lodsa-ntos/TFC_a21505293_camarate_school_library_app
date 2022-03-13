@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'Models/livro.dart';
-import 'Models/livros_requisitados_model.dart';
+import 'Models/livro_requisitado_model.dart';
 import 'screens/home.dart';
 
 void main() {
@@ -16,8 +16,8 @@ void main() {
         //** Ao carregar no botao requisitar, consumo o primeiro valor livro da
         //** lista na classe GerarLivro e guardo na funcao da classe LivrosRequisitadosModel
         //** que é o addLivrosRequisitados*/
-        ChangeNotifierProxyProvider<LivroModel, LivrosRequisitadosModel>(
-          create: (context) => LivrosRequisitadosModel(),
+        ChangeNotifierProxyProvider<LivroModel, LivroRequisitadoModel>(
+          create: (context) => LivroRequisitadoModel(),
           update: (context, livro, informacaoDoLivro) {
             if (informacaoDoLivro == null)
               // ignore: curly_braces_in_flow_control_structures

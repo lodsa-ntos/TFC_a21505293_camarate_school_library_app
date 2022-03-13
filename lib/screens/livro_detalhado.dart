@@ -1,5 +1,5 @@
 import 'package:camarate_school_library/Models/livro.dart';
-import 'package:camarate_school_library/Models/livros_requisitados_model.dart';
+import 'package:camarate_school_library/Models/livro_requisitado_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // ignore: unused_import, implementation_imports
@@ -52,15 +52,6 @@ class LivroDetalhado extends StatelessWidget {
               child: Image.network(livro.imagePath),
             ),
 
-            const SizedBox(height: 8),
-
-            if (livro.isRequisitado == true) ...[
-              const Text(
-                'requisitado',
-                style: TextStyle(color: Colors.indigo),
-              ),
-            ],
-
             const SizedBox(height: 12),
 
             //*  _Botão Requisitar */
@@ -80,35 +71,47 @@ class _BotaoRequisitar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //** Consumer */
-    return Consumer<LivrosRequisitadosModel>(
-      builder: (context, LivrosRequisitadosModel historicoRequisicao, child) =>
-          ElevatedButton(
-        //** Se o livro está disponivel... */
-        onPressed: livroARequisitar.isDisponivel
-            ? () {
-                //** Aidiciona-mos o livro na lista de livros requisitados */
-                historicoRequisicao.addLivroRequisitado(livroARequisitar);
+    var requisicao = context.read<LivroRequisitadoModel>();
+    var devolucao = context.watch<LivroRequisitadoModel>();
 
-                //** fica requisitado */
-                livroARequisitar.isRequisitado = true;
-                //** Deixa de estar disponível */
-                livroARequisitar.isDisponivel = false;
-              }
+    return Row(
+      children: [
+        //* Botão Requisitar
+        ElevatedButton(
+          child: const Text('Requisitar'),
+          onPressed: livroARequisitar.isRequisitado
+              //* Se foi requisitado, o botão requisitar vai estar desativado
+              ? null
+              //* Se não foi requisitado
+              : () {
+                  //** Aidiciona-mos o livro na lista de livros requisitados */
+                  requisicao.addLivroRequisitado(livroARequisitar);
 
-            //** Aqui o botão fica desabilitado */
-            : null,
+                  //** Fica requisitado */
+                  livroARequisitar.isRequisitado = true;
+                  //** Deixa de estar disponível */
+                  livroARequisitar.isDisponivel = false;
+                },
+        ),
+        //* Distanciar botôes
+        const SizedBox(width: 50),
 
-        //** Se o livro foi requisitado  */
-        child: livroARequisitar.isRequisitado
-
-            //** O botão é transformado no icon check */
-            ? const Icon(Icons.check, semanticLabel: 'Livro requisitado')
-            : const Text(
-                'Requisitar',
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              ),
-      ),
+        //* Botão Devolver
+        ElevatedButton(
+          child: const Text('Devolver'),
+          //* Se foi requisitado
+          onPressed: livroARequisitar.isRequisitado
+              ? () {
+                  devolucao.remove(livroARequisitar);
+                  //** Fica devolvido */
+                  livroARequisitar.isRequisitado = false;
+                  //** Fica disponível */
+                  livroARequisitar.isDisponivel = true;
+                }
+              //* Se não foi requisitado, o botão devolver vai estar desativado
+              : null,
+        ),
+      ],
     );
   }
 }

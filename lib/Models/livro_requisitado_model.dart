@@ -1,7 +1,7 @@
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:flutter/material.dart';
 
-class LivrosRequisitadosModel extends ChangeNotifier {
+class LivroRequisitadoModel extends ChangeNotifier {
   //** Variável privada [livro], para chamar e guardar o livro por id. */
   late LivroModel _listaDeLivros;
 
@@ -20,6 +20,13 @@ class LivrosRequisitadosModel extends ChangeNotifier {
     _idsDoslivros.add(livro.id);
 
     /// Notifica, caso exista um livro que foi requisitado
+    notifyListeners();
+  }
+
+  void remove(Livro livro) {
+    _idsDoslivros.remove(livro.id);
+    // Don't forget to tell dependent widgets to rebuild _every time_
+    // you change the model.
     notifyListeners();
   }
 
