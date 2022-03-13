@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-class GerarLivro {
+class LivroModel {
   List<Livro> gerarLivrosAleatorios = [
     Livro(
       id: 0,

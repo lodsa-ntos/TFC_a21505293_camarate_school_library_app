@@ -1,5 +1,5 @@
 import 'package:camarate_school_library/Models/livro.dart';
-import 'package:camarate_school_library/View_models/home_requisitar_provider.dart';
+import 'package:camarate_school_library/Models/livros_requisitados_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // ignore: unused_import, implementation_imports
@@ -81,8 +81,8 @@ class _BotaoRequisitar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //** Consumer */
-    return Consumer<HomeRequisitarProvider>(
-      builder: (context, HomeRequisitarProvider historicoRequisicao, child) =>
+    return Consumer<LivrosRequisitadosModel>(
+      builder: (context, LivrosRequisitadosModel historicoRequisicao, child) =>
           ElevatedButton(
         //** Se o livro está disponivel... */
         onPressed: livroARequisitar.isDisponivel

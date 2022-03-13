@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'Models/livro.dart';
-import 'View_models/home_requisitar_provider.dart';
+import 'Models/livros_requisitados_model.dart';
 import 'screens/home.dart';
 
 void main() {
@@ -10,14 +10,14 @@ void main() {
     MultiProvider(
       providers: [
         //** Exponho o primeiro valor da minha lista na página home (Livros da prateleira) */
-        Provider(create: (_) => GerarLivro()),
+        Provider(create: (_) => LivroModel()),
 
         //** Dependência = GerarLivro --> HomeRequisitarProvider
         //** Ao carregar no botao requisitar, consumo o primeiro valor livro da
-        //** lista na classe GerarLivro e guardo na funcao da classe HomeRequisitarProvider
+        //** lista na classe GerarLivro e guardo na funcao da classe LivrosRequisitadosModel
         //** que é o addLivrosRequisitados*/
-        ChangeNotifierProxyProvider<GerarLivro, HomeRequisitarProvider>(
-          create: (context) => HomeRequisitarProvider(),
+        ChangeNotifierProxyProvider<LivroModel, LivrosRequisitadosModel>(
+          create: (context) => LivrosRequisitadosModel(),
           update: (context, livro, informacaoDoLivro) {
             if (informacaoDoLivro == null)
               // ignore: curly_braces_in_flow_control_structures
