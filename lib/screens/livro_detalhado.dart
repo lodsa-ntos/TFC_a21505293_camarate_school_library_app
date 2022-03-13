@@ -74,42 +74,60 @@ class _BotaoRequisitar extends StatelessWidget {
     var requisicao = context.read<LivroRequisitadoModel>();
     var devolucao = context.watch<LivroRequisitadoModel>();
 
-    return Row(
+    return Column(
       children: [
-        //* Botão Requisitar
-        ElevatedButton(
-          child: const Text('Requisitar'),
-          onPressed: livroARequisitar.isRequisitado
-              //* Se foi requisitado, o botão requisitar vai estar desativado
-              ? null
-              //* Se não foi requisitado
-              : () {
-                  //** Aidiciona-mos o livro na lista de livros requisitados */
-                  requisicao.addLivroRequisitado(livroARequisitar);
+        Row(
+          children: [
+            //* Requisitar
+            ElevatedButton(
+              child: const Text('Requisitar'),
+              onPressed: livroARequisitar.isRequisitado
+                  //* Se foi requisitado, o botão requisitar vai estar desativado
+                  ? null
+                  //* Se não foi requisitado
+                  : () {
+                      //** Aidiciona-mos o livro na lista de livros requisitados */
+                      requisicao.addLivroRequisitado(livroARequisitar);
 
-                  //** Fica requisitado */
-                  livroARequisitar.isRequisitado = true;
-                  //** Deixa de estar disponível */
-                  livroARequisitar.isDisponivel = false;
-                },
+                      //** Fica requisitado */
+                      livroARequisitar.isRequisitado = true;
+                      //** Deixa de estar disponível */
+                      livroARequisitar.isDisponivel = false;
+                    },
+            ),
+
+            //* Distanciar botôes
+            const SizedBox(width: 50),
+
+            //* Devolver
+            ElevatedButton(
+              child: const Text('Devolver'),
+              //* Se foi requisitado
+              onPressed: livroARequisitar.isRequisitado
+                  ? () {
+                      devolucao.remove(livroARequisitar);
+                      //** Fica devolvido */
+                      livroARequisitar.isRequisitado = false;
+                      //** Fica disponível */
+                      livroARequisitar.isDisponivel = true;
+                    }
+                  //* Se não foi requisitado, o botão devolver vai estar desativado
+                  : null,
+            ),
+          ],
         ),
-        //* Distanciar botôes
-        const SizedBox(width: 50),
 
-        //* Botão Devolver
-        ElevatedButton(
-          child: const Text('Devolver'),
-          //* Se foi requisitado
-          onPressed: livroARequisitar.isRequisitado
-              ? () {
-                  devolucao.remove(livroARequisitar);
-                  //** Fica devolvido */
-                  livroARequisitar.isRequisitado = false;
-                  //** Fica disponível */
-                  livroARequisitar.isDisponivel = true;
-                }
-              //* Se não foi requisitado, o botão devolver vai estar desativado
-              : null,
+        //* Distanciar botôes
+        const SizedBox(height: 12),
+
+        //* Mostram
+        Row(
+          children: [
+            Text(
+              livroARequisitar.isRequisitado ? 'Requisitado com sucesso' : '',
+              style: const TextStyle(color: Colors.green),
+            ),
+          ],
         ),
       ],
     );
