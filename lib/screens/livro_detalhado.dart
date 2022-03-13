@@ -80,7 +80,7 @@ class _BotaoRequisitar extends StatelessWidget {
           children: [
             //* Requisitar
             ElevatedButton(
-              child: const Text('Requisitar'),
+              child: const Text('Requisitar', style: TextStyle(fontSize: 16)),
               onPressed: livroARequisitar.isRequisitado
                   //* Se foi requisitado, o botão requisitar vai estar desativado
                   ? null
@@ -97,11 +97,11 @@ class _BotaoRequisitar extends StatelessWidget {
             ),
 
             //* Distanciar botôes
-            const SizedBox(width: 50),
+            const SizedBox(width: 35),
 
             //* Devolver
             ElevatedButton(
-              child: const Text('Devolver'),
+              child: const Text('Devolver', style: TextStyle(fontSize: 16)),
               //* Se foi requisitado
               onPressed: livroARequisitar.isRequisitado
                   ? () {
@@ -120,12 +120,12 @@ class _BotaoRequisitar extends StatelessWidget {
         //* Distanciar botôes
         const SizedBox(height: 12),
 
-        //* Mostram
+        //* SUCESSO
         Row(
           children: [
             Text(
               livroARequisitar.isRequisitado ? 'Requisitado com sucesso' : '',
-              style: const TextStyle(color: Colors.green),
+              style: const TextStyle(color: Colors.green, fontSize: 18),
             ),
           ],
         ),
