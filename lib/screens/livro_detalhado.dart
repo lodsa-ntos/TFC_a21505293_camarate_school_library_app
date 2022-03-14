@@ -105,7 +105,7 @@ class _BotaoRequisitar extends StatelessWidget {
               //* Se foi requisitado
               onPressed: livroARequisitar.isRequisitado
                   ? () {
-                      devolucao.remove(livroARequisitar);
+                      devolucao.devolverLivroRequisitado(livroARequisitar);
                       //** Fica devolvido */
                       livroARequisitar.isRequisitado = false;
                       //** Fica disponível */
@@ -124,7 +124,7 @@ class _BotaoRequisitar extends StatelessWidget {
         Row(
           children: [
             Text(
-              livroARequisitar.isRequisitado ? 'Requisitado com sucesso' : '',
+              livroARequisitar.isRequisitado ? 'Livro requisitado...' : '',
               style: const TextStyle(color: Colors.green, fontSize: 18),
             ),
           ],

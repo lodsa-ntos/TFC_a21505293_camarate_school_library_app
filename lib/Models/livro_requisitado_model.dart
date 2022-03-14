@@ -1,5 +1,6 @@
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class LivroRequisitadoModel extends ChangeNotifier {
   //** Variável privada [livro], para chamar e guardar o livro por id. */
@@ -23,12 +24,15 @@ class LivroRequisitadoModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void remove(Livro livro) {
+  void devolverLivroRequisitado(Livro livro) {
     _idsDoslivros.remove(livro.id);
     // Don't forget to tell dependent widgets to rebuild _every time_
     // you change the model.
     notifyListeners();
   }
+
+  String get dataRequisicao =>
+      DateFormat('dd/MM/yyyy – kk:mm').format(DateTime.now().toLocal().toUtc());
 
   //** Importante para o usar o ChangeNotifierProxyProvider
   //** para atualizar a informacao de um novo livro */

@@ -136,7 +136,7 @@ class ListaDeLivrosRequisitados extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //** Consumer dos livros que vão ser requisitados */
+    //** Consumer */
     return Consumer<LivroRequisitadoModel>(
       //** (context, requisicao, child) --> variaveis */
       builder: (context, requisicao, child) => ListView.builder(
@@ -197,16 +197,15 @@ class ListaDeLivrosRequisitados extends StatelessWidget {
                     const SizedBox(height: 5.0),
 
                     //** Data: */
-                    Text(
-                      'Data da requisição: ' +
-                          requisicao.livros[index].getDataAtual(),
+                    /*Text(
+                      'Data da requisição: ' + requisicao.dataRequisicao,
                       style: GoogleFonts.catamaran(
                         textStyle: const TextStyle(
                           fontSize: 13.0,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ),

@@ -82,10 +82,4 @@ class Livro {
 
   @override
   bool operator ==(Object other) => other is Livro && other.id == id;
-
-  //** Aqui obtenho a data do dia atual com a hora */
-  //** E guardo o formato de como a data apareçe para o utilizador */
-  getDataAtual() {
-    return DateFormat('dd/MM/yyyy – kk:mm').format(DateTime.now());
-  }
 }
