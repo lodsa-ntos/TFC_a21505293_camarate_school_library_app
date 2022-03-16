@@ -1,5 +1,6 @@
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Models/livro_requisitado_model.dart';
+import 'package:camarate_school_library/Screens/pesquisar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +50,15 @@ class Home extends StatelessWidget {
               Icons.search,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  //** Redireciona o utilizador para a página de detalhes do livro */
+                  builder: (context) => const Pesquisar(),
+                ),
+              );
+            },
           ),
         ],
 
