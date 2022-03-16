@@ -84,7 +84,7 @@ class Home extends StatelessWidget {
                         padding: EdgeInsets.all(16.0),
 
                         //** Apresenta o livro requisitado no ecrã */
-                        child: ListaDeLivrosRequisitados(),
+                        child: ListaDeLivroRequisitado(),
                       ),
                     ),
                   ],
@@ -113,9 +113,10 @@ class Home extends StatelessWidget {
 
                     //** Obter o tamanho maximo da minha lista, os valores
                     //** da lista estão contidos na classe GerarLivro */ */
-                    itemCount: Provider.of<LivroModel>(context, listen: false)
-                        .gerarLivrosAleatorios
-                        .length,
+                    itemCount:
+                        Provider.of<RequisicaoModel>(context, listen: false)
+                            .gerarLivrosAleatorios
+                            .length,
                   ),
                 ),
               ),
@@ -127,10 +128,10 @@ class Home extends StatelessWidget {
   }
 }
 
-//* LISTA DE LIVROS REQUISITADOS
+//* LISTA SE UM LIVRO FOR REQUISITADO
 
-class ListaDeLivrosRequisitados extends StatelessWidget {
-  const ListaDeLivrosRequisitados({
+class ListaDeLivroRequisitado extends StatelessWidget {
+  const ListaDeLivroRequisitado({
     Key? key,
   }) : super(key: key);
 
@@ -197,15 +198,15 @@ class ListaDeLivrosRequisitados extends StatelessWidget {
                     const SizedBox(height: 5.0),
 
                     //** Data: */
-                    /*Text(
-                      'Data da requisição: ' + requisicao.dataRequisicao,
+                    Text(
+                      'Data da requisição: ' + requisicao.livros[index].data,
                       style: GoogleFonts.catamaran(
                         textStyle: const TextStyle(
                           fontSize: 13.0,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                    ),*/
+                    ),
                   ],
                 ),
               ),
@@ -217,20 +218,17 @@ class ListaDeLivrosRequisitados extends StatelessWidget {
   }
 }
 
-///
-///
-///
 //* LISTA DE LIVROS PRATELEIRAS
 
 class ListaDeLivros extends StatelessWidget {
   const ListaDeLivros({Key? key, required this.index}) : super(key: key);
 
-  //** Variável para alcançar os livros por id na lista que gera livros */
+  //** Variável para alcançar os livros por id na lista livros */
   final int index;
 
   @override
   Widget build(BuildContext context) {
-    var livros = context.select<LivroModel, Livro>(
+    var livros = context.select<RequisicaoModel, Livro>(
       // Aqui, apenas interessa o livro a partir do [index].
       (livro) => livro.getPorId(index),
     );

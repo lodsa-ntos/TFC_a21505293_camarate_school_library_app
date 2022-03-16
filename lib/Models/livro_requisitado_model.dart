@@ -4,17 +4,17 @@ import 'package:intl/intl.dart';
 
 class LivroRequisitadoModel extends ChangeNotifier {
   //** Variável privada [livro], para chamar e guardar o livro por id. */
-  late LivroModel _listaDeLivros;
+  late RequisicaoModel _livrosComIds;
 
   //** Lista privada para armazenar os ids de cada livro */.
   final List<int> _idsDoslivros = [];
 
   //** Com esta variável [_livro] obtenho os livros por ids */
-  LivroModel get livro => _listaDeLivros;
+  RequisicaoModel get livro => _livrosComIds;
 
   //** Lista para guardar os livros por id na lista de _idsDoslivros no formato de uma lista. */
   List<Livro> get livros =>
-      _idsDoslivros.map((id) => _listaDeLivros.getPorId(id)).toList();
+      _idsDoslivros.map((id) => _livrosComIds.getPorId(id)).toList();
 
   //** Adicionar o [livro requisitado] na lista pelo os ids. */
   void addLivroRequisitado(Livro livro) {
@@ -31,13 +31,10 @@ class LivroRequisitadoModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String get dataRequisicao =>
-      DateFormat('dd/MM/yyyy – kk:mm').format(DateTime.now().toLocal().toUtc());
-
   //** Importante para o usar o ChangeNotifierProxyProvider
   //** para atualizar a informacao de um novo livro */
-  set livro(LivroModel novoLivro) {
-    _listaDeLivros = novoLivro;
+  set livro(RequisicaoModel novoLivro) {
+    _livrosComIds = novoLivro;
 
     /// Notifica, caso exista um novo livro
     notifyListeners();

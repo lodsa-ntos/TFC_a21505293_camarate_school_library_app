@@ -78,7 +78,7 @@ class _BotaoRequisitar extends StatelessWidget {
       children: [
         Row(
           children: [
-            //* Requisitar
+            //* REQUISITAR
             ElevatedButton(
               child: const Text('Requisitar', style: TextStyle(fontSize: 16)),
               onPressed: livroARequisitar.isRequisitado
@@ -99,7 +99,7 @@ class _BotaoRequisitar extends StatelessWidget {
             //* Distanciar botôes
             const SizedBox(width: 35),
 
-            //* Devolver
+            //* DEVOLVER
             ElevatedButton(
               child: const Text('Devolver', style: TextStyle(fontSize: 16)),
               //* Se foi requisitado
