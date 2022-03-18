@@ -1,5 +1,6 @@
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Models/livro_requisitado_model.dart';
+import 'package:camarate_school_library/Models/repositorio_de_livros.dart';
 import 'package:camarate_school_library/Screens/pesquisar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -123,8 +124,8 @@ class Home extends StatelessWidget {
                     //** Obter o tamanho maximo da minha lista, os valores
                     //** da lista estão contidos na classe GerarLivro */ */
                     itemCount:
-                        Provider.of<RequisicaoModel>(context, listen: false)
-                            .gerarLivrosAleatorios
+                        Provider.of<RepositorioDeLivros>(context, listen: false)
+                            .gerarTodosLivros
                             .length,
                   ),
                 ),
@@ -237,7 +238,7 @@ class ListaDeLivros extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var livros = context.select<RequisicaoModel, Livro>(
+    var livros = context.select<RepositorioDeLivros, Livro>(
       // Aqui, apenas interessa o livro a partir do [index].
       (livro) => livro.getPorId(index),
     );

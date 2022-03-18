@@ -1,7 +1,10 @@
 // ignore: use_key_in_widget_constructors
 
+import 'package:camarate_school_library/Models/livro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'livro_detalhado.dart';
 
 class Pesquisar extends StatefulWidget {
   const Pesquisar({Key? key}) : super(key: key);
@@ -22,7 +25,7 @@ class _PesquisarState extends State<Pesquisar> {
         children: const [
           SizedBox(height: 30),
           // Campo para fazer a pesquisa do livro
-          AreaDaPesquisa()
+          BarraDaPesquisa(),
         ],
       ),
     );
@@ -31,8 +34,8 @@ class _PesquisarState extends State<Pesquisar> {
 
 //* Esta classe constrói a área para o utilizador escrever o que deseja pesquisar
 
-class AreaDaPesquisa extends StatelessWidget {
-  const AreaDaPesquisa({Key? key}) : super(key: key);
+class BarraDaPesquisa extends StatelessWidget {
+  const BarraDaPesquisa({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,24 +43,27 @@ class AreaDaPesquisa extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(16, 0.0, 16, 0.0),
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: Colors.grey.shade300,
+          //* Cor campo de pesquisa
+          color: Colors.grey.shade100,
           borderRadius: BorderRadius.circular(10),
+
+          //* Borda
           border: Border.all(
             color: Colors.black,
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 17,
-            vertical: 8,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 8),
           child: Row(
-            children: [
-              const Icon(
+            children: const [
+              //* Lupa - ícone
+              Icon(
                 CupertinoIcons.search,
                 color: Colors.blue,
               ),
-              const Expanded(
+
+              //* Area para escrever
+              Expanded(
                 child: CupertinoTextField(
                   style: TextStyle(
                     color: Color.fromRGBO(0, 0, 0, 1),
@@ -69,14 +75,71 @@ class AreaDaPesquisa extends StatelessWidget {
                   decoration: null,
                 ),
               ),
-              GestureDetector(
-                child: const Icon(
-                  CupertinoIcons.clear_thick_circled,
-                  color: Colors.blue,
-                ),
-              ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class ProductRowItem extends StatelessWidget {
+  const ProductRowItem({
+    required this.livro,
+    required this.lastItem,
+    Key? key,
+  }) : super(key: key);
+
+  final Livro livro;
+  final bool lastItem;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          //** Redireciona o utilizador para a página de detalhes do livro */
+          builder: (context) => LivroDetalhado(
+            livro: livro,
+          ),
+        ),
+      ),
+      child: SafeArea(
+        top: false,
+        bottom: false,
+        minimum: const EdgeInsets.only(
+          left: 16,
+          top: 8,
+          bottom: 8,
+          right: 8,
+        ),
+        child: Row(
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: Image.asset(
+                livro.titulo,
+                fit: BoxFit.cover,
+                width: 76,
+                height: 76,
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      livro.autor,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

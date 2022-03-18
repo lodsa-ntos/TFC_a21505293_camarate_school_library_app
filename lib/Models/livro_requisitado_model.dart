@@ -1,22 +1,23 @@
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
+import 'repositorio_de_livros.dart';
 
 class LivroRequisitadoModel extends ChangeNotifier {
-  //** Variável privada [livro], para chamar e guardar o livro por id. */
-  late RequisicaoModel _livrosComIds;
+  // Variável privada [_livrosComIds], para chamar e guardar o livro por id. */
+  late RepositorioDeLivros _livrosComIds;
 
-  //** Lista privada para armazenar os ids de cada livro */.
+  // Lista privada para armazenar os ids de cada livro */.
   final List<int> _idsDoslivros = [];
 
-  //** Com esta variável [_livro] obtenho os livros por ids */
-  RequisicaoModel get livro => _livrosComIds;
+  // Com esta variável [_livro] obtenho os livros por ids */
+  RepositorioDeLivros get livro => _livrosComIds;
 
-  //** Lista para guardar os livros por id na lista de _idsDoslivros no formato de uma lista. */
+  // Lista para guardar os livros por id na lista de _idsDoslivros no formato de uma lista. */
   List<Livro> get livros =>
       _idsDoslivros.map((id) => _livrosComIds.getPorId(id)).toList();
 
-  //** Adicionar o [livro requisitado] na lista pelo os ids. */
+  // Adicionar o [livro requisitado] na lista pelo os ids. */
   void addLivroRequisitado(Livro livro) {
     _idsDoslivros.add(livro.id);
 
@@ -33,7 +34,7 @@ class LivroRequisitadoModel extends ChangeNotifier {
 
   //** Importante para o usar o ChangeNotifierProxyProvider
   //** para atualizar a informacao de um novo livro */
-  set livro(RequisicaoModel novoLivro) {
+  set livro(RepositorioDeLivros novoLivro) {
     _livrosComIds = novoLivro;
 
     /// Notifica, caso exista um novo livro
