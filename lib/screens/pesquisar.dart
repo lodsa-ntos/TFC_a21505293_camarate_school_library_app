@@ -65,7 +65,11 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
         child: SafeArea(
           child: Column(
             children: [
+              const SizedBox(height: 10),
               _controladorCaixaDePesquisa(),
+              const SizedBox(height: 3),
+              _buildFiltrarPesquisa(),
+              const SizedBox(height: 10),
               Expanded(
                 child: ListView.builder(
                   itemBuilder: (context, index) => LivroDaPrateleira(
@@ -81,4 +85,97 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
       ),
     );
   }
+}
+
+Widget _buildFiltrarPesquisa() {
+  List filtrarPor = [
+    'Todos',
+    'Autor',
+    'Título',
+    'Ano de publicação',
+    'Editora'
+  ]; // Lista de categorias
+  int selecionarFiltro = 0;
+
+  return Container(
+    margin: const EdgeInsets.symmetric(vertical: 20.0 / 2),
+    height: 35, // tamanho dos botões
+    child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: filtrarPor.length,
+        itemBuilder: (context, index) {
+          switch (selecionarFiltro) {
+            case 0:
+              index == selecionarFiltro
+                  ? Text(
+                      filtrarPor[index],
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    )
+                  //* e as retantes com a cor preta
+                  : Text(
+                      filtrarPor[index],
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                    );
+              break;
+            case 1:
+              index == selecionarFiltro
+                  ? Text(
+                      filtrarPor[index],
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    )
+                  //* e as retantes com a cor preta
+                  : Text(
+                      filtrarPor[index],
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                    );
+              break;
+            default:
+          }
+          return GestureDetector(
+            onTap: () => selecionarFiltro = index,
+            child: Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(
+                  left: 20.0, right: index == filtrarPor.length - 1 ? 20.0 : 0),
+
+              /// Equilibrio na horizontal
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+
+              //* Borda da caixas de filtro
+              decoration: BoxDecoration(
+                color: index == selecionarFiltro
+                    ? Colors.blue
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(color: Colors.black12, width: 2.0),
+              ),
+
+              /// Codição --> //* Se o filtro estiver selecionado a palavra fica
+              //* com cor branca
+              child: index == selecionarFiltro
+                  ? Text(
+                      filtrarPor[index],
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    )
+                  //* e as retantes com a cor preta
+                  : Text(
+                      filtrarPor[index],
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+            ),
+          );
+        }),
+  );
 }
