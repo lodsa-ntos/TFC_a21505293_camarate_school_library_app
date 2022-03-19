@@ -18,10 +18,7 @@ class LivroDetalhado extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         //** Titulo do livro */
-        title: Text(
-          livro.titulo,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: const Text('Detalhe'), // Título
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -29,12 +26,16 @@ class LivroDetalhado extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //** Autor */
-            Text(livro.autor,
+            Text(livro.titulo,
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, fontSize: 20.0)),
 
             const SizedBox(height: 8),
 
+            Text(
+              livro.autor,
+              style: const TextStyle(color: Colors.grey),
+            ),
             Text(
               "ISBN: " + livro.isbn,
               style: const TextStyle(color: Colors.grey),
