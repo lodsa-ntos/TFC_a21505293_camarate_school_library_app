@@ -85,97 +85,62 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
       ),
     );
   }
-}
 
-Widget _buildFiltrarPesquisa() {
-  List filtrarPor = [
-    'Todos',
-    'Autor',
-    'Título',
-    'Ano de publicação',
-    'Editora'
-  ]; // Lista de categorias
-  int selecionarFiltro = 0;
+  Widget _buildFiltrarPesquisa() {
+    List menuFiltrarPor = [
+      'Todos',
+      'Autor',
+      'Título',
+      'Ano de publicação',
+      'Editora'
+    ]; // Lista de categorias
+    int selecionarFiltro = 0;
 
-  return Container(
-    margin: const EdgeInsets.symmetric(vertical: 20.0 / 2),
-    height: 35, // tamanho dos botões
-    child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: filtrarPor.length,
-        itemBuilder: (context, index) {
-          switch (selecionarFiltro) {
-            case 0:
-              index == selecionarFiltro
-                  ? Text(
-                      filtrarPor[index],
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
-                    )
-                  //* e as retantes com a cor preta
-                  : Text(
-                      filtrarPor[index],
-                      style: const TextStyle(
-                        color: Colors.black,
-                      ),
-                    );
-              break;
-            case 1:
-              index == selecionarFiltro
-                  ? Text(
-                      filtrarPor[index],
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
-                    )
-                  //* e as retantes com a cor preta
-                  : Text(
-                      filtrarPor[index],
-                      style: const TextStyle(
-                        color: Colors.black,
-                      ),
-                    );
-              break;
-            default:
-          }
-          return GestureDetector(
-            onTap: () => selecionarFiltro = index,
-            child: Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.only(
-                  left: 20.0, right: index == filtrarPor.length - 1 ? 20.0 : 0),
-
-              /// Equilibrio na horizontal
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-
-              //* Borda da caixas de filtro
-              decoration: BoxDecoration(
-                color: index == selecionarFiltro
-                    ? Colors.blue
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: Colors.black12, width: 2.0),
-              ),
-
-              /// Codição --> //* Se o filtro estiver selecionado a palavra fica
-              //* com cor branca
-              child: index == selecionarFiltro
-                  ? Text(
-                      filtrarPor[index],
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
-                    )
-                  //* e as retantes com a cor preta
-                  : Text(
-                      filtrarPor[index],
-                      style: const TextStyle(
-                        color: Colors.black,
+    return Column(
+      children: [
+        Row(
+          children: List.generate(
+            menuFiltrarPor.length,
+            (index) => InkWell(
+              onTap: () {
+                setState(() {
+                  selecionarFiltro = index;
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Container(
+                  height: 28,
+                  decoration: BoxDecoration(
+                    color: selecionarFiltro == index
+                        ? Colors.grey[200]
+                        : Colors.grey.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: Colors.grey.shade200,
+                      width: 0.2,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 6,
+                      horizontal: 8,
+                    ),
+                    child: Text(
+                      menuFiltrarPor[index],
+                      style: TextStyle(
+                        color: selecionarFiltro == index
+                            ? Colors.black
+                            : Colors.white,
                       ),
                     ),
+                  ),
+                ),
+              ),
             ),
-          );
-        }),
-  );
+          ),
+        ),
+      ],
+    );
+  }
 }

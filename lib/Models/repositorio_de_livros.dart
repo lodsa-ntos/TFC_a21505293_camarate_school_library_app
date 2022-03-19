@@ -60,9 +60,11 @@ class RepositorioDeLivros {
       gerarTodosLivros.firstWhere((element) => element.id == id);
 
   // Pesquisar livros
-  List<Livro> pesquisarLivro(String searchTerms) {
+  List<Livro> pesquisarLivro(String condicaoDaPesquisa) {
     return gerarTodosLivros.where((livro) {
-      return livro.titulo.toLowerCase().contains(searchTerms.toLowerCase());
+      return livro.titulo
+          .toLowerCase()
+          .contains(condicaoDaPesquisa.toLowerCase());
     }).toList();
   }
 }
