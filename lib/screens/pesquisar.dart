@@ -1,145 +1,82 @@
-// ignore: use_key_in_widget_constructors
-
-import 'package:camarate_school_library/Models/livro.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:camarate_school_library/Components/barra_de_pesquisa.dart';
+import 'package:camarate_school_library/Components/livro_da_prateleira.dart';
+import 'package:camarate_school_library/Models/repositorio_de_livros.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 'livro_detalhado.dart';
-
-class Pesquisar extends StatefulWidget {
-  const Pesquisar({Key? key}) : super(key: key);
+class PesquisaDeLivro extends StatefulWidget {
+  const PesquisaDeLivro({Key? key}) : super(key: key);
 
   @override
-  State<Pesquisar> createState() => _PesquisarState();
-}
-
-class _PesquisarState extends State<Pesquisar> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pesquisar'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: const [
-          SizedBox(height: 30),
-          // Campo para fazer a pesquisa do livro
-          BarraDaPesquisa(),
-        ],
-      ),
-    );
+  _PesquisaDeLivroState createState() {
+    return _PesquisaDeLivroState();
   }
 }
 
-//* Esta classe constrói a área para o utilizador escrever o que deseja pesquisar
+class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
+  late final TextEditingController _controladorDoTexto;
+  late final FocusNode _focarNaLetra;
+  String _condicao = '';
 
-class BarraDaPesquisa extends StatelessWidget {
-  const BarraDaPesquisa({Key? key}) : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+    _controladorDoTexto = TextEditingController()..addListener(_onTextChanged);
+    _focarNaLetra = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _focarNaLetra.dispose();
+    _controladorDoTexto.dispose();
+    super.dispose();
+  }
+
+  void _onTextChanged() {
+    setState(() {
+      _condicao = _controladorDoTexto.text;
+    });
+  }
+
+  Widget _controladorCaixaDePesquisa() {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: BarraDePesquisa(
+        controlador: _controladorDoTexto,
+        foco: _focarNaLetra,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(16, 0.0, 16, 0.0),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          //* Cor campo de pesquisa
-          color: Colors.grey.shade100,
-          borderRadius: BorderRadius.circular(10),
+    final repositorio =
+        Provider.of<RepositorioDeLivros>(context, listen: false);
+    final livros = repositorio.pesquisarLivro(_condicao);
 
-          //* Borda
-          border: Border.all(
-            color: Colors.black,
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Pesquisar'), // Título
+      ),
+      body: DecoratedBox(
+        decoration: const BoxDecoration(
+          color: Color(0xfff0f0f0),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 8),
-          child: Row(
-            children: const [
-              //* Lupa - ícone
-              Icon(
-                CupertinoIcons.search,
-                color: Colors.blue,
-              ),
-
-              //* Area para escrever
+        child: SafeArea(
+          child: Column(
+            children: [
+              _controladorCaixaDePesquisa(),
               Expanded(
-                child: CupertinoTextField(
-                  style: TextStyle(
-                    color: Color.fromRGBO(0, 0, 0, 1),
-                    fontSize: 16,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.normal,
+                child: ListView.builder(
+                  itemBuilder: (context, index) => LivroDaPrateleira(
+                    livros: livros[index],
+                    ultimoLivro: index == livros.length - 1,
                   ),
-                  cursorColor: Color.fromRGBO(0, 122, 255, 1),
-                  decoration: null,
+                  itemCount: livros.length,
                 ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class ProductRowItem extends StatelessWidget {
-  const ProductRowItem({
-    required this.livro,
-    required this.lastItem,
-    Key? key,
-  }) : super(key: key);
-
-  final Livro livro;
-  final bool lastItem;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          //** Redireciona o utilizador para a página de detalhes do livro */
-          builder: (context) => LivroDetalhado(
-            livro: livro,
-          ),
-        ),
-      ),
-      child: SafeArea(
-        top: false,
-        bottom: false,
-        minimum: const EdgeInsets.only(
-          left: 16,
-          top: 8,
-          bottom: 8,
-          right: 8,
-        ),
-        child: Row(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: Image.asset(
-                livro.titulo,
-                fit: BoxFit.cover,
-                width: 76,
-                height: 76,
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      livro.autor,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );

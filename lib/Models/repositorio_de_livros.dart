@@ -58,4 +58,11 @@ class RepositorioDeLivros {
       /// Aqui, a lista de livros é infinita, vai fazer um loop sobre [gerarLivrosAleatorios].
       /// O que é errado para o que se quer....
       gerarTodosLivros.firstWhere((element) => element.id == id);
+
+  // Pesquisar livros
+  List<Livro> pesquisarLivro(String searchTerms) {
+    return gerarTodosLivros.where((livro) {
+      return livro.titulo.toLowerCase().contains(searchTerms.toLowerCase());
+    }).toList();
+  }
 }

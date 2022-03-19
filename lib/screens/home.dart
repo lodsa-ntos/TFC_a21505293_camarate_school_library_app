@@ -56,7 +56,7 @@ class Home extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   //** Redireciona o utilizador para a página de detalhes do livro */
-                  builder: (context) => const Pesquisar(),
+                  builder: (context) => const PesquisaDeLivro(),
                 ),
               );
             },
