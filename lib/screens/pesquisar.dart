@@ -109,6 +109,7 @@ class _FiltrarPesquisaState extends State<FiltrarPesquisa> {
             children: List.generate(
               menuDoFiltro.length,
               (index) => InkWell(
+                //* Ação para mudar de filtro
                 onTap: () {
                   setState(() {
                     selecionarFiltro = index;
