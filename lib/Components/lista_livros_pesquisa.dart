@@ -2,6 +2,9 @@ import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Screens/livro_detalhado.dart';
 import 'package:flutter/material.dart';
 
+//** Classe que vais contruir o formato de como deve ser
+//*  apresentada a informacao dos livros
+//*  na página de pesquisa */
 class ListaDeLivrosDaPesquisa extends StatelessWidget {
   const ListaDeLivrosDaPesquisa({
     required this.livros,
@@ -76,7 +79,7 @@ class ListaDeLivrosDaPesquisa extends StatelessWidget {
                     const Padding(padding: EdgeInsets.only(top: 8)),
 
                     Text(
-                      'ISBN: ' + livros.isbn,
+                      'Ano de publicação: ' + livros.ano.toString(),
                       style: const TextStyle(
                         color: Color(0xFF8E8E93),
                         fontSize: 13,

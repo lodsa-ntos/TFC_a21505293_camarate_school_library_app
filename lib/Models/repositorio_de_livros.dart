@@ -1,9 +1,9 @@
-import 'package:camarate_school_library/Components/filtrar_pesquisa.dart';
+import 'package:camarate_school_library/Components/construir_filtros_pesquisa.dart';
 
 import 'livro.dart';
 
 class RepositorioDeLivros {
-  List<Livro> gerarTodosLivros = [
+  List<Livro> todosLivros = [
     Livro(
       id: 0,
       titulo: 'O Alquimista',
@@ -41,7 +41,7 @@ class RepositorioDeLivros {
       isRequisitado: false,
       isDisponivel: true,
       data: '15-03-2022 - 17:00',
-      ano: 2002,
+      ano: 2004,
     ),
     Livro(
       id: 3,
@@ -63,37 +63,28 @@ class RepositorioDeLivros {
 
       /// Aqui, a lista de livros é infinita, vai fazer um loop sobre [gerarLivrosAleatorios].
       /// O que é errado para o que se quer....
-      gerarTodosLivros.firstWhere((element) => element.id == id);
-
-  // Pesquisar livros
-  List<Livro> pesquisarLivro(String condicaoDaPesquisa) {
-    return gerarTodosLivros.where((livro) {
-      return livro.titulo
-          .toLowerCase()
-          .contains(condicaoDaPesquisa.toLowerCase());
-    }).toList();
-  }
+      todosLivros.firstWhere((element) => element.id == id);
 
   /// Pesquisar livros por filtro
   filtrarPesquisa(String condicaoDaPesquisa) {
     if (condicaoDaPesquisa.isEmpty || selecionarFiltro == 0) {
-      return gerarTodosLivros;
+      return todosLivros;
     } else if (selecionarFiltro == 1) {
-      return gerarTodosLivros.where((livro) {
+      return todosLivros.where((livro) {
         return livro.autor
             .toString()
             .toLowerCase()
             .contains(condicaoDaPesquisa.toLowerCase());
       }).toList();
     } else if (selecionarFiltro == 2) {
-      return gerarTodosLivros.where((livro) {
+      return todosLivros.where((livro) {
         return livro.titulo
             .toString()
             .toLowerCase()
             .contains(condicaoDaPesquisa.toLowerCase());
       }).toList();
     } else if (selecionarFiltro == 3) {
-      return gerarTodosLivros.where((livro) {
+      return todosLivros.where((livro) {
         return livro.ano
             .toString()
             .toLowerCase()

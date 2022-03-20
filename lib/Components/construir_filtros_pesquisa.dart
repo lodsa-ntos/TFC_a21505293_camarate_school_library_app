@@ -1,19 +1,20 @@
-//* Classe para montar os menus do filtro de pesquisa
-
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:flutter/material.dart';
 
-// Lista de categorias
+//* Variavel para controlar as escolhas dos filtros
 int selecionarFiltro = 0;
 
-class FiltrarPesquisa extends StatefulWidget {
-  const FiltrarPesquisa({Key? key}) : super(key: key);
+class ConstruirFiltrosDePesquisa extends StatefulWidget {
+  const ConstruirFiltrosDePesquisa({Key? key}) : super(key: key);
 
   @override
-  State<FiltrarPesquisa> createState() => _FiltrarPesquisaState();
+  State<ConstruirFiltrosDePesquisa> createState() =>
+      _ConstruirFiltrosDePesquisaState();
 }
 
-class _FiltrarPesquisaState extends State<FiltrarPesquisa> {
+//* Classe para montar os menus do filtro de pesquisa
+class _ConstruirFiltrosDePesquisaState
+    extends State<ConstruirFiltrosDePesquisa> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

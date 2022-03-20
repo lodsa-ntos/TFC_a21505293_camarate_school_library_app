@@ -1,5 +1,5 @@
-import 'package:camarate_school_library/Components/barra_de_pesquisa.dart';
-import 'package:camarate_school_library/Components/filtrar_pesquisa.dart';
+import 'package:camarate_school_library/Components/construir_caixa_pesquisa.dart';
+import 'package:camarate_school_library/Components/construir_filtros_pesquisa.dart';
 import 'package:camarate_school_library/Components/lista_livros_pesquisa.dart';
 import 'package:camarate_school_library/Models/repositorio_de_livros.dart';
 
@@ -44,7 +44,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
   Widget _controladorCaixaDePesquisa() {
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: BarraDePesquisa(
+      child: ConstruirCaixaDePesquisa(
         controlador: _controladorDoTexto,
         foco: _focarNaLetra,
       ),
@@ -53,8 +53,11 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
   @override
   Widget build(BuildContext context) {
+    //* Variavel para aceder a funcão --> [ filtrarPesquisa ]
     final repositorio =
         Provider.of<RepositorioDeLivros>(context, listen: false);
+
+    //* Função para a condição da pesquisa por filtros
     final livros = repositorio.filtrarPesquisa(_condicao);
 
     return Scaffold(
@@ -75,18 +78,20 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
               const SizedBox(height: 15),
 
-              //* Filtros de pesquisa
-              const FiltrarPesquisa(),
+              //* Filtros para pesquisar pesquisa
+              const ConstruirFiltrosDePesquisa(),
 
               const SizedBox(height: 20),
 
               //* Livros
               Expanded(
                 child: ListView.builder(
+                  //* Mostra todos os livros da lista
                   itemBuilder: (context, index) => ListaDeLivrosDaPesquisa(
                     livros: livros[index],
                     ultimoLivro: index == livros.length - 1,
                   ),
+                  //* Até ao último livro da lista
                   itemCount: livros.length,
                 ),
               ),

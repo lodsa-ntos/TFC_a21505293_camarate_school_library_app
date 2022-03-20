@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class BarraDePesquisa extends StatelessWidget {
-  const BarraDePesquisa({
+class ConstruirCaixaDePesquisa extends StatelessWidget {
+  const ConstruirCaixaDePesquisa({
     required this.controlador,
     required this.foco,
     Key? key,

@@ -125,7 +125,7 @@ class Home extends StatelessWidget {
                     //** da lista estão contidos na classe GerarLivro */ */
                     itemCount:
                         Provider.of<RepositorioDeLivros>(context, listen: false)
-                            .gerarTodosLivros
+                            .todosLivros
                             .length,
                   ),
                 ),
