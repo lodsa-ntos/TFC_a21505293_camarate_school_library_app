@@ -6,6 +6,7 @@ class Livro {
   final String editora;
   final String imagePath;
   final String data;
+  final int ano;
   bool isRequisitado;
   bool isDisponivel;
 
@@ -17,6 +18,7 @@ class Livro {
     required this.editora,
     required this.imagePath,
     required this.data,
+    required this.ano,
     required this.isRequisitado,
     required this.isDisponivel,
   });
@@ -31,6 +33,6 @@ class Livro {
 List menuDoFiltro = [
   'Todos',
   'Autor',
-  'Título',
+  'Titulo',
   'Ano de publicação',
 ];

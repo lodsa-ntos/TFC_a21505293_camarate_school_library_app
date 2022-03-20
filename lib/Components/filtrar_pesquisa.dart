@@ -3,6 +3,9 @@
 import 'package:camarate_school_library/Models/livro.dart';
 import 'package:flutter/material.dart';
 
+// Lista de categorias
+int selecionarFiltro = 0;
+
 class FiltrarPesquisa extends StatefulWidget {
   const FiltrarPesquisa({Key? key}) : super(key: key);
 
@@ -11,9 +14,6 @@ class FiltrarPesquisa extends StatefulWidget {
 }
 
 class _FiltrarPesquisaState extends State<FiltrarPesquisa> {
-  // Lista de categorias
-  int selecionarFiltro = 0;
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

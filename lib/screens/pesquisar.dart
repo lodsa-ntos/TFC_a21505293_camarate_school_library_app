@@ -55,7 +55,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
   Widget build(BuildContext context) {
     final repositorio =
         Provider.of<RepositorioDeLivros>(context, listen: false);
-    final livros = repositorio.pesquisarLivro(_condicao);
+    final livros = repositorio.filtrarPesquisa(_condicao);
 
     return Scaffold(
       appBar: AppBar(

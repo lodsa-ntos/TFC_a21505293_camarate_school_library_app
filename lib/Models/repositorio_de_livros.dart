@@ -1,3 +1,5 @@
+import 'package:camarate_school_library/Components/filtrar_pesquisa.dart';
+
 import 'livro.dart';
 
 class RepositorioDeLivros {
@@ -13,6 +15,7 @@ class RepositorioDeLivros {
       isRequisitado: false,
       isDisponivel: true,
       data: '15-03-2022 - 17:00',
+      ano: 2013,
     ),
     Livro(
       id: 1,
@@ -25,6 +28,7 @@ class RepositorioDeLivros {
       isRequisitado: false,
       isDisponivel: true,
       data: '15-03-2022 - 17:00',
+      ano: 2004,
     ),
     Livro(
       id: 2,
@@ -37,6 +41,7 @@ class RepositorioDeLivros {
       isRequisitado: false,
       isDisponivel: true,
       data: '15-03-2022 - 17:00',
+      ano: 2002,
     ),
     Livro(
       id: 3,
@@ -49,6 +54,7 @@ class RepositorioDeLivros {
       isRequisitado: false,
       isDisponivel: true,
       data: '15-03-2022 - 17:00',
+      ano: 1998,
     ),
   ];
 
@@ -66,5 +72,33 @@ class RepositorioDeLivros {
           .toLowerCase()
           .contains(condicaoDaPesquisa.toLowerCase());
     }).toList();
+  }
+
+  /// Pesquisar livros por filtro
+  filtrarPesquisa(String condicaoDaPesquisa) {
+    if (condicaoDaPesquisa.isEmpty || selecionarFiltro == 0) {
+      return gerarTodosLivros;
+    } else if (selecionarFiltro == 1) {
+      return gerarTodosLivros.where((livro) {
+        return livro.autor
+            .toString()
+            .toLowerCase()
+            .contains(condicaoDaPesquisa.toLowerCase());
+      }).toList();
+    } else if (selecionarFiltro == 2) {
+      return gerarTodosLivros.where((livro) {
+        return livro.titulo
+            .toString()
+            .toLowerCase()
+            .contains(condicaoDaPesquisa.toLowerCase());
+      }).toList();
+    } else if (selecionarFiltro == 3) {
+      return gerarTodosLivros.where((livro) {
+        return livro.ano
+            .toString()
+            .toLowerCase()
+            .contains(condicaoDaPesquisa.toLowerCase());
+      }).toList();
+    }
   }
 }
