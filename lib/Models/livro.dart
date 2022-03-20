@@ -27,3 +27,11 @@ class Livro {
   @override
   bool operator ==(Object other) => other is Livro && other.id == id;
 }
+
+List menuDoFiltro = [
+  'Todos',
+  'Autor',
+  'Título',
+  'Ano de publicação',
+  'Editora'
+];

@@ -1,6 +1,7 @@
 import 'package:camarate_school_library/Components/barra_de_pesquisa.dart';
 import 'package:camarate_school_library/Components/livro_da_prateleira.dart';
 import 'package:camarate_school_library/Models/repositorio_de_livros.dart';
+import 'package:camarate_school_library/Models/livro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -67,9 +68,9 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
             children: [
               const SizedBox(height: 10),
               _controladorCaixaDePesquisa(),
-              const SizedBox(height: 3),
-              _buildFiltrarPesquisa(),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
+              const FiltrarPesquisa(),
+              const SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(
                   itemBuilder: (context, index) => LivroDaPrateleira(
@@ -85,53 +86,67 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
       ),
     );
   }
+}
 
-  Widget _buildFiltrarPesquisa() {
-    List menuFiltrarPor = [
-      'Todos',
-      'Autor',
-      'Título',
-      'Ano de publicação',
-      'Editora'
-    ]; // Lista de categorias
-    int selecionarFiltro = 0;
+class FiltrarPesquisa extends StatefulWidget {
+  const FiltrarPesquisa({Key? key}) : super(key: key);
 
-    return Column(
-      children: [
-        Row(
-          children: List.generate(
-            menuFiltrarPor.length,
-            (index) => InkWell(
-              onTap: () {
-                setState(() {
-                  selecionarFiltro = index;
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8),
+  @override
+  State<FiltrarPesquisa> createState() => _FiltrarPesquisaState();
+}
+
+class _FiltrarPesquisaState extends State<FiltrarPesquisa> {
+  // Lista de categorias
+  int selecionarFiltro = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Column(
+        children: [
+          Row(
+            children: List.generate(
+              menuDoFiltro.length,
+              (index) => InkWell(
+                onTap: () {
+                  setState(() {
+                    selecionarFiltro = index;
+                  });
+                },
                 child: Container(
-                  height: 28,
+                  //* Alinhamento das palavras no retangulo dos filtros
+                  alignment: Alignment.center,
+
+                  margin: EdgeInsets.only(
+                    left: 17.0,
+                    right: index == menuDoFiltro.length - 1 ? 20.0 : 0,
+                  ),
+
+                  //* Comportamento quando um filtro é selecionado
                   decoration: BoxDecoration(
                     color: selecionarFiltro == index
-                        ? Colors.grey[200]
-                        : Colors.grey.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: Colors.grey.shade200,
-                      width: 0.2,
-                    ),
+                        ? Colors.blue
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(color: Colors.black12, width: 2.0),
                   ),
+
+                  //* Comprimento e largura dos retangulos do filtro
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: 6,
-                      horizontal: 8,
+                      horizontal: 12,
                     ),
+
+                    //* Comportamento do texto quando é selecionado um filtro
                     child: Text(
-                      menuFiltrarPor[index],
+                      menuDoFiltro[index],
                       style: TextStyle(
                         color: selecionarFiltro == index
-                            ? Colors.black
-                            : Colors.white,
+                            ? Colors.white
+                            : Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -139,8 +154,8 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
