@@ -50,6 +50,7 @@ class ListaDeLivrosDaPesquisa extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    //* Titulo do livro
                     Text(
                       livros.titulo,
                       style: const TextStyle(
@@ -59,7 +60,10 @@ class ListaDeLivrosDaPesquisa extends StatelessWidget {
                         fontWeight: FontWeight.normal,
                       ),
                     ),
+
                     const Padding(padding: EdgeInsets.only(top: 8)),
+
+                    //* Autor
                     Text(
                       livros.autor,
                       style: const TextStyle(
@@ -68,7 +72,9 @@ class ListaDeLivrosDaPesquisa extends StatelessWidget {
                         fontWeight: FontWeight.w300,
                       ),
                     ),
+
                     const Padding(padding: EdgeInsets.only(top: 8)),
+
                     Text(
                       'ISBN: ' + livros.isbn,
                       style: const TextStyle(
