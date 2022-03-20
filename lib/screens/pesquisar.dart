@@ -69,10 +69,18 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
           child: Column(
             children: [
               const SizedBox(height: 10),
+
+              //* Barra de pesquisa
               _controladorCaixaDePesquisa(),
+
               const SizedBox(height: 15),
+
+              //* Filtros de pesquisa
               const FiltrarPesquisa(),
+
               const SizedBox(height: 20),
+
+              //* Livros
               Expanded(
                 child: ListView.builder(
                   itemBuilder: (context, index) => ListaDeLivrosDaPesquisa(
