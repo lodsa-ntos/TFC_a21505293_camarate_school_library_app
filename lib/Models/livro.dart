@@ -33,5 +33,4 @@ List menuDoFiltro = [
   'Autor',
   'Título',
   'Ano de publicação',
-  'Editora'
 ];
