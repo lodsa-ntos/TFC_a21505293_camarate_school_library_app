@@ -2,8 +2,8 @@ import 'package:camarate_school_library/Models/livro.dart';
 import 'package:camarate_school_library/Screens/livro_detalhado.dart';
 import 'package:flutter/material.dart';
 
-class LivroDaPrateleira extends StatelessWidget {
-  const LivroDaPrateleira({
+class ListaDeLivrosDaPesquisa extends StatelessWidget {
+  const ListaDeLivrosDaPesquisa({
     required this.livros,
     required this.ultimoLivro,
     Key? key,
@@ -88,7 +88,7 @@ class LivroDaPrateleira extends StatelessWidget {
 
     // [ semLinhas ]  --> variável  */
 
-    //* Se chegar ao ultimo livro não mostramos mais linhas a dividir a seguir
+    //* Se chegar ao ultimo livro não mostramos mais linhas a dividir
     if (ultimoLivro) {
       return semLinhas;
     }

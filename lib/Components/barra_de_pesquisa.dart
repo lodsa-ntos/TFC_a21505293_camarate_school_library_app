@@ -32,10 +32,13 @@ class BarraDePesquisa extends StatelessWidget {
               ),
               child: Row(
                 children: [
+                  //* Lupa
                   const Icon(
                     CupertinoIcons.search,
                     color: Colors.blue,
                   ),
+
+                  //* Caixa de texto
                   Expanded(
                     child: CupertinoTextField(
                       controller: controlador,
@@ -50,6 +53,8 @@ class BarraDePesquisa extends StatelessWidget {
                       ),
                     ),
                   ),
+
+                  //* X --> para apagar a palavra que foi escrita
                   GestureDetector(
                     onTap: controlador.clear,
                     child: const Icon(
