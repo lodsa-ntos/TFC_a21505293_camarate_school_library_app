@@ -35,62 +35,64 @@ class ListaDeLivrosDaPesquisa extends StatelessWidget {
           bottom: 8,
           right: 8,
         ),
-        child: Row(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: Image.network(
-                livros.imagePath,
-                fit: BoxFit.cover,
-                width: 80,
-                height: 115,
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    //* Titulo do livro
-                    Text(
-                      livros.titulo,
-                      style: const TextStyle(
-                        color: Color.fromRGBO(0, 0, 0, 0.8),
-                        fontSize: 18,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-
-                    const Padding(padding: EdgeInsets.only(top: 8)),
-
-                    //* Autor
-                    Text(
-                      livros.autor,
-                      style: const TextStyle(
-                        color: Color(0xFF8E8E93),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-
-                    const Padding(padding: EdgeInsets.only(top: 8)),
-
-                    Text(
-                      'Ano de publicação: ' + livros.ano.toString(),
-                      style: const TextStyle(
-                        color: Color(0xFF8E8E93),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    )
-                  ],
+        child: SingleChildScrollView(
+          child: Row(
+            children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: Image.network(
+                  livros.imagePath,
+                  fit: BoxFit.cover,
+                  width: 80,
+                  height: 115,
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      //* Titulo do livro
+                      Text(
+                        livros.titulo,
+                        style: const TextStyle(
+                          color: Color.fromRGBO(0, 0, 0, 0.8),
+                          fontSize: 18,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+
+                      const Padding(padding: EdgeInsets.only(top: 8)),
+
+                      //* Autor
+                      Text(
+                        livros.autor,
+                        style: const TextStyle(
+                          color: Color(0xFF8E8E93),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+
+                      const Padding(padding: EdgeInsets.only(top: 8)),
+
+                      Text(
+                        'Ano de publicação: ' + livros.ano.toString(),
+                        style: const TextStyle(
+                          color: Color(0xFF8E8E93),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

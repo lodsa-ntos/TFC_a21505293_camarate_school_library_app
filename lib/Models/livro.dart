@@ -33,6 +33,6 @@ class Livro {
 List menuDoFiltro = [
   'Todos',
   'Autor',
-  'Titulo',
+  'Título',
   'Ano de publicação',
 ];
