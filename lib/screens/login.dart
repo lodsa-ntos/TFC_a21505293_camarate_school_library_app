@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 2.0,
                       ),
                       decoration: const InputDecoration(
-                        labelText: "E-mail ou número do cartão de aluno",
+                        labelText: "E-mail",
                         labelStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 15,
