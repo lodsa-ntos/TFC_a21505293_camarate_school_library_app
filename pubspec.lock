@@ -8,13 +8,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.2"
-  auto_size_text_pk:
-    dependency: transitive
-    description:
-      name: auto_size_text_pk
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -22,27 +15,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  cached_network_image:
-    dependency: "direct main"
-    description:
-      name: cached_network_image
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.2.0"
-  cached_network_image_platform_interface:
-    dependency: transitive
-    description:
-      name: cached_network_image_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
-  cached_network_image_web:
-    dependency: transitive
-    description:
-      name: cached_network_image_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   characters:
     dependency: transitive
     description:
@@ -118,20 +90,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_blurhash:
-    dependency: transitive
-    description:
-      name: flutter_blurhash
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.6.4"
-  flutter_cache_manager:
-    dependency: transitive
-    description:
-      name: flutter_cache_manager
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.3.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -170,13 +128,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
-  group_button:
-    dependency: "direct main"
-    description:
-      name: group_button
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.6.0"
   http:
     dependency: "direct dev"
     description:
@@ -191,13 +142,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
-  intl:
-    dependency: transitive
-    description:
-      name: intl
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.17.0"
   js:
     dependency: transitive
     description:
@@ -233,13 +177,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  octo_image:
-    dependency: transitive
-    description:
-      name: octo_image
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   path:
     dependency: transitive
     description:
@@ -296,13 +233,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
-  pedantic:
-    dependency: transitive
-    description:
-      name: pedantic
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.11.1"
   platform:
     dependency: transitive
     description:
@@ -331,13 +261,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.2"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.27.3"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -406,20 +329,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.1"
-  sqflite:
-    dependency: transitive
-    description:
-      name: sqflite
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.2"
-  sqflite_common:
-    dependency: transitive
-    description:
-      name: sqflite_common
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.0"
   stack_trace:
     dependency: transitive
     description:
@@ -441,20 +350,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  synchronized:
-    dependency: transitive
-    description:
-      name: synchronized
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
-  tab_indicator_styler:
-    dependency: "direct main"
-    description:
-      name: tab_indicator_styler
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   term_glyph:
     dependency: transitive
     description:
@@ -476,13 +371,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0"
-  uuid:
-    dependency: transitive
-    description:
-      name: uuid
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.6"
   vector_math:
     dependency: transitive
     description:
@@ -490,20 +378,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
-  velocity_x:
-    dependency: "direct main"
-    description:
-      name: velocity_x
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.3.0"
-  vxstate:
-    dependency: transitive
-    description:
-      name: vxstate
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.0"
   win32:
     dependency: transitive
     description:
@@ -519,5 +393,5 @@ packages:
     source: hosted
     version: "0.2.0"
 sdks:
-  dart: ">=2.15.0 <3.0.0"
+  dart: ">=2.14.0 <3.0.0"
   flutter: ">=2.5.0"
