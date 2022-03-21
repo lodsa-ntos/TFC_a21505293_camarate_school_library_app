@@ -1,9 +1,10 @@
+import 'package:camarate_school_library/Screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'Models/livro.dart';
-import 'Models/livro_requisitado_model.dart';
-import 'Models/repositorio_de_livros.dart';
+import 'Models/Livro/livro.dart';
+import 'Models/Livro/livro_requisitado_model.dart';
+import 'Models/Livro/repositorio_de_livros.dart';
 import 'screens/home.dart';
 
 void main() {
@@ -43,7 +44,7 @@ class CamarateSchoolLibraryApp extends StatelessWidget {
     return const MaterialApp(
       // tira o debug do ecrã
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: LoginScreen(),
     );
   }
 }

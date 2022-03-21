@@ -1,6 +1,6 @@
-import 'package:camarate_school_library/Models/livro.dart';
-import 'package:camarate_school_library/Models/livro_requisitado_model.dart';
-import 'package:camarate_school_library/Models/repositorio_de_livros.dart';
+import 'package:camarate_school_library/Models/Livro/livro.dart';
+import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
+import 'package:camarate_school_library/Models/Livro/repositorio_de_livros.dart';
 import 'package:camarate_school_library/Screens/pesquisar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

@@ -1,4 +1,4 @@
-import 'package:camarate_school_library/Models/livro.dart';
+import 'package:camarate_school_library/Models/Livro/livro.dart';
 import 'package:flutter/material.dart';
 
 //* Variavel para controlar as escolhas dos filtros
