@@ -1,7 +1,7 @@
 import 'package:camarate_school_library/Components/construir_caixa_pesquisa.dart';
 import 'package:camarate_school_library/Components/construir_filtros_pesquisa.dart';
 import 'package:camarate_school_library/Components/lista_livros_pesquisa.dart';
-import 'package:camarate_school_library/Models/Livro/repositorio_de_livros.dart';
+import 'package:camarate_school_library/Database/repositorio_de_livros.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

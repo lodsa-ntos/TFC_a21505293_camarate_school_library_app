@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'Models/Livro/livro.dart';
-import 'Models/Livro/livro_requisitado_model.dart';
-import 'Models/Livro/repositorio_de_livros.dart';
+import 'View_Models/livro_requisitado_model.dart';
+import 'Database/repositorio_de_livros.dart';
 import 'screens/home.dart';
 
 void main() {

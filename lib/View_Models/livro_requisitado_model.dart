@@ -1,7 +1,8 @@
 import 'package:camarate_school_library/Models/Livro/livro.dart';
+import 'package:camarate_school_library/Database/repositorio_de_livros.dart';
 import 'package:flutter/material.dart';
 
-import 'repositorio_de_livros.dart';
+import '../Database/repositorio_de_livros.dart';
 
 class LivroRequisitadoModel extends ChangeNotifier {
   // Variável privada [_livrosComIds], para chamar e guardar o livro por id. */

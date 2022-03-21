@@ -1,6 +1,6 @@
 import 'package:camarate_school_library/Components/construir_filtros_pesquisa.dart';
 
-import 'livro.dart';
+import '../Models/Livro/livro.dart';
 
 class RepositorioDeLivros {
   List<Livro> todosLivros = [
