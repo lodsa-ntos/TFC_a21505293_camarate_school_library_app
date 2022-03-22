@@ -1,5 +1,5 @@
 import 'package:camarate_school_library/Models/Livro/livro.dart';
-import 'package:camarate_school_library/View_Models/livro_requisitado_model.dart';
+import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // ignore: unused_import, implementation_imports

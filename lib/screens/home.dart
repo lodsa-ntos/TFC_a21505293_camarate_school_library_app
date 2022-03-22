@@ -1,7 +1,8 @@
+import 'package:camarate_school_library/Models/Auth/auth_model.dart';
 import 'package:camarate_school_library/Models/Livro/livro.dart';
 import 'package:camarate_school_library/Database/repositorio_de_livros.dart';
+import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
 import 'package:camarate_school_library/Screens/pesquisar.dart';
-import 'package:camarate_school_library/View_Models/livro_requisitado_model.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,8 +40,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //** Variável para alcançar os livros por id na lista que gera livros */
-    final int index;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Livros'), // Título
@@ -63,11 +62,29 @@ class Home extends StatelessWidget {
             },
           ),
         ],
+      ),
 
-        //** Icone Menu lateral */
-        leading: IconButton(
-          icon: const Icon(Icons.menu_outlined),
-          onPressed: () {},
+      /// Menu Lateral
+      drawer: Drawer(
+        child: ListView(
+          // Importante: Remove qualquer preenchimento a mais do ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: null,
+            ),
+            ListTile(
+              title: const Text(
+                'Terminar sessão',
+              ), // Titulo dentro do menu lateral
+
+              /// Aceder ao metodo com o provider para terminar sessão
+              onTap: () => context.read<AuthModel>().terminarSessao(),
+            ),
+          ],
         ),
       ),
 
