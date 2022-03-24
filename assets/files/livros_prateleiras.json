@@ -1,40 +1,48 @@
 {
-    "gerarLivrosAleatorios": [
+    "livrosAleatorios": [
         {
             "id": 0,
-            "titulo": "A estrada do futuro",
-            "autor": "Bill Gates",
-            "editora": "Disponível",
-            "isbn": "isbn",
-            "imagem": "https://images-na.ssl-images-amazon.com/images/I/81blQVIfQwL.jpg",
-            "isRequisitado": false
+            "titulo": "O Alquimista",
+            "autor": "Paulo Coelho",
+            "editora": "11 X 17",
+            "isbn": "9789722524223",
+            "imagem": "https://img.wook.pt/images/o-alquimista-paulo-coelho/MXwxNTIzNzEzOXwxMDcyNTQ3NXwxMzgzNTIzMjAwMDAwfHdlYnA=/502x",
+            "isRequisitado": false,
+            "isDisponivel": true,
+            "ano": 2013
         },
         {
             "id": 1,
-            "titulo": "Livro do Desassossego | Vol.II",
-            "autor": "Fernando Pessoa",
-            "editora": "Disponível",
-            "isbn": "isbn",
-            "imagem": "https://cdn.shopify.com/s/files/1/0450/0717/5837/products/image-1_0645e650-6119-4245-bff4-b13847982f82_1024x1024.jpg?v=1614103731",
-            "isRequisitado": false
+            "titulo": "Que número é este",
+            "autor": "Ricardo Garcia",
+            "editora": "Fundação Francisco Manuel dos Santos",
+            "isbn": "9789898838889",
+            "imagem": "https://img.wook.pt/images/que-numero-e-este-ricardo-garcia/MXwyNDAwNjIyNHwyMDA1MjUxN3wxNTg3NDIzNjAwMDAwfHdlYnA=/502x",
+            "isRequisitado": false,
+            "isDisponivel": true,
+            "ano": 2004
         },
         {
             "id": 2,
-            "titulo": "O Eu profundo e os outros Eus",
-            "autor": "Fernando Pessoa",
-            "editora": "Esgotado",
-            "isbn": "isbn",
-            "imagem": "https://blog.estantevirtual.com.br/wp-content/uploads/fernandopessoa-euprofundoeoutroseus.jpg",
-            "isRequisitado": false
+            "titulo": "14 - Uma Vida nos Tectos do Mundo",
+            "autor": "João Garcia",
+            "editora": "Lua de Papel",
+            "isbn": "9789892326153",
+            "imagem": "https://img.wook.pt/images/14-uma-vida-nos-tectos-do-mundo-joao-garcia/MXwxNTcyNDIwNXwxMTIxOTMwMnwxMzk4OTg1MjAwMDAwfHdlYnA=/502x",
+            "isRequisitado": false,
+            "isDisponivel": true,
+            "ano": 2004
         },
         {
             "id": 3,
-            "titulo": "Luís De Camões",
-            "autor": "J. M. Latino Coelho",
-            "editora": "Disponível",
-            "isbn": "isbn",
-            "imagem": "http://www.livrosusados.pt/wp-content/uploads/2016/03/figuras-do-passado-luis-de-camoes.jpg",
-            "isRequisitado": false
+            "titulo": "Planisfério Pessoal",
+            "autor": "Gonçalo Cadilhe",
+            "editora": "Clube do Autor",
+            "isbn": "9789897242915",
+            "imagem": "https://img.wook.pt/images/planisferio-pessoal-goncalo-cadilhe/MXwxNzgxNzY4M3wxMzQ1ODk0NnwxNDYwNDE1NjAwMDAwfHdlYnA=/502x",
+            "isRequisitado": false,
+            "isDisponivel": true,
+            "ano": 1998
         }
     ]
 }

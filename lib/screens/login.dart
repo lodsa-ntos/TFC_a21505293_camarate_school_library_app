@@ -1,7 +1,5 @@
 import 'package:camarate_school_library/Models/Auth/auth_model.dart';
-import 'package:camarate_school_library/Screens/home.dart';
 import 'package:camarate_school_library/Styles/style_login_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 
@@ -51,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     return Scaffold(
-      //
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
