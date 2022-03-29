@@ -1,4 +1,4 @@
-import 'package:camarate_school_library/Models/Livro/livro.dart';
+import 'package:camarate_school_library/Models/Livro/livro_model.dart';
 import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +11,7 @@ import 'package:provider/src/provider.dart';
 class LivroDetalhado extends StatelessWidget {
   const LivroDetalhado({Key? key, required this.livro}) : super(key: key);
 
-  final Livro livro;
+  final LivroModel livro;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class LivroDetalhado extends StatelessWidget {
 }
 
 class _BotaoRequisitar extends StatelessWidget {
-  final Livro livroARequisitar;
+  final LivroModel livroARequisitar;
 
   const _BotaoRequisitar({required this.livroARequisitar, Key? key})
       : super(key: key);

@@ -1,4 +1,4 @@
-import 'package:camarate_school_library/Models/Livro/livro.dart';
+import 'package:camarate_school_library/Models/Livro/livro_model.dart';
 import 'package:camarate_school_library/Screens/livro_detalhado.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,7 @@ class ListaDeLivrosDaPesquisa extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final Livro livros;
+  final LivroModel livros;
   final bool ultimoLivro;
 
   @override

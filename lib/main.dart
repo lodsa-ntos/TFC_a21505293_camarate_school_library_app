@@ -2,6 +2,7 @@ import 'package:camarate_school_library/Screens/home.dart';
 import 'package:camarate_school_library/Screens/login.dart';
 import 'package:camarate_school_library/Models/Auth/auth_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
@@ -10,6 +11,8 @@ import 'Models/Livro/livro_requisitado_model.dart';
 import 'Database/repositorio_de_livros.dart';
 
 Future<void> main() async {
+  /// Necessário para usar canais para chamar o código nativo
+  /// para inicializar o Firebase.
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
@@ -73,7 +76,7 @@ class AutenticarUtilizador extends StatelessWidget {
 
     // ignore: unnecessary_null_comparison
     if (firebaseUser != null) {
-      /// Significa que o utilizador já está logado e, portanto, é redirecionado
+      /// O utilizador já está logado e, portanto, é redirecionado
       /// até a HomePage
       return const Home();
     }

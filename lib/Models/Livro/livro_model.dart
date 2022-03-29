@@ -1,18 +1,20 @@
 import 'dart:convert';
 
-class Livro {
+import 'package:flutter/cupertino.dart';
+
+class LivroModel {
   final int id;
   final String titulo;
   final String autor;
   final String isbn;
   final String editora;
   final String imagePath;
-  final String data;
+  final DateTime data;
   final int ano;
   bool isRequisitado;
   bool isDisponivel;
 
-  Livro({
+  LivroModel({
     required this.id,
     required this.titulo,
     required this.autor,
@@ -29,7 +31,7 @@ class Livro {
   int get hashCode => id;
 
   @override
-  bool operator ==(Object other) => other is Livro && other.id == id;
+  bool operator ==(Object other) => other is LivroModel && other.id == id;
 
   Map<String, dynamic> toMap() {
     return {
@@ -39,29 +41,27 @@ class Livro {
       'isbn': isbn,
       'editora': editora,
       'imagePath': imagePath,
-      'data': data,
+      'data': data.millisecondsSinceEpoch,
       'ano': ano,
       'isRequisitado': isRequisitado,
       'isDisponivel': isDisponivel,
     };
   }
 
-  factory Livro.fromJson(Map<String, dynamic> map) {
-    return Livro(
-      id: map['id']?.toInt() ?? 0,
-      titulo: map['titulo'] ?? '',
-      autor: map['autor'] ?? '',
-      isbn: map['isbn'] ?? '',
-      editora: map['editora'] ?? '',
-      imagePath: map['imagePath'] ?? '',
-      data: map['data'] ?? '',
-      ano: map['ano']?.toInt() ?? 0,
-      isRequisitado: map['isRequisitado'] ?? false,
-      isDisponivel: map['isDisponivel'] ?? false,
+  factory LivroModel.fromJson(key, Map dados) {
+    return LivroModel(
+      id: dados['id']?.toInt() ?? 0,
+      titulo: dados['titulo'] ?? '',
+      autor: dados['autor'] ?? '',
+      isbn: dados['isbn'] ?? '',
+      editora: dados['editora'] ?? '',
+      imagePath: dados['imagePath'] ?? '',
+      data: DateTime.fromMillisecondsSinceEpoch(dados['data']),
+      ano: dados['ano']?.toInt() ?? 0,
+      isRequisitado: dados['isRequisitado'] ?? false,
+      isDisponivel: dados['isDisponivel'] ?? false,
     );
   }
-
-  String toJson() => json.encode(toMap());
 }
 
 List menuDoFiltro = [

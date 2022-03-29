@@ -1,5 +1,5 @@
 import 'package:camarate_school_library/Models/Auth/auth_model.dart';
-import 'package:camarate_school_library/Models/Livro/livro.dart';
+import 'package:camarate_school_library/Models/Livro/livro_model.dart';
 import 'package:camarate_school_library/Database/repositorio_de_livros.dart';
 import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
 import 'package:camarate_school_library/Screens/pesquisar.dart';
@@ -35,9 +35,14 @@ const livrosRequisitados = Padding(
 );
 
 //* PÁGINA HOME
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -227,7 +232,7 @@ class ListaDeLivroRequisitado extends StatelessWidget {
 
                     //** Data: */
                     Text(
-                      'Data da requisição: ' + requisicao.livros[index].data,
+                      'Data da requisição: ',
                       style: GoogleFonts.catamaran(
                         textStyle: const TextStyle(
                           fontSize: 13.0,
@@ -256,7 +261,7 @@ class ListaDeLivros extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var livros = context.select<RepositorioDeLivros, Livro>(
+    var livros = context.select<RepositorioDeLivros, LivroModel>(
       // Aqui, apenas interessa o livro a partir do [index].
       (livro) => livro.getPorId(index),
     );
