@@ -1,7 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
-
 class LivroModel {
   final int id;
   final String titulo;
@@ -60,6 +56,21 @@ class LivroModel {
       ano: dados['ano']?.toInt() ?? 0,
       isRequisitado: dados['isRequisitado'] ?? false,
       isDisponivel: dados['isDisponivel'] ?? false,
+    );
+  }
+
+  factory LivroModel.fromMap(Map<dynamic, dynamic> map) {
+    return LivroModel(
+      id: map['id']?.toInt() ?? 0,
+      titulo: map['titulo'] ?? '',
+      autor: map['autor'] ?? '',
+      isbn: map['isbn'] ?? '',
+      editora: map['editora'] ?? '',
+      imagePath: map['imagePath'] ?? '',
+      data: DateTime.fromMillisecondsSinceEpoch(map['data']),
+      ano: map['ano']?.toInt() ?? 0,
+      isRequisitado: map['isRequisitado'] ?? false,
+      isDisponivel: map['isDisponivel'] ?? false,
     );
   }
 }

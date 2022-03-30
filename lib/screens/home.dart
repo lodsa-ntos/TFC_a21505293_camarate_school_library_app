@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:http/http.dart' as http;
 import 'package:camarate_school_library/Models/Auth/auth_model.dart';
 import 'package:camarate_school_library/Models/Livro/livro_model.dart';
 import 'package:camarate_school_library/Database/repositorio_de_livros.dart';
@@ -11,6 +16,9 @@ import 'package:provider/provider.dart';
 import 'livro_detalhado.dart';
 
 //** VARIÁVEIS GLOBAIS */
+
+String _todoName = "Sem livros para mostrar";
+
 //* Espaçamento
 const espacamento = SizedBox(
   height: 14,
@@ -43,8 +51,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final fb = FirebaseDatabase.instance;
+  var retrievedName;
+
   @override
   Widget build(BuildContext context) {
+    final ref = fb.ref();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Livros'), // Título
@@ -95,67 +107,63 @@ class _HomeState extends State<Home> {
 
       //* Este SingleChildScrollView será geral para toda a página home e fará apenas
       //* scroll na vertical
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //
-            //* Título
-            livrosRequisitados,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //
+                //* Título
+                livrosRequisitados,
 
-            //** Este SingleChildScrollView vai fazer scroll na horizontal
-            //** vai apresentar os livros que foram requisitados */
-            SingleChildScrollView(
-              child: SizedBox(
-                width: double.infinity,
-                height: 310.0,
-                child: Column(
-                  children: const [
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.all(16.0),
+                //** Este SingleChildScrollView vai fazer scroll na horizontal
+                //** vai apresentar os livros que foram requisitados */
+                SingleChildScrollView(
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 310.0,
+                    child: Column(
+                      children: const [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
 
-                        //** Apresenta o livro requisitado no ecrã */
-                        child: ListaDeLivroRequisitado(),
-                      ),
+                            //** Apresenta o livro requisitado no ecrã */
+                            child: ListaDeLivroRequisitado(),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ),
-
-            //* Título
-            prateleiras,
-            //
-            //** Este SingleChildScrollView vai fazer scroll na horizontal
-            //** e irá apresentar os livros das prateleiras */
-            SingleChildScrollView(
-              child: SizedBox(
-                width: double.infinity,
-                height: 375.0,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    //** comportamento para que a ListView só ocupe o espaço que precisa */
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) =>
-                        //** Livros da prateleira na página home */
-                        ListaDeLivros(index: index),
-
-                    //** Obter o tamanho maximo da minha lista, os valores
-                    //** da lista estão contidos na classe GerarLivro */ */
-                    itemCount:
-                        Provider.of<RepositorioDeLivros>(context, listen: false)
-                            .todosLivros
-                            .length,
                   ),
                 ),
-              ),
+
+                //* Título
+                prateleiras,
+                //
+                //** Este SingleChildScrollView vai fazer scroll na horizontal
+                //** e irá apresentar os livros das prateleiras */
+
+                ElevatedButton(
+                  onPressed: () {
+                    ref
+                        .child("livrosAleatorios")
+                        .once()
+                        .then((DatabaseEvent data) {
+                      print("read once" + data.snapshot.value.toString());
+                      setState(() {
+                        retrievedName = data.snapshot.value.toString();
+                      });
+                    });
+                  },
+                  child: const Text("Get"),
+                ),
+                Text(retrievedName ?? "sem livros para apresentar"),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
