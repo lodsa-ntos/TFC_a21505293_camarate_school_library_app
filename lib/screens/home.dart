@@ -1,8 +1,5 @@
-import 'dart:convert';
-
+import 'package:camarate_school_library/Database/base_de_dados.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:http/http.dart' as http;
 import 'package:camarate_school_library/Models/Auth/auth_model.dart';
 import 'package:camarate_school_library/Models/Livro/livro_model.dart';
 import 'package:camarate_school_library/Database/repositorio_de_livros.dart';
@@ -52,7 +49,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final fb = FirebaseDatabase.instance;
-  var retrievedName;
+  var livrosRecuperados;
 
   @override
   Widget build(BuildContext context) {
@@ -151,18 +148,16 @@ class _HomeState extends State<Home> {
                         .child("livrosAleatorios")
                         .once()
                         .then((DatabaseEvent data) {
-                      // imprimo da base de dados
                       print("livros" + data.snapshot.value.toString());
-
-                      /// solicito o valor da base de dados
                       setState(() {
-                        retrievedName = data.snapshot.value.toString();
+                        livrosRecuperados = data.snapshot.value.toString();
                       });
                     });
                   },
                   child: const Text("Get"),
                 ),
-                Text(retrievedName ?? "sem livros para apresentar"),
+
+                Text(livrosRecuperados ?? "sem livros para apresentar"),
               ],
             ),
           ),

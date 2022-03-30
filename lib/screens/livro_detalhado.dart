@@ -92,8 +92,6 @@ class _BotaoRequisitar extends StatelessWidget {
 
                       //** Fica requisitado */
                       livroARequisitar.isRequisitado = true;
-                      //** Deixa de estar disponível */
-                      livroARequisitar.isDisponivel = false;
                     },
             ),
 
@@ -109,8 +107,6 @@ class _BotaoRequisitar extends StatelessWidget {
                       devolucao.devolverLivroRequisitado(livroARequisitar);
                       //** Fica devolvido */
                       livroARequisitar.isRequisitado = false;
-                      //** Fica disponível */
-                      livroARequisitar.isDisponivel = true;
                     }
                   //* Se não foi requisitado, o botão devolver vai estar desativado
                   : null,
