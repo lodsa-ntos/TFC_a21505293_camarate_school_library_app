@@ -44,35 +44,9 @@ class LivroModel {
     };
   }
 
-  factory LivroModel.fromJson(key, Map dados) {
-    return LivroModel(
-      id: dados['id']?.toInt() ?? 0,
-      titulo: dados['titulo'] ?? '',
-      autor: dados['autor'] ?? '',
-      isbn: dados['isbn'] ?? '',
-      editora: dados['editora'] ?? '',
-      imagePath: dados['imagePath'] ?? '',
-      data: DateTime.fromMillisecondsSinceEpoch(dados['data']),
-      ano: dados['ano']?.toInt() ?? 0,
-      isRequisitado: dados['isRequisitado'] ?? false,
-      isDisponivel: dados['isDisponivel'] ?? false,
-    );
-  }
+  // Convert a Dog into a Map. The keys must correspond to the names of the
+  // columns in the database.
 
-  factory LivroModel.fromMap(Map<dynamic, dynamic> map) {
-    return LivroModel(
-      id: map['id']?.toInt() ?? 0,
-      titulo: map['titulo'] ?? '',
-      autor: map['autor'] ?? '',
-      isbn: map['isbn'] ?? '',
-      editora: map['editora'] ?? '',
-      imagePath: map['imagePath'] ?? '',
-      data: DateTime.fromMillisecondsSinceEpoch(map['data']),
-      ano: map['ano']?.toInt() ?? 0,
-      isRequisitado: map['isRequisitado'] ?? false,
-      isDisponivel: map['isDisponivel'] ?? false,
-    );
-  }
 }
 
 List menuDoFiltro = [

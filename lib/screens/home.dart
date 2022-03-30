@@ -151,7 +151,10 @@ class _HomeState extends State<Home> {
                         .child("livrosAleatorios")
                         .once()
                         .then((DatabaseEvent data) {
+                      // imprimo da base de dados
                       print("livros" + data.snapshot.value.toString());
+
+                      /// solicito o valor da base de dados
                       setState(() {
                         retrievedName = data.snapshot.value.toString();
                       });
