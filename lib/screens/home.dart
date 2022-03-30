@@ -151,7 +151,7 @@ class _HomeState extends State<Home> {
                         .child("livrosAleatorios")
                         .once()
                         .then((DatabaseEvent data) {
-                      print("read once" + data.snapshot.value.toString());
+                      print("livros" + data.snapshot.value.toString());
                       setState(() {
                         retrievedName = data.snapshot.value.toString();
                       });
