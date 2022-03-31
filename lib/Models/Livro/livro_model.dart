@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:firebase_database/firebase_database.dart';
+
 class LivroModel {
-  final int id;
+  late final int id;
   final String titulo;
   final String autor;
   final String isbn;

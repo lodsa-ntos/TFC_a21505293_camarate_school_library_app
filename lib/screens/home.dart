@@ -1,10 +1,10 @@
-import 'package:camarate_school_library/Database/base_de_dados.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:camarate_school_library/Models/Auth/auth_model.dart';
 import 'package:camarate_school_library/Models/Livro/livro_model.dart';
 import 'package:camarate_school_library/Database/repositorio_de_livros.dart';
 import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
 import 'package:camarate_school_library/Screens/pesquisar.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,8 +13,6 @@ import 'package:provider/provider.dart';
 import 'livro_detalhado.dart';
 
 //** VARIÁVEIS GLOBAIS */
-
-String _todoName = "Sem livros para mostrar";
 
 //* Espaçamento
 const espacamento = SizedBox(
@@ -48,12 +46,18 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final fb = FirebaseDatabase.instance;
-  var livrosRecuperados;
+  final FirebaseDatabase _baseDeDados = FirebaseDatabase.instance;
+
+  List<LivroModel> livros = <LivroModel>[];
+
+  @override
+  void initState() {
+    super.initState();
+    _baseDeDados.ref().child("livrosAleatorios");
+  }
 
   @override
   Widget build(BuildContext context) {
-    final ref = fb.ref();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Livros'), // Título
@@ -104,64 +108,127 @@ class _HomeState extends State<Home> {
 
       //* Este SingleChildScrollView será geral para toda a página home e fará apenas
       //* scroll na vertical
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //
-                //* Título
-                livrosRequisitados,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //
+            //* Título
+            livrosRequisitados,
 
-                //** Este SingleChildScrollView vai fazer scroll na horizontal
-                //** vai apresentar os livros que foram requisitados */
-                SingleChildScrollView(
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 310.0,
-                    child: Column(
-                      children: const [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.all(16.0),
+            //** Este SingleChildScrollView vai fazer scroll na horizontal
+            //** vai apresentar os livros que foram requisitados */
+            SingleChildScrollView(
+              child: SizedBox(
+                width: double.infinity,
+                height: 310.0,
+                child: Column(
+                  children: const [
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(16.0),
 
-                            //** Apresenta o livro requisitado no ecrã */
-                            child: ListaDeLivroRequisitado(),
-                          ),
-                        ),
-                      ],
+                        //** Apresenta o livro requisitado no ecrã */
+                        child: ListaDeLivroRequisitado(),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-
-                //* Título
-                prateleiras,
-                //
-                //** Este SingleChildScrollView vai fazer scroll na horizontal
-                //** e irá apresentar os livros das prateleiras */
-
-                ElevatedButton(
-                  onPressed: () {
-                    ref
-                        .child("livrosAleatorios")
-                        .once()
-                        .then((DatabaseEvent data) {
-                      print("livros" + data.snapshot.value.toString());
-                      setState(() {
-                        livrosRecuperados = data.snapshot.value.toString();
-                      });
-                    });
-                  },
-                  child: const Text("Get"),
-                ),
-
-                Text(livrosRecuperados ?? "sem livros para apresentar"),
-              ],
+              ),
             ),
-          ),
-        ],
+
+            //* Título
+            prateleiras,
+            //
+            //** Este SingleChildScrollView vai fazer scroll na horizontal
+            //** e irá apresentar os livros das prateleiras */
+            Visibility(
+              visible: livros.isEmpty,
+              child: Center(
+                child: Container(
+                  alignment: Alignment.center,
+                  child: const CircularProgressIndicator(),
+                ),
+              ),
+            ),
+
+            Visibility(
+              visible: livros.isNotEmpty,
+              child: Flexible(
+                  child: FirebaseAnimatedList(
+                      query: _baseDeDados.ref().child('livrosAleatorios'),
+                      itemBuilder: (_, DataSnapshot snap,
+                          Animation<double> animation, int index) {
+                        return GestureDetector(
+                          //* Aqui o utilizador consegue carregar em cima do livro
+                          //* e ser direcionado para o ecrã de livro detalhado
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                //** Redireciona o utilizador para a página de detalhes do livro */
+                                builder: (context) => LivroDetalhado(
+                                  livro: livros[index],
+                                ),
+                              ),
+                            );
+                          },
+
+                          //** Widgets que vão desenvolver formato dos livros a serem apresentados
+                          //** no página home */
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 2, vertical: 8),
+                            child: LimitedBox(
+                              maxHeight: 48,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 122.0,
+                                    margin: const EdgeInsets.only(right: 12.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 121.66,
+                                          height: 190.5,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            image: DecorationImage(
+                                              //** Capa */
+                                              image: NetworkImage(
+                                                  livros[index].imagePath),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+
+                                        const SizedBox(height: 12.0),
+
+                                        //** Titulo */
+                                        Text(livros[index].titulo),
+
+                                        const SizedBox(height: 5.0),
+
+                                        //** Autor */
+                                        Text(livros[index].autor),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      })),
+            )
+          ],
+        ),
       ),
     );
   }
