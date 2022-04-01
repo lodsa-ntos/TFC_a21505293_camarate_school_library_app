@@ -1,10 +1,10 @@
+import 'package:camarate_school_library/Database/base_de_dados.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:camarate_school_library/Models/Auth/auth_model.dart';
 import 'package:camarate_school_library/Models/Livro/livro_model.dart';
 import 'package:camarate_school_library/Database/repositorio_de_livros.dart';
 import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
 import 'package:camarate_school_library/Screens/pesquisar.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'livro_detalhado.dart';
 
 //** VARIÁVEIS GLOBAIS */
+final getLivrosBD = BaseDeDados();
 
 //* Espaçamento
 const espacamento = SizedBox(
@@ -143,90 +144,45 @@ class _HomeState extends State<Home> {
             //
             //** Este SingleChildScrollView vai fazer scroll na horizontal
             //** e irá apresentar os livros das prateleiras */
-            Visibility(
-              visible: livros.isEmpty,
-              child: Center(
-                child: Container(
-                  alignment: Alignment.center,
-                  child: const CircularProgressIndicator(),
+
+            SingleChildScrollView(
+              child: SizedBox(
+                width: double.infinity,
+                height: 375.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    //** comportamento para que a ListView só ocupe o espaço que precisa */
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) =>
+                        //** Livros da prateleira na página home */
+                        ListaDeLivros(index: index),
+
+                    //** Obter o tamanho maximo da minha lista, os valores
+                    //** da lista estão contidos na classe GerarLivro */ */
+                    itemCount:
+                        Provider.of<RepositorioDeLivros>(context, listen: false)
+                            .todosLivros
+                            .length,
+                  ),
                 ),
               ),
             ),
 
-            Visibility(
-              visible: livros.isNotEmpty,
-              child: Flexible(
-                  child: FirebaseAnimatedList(
-                      query: _baseDeDados.ref().child('livrosAleatorios'),
-                      itemBuilder: (_, DataSnapshot snap,
-                          Animation<double> animation, int index) {
-                        return GestureDetector(
-                          //* Aqui o utilizador consegue carregar em cima do livro
-                          //* e ser direcionado para o ecrã de livro detalhado
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                //** Redireciona o utilizador para a página de detalhes do livro */
-                                builder: (context) => LivroDetalhado(
-                                  livro: livros[index],
-                                ),
-                              ),
-                            );
-                          },
-
-                          //** Widgets que vão desenvolver formato dos livros a serem apresentados
-                          //** no página home */
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 2, vertical: 8),
-                            child: LimitedBox(
-                              maxHeight: 48,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 122.0,
-                                    margin: const EdgeInsets.only(right: 12.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          width: 121.66,
-                                          height: 190.5,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            image: DecorationImage(
-                                              //** Capa */
-                                              image: NetworkImage(
-                                                  livros[index].imagePath),
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-
-                                        const SizedBox(height: 12.0),
-
-                                        //** Titulo */
-                                        Text(livros[index].titulo),
-
-                                        const SizedBox(height: 5.0),
-
-                                        //** Autor */
-                                        Text(livros[index].autor),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      })),
-            )
+            StreamBuilder(
+              stream: FirebaseDatabase.instance.ref("livrosAleatorios").onValue,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  var databaseEvent = snapshot.data!;
+                  var databaseSnapshot = databaseEvent.snapshot;
+                  print('Snapshot: ${databaseSnapshot.value}');
+                  return Text("${databaseSnapshot.value}");
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            ),
           ],
         ),
       ),
