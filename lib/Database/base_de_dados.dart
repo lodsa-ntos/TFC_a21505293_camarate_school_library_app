@@ -13,15 +13,16 @@ class BaseDeDados {
 
     DatabaseEvent dadosSnapshot = await referenciaLivrosBD.once();
 
-    Map<String, dynamic> respostaJSON =
-        jsonDecode(jsonEncode(dadosSnapshot.snapshot.value))
-            as Map<String, dynamic>;
+    List<dynamic> respostaJSON =
+        jsonDecode(jsonEncode(dadosSnapshot.snapshot.value));
 
     listaDeLivros = ListaDeLivros.fromJSON(respostaJSON);
+    // ignore: avoid_print
     print(listaDeLivros);
 
-    livros.addAll(listaDeLivros.listaDeLivros);
+    livros.addAll(listaDeLivros.livroModel);
 
+    // ignore: avoid_print
     print('Livro:  ${livros[0].titulo}');
 
     return livros;
