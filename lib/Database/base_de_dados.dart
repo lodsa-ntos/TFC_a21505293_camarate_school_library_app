@@ -7,12 +7,19 @@ class BaseDeDados {
 
   Future<List<LivroModel>> carregarLivrosBD(
       DatabaseReference referenciaLivrosBD) async {
-    ListaDeLivros recipeList;
+    ListaDeLivros listaDeLivros;
 
-    DataSnapshot dadosSnapshot =
-        await referenciaLivrosBD.once() as DataSnapshot;
+    DatabaseEvent dadosSnapshot = await referenciaLivrosBD.once();
 
-    Map<dynamic, dynamic> respostaJSON = dadosSnapshot.value[0]['conteudo'];
+    Map<String, dynamic> respostaJSON =
+        dadosSnapshot.snapshot.value as Map<String, dynamic>;
+
+    listaDeLivros = ListaDeLivros.fromJSON(respostaJSON);
+    print(listaDeLivros);
+
+    livros.addAll(listaDeLivros.listaDeLivros);
+
+    print('Livro:  ${livros[0].titulo}');
 
     return livros;
   }
