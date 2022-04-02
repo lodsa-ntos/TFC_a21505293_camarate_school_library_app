@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     // Um pequeno tema para o texto(titulo, subTitulo, etc)
     var textTheme = Theme.of(context).textTheme.headline6;
-    var futureBuilder = FutureBuilder(
+    var mostrarLivro = FutureBuilder(
       future: fazerLigacao.carregarLivrosBD(referenciaBD), // async work
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         switch (snapshot.connectionState) {
@@ -199,7 +199,7 @@ class _HomeState extends State<Home> {
             const SizedBox(
               height: 15,
             ),
-            futureBuilder,
+            mostrarLivro,
           ],
         ),
       ),
