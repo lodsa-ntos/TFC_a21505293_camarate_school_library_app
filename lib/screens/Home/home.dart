@@ -63,7 +63,7 @@ class _HomeState extends State<Home> {
           case ConnectionState.none:
             return const Text('Press button to start');
           case ConnectionState.waiting:
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           default:
             if (snapshot.hasError) {
               return Text('Erro: ${snapshot.error}');
@@ -201,9 +201,7 @@ class _HomeState extends State<Home> {
             const SizedBox(
               height: 15,
             ),
-            Center(
-              child: futureBuilder,
-            ),
+            futureBuilder,
           ],
         ),
       ),
