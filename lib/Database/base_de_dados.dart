@@ -9,9 +9,10 @@ class BaseDeDados {
       DatabaseReference referenciaLivrosBD) async {
     ListaDeLivros recipeList;
 
-    DataSnapshot dataSnapshot = await referenciaLivrosBD.once();
+    DataSnapshot dadosSnapshot =
+        await referenciaLivrosBD.once() as DataSnapshot;
 
-    Map<dynamic, dynamic> jsonResponse = dataSnapshot.value[0]['content'];
+    Map<dynamic, dynamic> respostaJSON = dadosSnapshot.value[0]['conteudo'];
 
     return livros;
   }
