@@ -197,7 +197,14 @@ class _HomeState extends State<Home> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [futureBuilder],
+          children: [
+            const SizedBox(
+              height: 15,
+            ),
+            Center(
+              child: futureBuilder,
+            ),
+          ],
         ),
       ),
     );
