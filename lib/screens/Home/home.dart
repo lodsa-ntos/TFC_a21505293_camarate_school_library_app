@@ -60,8 +60,6 @@ class _HomeState extends State<Home> {
       future: fazerLigacao.carregarLivrosBD(referenciaBD), // async work
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         switch (snapshot.connectionState) {
-          case ConnectionState.none:
-            return const Text(':::');
           case ConnectionState.waiting:
             return const Center(child: CircularProgressIndicator());
           default:

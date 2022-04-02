@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class ListaDeLivros {
   List<LivroModel> listaDeLivros;
 
@@ -6,11 +8,11 @@ class ListaDeLivros {
   });
 
   factory ListaDeLivros.fromJSON(Map<dynamic, dynamic> json) {
-    return ListaDeLivros(listaDeLivros: analisarLivros(json));
+    return ListaDeLivros(listaDeLivros: verificarLivros(json));
   }
 
-  static List<LivroModel> analisarLivros(livroJSON) {
-    var isLivro = livroJSON['procurarLivros'] as List;
+  static List<LivroModel> verificarLivros(livroJSON) {
+    var isLivro = jsonDecode(livroJSON) as List<dynamic>;
     List<LivroModel> listaDeLivros =
         isLivro.map((dados) => LivroModel.fromJson(dados)).toList();
     return listaDeLivros;
