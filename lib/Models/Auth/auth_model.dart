@@ -16,7 +16,9 @@ class AuthModel with ChangeNotifier {
       {required String email, required String password}) async {
     try {
       await firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
       return "Logado com sucesso!";
     } on FirebaseAuthException catch (e) {
       return e.message.toString();

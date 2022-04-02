@@ -1,4 +1,4 @@
-import 'package:camarate_school_library/Screens/home.dart';
+import 'package:camarate_school_library/Screens/Home/home.dart';
 import 'package:camarate_school_library/Screens/login.dart';
 import 'package:camarate_school_library/Models/Auth/auth_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -78,7 +78,7 @@ class AutenticarUtilizador extends StatelessWidget {
     if (firebaseUser != null) {
       /// O utilizador já está logado e, portanto, é redirecionado
       /// até a HomePage
-      return const Home();
+      return Home();
     }
 
     /// O utilizador não está conectado e, portanto, é redirecionado

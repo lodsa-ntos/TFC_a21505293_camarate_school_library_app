@@ -1,48 +1,39 @@
 {
-    "livrosAleatorios": [
-        {
-            "id": 0,
-            "titulo": "O Alquimista",
-            "autor": "Paulo Coelho",
-            "editora": "11 X 17",
-            "isbn": "9789722524223",
-            "imagem": "https://img.wook.pt/images/o-alquimista-paulo-coelho/MXwxNTIzNzEzOXwxMDcyNTQ3NXwxMzgzNTIzMjAwMDAwfHdlYnA=/502x",
-            "isRequisitado": false,
-            "isDisponivel": true,
-            "ano": 2013
-        },
-        {
-            "id": 1,
-            "titulo": "Que número é este",
-            "autor": "Ricardo Garcia",
-            "editora": "Fundação Francisco Manuel dos Santos",
-            "isbn": "9789898838889",
-            "imagem": "https://img.wook.pt/images/que-numero-e-este-ricardo-garcia/MXwyNDAwNjIyNHwyMDA1MjUxN3wxNTg3NDIzNjAwMDAwfHdlYnA=/502x",
-            "isRequisitado": false,
-            "isDisponivel": true,
-            "ano": 2004
-        },
-        {
-            "id": 2,
-            "titulo": "14 - Uma Vida nos Tectos do Mundo",
-            "autor": "João Garcia",
-            "editora": "Lua de Papel",
-            "isbn": "9789892326153",
-            "imagem": "https://img.wook.pt/images/14-uma-vida-nos-tectos-do-mundo-joao-garcia/MXwxNTcyNDIwNXwxMTIxOTMwMnwxMzk4OTg1MjAwMDAwfHdlYnA=/502x",
-            "isRequisitado": false,
-            "isDisponivel": true,
-            "ano": 2004
-        },
-        {
-            "id": 3,
-            "titulo": "Planisfério Pessoal",
-            "autor": "Gonçalo Cadilhe",
-            "editora": "Clube do Autor",
-            "isbn": "9789897242915",
-            "imagem": "https://img.wook.pt/images/planisferio-pessoal-goncalo-cadilhe/MXwxNzgxNzY4M3wxMzQ1ODk0NnwxNDYwNDE1NjAwMDAwfHdlYnA=/502x",
-            "isRequisitado": false,
-            "isDisponivel": true,
-            "ano": 1998
-        }
-    ]
+  "livrosAleatorios" : [ {
+    "ano" : 2013,
+    "autor" : "Paulo Coelho",
+    "editora" : "11 X 17",
+    "id" : 0,
+    "imagem" : "https://img.wook.pt/images/o-alquimista-paulo-coelho/MXwxNTIzNzEzOXwxMDcyNTQ3NXwxMzgzNTIzMjAwMDAwfHdlYnA=/502x",
+    "isRequisitado" : false,
+    "isbn" : "9789722524223",
+    "titulo" : "O Alquimista"
+  }, {
+    "ano" : 2004,
+    "autor" : "Ricardo Garcia",
+    "editora" : "Fundação Francisco Manuel dos Santos",
+    "id" : 1,
+    "imagem" : "https://img.wook.pt/images/que-numero-e-este-ricardo-garcia/MXwyNDAwNjIyNHwyMDA1MjUxN3wxNTg3NDIzNjAwMDAwfHdlYnA=/502x",
+    "isRequisitado" : false,
+    "isbn" : "9789898838889",
+    "titulo" : "Que número é este"
+  }, {
+    "ano" : 2004,
+    "autor" : "João Garcia",
+    "editora" : "Lua de Papel",
+    "id" : 2,
+    "imagem" : "https://img.wook.pt/images/14-uma-vida-nos-tectos-do-mundo-joao-garcia/MXwxNTcyNDIwNXwxMTIxOTMwMnwxMzk4OTg1MjAwMDAwfHdlYnA=/502x",
+    "isRequisitado" : false,
+    "isbn" : "9789892326153",
+    "titulo" : "14 - Uma Vida nos Tectos do Mundo"
+  }, {
+    "ano" : 1998,
+    "autor" : "Gonçalo Cadilhe",
+    "editora" : "Clube do Autor",
+    "id" : 3,
+    "imagem" : "https://img.wook.pt/images/planisferio-pessoal-goncalo-cadilhe/MXwxNzgxNzY4M3wxMzQ1ODk0NnwxNDYwNDE1NjAwMDAwfHdlYnA=/502x",
+    "isRequisitado" : false,
+    "isbn" : "9789897242915",
+    "titulo" : "Planisfério Pessoal"
+  } ]
 }

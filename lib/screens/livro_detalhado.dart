@@ -64,12 +64,17 @@ class LivroDetalhado extends StatelessWidget {
   }
 }
 
-class _BotaoRequisitar extends StatelessWidget {
+class _BotaoRequisitar extends StatefulWidget {
   final LivroModel livroARequisitar;
 
   const _BotaoRequisitar({required this.livroARequisitar, Key? key})
       : super(key: key);
 
+  @override
+  State<_BotaoRequisitar> createState() => _BotaoRequisitarState();
+}
+
+class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   @override
   Widget build(BuildContext context) {
     var requisicao = context.read<LivroRequisitadoModel>();
@@ -82,16 +87,16 @@ class _BotaoRequisitar extends StatelessWidget {
             //* REQUISITAR
             ElevatedButton(
               child: const Text('Requisitar', style: TextStyle(fontSize: 16)),
-              onPressed: livroARequisitar.isRequisitado
+              onPressed: widget.livroARequisitar.isRequisitado
                   //* Se foi requisitado, o botão requisitar vai estar desativado
                   ? null
                   //* Se não foi requisitado
                   : () {
                       //** Aidiciona-mos o livro na lista de livros requisitados */
-                      requisicao.addLivroRequisitado(livroARequisitar);
+                      requisicao.addLivroRequisitado(widget.livroARequisitar);
 
                       //** Fica requisitado */
-                      livroARequisitar.isRequisitado = true;
+                      widget.livroARequisitar.isRequisitado = true;
                     },
             ),
 
@@ -102,11 +107,12 @@ class _BotaoRequisitar extends StatelessWidget {
             ElevatedButton(
               child: const Text('Devolver', style: TextStyle(fontSize: 16)),
               //* Se foi requisitado
-              onPressed: livroARequisitar.isRequisitado
+              onPressed: widget.livroARequisitar.isRequisitado
                   ? () {
-                      devolucao.devolverLivroRequisitado(livroARequisitar);
+                      devolucao
+                          .devolverLivroRequisitado(widget.livroARequisitar);
                       //** Fica devolvido */
-                      livroARequisitar.isRequisitado = false;
+                      widget.livroARequisitar.isRequisitado = false;
                     }
                   //* Se não foi requisitado, o botão devolver vai estar desativado
                   : null,
@@ -121,7 +127,9 @@ class _BotaoRequisitar extends StatelessWidget {
         Row(
           children: [
             Text(
-              livroARequisitar.isRequisitado ? 'Livro requisitado...' : '',
+              widget.livroARequisitar.isRequisitado
+                  ? 'Livro requisitado...'
+                  : '',
               style: const TextStyle(color: Colors.green, fontSize: 18),
             ),
           ],

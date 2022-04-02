@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'livro_detalhado.dart';
+import '../livro_detalhado.dart';
 
 //** VARIÁVEIS GLOBAIS */
 final getLivrosBD = BaseDeDados();
@@ -168,20 +168,6 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-            ),
-
-            StreamBuilder(
-              stream: FirebaseDatabase.instance.ref("livrosAleatorios").onValue,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  var databaseEvent = snapshot.data!;
-                  var databaseSnapshot = databaseEvent.snapshot;
-                  print('Snapshot: ${databaseSnapshot.value}');
-                  return Text("${databaseSnapshot.value}");
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
             ),
           ],
         ),
