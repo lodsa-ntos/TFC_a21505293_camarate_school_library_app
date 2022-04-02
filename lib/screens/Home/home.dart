@@ -49,7 +49,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final color = const Color(0xffbfd6ba);
   final colorText = const Color(0xffd1bad6);
-  final referenciaBD = FirebaseDatabase.instance.ref();
+  final referenciaBD = FirebaseDatabase.instance.ref('livrosAleatorios');
   final fazerLigacao = BaseDeDados();
 
   @override
