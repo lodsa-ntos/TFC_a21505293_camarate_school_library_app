@@ -6,10 +6,10 @@ class ListaDeLivros {
   });
 
   factory ListaDeLivros.fromJSON(Map<dynamic, dynamic> json) {
-    return ListaDeLivros(listaDeLivros: parserecipes(json));
+    return ListaDeLivros(listaDeLivros: analisarLivros(json));
   }
 
-  static List<LivroModel> parserecipes(livroJSON) {
+  static List<LivroModel> analisarLivros(livroJSON) {
     var isLivro = livroJSON['procurarLivros'] as List;
     List<LivroModel> listaDeLivros =
         isLivro.map((dados) => LivroModel.fromJson(dados)).toList();
