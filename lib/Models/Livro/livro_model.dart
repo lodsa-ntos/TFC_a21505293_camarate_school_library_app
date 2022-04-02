@@ -1,3 +1,22 @@
+class ListaDeLivros {
+  List<LivroModel> listaDeLivros;
+
+  ListaDeLivros({
+    required this.listaDeLivros,
+  });
+
+  factory ListaDeLivros.fromJSON(Map<dynamic, dynamic> json) {
+    return ListaDeLivros(listaDeLivros: parserecipes(json));
+  }
+
+  static List<LivroModel> parserecipes(livroJSON) {
+    var isLivro = livroJSON['procurarLivros'] as List;
+    List<LivroModel> listaDeLivros =
+        isLivro.map((dados) => LivroModel.fromJson(dados)).toList();
+    return listaDeLivros;
+  }
+}
+
 class LivroModel {
   final int id;
   final String titulo;
