@@ -7,6 +7,12 @@ class BaseDeDados {
 
   Future<List<LivroModel>> carregarLivrosBD(
       DatabaseReference referenciaLivrosBD) async {
+    ListaDeLivros recipeList;
+
+    DataSnapshot dataSnapshot = await referenciaLivrosBD.once();
+
+    Map<dynamic, dynamic> jsonResponse = dataSnapshot.value[0]['content'];
+
     return livros;
   }
 }
