@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
-            return const Text('Press button to start');
+            return const Text(':::');
           case ConnectionState.waiting:
             return const Center(child: CircularProgressIndicator());
           default:
