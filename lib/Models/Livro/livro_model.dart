@@ -12,9 +12,12 @@ class ListaDeLivros {
   }
 
   static List<LivroModel> verificarLivros(livroJSON) {
-    var isLivro = jsonDecode(livroJSON);
+    //
+    var isLivro = List<dynamic>.from(jsonDecode(livroJSON));
+
     List<LivroModel> listaDeLivros =
         isLivro.map((dados) => LivroModel.fromJson(dados)).toList();
+
     return listaDeLivros;
   }
 }
@@ -44,7 +47,7 @@ class LivroModel {
 
   factory LivroModel.fromJson(Map<String, dynamic> json) {
     return LivroModel(
-      id: json['id']?.toInt() ?? 0,
+      id: json["_id"] ?? 0,
       titulo: json['titulo'] ?? '',
       autor: json['autor'] ?? '',
       isbn: json['isbn'] ?? '',
@@ -54,6 +57,20 @@ class LivroModel {
       ano: json['ano']?.toInt() ?? 0,
       isRequisitado: json['isRequisitado'] ?? false,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> map = <String, dynamic>{};
+    if (id != null) map["_id"] = id;
+    map["titulo"] = titulo;
+    map["autor"] = autor;
+    map["isbn"] = isbn;
+    map["editora"] = editora;
+    map["imagePath"] = imagePath;
+    map["data"] = data;
+    map["ano"] = ano;
+    map["isRequisitado"] = isRequisitado;
+    return map;
   }
 }
 
