@@ -13,7 +13,7 @@ class ListaDeLivros {
 
   static List<LivroModel> verificarLivros(livroJSON) {
     //
-    var isLivro = List<dynamic>.from(jsonDecode(livroJSON));
+    List<dynamic> isLivro = jsonDecode(jsonEncode(livroJSON));
 
     List<LivroModel> listaDeLivros =
         isLivro.map((dados) => LivroModel.fromJson(dados)).toList();
@@ -29,7 +29,6 @@ class LivroModel {
   final String isbn;
   final String editora;
   final String imagePath;
-  final DateTime data;
   final int ano;
   bool isRequisitado;
 
@@ -40,7 +39,6 @@ class LivroModel {
     required this.isbn,
     required this.editora,
     required this.imagePath,
-    required this.data,
     required this.ano,
     required this.isRequisitado,
   });
@@ -53,7 +51,6 @@ class LivroModel {
       isbn: json['isbn'] ?? '',
       editora: json['editora'] ?? '',
       imagePath: json['imagePath'] ?? '',
-      data: DateTime.parse(json['data'] as String),
       ano: json['ano']?.toInt() ?? 0,
       isRequisitado: json['isRequisitado'] ?? false,
     );
@@ -67,7 +64,6 @@ class LivroModel {
     map["isbn"] = isbn;
     map["editora"] = editora;
     map["imagePath"] = imagePath;
-    map["data"] = data;
     map["ano"] = ano;
     map["isRequisitado"] = isRequisitado;
     return map;

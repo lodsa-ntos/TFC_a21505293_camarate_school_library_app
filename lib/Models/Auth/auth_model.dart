@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AuthModel with ChangeNotifier {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -12,14 +13,15 @@ class AuthModel with ChangeNotifier {
   Stream<User?> get estadoDeAutenticacao => firebaseAuth.idTokenChanges();
 
   //MÉTODO DE LOGIN
-  Future<String> login(
+  Future<Object> login(
       {required String email, required String password}) async {
     try {
-      await firebaseAuth.signInWithEmailAndPassword(
+      var resultadoAuth = await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return "Logado com sucesso!";
+      notifyListeners();
+      return resultadoAuth.user != null;
     } on FirebaseAuthException catch (e) {
       return e.message.toString();
     }
@@ -28,5 +30,6 @@ class AuthModel with ChangeNotifier {
   /// MÉTODO SAIR
   Future<void> terminarSessao() async {
     await firebaseAuth.signOut();
+    notifyListeners();
   }
 }

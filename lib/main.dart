@@ -78,7 +78,7 @@ class AutenticarUtilizador extends StatelessWidget {
     if (firebaseUser != null) {
       /// O utilizador já está logado e, portanto, é redirecionado
       /// até a HomePage
-      return Home();
+      return const Home();
     }
 
     /// O utilizador não está conectado e, portanto, é redirecionado

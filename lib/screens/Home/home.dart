@@ -1,4 +1,5 @@
 import 'package:camarate_school_library/Database/base_de_dados.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:camarate_school_library/Models/Auth/auth_model.dart';
 import 'package:camarate_school_library/Models/Livro/livro_model.dart';
@@ -49,7 +50,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final color = const Color(0xffbfd6ba);
   final colorText = const Color(0xffd1bad6);
-  final referenciaBD = FirebaseDatabase.instance.ref('livrosAleatorios');
+  final referenciaBD =
+      FirebaseDatabase.instance.ref().child('livrosAleatorios');
   final fazerLigacao = BaseDeDados();
 
   @override
@@ -91,46 +93,44 @@ class _HomeState extends State<Home> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 2, vertical: 8),
-                      child: LimitedBox(
-                        maxHeight: 48,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 122.0,
-                              margin: const EdgeInsets.only(right: 12.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 121.66,
-                                    height: 190.5,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      image: DecorationImage(
-                                        //** Capa */
-                                        image: NetworkImage(
-                                            snapshot.data[index].imagePath),
-                                        fit: BoxFit.cover,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 122.0,
+                            margin: const EdgeInsets.only(right: 12.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 121.66,
+                                  height: 190.5,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    image: DecorationImage(
+                                      //** Capa */
+                                      image: NetworkImage(
+                                        snapshot.data[index].imagePath,
                                       ),
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
+                                ),
 
-                                  const SizedBox(height: 12.0),
+                                const SizedBox(height: 12.0),
 
-                                  //** Titulo */
-                                  Text(snapshot.data[index].titulo,
-                                      style: textTheme),
+                                //** Titulo */
+                                Text(snapshot.data[index].titulo,
+                                    style: textTheme),
 
-                                  const SizedBox(height: 5.0),
+                                const SizedBox(height: 5.0),
 
-                                  //** Autor */
-                                  Text(snapshot.data[index].autor),
-                                ],
-                              ),
+                                //** Autor */
+                                Text(snapshot.data[index].autor),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   );
@@ -191,18 +191,7 @@ class _HomeState extends State<Home> {
 
       //* Este SingleChildScrollView será geral para toda a página home e fará apenas
       //* scroll na vertical
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 15,
-            ),
-            mostrarLivro,
-          ],
-        ),
-      ),
+      body: mostrarLivro,
     );
   }
 }

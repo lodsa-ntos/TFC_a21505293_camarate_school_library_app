@@ -17,8 +17,6 @@ class BaseDeDados {
         jsonDecode(jsonEncode(dadosSnapshot.snapshot.value));
 
     listaDeLivros = ListaDeLivros.fromJSON(respostaJSON);
-    // ignore: avoid_print
-    print(listaDeLivros);
 
     livros.addAll(listaDeLivros.livroModel);
 
