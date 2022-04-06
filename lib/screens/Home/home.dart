@@ -191,7 +191,48 @@ class _HomeState extends State<Home> {
 
       //* Este SingleChildScrollView será geral para toda a página home e fará apenas
       //* scroll na vertical
-      body: mostrarLivro,
+
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //* Título
+            livrosRequisitados,
+            //** Este SingleChildScrollView vai fazer scroll na horizontal
+            //** vai apresentar os livros que foram requisitados */
+            SingleChildScrollView(
+              child: SizedBox(
+                width: double.infinity,
+                height: 310.0,
+                child: Column(
+                  children: const [
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(16.0),
+
+                        //** Apresenta o livro requisitado no ecrã */
+                        child: ListaDeLivroRequisitado(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            //* Título
+            prateleiras,
+
+            SingleChildScrollView(
+              child: SizedBox(
+                width: double.infinity,
+                height: 375.0,
+                child: mostrarLivro,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
