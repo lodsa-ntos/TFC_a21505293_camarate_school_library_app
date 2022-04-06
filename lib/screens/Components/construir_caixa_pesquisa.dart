@@ -51,6 +51,7 @@ class ConstruirCaixaDePesquisa extends StatelessWidget {
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.normal,
                       ),
+                      textInputAction: TextInputAction.go,
                     ),
                   ),
 
