@@ -1,4 +1,6 @@
+import 'package:camarate_school_library/Database/base_de_dados.dart';
 import 'package:camarate_school_library/Database/repositorio_de_livros.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -54,12 +56,39 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
   @override
   Widget build(BuildContext context) {
-    //* Variavel para aceder a funcão --> [ filtrarPesquisa ]
-    final repositorio =
-        Provider.of<RepositorioDeLivros>(context, listen: false);
+    final referenciaBD =
+        FirebaseDatabase.instance.ref().child('livrosAleatorios');
+    final fazerLigacao = BaseDeDados();
 
-    //* Função para a condição da pesquisa por filtros
-    final livros = repositorio.filtrarPesquisa(_condicao);
+    final pesquisarLivrosBD = FutureBuilder(
+      future: fazerLigacao.carregarLivrosBD(referenciaBD), // async work
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return const Center(child: CircularProgressIndicator());
+          default:
+            if (snapshot.hasError) {
+              return Text('Erro: ${snapshot.error}');
+            } else {
+              return Flexible(
+                child: ListView.builder(
+                  shrinkWrap: true,
+
+                  // Até ao último livro da lista
+                  itemCount: snapshot.data.length,
+                  // Mostra todos os livros da lista
+                  itemBuilder: (context, index) {
+                    return ListaDeLivrosDaPesquisa(
+                      livros: snapshot.data[index],
+                      ultimoLivro: index == snapshot.data.length - 1,
+                    );
+                  },
+                ),
+              );
+            }
+        }
+      },
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -85,17 +114,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
               const SizedBox(height: 20),
 
               //* Livros
-              Expanded(
-                child: ListView.builder(
-                  //* Mostra todos os livros da lista
-                  itemBuilder: (context, index) => ListaDeLivrosDaPesquisa(
-                    livros: livros[index],
-                    ultimoLivro: index == livros.length - 1,
-                  ),
-                  //* Até ao último livro da lista
-                  itemCount: livros.length,
-                ),
-              ),
+              pesquisarLivrosBD,
             ],
           ),
         ),
