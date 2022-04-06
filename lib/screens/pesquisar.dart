@@ -1,13 +1,14 @@
 import 'package:camarate_school_library/Database/base_de_dados.dart';
-import 'package:camarate_school_library/Database/repositorio_de_livros.dart';
+import 'package:camarate_school_library/Models/Livro/livro_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'Components/construir_caixa_pesquisa.dart';
 import 'Components/construir_filtros_pesquisa.dart';
 import 'Components/lista_livros_pesquisa.dart';
+
+String _condicao = '';
 
 class PesquisaDeLivro extends StatefulWidget {
   const PesquisaDeLivro({Key? key}) : super(key: key);
@@ -21,7 +22,6 @@ class PesquisaDeLivro extends StatefulWidget {
 class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
   late final TextEditingController _controladorDoTexto;
   late final FocusNode _focarNaLetra;
-  String _condicao = '';
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
     _focarNaLetra = FocusNode();
   }
 
-  //* Limpara espaços da memória
+  //* Limpar espaços da memória
   @override
   void dispose() {
     _focarNaLetra.dispose();
@@ -70,17 +70,18 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
             if (snapshot.hasError) {
               return Text('Erro: ${snapshot.error}');
             } else {
+              final result = _filtrarPesquisa(snapshot.data);
               return Flexible(
                 child: ListView.builder(
                   shrinkWrap: true,
 
                   // Até ao último livro da lista
-                  itemCount: snapshot.data.length,
+                  itemCount: result.length,
                   // Mostra todos os livros da lista
                   itemBuilder: (context, index) {
                     return ListaDeLivrosDaPesquisa(
-                      livros: snapshot.data[index],
-                      ultimoLivro: index == snapshot.data.length - 1,
+                      livros: result[index],
+                      ultimoLivro: index == result.length - 1,
                     );
                   },
                 ),
@@ -121,4 +122,53 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
       ),
     );
   }
+}
+
+List<LivroModel> _filtrarPesquisa(List<LivroModel>? caixaDePesquisa) {
+  if (_condicao.isNotEmpty == true) {
+    //search logic what you want
+    if (selecionarFiltro == 0) {
+      return caixaDePesquisa
+              ?.where(
+                (element) => element.titulo
+                    .toString()
+                    .toLowerCase()
+                    .contains(_condicao.toLowerCase()),
+              )
+              .toList() ??
+          <LivroModel>[];
+    } else if (selecionarFiltro == 1) {
+      return caixaDePesquisa
+              ?.where(
+                (element) => element.autor
+                    .toString()
+                    .toLowerCase()
+                    .contains(_condicao.toLowerCase()),
+              )
+              .toList() ??
+          <LivroModel>[];
+    } else if (selecionarFiltro == 2) {
+      return caixaDePesquisa
+              ?.where(
+                (element) => element.titulo
+                    .toString()
+                    .toLowerCase()
+                    .contains(_condicao.toLowerCase()),
+              )
+              .toList() ??
+          <LivroModel>[];
+    } else if (selecionarFiltro == 3) {
+      return caixaDePesquisa
+              ?.where(
+                (element) => element.ano
+                    .toString()
+                    .toLowerCase()
+                    .contains(_condicao.toLowerCase()),
+              )
+              .toList() ??
+          <LivroModel>[];
+    }
+  }
+
+  return caixaDePesquisa ?? <LivroModel>[];
 }
