@@ -1,5 +1,9 @@
+import 'dart:async';
+
+import 'package:camarate_school_library/Database/base_de_dados.dart';
 import 'package:camarate_school_library/Models/Livro/livro_model.dart';
 import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // ignore: unused_import, implementation_imports
@@ -22,42 +26,44 @@ class LivroDetalhado extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //** Autor */
-            Text(livro.titulo,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 20.0)),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //** Autor */
+              Text(livro.titulo,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20.0)),
 
-            const SizedBox(height: 8),
+              const SizedBox(height: 8),
 
-            Text(
-              livro.autor,
-              style: const TextStyle(color: Colors.grey),
-            ),
-            Text(
-              "ISBN: " + livro.isbn,
-              style: const TextStyle(color: Colors.grey),
-            ),
-            Text(
-              "Editora: " + livro.editora,
-              style: const TextStyle(color: Colors.grey),
-            ),
+              Text(
+                livro.autor,
+                style: const TextStyle(color: Colors.grey),
+              ),
+              Text(
+                "ISBN: " + livro.isbn,
+                style: const TextStyle(color: Colors.grey),
+              ),
+              Text(
+                "Editora: " + livro.editora,
+                style: const TextStyle(color: Colors.grey),
+              ),
 
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            //** Capa */
-            SizedBox(
-              height: 350,
-              child: Image.network(livro.imagePath),
-            ),
+              //** Capa */
+              SizedBox(
+                height: 350,
+                child: Image.network(livro.imagePath),
+              ),
 
-            const SizedBox(height: 12),
+              const SizedBox(height: 12),
 
-            //*  _Botão Requisitar */
-            _BotaoRequisitar(livroARequisitar: livro)
-          ],
+              //*  _Botão Requisitar */
+              _BotaoRequisitar(livroARequisitar: livro)
+            ],
+          ),
         ),
       ),
     );
@@ -75,6 +81,49 @@ class _BotaoRequisitar extends StatefulWidget {
 }
 
 class _BotaoRequisitarState extends State<_BotaoRequisitar> {
+  late final DatabaseReference _referenciaParaRequisicao;
+  late StreamSubscription<DatabaseEvent> _estadoDaRequisicao;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  init() async {
+    _referenciaParaRequisicao =
+        FirebaseDatabase.instance.ref('livrosAleatorios/0/isRequisitado');
+
+    try {
+      final requisicaoNaBD = await _referenciaParaRequisicao.get();
+      widget.livroARequisitar.isRequisitado = requisicaoNaBD.value as bool;
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+
+    _estadoDaRequisicao =
+        _referenciaParaRequisicao.onValue.listen((DatabaseEvent event) {
+      setState(() {
+        widget.livroARequisitar.isRequisitado =
+            (event.snapshot.value ?? false) as bool;
+      });
+    });
+  }
+
+  fazerRequisicao() async {
+    await _referenciaParaRequisicao.set(true);
+  }
+
+  fazerDevolucao() async {
+    await _referenciaParaRequisicao.set(false);
+  }
+
+  @override
+  void dispose() {
+    _estadoDaRequisicao.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var requisicao = context.read<LivroRequisitadoModel>();
@@ -96,7 +145,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                       requisicao.addLivroRequisitado(widget.livroARequisitar);
 
                       //** Fica requisitado */
-                      widget.livroARequisitar.isRequisitado = true;
+                      fazerRequisicao();
                     },
             ),
 
@@ -112,7 +161,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                       devolucao
                           .devolverLivroRequisitado(widget.livroARequisitar);
                       //** Fica devolvido */
-                      widget.livroARequisitar.isRequisitado = false;
+                      fazerDevolucao();
                     }
                   //* Se não foi requisitado, o botão devolver vai estar desativado
                   : null,
