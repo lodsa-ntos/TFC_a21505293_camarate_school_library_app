@@ -223,7 +223,7 @@ class ValidadorDaPassword {
   static String? validar(String value) {
     if (value.isEmpty) {
       return "A palavra-passe não pode ser vazia";
-    } else if (value.length >= 8 && !_passwordErrado) {
+    } else if (value.length > 6 && !_passwordErrado) {
       return null;
     } else {
       if (_passwordErrado == true) {
