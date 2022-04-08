@@ -8,6 +8,7 @@ import 'package:provider/src/provider.dart';
 
 bool _emailErrado = false;
 bool _passwordErrado = false;
+String _messagemErro = '';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -131,6 +132,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: _decoracaoCampoDaPassword,
                     ),
 
+                    Center(
+                      child: Text(_messagemErro),
+                    ),
+
                     const Padding(padding: EdgeInsets.only(bottom: 50)),
 
                     //* --> Botão Iniciar Sessão <--
@@ -147,24 +152,25 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         onPressed: () async {
                           if (chaveDeFormulario.currentState!.validate()) {
-                            setState(() {
-                              isInProgresso = true;
-                            });
+                            try {
+                              await Provider.of<AuthModel>(context,
+                                      listen: false)
+                                  .login(
+                                email: emailInputController.text.trim(),
+                                password: passwordInputController.text.trim(),
+                              );
 
-                            await Provider.of<AuthModel>(context, listen: false)
-                                .login(
-                              email: emailInputController.text.trim(),
-                              password: passwordInputController.text.trim(),
-                            );
+                              // ignore: avoid_print
+                              print('E-mail: ${emailInputController.text}');
+                              // ignore: avoid_print
+                              print(
+                                  'Password: ${passwordInputController.text}');
 
-                            setState(() {
-                              isInProgresso = false;
-                            });
-
-                            // ignore: avoid_print
-                            print('E-mail: ${emailInputController.text}');
-                            // ignore: avoid_print
-                            print('Password: ${passwordInputController.text}');
+                              _messagemErro = 'Nenhum e-mail encontrado';
+                            } on FirebaseAuthException catch (error) {
+                              _messagemErro = error.message!;
+                            }
+                            setState(() {});
                           }
                         },
                       ),
@@ -179,23 +185,22 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _mostrarMensagemErro() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
+  Future _mostrarMensagemErro(BuildContext context, _message) {
+    return showDialog(
+      builder: (context) {
         return AlertDialog(
           title: const Text("Conta não existe"),
-          content: const Text("Esta conta com este e-mail não existe"),
+          content: Text(_message),
           actions: <Widget>[
             TextButton(
-              child: const Text("Ok"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
+                child: const Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                })
           ],
         );
       },
+      context: context,
     );
   }
 }
@@ -227,7 +232,7 @@ class ValidadorDaPassword {
       return null;
     } else {
       if (_passwordErrado == true) {
-        return "Password incorreta";
+        return "A tua palavra-passe estava incorreta. Verifica-a novamente.";
       } else {
         return "A palavra-passe deve ter mais de 8 caracteres";
       }
