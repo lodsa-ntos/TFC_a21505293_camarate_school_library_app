@@ -1,9 +1,13 @@
 import 'package:camarate_school_library/Models/Auth/auth_model.dart';
+import 'package:camarate_school_library/Screens/Home/home.dart';
 import 'package:camarate_school_library/Styles/style_login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/src/provider.dart';
+
+bool _emailErrado = false;
+bool _passwordErrado = false;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -21,6 +25,26 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isDadosCorretos = false;
   bool isInProgresso = false;
   final chaveDeFormulario = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    emailInputController = TextEditingController();
+    emailInputController.addListener(() {
+      setState(() {});
+    });
+    passwordInputController = TextEditingController();
+    passwordInputController.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailInputController.dispose();
+    passwordInputController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     //* E-mail
                     TextFormField(
-                      validator: (val) => val!.isNotEmpty
-                          ? null
-                          : "Por favor, introduza um endereço de e-mail",
+                      validator: (val) => ValidadorDeEmail.validar(val!),
 
                       // Obter o valor do email escrito pelo user
                       controller: emailInputController,
@@ -95,9 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     //* Palavra-passe
                     TextFormField(
-                      validator: (val) => val!.length < 8
-                          ? "A palavra-passe deve conter pelo menos 8 caracteres"
-                          : null,
+                      validator: (val) => ValidadorDaPassword.validar(val!),
 
                       // Esconder a palavra-passe
                       obscureText: esconderPassword,
@@ -130,11 +150,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             setState(() {
                               isInProgresso = true;
                             });
+
                             await Provider.of<AuthModel>(context, listen: false)
                                 .login(
                               email: emailInputController.text.trim(),
                               password: passwordInputController.text.trim(),
                             );
+
                             setState(() {
                               isInProgresso = false;
                             });
@@ -143,9 +165,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             print('E-mail: ${emailInputController.text}');
                             // ignore: avoid_print
                             print('Password: ${passwordInputController.text}');
-
-                            /// Método de login com o provider
-
                           }
                         },
                       ),
@@ -160,21 +179,58 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future _mostrarMenssagemDeErro() {
-    return showDialog(
-      builder: (context) {
+  void _mostrarMensagemErro() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Error Message rwgwefwerw'),
+          title: const Text("Conta não existe"),
+          content: const Text("Esta conta com este e-mail não existe"),
           actions: <Widget>[
             TextButton(
-                child: const Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                })
+              child: const Text("Ok"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
           ],
         );
       },
-      context: context,
     );
+  }
+}
+
+class ValidadorDeEmail {
+  static String? validar(String value) {
+    if (value.isEmpty) {
+      return "O e-mail não pode ser vazio";
+    } else if ((RegExp(
+                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            .hasMatch(value) &&
+        !_emailErrado)) {
+      return null;
+    } else {
+      if (_emailErrado == true) {
+        return "Nenhum e-mail encontrado";
+      } else {
+        return "Por favor, introduza um email válido";
+      }
+    }
+  }
+}
+
+class ValidadorDaPassword {
+  static String? validar(String value) {
+    if (value.isEmpty) {
+      return "A palavra-passe não pode ser vazia";
+    } else if (value.length >= 8 && !_passwordErrado) {
+      return null;
+    } else {
+      if (_passwordErrado == true) {
+        return "Password incorreta";
+      } else {
+        return "A palavra-passe deve ter mais de 8 caracteres";
+      }
+    }
   }
 }

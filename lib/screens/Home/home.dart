@@ -73,7 +73,7 @@ class _HomeState extends State<Home> {
                 scrollDirection: Axis.horizontal,
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
-//                  return new Text(snapshot.data[index].foodtitle);
+//
                   return GestureDetector(
                     //* Aqui o utilizador consegue carregar em cima do livro
                     //* e ser direcionado para o ecrã de livro detalhado
@@ -128,6 +128,13 @@ class _HomeState extends State<Home> {
 
                                 //** Autor */
                                 Text(snapshot.data[index].autor),
+
+                                const SizedBox(height: 5.0),
+
+                                //** isRequisitado */
+                                Text(
+                                  snapshot.data[index].isRequisitado.toString(),
+                                ),
                               ],
                             ),
                           ),
@@ -198,29 +205,6 @@ class _HomeState extends State<Home> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //* Título
-            livrosRequisitados,
-            //** Este SingleChildScrollView vai fazer scroll na horizontal
-            //** vai apresentar os livros que foram requisitados */
-            SingleChildScrollView(
-              child: SizedBox(
-                width: double.infinity,
-                height: 310.0,
-                child: Column(
-                  children: const [
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.all(16.0),
-
-                        //** Apresenta o livro requisitado no ecrã */
-                        child: ListaDeLivroRequisitado(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
             //* Título
             prateleiras,
 
