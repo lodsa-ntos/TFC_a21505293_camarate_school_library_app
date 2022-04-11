@@ -9,7 +9,8 @@ class AuthModel with ChangeNotifier {
   AuthModel({required this.firebaseAuth});
 
   /// O Stream vai ser para ouvir continuamente o estado da autenticação
-  /// do utilizador (se está conectado ou não).
+  /// do utilizador (se está conectado ou não) para atualizar o id token
+  /// do utilizador.
   Stream<User?> get estadoDeAutenticacao => firebaseAuth.idTokenChanges();
 
   //MÉTODO DE LOGIN

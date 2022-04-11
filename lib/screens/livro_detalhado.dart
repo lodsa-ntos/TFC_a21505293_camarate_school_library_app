@@ -91,8 +91,11 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   }
 
   init() async {
-    _referenciaParaRequisicao =
-        FirebaseDatabase.instance.ref('livrosAleatorios/0/isRequisitado');
+    _referenciaParaRequisicao = FirebaseDatabase.instance.ref(
+      'livrosAleatorios/' +
+          widget.livroARequisitar.id.toString() +
+          '/isRequisitado',
+    );
 
     try {
       final requisicaoNaBD = await _referenciaParaRequisicao.get();
@@ -112,10 +115,12 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
   fazerRequisicao() async {
     await _referenciaParaRequisicao.set(true);
+    //widget.livroARequisitar.isRequisitado = true;
   }
 
   fazerDevolucao() async {
     await _referenciaParaRequisicao.set(false);
+    //widget.livroARequisitar.isRequisitado = false;
   }
 
   @override
@@ -141,7 +146,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                   ? null
                   //* Se não foi requisitado
                   : () {
-                      //** Aidiciona-mos o livro na lista de livros requisitados */
+                      //** Adiciona-mos o livro na lista de livros requisitados */
                       requisicao.addLivroRequisitado(widget.livroARequisitar);
 
                       //** Fica requisitado */
@@ -149,7 +154,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                     },
             ),
 
-            //* Distanciar botôes
+            //* Distanciar botões
             const SizedBox(width: 35),
 
             //* DEVOLVER

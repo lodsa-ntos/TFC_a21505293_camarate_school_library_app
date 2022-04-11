@@ -126,7 +126,6 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
 List<LivroModel> _filtrarPesquisa(List<LivroModel>? caixaDePesquisa) {
   if (_condicao.isNotEmpty == true) {
-    //search logic what you want
     if (selecionarFiltro == 0) {
       return caixaDePesquisa
               ?.where(
