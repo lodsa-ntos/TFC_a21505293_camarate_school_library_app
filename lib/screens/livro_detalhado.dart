@@ -30,13 +30,14 @@ class LivroDetalhado extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //** Autor */
+              //** Título */
               Text(livro.titulo,
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 20.0)),
 
               const SizedBox(height: 8),
 
+              //** Autor */
               Text(
                 livro.autor,
                 style: const TextStyle(color: Colors.grey),

@@ -20,8 +20,13 @@ class BaseDeDados {
 
     livros.addAll(listaDeLivros.livroModel);
 
-    // ignore: avoid_print
-    print('Livro:  ${livros[0].titulo}');
+    if (livros.isNotEmpty) {
+      // ignore: avoid_print
+      print('Livros carregados com sucesso da base de dados');
+    } else {
+      // ignore: avoid_print
+      print('Sem dados para mostrar');
+    }
 
     return livros;
   }

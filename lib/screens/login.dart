@@ -17,6 +17,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  /// O botão também não poderá ser pressionado.
+  /// O indicador aparecerá quando _isLoading = true.
+  bool _isLoading = false;
+
   /// Controladores para os campos de texto do e-mail e da password.
   TextEditingController emailInputController = TextEditingController();
   TextEditingController passwordInputController = TextEditingController();
@@ -44,6 +48,20 @@ class _LoginScreenState extends State<LoginScreen> {
     emailInputController.dispose();
     passwordInputController.dispose();
     super.dispose();
+  }
+
+  /// Esta função será acionada quando o botão de Iniciar Sessão for pressionado
+  void _iniciarLoading() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    /// Aguarda 3 segundos
+    await Future.delayed(const Duration(seconds: 3));
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -131,48 +149,59 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: _decoracaoCampoDaPassword,
                     ),
 
+                    const SizedBox(height: 20),
+
                     Center(
-                      child: Text(_messagemErro),
+                      child: Text(
+                        _messagemErro,
+                        style: const TextStyle(color: Colors.red),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
 
-                    const Padding(padding: EdgeInsets.only(bottom: 50)),
+                    const Padding(padding: EdgeInsets.only(bottom: 35)),
 
                     //* --> Botão Iniciar Sessão <--
                     SizedBox(
                       height: 65.0,
                       width: 335.0,
-                      child: MaterialButton(
-                        height: 50,
-                        textColor: Colors.white,
-                        color: Colors.blue,
-                        child: const Text(
-                          "Iniciar sessão",
-                          style: StyleLoginScreen.estiloBotaoIniciarSessao,
-                        ),
-                        onPressed: () async {
-                          if (chaveDeFormulario.currentState!.validate()) {
-                            try {
-                              await Provider.of<AuthModel>(context,
-                                      listen: false)
-                                  .login(
-                                email: emailInputController.text.trim(),
-                                password: passwordInputController.text.trim(),
-                              );
+                      child: _isLoading
+                          ? const CircularProgressIndicator()
+                          : MaterialButton(
+                              height: 50,
+                              textColor: Colors.white,
+                              color: Colors.blue,
+                              child: const Text(
+                                "Iniciar sessão",
+                                style:
+                                    StyleLoginScreen.estiloBotaoIniciarSessao,
+                              ),
+                              onPressed: () async {
+                                if (chaveDeFormulario.currentState!
+                                    .validate()) {
+                                  try {
+                                    await Provider.of<AuthModel>(context,
+                                            listen: false)
+                                        .login(
+                                      email: emailInputController.text.trim(),
+                                      password:
+                                          passwordInputController.text.trim(),
+                                    );
 
-                              // ignore: avoid_print
-                              print('E-mail: ${emailInputController.text}');
-                              // ignore: avoid_print
-                              print(
-                                  'Password: ${passwordInputController.text}');
+                                    // ignore: avoid_print
+                                    print(
+                                        'E-mail: ${emailInputController.text}');
+                                    // ignore: avoid_print
+                                    print(
+                                        'Password: ${passwordInputController.text}');
 
-                              _messagemErro = 'Nenhum e-mail encontrado';
-                            } on FirebaseAuthException catch (error) {
-                              _messagemErro = error.message!;
-                            }
-                            setState(() {});
-                          }
-                        },
-                      ),
+                                    _messagemErro =
+                                        'Desculpa, mas o teu e-mail ou a tua palavra-passe estão incorretos. Verifica novamente.';
+                                  } on FirebaseAuthException catch (error) {
+                                    _messagemErro = error.message!;
+                                  }
+                                }
+                              }),
                     ),
                   ],
                 ),
@@ -183,31 +212,12 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-  Future _mostrarMensagemErro(BuildContext context, _message) {
-    return showDialog(
-      builder: (context) {
-        return AlertDialog(
-          title: const Text("Conta não existe"),
-          content: Text(_message),
-          actions: <Widget>[
-            TextButton(
-                child: const Text('Ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                })
-          ],
-        );
-      },
-      context: context,
-    );
-  }
 }
 
 class ValidadorDeEmail {
   static String? validar(String value) {
     if (value.isEmpty) {
-      return "O e-mail não pode ser vazio";
+      return "O campo do e-mail não pode ser vazio";
     } else if ((RegExp(
                 r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
             .hasMatch(value) &&
@@ -226,7 +236,7 @@ class ValidadorDeEmail {
 class ValidadorDaPassword {
   static String? validar(String value) {
     if (value.isEmpty) {
-      return "A palavra-passe não pode ser vazia";
+      return "O campo da palavra-passe não pode ser vazio";
     } else if (value.length > 6 && !_passwordErrado) {
       return null;
     } else {

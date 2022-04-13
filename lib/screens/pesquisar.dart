@@ -56,12 +56,11 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
   @override
   Widget build(BuildContext context) {
-    final referenciaBD =
-        FirebaseDatabase.instance.ref().child('livrosAleatorios');
+    final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
     final fazerLigacao = BaseDeDados();
 
     final pesquisarLivrosBD = FutureBuilder(
-      future: fazerLigacao.carregarLivrosBD(referenciaBD), // async work
+      future: fazerLigacao.carregarLivrosBD(referenciaBD),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
@@ -70,6 +69,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
             if (snapshot.hasError) {
               return Text('Erro: ${snapshot.error}');
             } else {
+              /// snapshot.data --> livros da bases de dados
               final result = _filtrarPesquisa(snapshot.data);
               return Flexible(
                 child: ListView.builder(
@@ -77,9 +77,10 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
                   // Até ao último livro da lista
                   itemCount: result.length,
-                  // Mostra todos os livros da lista
+                  // Mostra todos os livros da lista contidos na base de dados
                   itemBuilder: (context, index) {
                     return ListaDeLivrosDaPesquisa(
+                      // Obter todos os index da lista de livros da base de dados
                       livros: result[index],
                       ultimoLivro: index == result.length - 1,
                     );
@@ -126,6 +127,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
 List<LivroModel> _filtrarPesquisa(List<LivroModel>? caixaDePesquisa) {
   if (_condicao.isNotEmpty == true) {
+    //* Título
     if (selecionarFiltro == 0) {
       return caixaDePesquisa
               ?.where(
@@ -136,6 +138,8 @@ List<LivroModel> _filtrarPesquisa(List<LivroModel>? caixaDePesquisa) {
               )
               .toList() ??
           <LivroModel>[];
+
+      //* Autor
     } else if (selecionarFiltro == 1) {
       return caixaDePesquisa
               ?.where(
@@ -146,6 +150,8 @@ List<LivroModel> _filtrarPesquisa(List<LivroModel>? caixaDePesquisa) {
               )
               .toList() ??
           <LivroModel>[];
+
+      //* Título
     } else if (selecionarFiltro == 2) {
       return caixaDePesquisa
               ?.where(
@@ -156,6 +162,8 @@ List<LivroModel> _filtrarPesquisa(List<LivroModel>? caixaDePesquisa) {
               )
               .toList() ??
           <LivroModel>[];
+
+      //* Ano de publicação
     } else if (selecionarFiltro == 3) {
       return caixaDePesquisa
               ?.where(
