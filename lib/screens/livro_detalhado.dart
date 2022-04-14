@@ -55,10 +55,6 @@ class LivroDetalhado extends StatelessWidget {
                 "Editora: " + livro.editora,
                 style: const TextStyle(color: Colors.grey),
               ),
-              Text(
-                "Disponível: " + livro.isRequisitado.toString(),
-                style: const TextStyle(color: Colors.grey),
-              ),
 
               const SizedBox(height: 16),
 
