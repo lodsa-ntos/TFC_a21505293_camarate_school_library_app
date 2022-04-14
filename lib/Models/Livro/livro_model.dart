@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-class ListaDeLivros {
+class RepositorioDeLivros {
   List<LivroModel> livroModel;
 
-  ListaDeLivros({
+  RepositorioDeLivros({
     required this.livroModel,
   });
 
-  factory ListaDeLivros.fromJSON(List<dynamic> json) {
-    return ListaDeLivros(livroModel: verificarLivros(json));
+  factory RepositorioDeLivros.fromJSON(List<dynamic> json) {
+    return RepositorioDeLivros(livroModel: verificarLivros(json));
   }
 
   static List<LivroModel> verificarLivros(livroJSON) {
@@ -20,10 +20,17 @@ class ListaDeLivros {
 
     return listaDeLivros;
   }
+
+  //** */ Obter os livros pelo id
+  LivroModel getPorId(String id) =>
+
+      /// Aqui, a lista de livros é infinita, vai fazer um loop sobre [gerarLivrosAleatorios].
+      /// O que é errado para o que se quer....
+      livroModel.firstWhere((element) => element.id == id);
 }
 
 class LivroModel {
-  final int id;
+  final String id;
   final String titulo;
   final String autor;
   final String isbn;
@@ -43,22 +50,9 @@ class LivroModel {
     required this.isRequisitado,
   });
 
-  factory LivroModel.fromJson(Map<String, dynamic> json) {
-    return LivroModel(
-      id: json["_id"] ?? 0,
-      titulo: json['titulo'] ?? '',
-      autor: json['autor'] ?? '',
-      isbn: json['isbn'] ?? '',
-      editora: json['editora'] ?? '',
-      imagePath: json['imagePath'] ?? '',
-      ano: json['ano']?.toInt() ?? 0,
-      isRequisitado: json['isRequisitado'] ?? false,
-    );
-  }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> map = <String, dynamic>{};
-    if (id != null) map["_id"] = id;
+    map["id"] = id;
     map["titulo"] = titulo;
     map["autor"] = autor;
     map["isbn"] = isbn;
@@ -67,6 +61,19 @@ class LivroModel {
     map["ano"] = ano;
     map["isRequisitado"] = isRequisitado;
     return map;
+  }
+
+  factory LivroModel.fromJson(Map<String, dynamic> json) {
+    return LivroModel(
+      id: json['id'] ?? '',
+      titulo: json['titulo'] ?? '',
+      autor: json['autor'] ?? '',
+      isbn: json['isbn'] ?? '',
+      editora: json['editora'] ?? '',
+      imagePath: json['imagePath'] ?? '',
+      ano: json['ano']?.toInt() ?? 0,
+      isRequisitado: json['isRequisitado'] ?? false,
+    );
   }
 }
 

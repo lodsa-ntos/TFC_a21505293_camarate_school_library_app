@@ -9,14 +9,14 @@ class BaseDeDados {
 
   Future<List<LivroModel>> carregarLivrosBD(
       DatabaseReference referenciaLivrosBD) async {
-    ListaDeLivros listaDeLivros;
+    RepositorioDeLivros listaDeLivros;
 
     DatabaseEvent dadosSnapshot = await referenciaLivrosBD.once();
 
     List<dynamic> respostaJSON =
         jsonDecode(jsonEncode(dadosSnapshot.snapshot.value));
 
-    listaDeLivros = ListaDeLivros.fromJSON(respostaJSON);
+    listaDeLivros = RepositorioDeLivros.fromJSON(respostaJSON);
 
     livros.addAll(listaDeLivros.livroModel);
 

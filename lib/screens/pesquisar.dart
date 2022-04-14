@@ -3,6 +3,7 @@ import 'package:camarate_school_library/Models/Livro/livro_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'Components/construir_caixa_pesquisa.dart';
 import 'Components/construir_filtros_pesquisa.dart';
@@ -91,7 +92,6 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
         }
       },
     );
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pesquisar'), // Título

@@ -1,14 +1,18 @@
+import 'package:camarate_school_library/Database/base_de_dados.dart';
+import 'package:camarate_school_library/Models/Livro/livro_model.dart';
 import 'package:camarate_school_library/Screens/Home/home.dart';
 import 'package:camarate_school_library/Screens/login.dart';
 import 'package:camarate_school_library/Models/Auth/auth_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'Models/Livro/livro_requisitado_model.dart';
-import 'Database/repositorio_de_livros.dart';
+
+final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
 
 Future<void> main() async {
   /// Necessário para usar canais para chamar o código nativo
@@ -18,24 +22,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        //** Exponho o primeiro valor da minha lista na página home (Livros da prateleira) */
-        Provider(create: (_) => RepositorioDeLivros()),
-
-        //** Dependência = GerarLivro --> HomeRequisitarProvider
-        //** Ao carregar no botao requisitar, consumo o primeiro valor livro da
-        //** lista na classe GerarLivro e guardo na funcao da classe LivrosRequisitadosModel
-        //** que é o addLivrosRequisitados*/
-
-        ChangeNotifierProxyProvider<RepositorioDeLivros, LivroRequisitadoModel>(
-          create: (context) => LivroRequisitadoModel(),
-          update: (context, livro, informacaoDoLivro) {
-            if (informacaoDoLivro == null)
-              // ignore: curly_braces_in_flow_control_structures
-              throw ArgumentError.notNull('Sem informacao do Livro');
-            informacaoDoLivro.livro = livro;
-            return informacaoDoLivro;
-          },
-        ),
+        ChangeNotifierProvider(create: (_) => LivroRequisitadoModel()),
 
         ChangeNotifierProvider<AuthModel>(
             create: (_) => AuthModel(firebaseAuth: FirebaseAuth.instance)),

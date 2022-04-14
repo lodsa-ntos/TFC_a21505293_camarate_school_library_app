@@ -1,15 +1,12 @@
 import 'package:camarate_school_library/Models/Livro/livro_model.dart';
-import 'package:camarate_school_library/Database/repositorio_de_livros.dart';
 import 'package:flutter/material.dart';
-
-import '../../Database/repositorio_de_livros.dart';
 
 class LivroRequisitadoModel extends ChangeNotifier {
   // Variável privada [_livrosComIds], para chamar e guardar o livro por id. */
   late RepositorioDeLivros _livrosComIds;
 
   // Lista privada para armazenar os ids de cada livro */.
-  final List<int> _idsDoslivros = [];
+  final List<String> _idsDoslivros = [];
 
   // Com esta variável [_livro] obtenho os livros por ids */
   RepositorioDeLivros get livro => _livrosComIds;
@@ -20,7 +17,7 @@ class LivroRequisitadoModel extends ChangeNotifier {
 
   // Adicionar o [livro requisitado] na lista pelo os ids. */
   void addLivroRequisitado(LivroModel livro) {
-    _idsDoslivros.add(livro.id);
+    _idsDoslivros.add(livro.id.toString());
 
     /// Notifica, caso exista um livro que foi requisitado
     notifyListeners();

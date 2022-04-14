@@ -13,7 +13,7 @@ class AuthModel with ChangeNotifier {
   /// do utilizador.
   Stream<User?> get estadoDeAutenticacao => firebaseAuth.idTokenChanges();
 
-  //MÉTODO DE LOGIN
+  // MÉTODO DE LOGIN
   Future<Object> login(
       {required String email, required String password}) async {
     try {
@@ -29,8 +29,14 @@ class AuthModel with ChangeNotifier {
   }
 
   /// MÉTODO SAIR
-  Future<void> terminarSessao() async {
-    await firebaseAuth.signOut();
-    notifyListeners();
+  Future terminarSessao() async {
+    try {
+      await firebaseAuth.signOut();
+      notifyListeners();
+    } catch (error) {
+      // ignore: avoid_print
+      print(error.toString());
+      return null;
+    }
   }
 }

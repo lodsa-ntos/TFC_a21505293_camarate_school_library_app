@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool esconderPassword = true;
   bool isDadosCorretos = false;
   bool isInProgresso = false;
-  final chaveDeFormulario = GlobalKey<FormState>();
+  final _chaveDeFormulario = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -102,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Form(
-                key: chaveDeFormulario,
+                key: _chaveDeFormulario,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -177,9 +177,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     StyleLoginScreen.estiloBotaoIniciarSessao,
                               ),
                               onPressed: () async {
-                                if (chaveDeFormulario.currentState!
+                                if (_chaveDeFormulario.currentState!
                                     .validate()) {
                                   try {
+                                    _chaveDeFormulario.currentState?.save();
                                     await Provider.of<AuthModel>(context,
                                             listen: false)
                                         .login(

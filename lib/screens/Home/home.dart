@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:camarate_school_library/Models/Auth/auth_model.dart';
 import 'package:camarate_school_library/Models/Livro/livro_model.dart';
-import 'package:camarate_school_library/Database/repositorio_de_livros.dart';
 import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
 import 'package:camarate_school_library/Screens/pesquisar.dart';
 

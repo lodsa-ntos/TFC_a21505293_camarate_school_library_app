@@ -4,6 +4,7 @@ import 'package:camarate_school_library/Database/base_de_dados.dart';
 import 'package:camarate_school_library/Models/Livro/livro_model.dart';
 import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // ignore: unused_import, implementation_imports
@@ -37,6 +38,10 @@ class LivroDetalhado extends StatelessWidget {
 
               const SizedBox(height: 8),
 
+              Text(
+                "Id: " + livro.id,
+                style: const TextStyle(color: Colors.grey),
+              ),
               //** Autor */
               Text(
                 livro.autor,
@@ -48,6 +53,10 @@ class LivroDetalhado extends StatelessWidget {
               ),
               Text(
                 "Editora: " + livro.editora,
+                style: const TextStyle(color: Colors.grey),
+              ),
+              Text(
+                "Disponível: " + livro.isRequisitado.toString(),
                 style: const TextStyle(color: Colors.grey),
               ),
 
@@ -82,58 +91,15 @@ class _BotaoRequisitar extends StatefulWidget {
 }
 
 class _BotaoRequisitarState extends State<_BotaoRequisitar> {
-  late final DatabaseReference _referenciaParaRequisicao;
-  late StreamSubscription<DatabaseEvent> _estadoDaRequisicao;
-
-  @override
-  void initState() {
-    super.initState();
-    init();
-  }
-
-  init() async {
-    _referenciaParaRequisicao = FirebaseDatabase.instance.ref(
-      'livrosAleatorios/' +
-          widget.livroARequisitar.id.toString() +
-          '/isRequisitado',
-    );
-
-    try {
-      final requisicaoNaBD = await _referenciaParaRequisicao.get();
-      widget.livroARequisitar.isRequisitado = requisicaoNaBD.value as bool;
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-
-    _estadoDaRequisicao =
-        _referenciaParaRequisicao.onValue.listen((DatabaseEvent event) {
-      setState(() {
-        widget.livroARequisitar.isRequisitado =
-            (event.snapshot.value ?? false) as bool;
-      });
-    });
-  }
-
-  fazerRequisicao() async {
-    await _referenciaParaRequisicao.set(true);
-    //widget.livroARequisitar.isRequisitado = true;
-  }
-
-  fazerDevolucao() async {
-    await _referenciaParaRequisicao.set(false);
-    //widget.livroARequisitar.isRequisitado = false;
-  }
-
-  @override
-  void dispose() {
-    _estadoDaRequisicao.cancel();
-    super.dispose();
-  }
+  DatabaseReference? _referenciaParaRequisicao;
 
   @override
   Widget build(BuildContext context) {
     var requisicao = context.read<LivroRequisitadoModel>();
     var devolucao = context.watch<LivroRequisitadoModel>();
+
+    _referenciaParaRequisicao =
+        FirebaseDatabase.instance.ref().child('0').child('isRequisitado');
 
     return Column(
       children: [
@@ -142,17 +108,14 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             //* REQUISITAR
             ElevatedButton(
               child: const Text('Requisitar', style: TextStyle(fontSize: 16)),
-              onPressed: widget.livroARequisitar.isRequisitado
-                  //* Se foi requisitado, o botão requisitar vai estar desativado
-                  ? null
-                  //* Se não foi requisitado
-                  : () {
-                      //** Adiciona-mos o livro na lista de livros requisitados */
-                      requisicao.addLivroRequisitado(widget.livroARequisitar);
+              onPressed: () {
+                //** Adiciona-mos o livro na lista de livros requisitados */
+                //requisicao.addLivroRequisitado(widget.livroARequisitar);
 
-                      //** Fica requisitado */
-                      fazerRequisicao();
-                    },
+                //** Fica requisitado */
+
+                _referenciaParaRequisicao?.set(true).hashCode;
+              },
             ),
 
             //* Distanciar botões
@@ -162,15 +125,10 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             ElevatedButton(
               child: const Text('Devolver', style: TextStyle(fontSize: 16)),
               //* Se foi requisitado
-              onPressed: widget.livroARequisitar.isRequisitado
-                  ? () {
-                      devolucao
-                          .devolverLivroRequisitado(widget.livroARequisitar);
-                      //** Fica devolvido */
-                      fazerDevolucao();
-                    }
-                  //* Se não foi requisitado, o botão devolver vai estar desativado
-                  : null,
+              onPressed: () {
+                //** Fica devolvido */
+                _referenciaParaRequisicao?.set(false).hashCode;
+              },
             ),
           ],
         ),

@@ -1,25 +1,14 @@
-class Utilizador {
-  String? uid;
-  String? email;
-  String? password;
+class UtilizadorModel {
+  final String uid;
+  final String name;
+  final String email;
+  final String password;
 
   // Construtor
-  Utilizador({
-    this.uid,
-    this.email,
-    this.password,
+  UtilizadorModel({
+    required this.uid,
+    required this.name,
+    required this.email,
+    required this.password,
   });
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Utilizador &&
-        other.uid == uid &&
-        other.email == email &&
-        other.password == password;
-  }
-
-  @override
-  int get hashCode => uid.hashCode ^ email.hashCode ^ password.hashCode;
 }
