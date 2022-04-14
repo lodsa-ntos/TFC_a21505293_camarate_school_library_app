@@ -95,9 +95,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
   @override
   Widget build(BuildContext context) {
-    var requisicao = context.read<LivroRequisitadoModel>();
-    var devolucao = context.watch<LivroRequisitadoModel>();
-
     _referenciaParaRequisicao = FirebaseDatabase.instance
         .ref('livros')
         .child(widget.livroARequisitar.id)
@@ -111,31 +108,30 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             ElevatedButton(
               child: const Text('Requisitar', style: TextStyle(fontSize: 16)),
               onPressed: () {
-                //** Adiciona-mos o livro na lista de livros requisitados */
+                /// Adiciona-mos o livro na lista de livros requisitados
                 //requisicao.addLivroRequisitado(widget.livroARequisitar);
 
                 //** Fica requisitado */
 
-                _referenciaParaRequisicao?.set(true).hashCode;
+                _referenciaParaRequisicao?.set(true);
+                widget.livroARequisitar.isRequisitado = true;
               },
             ),
 
-            //* Distanciar botões
             const SizedBox(width: 35),
 
             //* DEVOLVER
             ElevatedButton(
               child: const Text('Devolver', style: TextStyle(fontSize: 16)),
-              //* Se foi requisitado
               onPressed: () {
                 //** Fica devolvido */
-                _referenciaParaRequisicao?.set(false).hashCode;
+                _referenciaParaRequisicao?.set(false);
+                widget.livroARequisitar.isRequisitado = false;
               },
             ),
           ],
         ),
 
-        //* Distanciar botôes
         const SizedBox(height: 12),
 
         //* SUCESSO
