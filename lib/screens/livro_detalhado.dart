@@ -55,6 +55,10 @@ class LivroDetalhado extends StatelessWidget {
                 "Editora: " + livro.editora,
                 style: const TextStyle(color: Colors.grey),
               ),
+              Text(
+                "Disponível: " + livro.isRequisitado.toString(),
+                style: const TextStyle(color: Colors.grey),
+              ),
 
               const SizedBox(height: 16),
 
@@ -94,8 +98,10 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
     var requisicao = context.read<LivroRequisitadoModel>();
     var devolucao = context.watch<LivroRequisitadoModel>();
 
-    _referenciaParaRequisicao =
-        FirebaseDatabase.instance.ref().child('0').child('isRequisitado');
+    _referenciaParaRequisicao = FirebaseDatabase.instance
+        .ref('livros')
+        .child(widget.livroARequisitar.id)
+        .child('isRequisitado');
 
     return Column(
       children: [
