@@ -1,12 +1,6 @@
-import 'dart:async';
-
-import 'package:camarate_school_library/Database/base_de_dados.dart';
 import 'package:camarate_school_library/Models/Livro/livro_model.dart';
-import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 // ignore: unused_import, implementation_imports
 import 'package:provider/src/provider.dart';
 
@@ -106,15 +100,18 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
           children: [
             //* REQUISITAR
             ElevatedButton(
+              ///
               child: const Text('Requisitar', style: TextStyle(fontSize: 16)),
+
               onPressed: () {
                 /// Adiciona-mos o livro na lista de livros requisitados
                 //requisicao.addLivroRequisitado(widget.livroARequisitar);
 
                 //** Fica requisitado */
-
                 _referenciaParaRequisicao?.set(true);
-                widget.livroARequisitar.isRequisitado = true;
+                setState(() {
+                  widget.livroARequisitar.isRequisitado = true;
+                });
               },
             ),
 
@@ -122,11 +119,15 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
             //* DEVOLVER
             ElevatedButton(
+              ///
               child: const Text('Devolver', style: TextStyle(fontSize: 16)),
+
               onPressed: () {
                 //** Fica devolvido */
                 _referenciaParaRequisicao?.set(false);
-                widget.livroARequisitar.isRequisitado = false;
+                setState(() {
+                  widget.livroARequisitar.isRequisitado = true;
+                });
               },
             ),
           ],
