@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 // ignore: unused_import, implementation_imports
 import 'package:provider/src/provider.dart';
 
-//** Classe para apresentar os widgets que compoêm o formato para representarem
-//** os detalhes dos livros */
+/// Classe para apresentar os widgets que compoêm o formato para representarem
+/// os detalhes dos livros
 
 class LivroDetalhado extends StatelessWidget {
   const LivroDetalhado({Key? key, required this.livro}) : super(key: key);
@@ -110,7 +110,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
           children: [
             Row(
               children: [
-                //* REQUISITAR
+                // REQUISITAR
                 ElevatedButton(
                   ///
                   child:
@@ -129,17 +129,17 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                 const SizedBox(width: 35),
 
-                //* DEVOLVER
+                // DEVOLVER
                 ElevatedButton(
                   ///
                   child: const Text('Devolver', style: TextStyle(fontSize: 16)),
 
+                  //** Fica devolvido */
                   onPressed: () async {
-                    //** Fica devolvido */
-
                     setState(() {
                       _referenciaParaRequisicao?.set(false);
                       widget.livroARequisitar.isRequisitado = false;
+
                       detalheModel
                           .devolverLivroRequisitado(widget.livroARequisitar);
                     });
