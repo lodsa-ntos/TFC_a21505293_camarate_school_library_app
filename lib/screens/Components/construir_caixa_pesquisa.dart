@@ -1,5 +1,7 @@
+import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ConstruirCaixaDePesquisa extends StatelessWidget {
   const ConstruirCaixaDePesquisa({
@@ -13,62 +15,67 @@ class ConstruirCaixaDePesquisa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 7),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: const Color(0xffe0e0e0),
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.black12),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 4,
-                vertical: 8,
-              ),
-              child: Row(
-                children: [
-                  //* Lupa
-                  const Icon(
-                    CupertinoIcons.search,
-                    color: Colors.blue,
+    return Consumer<LivroRequisitadoModel>(
+      builder: (BuildContext context, LivroRequisitadoModel detalheModel,
+          Widget? child) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 7),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: const Color(0xffe0e0e0),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.black12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                    vertical: 8,
                   ),
-
-                  //* Caixa de texto
-                  Expanded(
-                    child: CupertinoTextField(
-                      controller: controlador,
-                      focusNode: foco,
-                      cursorColor: Colors.black,
-                      decoration: null,
-                      style: const TextStyle(
-                        color: Color.fromRGBO(0, 0, 0, 1),
-                        fontSize: 18,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.normal,
+                  child: Row(
+                    children: [
+                      //* Lupa
+                      const Icon(
+                        CupertinoIcons.search,
+                        color: Colors.blue,
                       ),
-                      textInputAction: TextInputAction.go,
-                    ),
-                  ),
 
-                  //* X --> para apagar a palavra que foi escrita
-                  GestureDetector(
-                    onTap: controlador.clear,
-                    child: const Icon(
-                      CupertinoIcons.clear_thick_circled,
-                      color: Colors.blue,
-                    ),
+                      //* Caixa de texto
+                      Expanded(
+                        child: CupertinoTextField(
+                          controller: controlador,
+                          focusNode: foco,
+                          cursorColor: Colors.black,
+                          decoration: null,
+                          style: const TextStyle(
+                            color: Color.fromRGBO(0, 0, 0, 1),
+                            fontSize: 18,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.normal,
+                          ),
+                          textInputAction: TextInputAction.go,
+                        ),
+                      ),
+
+                      //* X --> para apagar a palavra que foi escrita
+                      GestureDetector(
+                        onTap: controlador.clear,
+                        child: const Icon(
+                          CupertinoIcons.clear_thick_circled,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 }

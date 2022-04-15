@@ -1,5 +1,5 @@
 import 'package:camarate_school_library/Database/base_de_dados.dart';
-import 'package:camarate_school_library/Models/Livro/detalhe_model.dart';
+import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:camarate_school_library/Models/Auth/auth_model.dart';
 import 'package:camarate_school_library/Screens/pesquisar.dart';
@@ -45,17 +45,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
-  final fazerLigacao = BaseDeDados();
-
   @override
   Widget build(BuildContext context) {
-    // Um pequeno tema para o texto(titulo, subTitulo, etc)
-    var textTheme = Theme.of(context).textTheme.headline6;
-
     var mostrarLivro = Consumer<LivroRequisitadoModel>(
       builder: (BuildContext context, LivroRequisitadoModel detalheModel,
           Widget? child) {
+        // Um pequeno tema para o texto(titulo, subTitulo, etc)
+        var textTheme = Theme.of(context).textTheme.headline6;
+        final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
+        final fazerLigacao = BaseDeDados();
         return FutureBuilder(
           future: fazerLigacao.carregarLivrosBD(referenciaBD), // async work
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -191,8 +189,7 @@ class _HomeState extends State<Home> {
                 ),
                 ListTile(
                   title: const Text(
-                    'Terminar sessão',
-                  ), // Titulo dentro do menu lateral
+                      'Terminar sessão'), // Titulo dentro do menu lateral
 
                   /// Aceder ao metodo com o provider para terminar sessão
                   onTap: () => context.read<AuthModel>().terminarSessao(),

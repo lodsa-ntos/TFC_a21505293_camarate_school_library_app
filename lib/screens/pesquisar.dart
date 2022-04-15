@@ -1,4 +1,5 @@
 import 'package:camarate_school_library/Database/base_de_dados.dart';
+import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
 import 'package:camarate_school_library/Models/Livro/livro_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -7,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import 'Components/construir_caixa_pesquisa.dart';
 import 'Components/construir_filtros_pesquisa.dart';
-import 'Components/lista_livros_pesquisa.dart';
+import 'livro_detalhado.dart';
 
 String _condicao = '';
 
@@ -57,70 +58,175 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
   @override
   Widget build(BuildContext context) {
-    final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
-    final fazerLigacao = BaseDeDados();
+    final pesquisarLivrosBD = Consumer<LivroRequisitadoModel>(
+      builder: (BuildContext context, LivroRequisitadoModel detalheModel,
+          Widget? child) {
+        final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
+        final fazerLigacao = BaseDeDados();
+        return FutureBuilder(
+          future: fazerLigacao.carregarLivrosBD(referenciaBD),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const Center(child: CircularProgressIndicator());
+              default:
+                if (snapshot.hasError) {
+                  return Text('Erro: ${snapshot.error}');
+                } else {
+                  /// snapshot.data --> livros da bases de dados
+                  final livro = _filtrarPesquisa(snapshot.data);
+                  return Flexible(
+                    child: ListView.builder(
+                      shrinkWrap: true,
 
-    final pesquisarLivrosBD = FutureBuilder(
-      future: fazerLigacao.carregarLivrosBD(referenciaBD),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return const Center(child: CircularProgressIndicator());
-          default:
-            if (snapshot.hasError) {
-              return Text('Erro: ${snapshot.error}');
-            } else {
-              /// snapshot.data --> livros da bases de dados
-              final result = _filtrarPesquisa(snapshot.data);
-              return Flexible(
-                child: ListView.builder(
-                  shrinkWrap: true,
+                      // Até ao último livro da lista
+                      itemCount: livro.length,
+                      // Mostra todos os livros da lista contidos na base de dados
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              /// Redireciona o utilizador para a página de detalhes do livro
+                              builder: (context) =>
+                                  LivroDetalhado(livro: livro[index]),
+                            ),
+                          ),
+                          child: SafeArea(
+                            top: false,
+                            bottom: false,
+                            minimum: const EdgeInsets.only(
+                              left: 16,
+                              top: 8,
+                              bottom: 8,
+                              right: 8,
+                            ),
+                            child: SingleChildScrollView(
+                              child: Row(
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(4),
+                                    child: Image.network(
+                                      livro[index].imagePath,
+                                      fit: BoxFit.cover,
+                                      width: 80,
+                                      height: 115,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          //* Titulo do livro
+                                          Text(
+                                            livro[index].titulo,
+                                            style: const TextStyle(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.8),
+                                              fontSize: 18,
+                                              fontStyle: FontStyle.normal,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ),
 
-                  // Até ao último livro da lista
-                  itemCount: result.length,
-                  // Mostra todos os livros da lista contidos na base de dados
-                  itemBuilder: (context, index) {
-                    return ListaDeLivrosDaPesquisa(
-                      // Obter todos os index da lista de livros da base de dados
-                      livros: result[index],
-                      ultimoLivro: index == result.length - 1,
-                    );
-                  },
-                ),
-              );
+                                          const Padding(
+                                              padding: EdgeInsets.only(top: 8)),
+
+                                          //* Autor
+                                          Text(
+                                            livro[index].autor,
+                                            style: const TextStyle(
+                                              color: Color(0xFF8E8E93),
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                          ),
+
+                                          const Padding(
+                                              padding: EdgeInsets.only(top: 8)),
+
+                                          Text(
+                                            'Ano de publicação: ' +
+                                                livro[index].ano.toString(),
+                                            style: const TextStyle(
+                                              color: Color(0xFF8E8E93),
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                          ),
+
+                                          const Padding(
+                                              padding: EdgeInsets.only(top: 8)),
+
+                                          Text(
+                                            'Disponível: ' +
+                                                livro[index]
+                                                    .isRequisitado
+                                                    .toString(),
+                                            style: const TextStyle(
+                                              color: Color(0xFF8E8E93),
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                }
             }
-        }
+          },
+        );
       },
     );
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pesquisar'), // Título
-      ),
-      body: DecoratedBox(
-        decoration: const BoxDecoration(
-          color: Color(0xfff0f0f0),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-
-              //* Barra de pesquisa
-              _controladorCaixaDePesquisa(),
-
-              const SizedBox(height: 15),
-
-              //* Filtros para pesquisar pesquisa
-              const ConstruirFiltrosDePesquisa(),
-
-              const SizedBox(height: 20),
-
-              //* Livros
-              pesquisarLivrosBD,
-            ],
+    return Consumer<LivroRequisitadoModel>(
+      builder: (BuildContext context, LivroRequisitadoModel detalheModel,
+          Widget? child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Pesquisar'), // Título
           ),
-        ),
-      ),
+          body: DecoratedBox(
+            decoration: const BoxDecoration(
+              color: Color(0xfff0f0f0),
+            ),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+
+                  //* Barra de pesquisa
+                  _controladorCaixaDePesquisa(),
+
+                  const SizedBox(height: 15),
+
+                  //* Filtros para pesquisar pesquisa
+                  const FiltrosDePesquisa(),
+
+                  const SizedBox(height: 20),
+
+                  //* Livros
+                  pesquisarLivrosBD,
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
