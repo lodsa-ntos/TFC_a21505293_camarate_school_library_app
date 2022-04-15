@@ -214,7 +214,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
                   const SizedBox(height: 15),
 
-                  //* Filtros para pesquisar pesquisa
+                  //* Filtros para pesquisar
                   const FiltrosDePesquisa(),
 
                   const SizedBox(height: 20),
@@ -231,6 +231,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
   }
 }
 
+//* Regra para filtrar a pesquisar
 List<LivroModel> _filtrarPesquisa(List<LivroModel>? caixaDePesquisa) {
   if (_condicao.isNotEmpty == true) {
     //* Título
