@@ -23,9 +23,6 @@ class RepositorioDeLivros {
 
   //** */ Obter os livros pelo id
   LivroModel getPorId(String id) =>
-
-      /// Aqui, a lista de livros é infinita, vai fazer um loop sobre [gerarLivrosAleatorios].
-      /// O que é errado para o que se quer....
       livroModel.firstWhere((element) => element.id == id);
 }
 

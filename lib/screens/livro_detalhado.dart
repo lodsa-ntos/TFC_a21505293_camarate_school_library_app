@@ -1,6 +1,9 @@
+import 'package:camarate_school_library/Models/Livro/detalhe_model.dart';
 import 'package:camarate_school_library/Models/Livro/livro_model.dart';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // ignore: unused_import, implementation_imports
 import 'package:provider/src/provider.dart';
 
@@ -14,63 +17,70 @@ class LivroDetalhado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        //** Titulo do livro */
-        title: const Text('Detalhe'), // Título
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //** Título */
-              Text(livro.titulo,
+    return Consumer<LivroRequisitadoModel>(builder: (BuildContext context,
+        LivroRequisitadoModel detalheModel, Widget? child) {
+      return Scaffold(
+        appBar: AppBar(
+          //** Titulo do livro */
+          title: const Text('Detalhe'), // Título
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //** Título */
+                Text(
+                  livro.titulo,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20.0)),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                  ),
+                ),
 
-              const SizedBox(height: 8),
+                const SizedBox(height: 8),
 
-              Text(
-                "Id: " + livro.id,
-                style: const TextStyle(color: Colors.grey),
-              ),
-              //** Autor */
-              Text(
-                livro.autor,
-                style: const TextStyle(color: Colors.grey),
-              ),
-              Text(
-                "ISBN: " + livro.isbn,
-                style: const TextStyle(color: Colors.grey),
-              ),
-              Text(
-                "Editora: " + livro.editora,
-                style: const TextStyle(color: Colors.grey),
-              ),
-              Text(
-                "Disponível: " + livro.isRequisitado.toString(),
-                style: const TextStyle(color: Colors.grey),
-              ),
+                Text(
+                  "Id: " + livro.id,
+                  style: const TextStyle(color: Colors.grey),
+                ),
+                //** Autor */
+                Text(
+                  livro.autor,
+                  style: const TextStyle(color: Colors.grey),
+                ),
+                Text(
+                  "ISBN: " + livro.isbn,
+                  style: const TextStyle(color: Colors.grey),
+                ),
+                Text(
+                  "Editora: " + livro.editora,
+                  style: const TextStyle(color: Colors.grey),
+                ),
+                Text(
+                  "Disponível: " + livro.isRequisitado.toString(),
+                  style: const TextStyle(color: Colors.grey),
+                ),
 
-              const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-              //** Capa */
-              SizedBox(
-                height: 350,
-                child: Image.network(livro.imagePath),
-              ),
+                //** Capa */
+                SizedBox(
+                  height: 350,
+                  child: Image.network(livro.imagePath),
+                ),
 
-              const SizedBox(height: 12),
+                const SizedBox(height: 12),
 
-              //*  _Botão Requisitar */
-              _BotaoRequisitar(livroARequisitar: livro)
-            ],
+                //*  _Botão Requisitar */
+                _BotaoRequisitar(livroARequisitar: livro)
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 
@@ -89,64 +99,71 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
   @override
   Widget build(BuildContext context) {
-    _referenciaParaRequisicao = FirebaseDatabase.instance
-        .ref('livros')
-        .child(widget.livroARequisitar.id)
-        .child('isRequisitado');
-
-    return Column(
-      children: [
-        Row(
+    return Consumer<LivroRequisitadoModel>(
+      builder: (BuildContext context, LivroRequisitadoModel detalheModel,
+          Widget? child) {
+        _referenciaParaRequisicao = FirebaseDatabase.instance
+            .ref('livros')
+            .child(widget.livroARequisitar.id)
+            .child('isRequisitado');
+        return Column(
           children: [
-            //* REQUISITAR
-            ElevatedButton(
-              ///
-              child: const Text('Requisitar', style: TextStyle(fontSize: 16)),
+            Row(
+              children: [
+                //* REQUISITAR
+                ElevatedButton(
+                  ///
+                  child:
+                      const Text('Requisitar', style: TextStyle(fontSize: 16)),
 
-              onPressed: () {
-                /// Adiciona-mos o livro na lista de livros requisitados
-                //requisicao.addLivroRequisitado(widget.livroARequisitar);
+                  onPressed: () async {
+                    // Fica requisitado
 
-                //** Fica requisitado */
-                _referenciaParaRequisicao?.set(true);
-                setState(() {
-                  widget.livroARequisitar.isRequisitado = true;
-                });
-              },
+                    setState(() {
+                      _referenciaParaRequisicao?.set(true);
+                      widget.livroARequisitar.isRequisitado = true;
+                      detalheModel.addLivroRequisitado(widget.livroARequisitar);
+                    });
+                  },
+                ),
+
+                const SizedBox(width: 35),
+
+                //* DEVOLVER
+                ElevatedButton(
+                  ///
+                  child: const Text('Devolver', style: TextStyle(fontSize: 16)),
+
+                  onPressed: () async {
+                    //** Fica devolvido */
+
+                    setState(() {
+                      _referenciaParaRequisicao?.set(false);
+                      widget.livroARequisitar.isRequisitado = false;
+                      detalheModel
+                          .devolverLivroRequisitado(widget.livroARequisitar);
+                    });
+                  },
+                ),
+              ],
             ),
 
-            const SizedBox(width: 35),
+            const SizedBox(height: 12),
 
-            //* DEVOLVER
-            ElevatedButton(
-              ///
-              child: const Text('Devolver', style: TextStyle(fontSize: 16)),
-
-              onPressed: () {
-                //** Fica devolvido */
-                _referenciaParaRequisicao?.set(false);
-                setState(() {
-                  widget.livroARequisitar.isRequisitado = true;
-                });
-              },
+            //* SUCESSO
+            Row(
+              children: [
+                Text(
+                  widget.livroARequisitar.isRequisitado
+                      ? 'Livro requisitado...'
+                      : '',
+                  style: const TextStyle(color: Colors.green, fontSize: 18),
+                ),
+              ],
             ),
           ],
-        ),
-
-        const SizedBox(height: 12),
-
-        //* SUCESSO
-        Row(
-          children: [
-            Text(
-              widget.livroARequisitar.isRequisitado
-                  ? 'Livro requisitado...'
-                  : '',
-              style: const TextStyle(color: Colors.green, fontSize: 18),
-            ),
-          ],
-        ),
-      ],
+        );
+      },
     );
   }
 }

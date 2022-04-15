@@ -1,5 +1,3 @@
-import 'package:camarate_school_library/Database/base_de_dados.dart';
-import 'package:camarate_school_library/Models/Livro/livro_model.dart';
 import 'package:camarate_school_library/Screens/Home/home.dart';
 import 'package:camarate_school_library/Screens/login.dart';
 import 'package:camarate_school_library/Models/Auth/auth_model.dart';
@@ -10,7 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'Models/Livro/livro_requisitado_model.dart';
+import 'Models/Livro/detalhe_model.dart';
 
 final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
 
