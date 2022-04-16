@@ -1,14 +1,13 @@
 import 'package:camarate_school_library/Screens/Home/home.dart';
-import 'package:camarate_school_library/Screens/login.dart';
-import 'package:camarate_school_library/Models/Auth/auth_model.dart';
+import 'package:camarate_school_library/screens/auth/login.dart';
+import 'package:camarate_school_library/view_models/auth_view_model.dart';
+import 'package:camarate_school_library/view_models/livro_requisitado_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'Models/Livro/livro_requisitado_model.dart';
 
 final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
 

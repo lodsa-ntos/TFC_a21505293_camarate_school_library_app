@@ -1,8 +1,9 @@
-import 'package:camarate_school_library/Models/Auth/auth_model.dart';
 import 'package:camarate_school_library/Styles/style_login_screen.dart';
+import 'package:camarate_school_library/view_models/auth_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+// ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
 bool _emailErrado = false;
@@ -19,7 +20,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   /// O botão também não poderá ser pressionado.
   /// O indicador aparecerá quando _isLoading = true.
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   /// Controladores para os campos de texto do e-mail e da password.
   TextEditingController emailInputController = TextEditingController();
@@ -48,20 +49,6 @@ class _LoginScreenState extends State<LoginScreen> {
     emailInputController.dispose();
     passwordInputController.dispose();
     super.dispose();
-  }
-
-  /// Esta função será acionada quando o botão de Iniciar Sessão for pressionado
-  void _iniciarLoading() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    /// Aguarda 3 segundos
-    await Future.delayed(const Duration(seconds: 3));
-
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override

@@ -1,14 +1,12 @@
 import 'package:camarate_school_library/Database/base_de_dados.dart';
-import 'package:camarate_school_library/Models/Livro/livro_requisitado_model.dart';
+import 'package:camarate_school_library/screens/detalhe/livro_detalhado.dart';
+import 'package:camarate_school_library/screens/pesquisa/pesquisar.dart';
+import 'package:camarate_school_library/view_models/auth_view_model.dart';
+import 'package:camarate_school_library/view_models/livro_requisitado_view_model.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:camarate_school_library/Models/Auth/auth_model.dart';
-import 'package:camarate_school_library/Screens/pesquisar.dart';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
-import '../livro_detalhado.dart';
 
 //** VARIÁVEIS GLOBAIS */
 final getLivrosBD = BaseDeDados();
