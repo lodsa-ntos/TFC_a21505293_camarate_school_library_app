@@ -122,6 +122,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                       _referenciaParaRequisicao?.set(true);
                       widget.livroARequisitar.isRequisitado = true;
                       detalheModel.addLivroRequisitado(widget.livroARequisitar);
+                      print('Livro requisitado');
                     });
                   },
                 ),
@@ -141,6 +142,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                       detalheModel
                           .devolverLivroRequisitado(widget.livroARequisitar);
+                      print('Livro devolvido');
                     });
                   },
                 ),
