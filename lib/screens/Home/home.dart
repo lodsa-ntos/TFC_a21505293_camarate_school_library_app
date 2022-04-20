@@ -204,7 +204,8 @@ class _HomeState extends State<Home> {
                   ), // Titulo dentro do menu lateral
 
                   /// Aceder ao metodo com o provider para terminar sessão
-                  onTap: () => context.read<AuthModel>().terminarSessao(),
+                  onTap: () async =>
+                      await context.read<AuthModel>().terminarSessao(),
                 ),
               ],
             ),

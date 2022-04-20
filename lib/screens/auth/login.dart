@@ -18,9 +18,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  /// O botão também não poderá ser pressionado.
-  /// O indicador aparecerá quando _isLoading = true.
-  final bool _isLoading = false;
+  bool _isLoading = false;
 
   /// Controladores para os campos de texto do e-mail e da password.
   TextEditingController emailInputController = TextEditingController();
@@ -34,13 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     emailInputController = TextEditingController();
-    emailInputController.addListener(() {
-      setState(() {});
-    });
     passwordInputController = TextEditingController();
-    passwordInputController.addListener(() {
-      setState(() {});
-    });
     super.initState();
   }
 
@@ -83,118 +75,131 @@ class _LoginScreenState extends State<LoginScreen> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        body: ModalProgressHUD(
-          inAsyncCall: isInProgresso,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Form(
-                key: _chaveDeFormulario,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(height: 100),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: _isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Form(
+                    key: _chaveDeFormulario,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(height: 100),
 
-                    const Text(
-                      "Login",
-                      textAlign: TextAlign.center,
-                      style: StyleLoginScreen.estiloTituloLogin,
+                        const Text(
+                          "Login",
+                          textAlign: TextAlign.center,
+                          style: StyleLoginScreen.estiloTituloLogin,
+                        ),
+
+                        const SizedBox(height: 45),
+
+                        //* E-mail
+                        TextFormField(
+                          validator: (val) => ValidadorDeEmail.validar(val!),
+
+                          // Obter o valor do email escrito pelo user
+                          controller: emailInputController,
+
+                          // Estilo dentro do campo de e-mail
+                          style: StyleLoginScreen.estiloCampoDoEmail,
+
+                          // Estilo da decoração do campo do e-mail
+                          decoration: StyleLoginScreen.decoracaoCampoDoEmail,
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        //* Palavra-passe
+                        TextFormField(
+                          validator: (val) => ValidadorDaPassword.validar(val!),
+
+                          // Esconder a palavra-passe
+                          obscureText: esconderPassword,
+
+                          // Obter o valor da password escrito pelo user
+                          controller: passwordInputController,
+
+                          // Estilo dentro do campo da palavra-passe
+                          style: StyleLoginScreen.estiloCampoDaPassword,
+
+                          decoration: _decoracaoCampoDaPassword,
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        Center(
+                          child: Text(
+                            _messagemErro,
+                            style: const TextStyle(color: Colors.red),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+
+                        const Padding(padding: EdgeInsets.only(bottom: 35)),
+
+                        //* --> Botão Iniciar Sessão <--
+                        SizedBox(
+                          height: 65.0,
+                          width: 335.0,
+                          child: _isLoading
+                              ? const CircularProgressIndicator()
+                              : MaterialButton(
+                                  height: 50,
+                                  textColor: Colors.white,
+                                  color: Colors.blue,
+                                  child: const Text(
+                                    "Iniciar sessão",
+                                    style: StyleLoginScreen
+                                        .estiloBotaoIniciarSessao,
+                                  ),
+                                  onPressed: () async {
+                                    if (_chaveDeFormulario.currentState!
+                                        .validate()) {
+                                      setState(() {
+                                        _isLoading = true;
+                                      });
+                                      try {
+                                        _chaveDeFormulario.currentState?.save();
+                                        await Provider.of<AuthModel>(context,
+                                                listen: false)
+                                            .login(
+                                          email:
+                                              emailInputController.text.trim(),
+                                          password: passwordInputController.text
+                                              .trim(),
+                                        );
+
+                                        // ignore: avoid_print
+                                        print(
+                                            'E-mail: ${emailInputController.text}');
+                                        // ignore: avoid_print
+                                        print(
+                                            'Password: ${passwordInputController.text}');
+
+                                        _messagemErro =
+                                            'Desculpa, mas o teu e-mail e a tua palavra-passe não pertence a nenhum conta.. Verifique, e tenta novamente.';
+                                        setState(() {
+                                          _isLoading = false;
+                                        });
+                                      } on FirebaseAuthException catch (error) {
+                                        _messagemErro = error.message!;
+                                        print(error);
+                                      }
+
+                                      setState(() {
+                                        _isLoading = false;
+                                      });
+                                    }
+                                  }),
+                        ),
+                      ],
                     ),
-
-                    const SizedBox(height: 45),
-
-                    //* E-mail
-                    TextFormField(
-                      validator: (val) => ValidadorDeEmail.validar(val!),
-
-                      // Obter o valor do email escrito pelo user
-                      controller: emailInputController,
-
-                      // Estilo dentro do campo de e-mail
-                      style: StyleLoginScreen.estiloCampoDoEmail,
-
-                      // Estilo da decoração do campo do e-mail
-                      decoration: StyleLoginScreen.decoracaoCampoDoEmail,
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    //* Palavra-passe
-                    TextFormField(
-                      validator: (val) => ValidadorDaPassword.validar(val!),
-
-                      // Esconder a palavra-passe
-                      obscureText: esconderPassword,
-
-                      // Obter o valor da password escrito pelo user
-                      controller: passwordInputController,
-
-                      // Estilo dentro do campo da palavra-passe
-                      style: StyleLoginScreen.estiloCampoDaPassword,
-
-                      decoration: _decoracaoCampoDaPassword,
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    Center(
-                      child: Text(
-                        _messagemErro,
-                        style: const TextStyle(color: Colors.red),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-
-                    const Padding(padding: EdgeInsets.only(bottom: 35)),
-
-                    //* --> Botão Iniciar Sessão <--
-                    SizedBox(
-                      height: 65.0,
-                      width: 335.0,
-                      child: _isLoading
-                          ? const CircularProgressIndicator()
-                          : MaterialButton(
-                              height: 50,
-                              textColor: Colors.white,
-                              color: Colors.blue,
-                              child: const Text(
-                                "Iniciar sessão",
-                                style:
-                                    StyleLoginScreen.estiloBotaoIniciarSessao,
-                              ),
-                              onPressed: () async {
-                                if (_chaveDeFormulario.currentState!
-                                    .validate()) {
-                                  try {
-                                    _chaveDeFormulario.currentState?.save();
-                                    await Provider.of<AuthModel>(context,
-                                            listen: false)
-                                        .login(
-                                      email: emailInputController.text.trim(),
-                                      password:
-                                          passwordInputController.text.trim(),
-                                    );
-
-                                    // ignore: avoid_print
-                                    print(
-                                        'E-mail: ${emailInputController.text}');
-                                    // ignore: avoid_print
-                                    print(
-                                        'Password: ${passwordInputController.text}');
-
-                                    _messagemErro =
-                                        'Desculpa, mas o teu e-mail ou a tua palavra-passe estão incorretos. Verifica novamente.';
-                                  } on FirebaseAuthException catch (error) {
-                                    _messagemErro = error.message!;
-                                  }
-                                }
-                              }),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
           ),
         ),
       ),
