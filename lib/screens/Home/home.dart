@@ -126,6 +126,12 @@ class _HomeState extends State<Home> {
 
                                     //** Autor */
                                     Text(snapshot.data[index].autor),
+
+                                    const SizedBox(height: 5.0),
+
+                                    //** isRequisitado */
+                                    Text(snapshot.data[index].isRequisitado
+                                        .toString()),
                                   ],
                                 ),
                               ),
