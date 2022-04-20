@@ -280,7 +280,7 @@ class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
                   children: [
                     Container(
                       width: 111.0,
-                      margin: const EdgeInsets.all(16.0),
+                      margin: const EdgeInsets.only(left: 16.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
