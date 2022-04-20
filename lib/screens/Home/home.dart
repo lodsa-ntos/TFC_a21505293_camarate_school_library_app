@@ -1,5 +1,6 @@
 import 'package:camarate_school_library/Database/base_de_dados.dart';
 import 'package:camarate_school_library/screens/detalhe/livro_detalhado.dart';
+import 'package:camarate_school_library/screens/notificacao/notificacao.dart';
 import 'package:camarate_school_library/screens/pesquisa/pesquisar.dart';
 import 'package:camarate_school_library/view_models/auth_view_model.dart';
 import 'package:camarate_school_library/view_models/livro_requisitado_view_model.dart';
@@ -125,14 +126,6 @@ class _HomeState extends State<Home> {
 
                                     //** Autor */
                                     Text(snapshot.data[index].autor),
-
-                                    const SizedBox(height: 5.0),
-
-                                    //** isRequisitado */
-                                    Text(
-                                      snapshot.data[index].isRequisitado
-                                          .toString(),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -152,8 +145,7 @@ class _HomeState extends State<Home> {
     final listaLivro = Provider.of<LivroRequisitadoModel>(context);
 
     return Consumer<LivroRequisitadoModel>(
-      builder: (BuildContext context, LivroRequisitadoModel requisitadoModel,
-          Widget? child) {
+      builder: (context, requisitadoModel, child) {
         return Scaffold(
           appBar: AppBar(
             //** Icone de pesquisa */
@@ -186,8 +178,30 @@ class _HomeState extends State<Home> {
                   child: null,
                 ),
                 ListTile(
+                  title: const Text('Ajuda'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: const Text('Estatistica'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: const Text('Notificação'),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        //** Redireciona o utilizador para a página de notificacao*/
+                        builder: (context) => const Notificacao()),
+                  ),
+                ),
+                const SizedBox(
+                  height: 215.0,
+                ),
+                ListTile(
                   title: const Text(
-                      'Terminar sessão'), // Titulo dentro do menu lateral
+                    'Terminar sessão',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ), // Titulo dentro do menu lateral
 
                   /// Aceder ao metodo com o provider para terminar sessão
                   onTap: () => context.read<AuthModel>().terminarSessao(),

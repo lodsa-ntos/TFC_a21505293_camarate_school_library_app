@@ -39,10 +39,6 @@ class LivroDetalhado extends StatelessWidget {
 
                 const SizedBox(height: 8),
 
-                Text(
-                  "Id: " + livro.id,
-                  style: const TextStyle(color: Colors.grey),
-                ),
                 //** Autor */
                 Text(
                   livro.autor,
