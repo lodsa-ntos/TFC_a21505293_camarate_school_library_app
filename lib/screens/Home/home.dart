@@ -215,7 +215,7 @@ class _HomeState extends State<Home> {
                   SingleChildScrollView(
                     child: SizedBox(
                       width: double.infinity,
-                      height: 310.0,
+                      height: 276.0,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
