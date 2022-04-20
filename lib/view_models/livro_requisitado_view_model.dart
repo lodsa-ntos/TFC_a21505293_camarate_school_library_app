@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class LivroRequisitadoModel extends ChangeNotifier {
   Map<String, LivroModel> _livrosRequisitado = {};
 
-  Map<String, LivroModel> get livroR {
+  Map<String, LivroModel> get livros {
     return {..._livrosRequisitado};
   }
 

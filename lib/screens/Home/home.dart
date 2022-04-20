@@ -206,7 +206,7 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (listaLivro.livroR.isNotEmpty) ...[
+                if (listaLivro.livros.isNotEmpty) ...[
                   //* Título
                   livrosRequisitados,
 
@@ -262,9 +262,9 @@ class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            itemCount: requisitadoModel.livroR.length,
+            itemCount: requisitadoModel.livros.length,
             itemBuilder: (context, index) {
-              final livro = requisitadoModel.livroR.values.toList()[index];
+              final livro = requisitadoModel.livros.values.toList()[index];
 
               return Row(
                 children: [
