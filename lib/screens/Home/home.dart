@@ -96,7 +96,7 @@ class _HomeState extends State<Home> {
                             children: [
                               Container(
                                 width: 122.0,
-                                margin: const EdgeInsets.only(right: 12.0),
+                                margin: const EdgeInsets.only(left: 16.0),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,7 +270,7 @@ class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
                 children: [
                   Container(
                     width: 111.0,
-                    margin: const EdgeInsets.only(right: 12.0),
+                    margin: const EdgeInsets.all(16.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
