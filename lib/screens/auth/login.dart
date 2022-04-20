@@ -1,4 +1,5 @@
 import 'package:camarate_school_library/Styles/style_login_screen.dart';
+import 'package:camarate_school_library/screens/home/home.dart';
 import 'package:camarate_school_library/view_models/auth_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -135,7 +136,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         Center(
                           child: Text(
                             _messagemErro,
-                            style: const TextStyle(color: Colors.red),
+                            style: const TextStyle(
+                              color: Colors.red,
+                              letterSpacing: 1.0,
+                            ),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -182,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             'Password: ${passwordInputController.text}');
 
                                         _messagemErro =
-                                            'Desculpa, mas o teu e-mail e a tua palavra-passe não pertence a nenhum conta.. Verifique, e tenta novamente.';
+                                            'Desculpa, mas o teu e-mail e a tua palavra-passe não pertence a nenhum conta. Verifique, e tenta novamente.';
                                         setState(() {
                                           _isLoading = false;
                                         });
