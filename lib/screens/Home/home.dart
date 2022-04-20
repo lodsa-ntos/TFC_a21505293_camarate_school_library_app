@@ -1,15 +1,18 @@
 import 'package:camarate_school_library/Database/base_de_dados.dart';
+import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/screens/detalhe/livro_detalhado.dart';
 import 'package:camarate_school_library/screens/pesquisa/pesquisar.dart';
 import 'package:camarate_school_library/view_models/auth_view_model.dart';
 import 'package:camarate_school_library/view_models/livro_requisitado_view_model.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart'; // DateFormat
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 //** VARIÁVEIS GLOBAIS */
-final getLivrosBD = BaseDeDados();
+LivroModel? livroARequisitar;
 
 //* Espaçamento
 const espacamento = SizedBox(
@@ -50,8 +53,10 @@ class _HomeState extends State<Home> {
           Widget? child) {
         // Um pequeno tema para o texto(titulo, subTitulo, etc)
         var textTheme = Theme.of(context).textTheme.headline6;
+
         final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
         final fazerLigacao = BaseDeDados();
+
         return FutureBuilder(
           future: fazerLigacao.carregarLivrosBD(referenciaBD), // async work
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -146,20 +151,17 @@ class _HomeState extends State<Home> {
       },
     );
 
+    final listaLivro = Provider.of<LivroRequisitadoModel>(context);
+
     return Consumer<LivroRequisitadoModel>(
-      builder: (BuildContext context, LivroRequisitadoModel detalheModel,
+      builder: (BuildContext context, LivroRequisitadoModel requisitadoModel,
           Widget? child) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Livros'), // Título
-
+            //** Icone de pesquisa */
             actions: <Widget>[
-              //** Icone de pesquisa */
               IconButton(
-                icon: const Icon(
-                  Icons.search,
-                  color: Colors.white,
-                ),
+                icon: const Icon(Icons.search, color: Colors.white),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -204,6 +206,27 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (listaLivro.livroR.isNotEmpty) ...[
+                  //* Título
+                  livrosRequisitados,
+
+                  //** Este SingleChildScrollView vai fazer scroll na horizontal
+                  //** vai apresentar os livros que foram requisitados */
+                  SingleChildScrollView(
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 310.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _FormatoLivroRequisitadoParaUtilizador(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+
                 //* Título
                 prateleiras,
 
@@ -216,6 +239,81 @@ class _HomeState extends State<Home> {
                 ),
               ],
             ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Aqui obtenho a data do dia atual
+    // E guardo o formato de como quero que a data apareça para o utilizador
+    var dataDeHoje = DateTime.now();
+    var formato = DateFormat('dd-MM-yyyy');
+    String data = formato.format(dataDeHoje);
+
+    return Consumer<LivroRequisitadoModel>(
+      builder: (BuildContext context, LivroRequisitadoModel requisitadoModel,
+          Widget? child) {
+        return Expanded(
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemCount: requisitadoModel.livroR.length,
+            itemBuilder: (context, index) {
+              final livro = requisitadoModel.livroR.values.toList()[index];
+
+              return Row(
+                children: [
+                  Container(
+                    width: 111.0,
+                    margin: const EdgeInsets.only(right: 12.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 121.66,
+                          height: 165.5,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            image: DecorationImage(
+                              image: NetworkImage(livro.imagePath),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 12.0,
+                        ),
+                        Text(
+                          livro.titulo,
+                          style: const TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          'Data de Entrega: ' + data,
+                          style: GoogleFonts.catamaran(
+                            textStyle: const TextStyle(
+                              fontSize: 13.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         );
       },

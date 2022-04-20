@@ -60,7 +60,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
   @override
   Widget build(BuildContext context) {
     final pesquisarLivrosBD = Consumer<LivroRequisitadoModel>(
-      builder: (BuildContext context, LivroRequisitadoModel detalheModel,
+      builder: (BuildContext context, LivroRequisitadoModel requisitadoModel,
           Widget? child) {
         final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
         final fazerLigacao = BaseDeDados();
@@ -195,7 +195,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
       },
     );
     return Consumer<LivroRequisitadoModel>(
-      builder: (BuildContext context, LivroRequisitadoModel detalheModel,
+      builder: (BuildContext context, LivroRequisitadoModel requisitadoModel,
           Widget? child) {
         return Scaffold(
           appBar: AppBar(

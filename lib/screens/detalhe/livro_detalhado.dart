@@ -3,7 +3,6 @@ import 'package:camarate_school_library/view_models/livro_requisitado_view_model
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// ignore: unused_import, implementation_imports
 import 'package:provider/src/provider.dart';
 
 /// Classe para apresentar os widgets que compoêm o formato para representarem
@@ -17,7 +16,7 @@ class LivroDetalhado extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<LivroRequisitadoModel>(builder: (BuildContext context,
-        LivroRequisitadoModel detalheModel, Widget? child) {
+        LivroRequisitadoModel requisitadoModel, Widget? child) {
       return Scaffold(
         appBar: AppBar(
           //** Titulo do livro */
@@ -99,12 +98,14 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   @override
   Widget build(BuildContext context) {
     return Consumer<LivroRequisitadoModel>(
-      builder: (BuildContext context, LivroRequisitadoModel detalheModel,
+      builder: (BuildContext context, LivroRequisitadoModel requisitadoModel,
           Widget? child) {
+        //
         _referenciaParaRequisicao = FirebaseDatabase.instance
             .ref('livros')
             .child(widget.livroARequisitar.id)
             .child('isRequisitado');
+
         return Column(
           children: [
             Row(
@@ -121,7 +122,9 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                     setState(() {
                       _referenciaParaRequisicao?.set(true);
                       widget.livroARequisitar.isRequisitado = true;
-                      detalheModel.addLivroRequisitado(widget.livroARequisitar);
+                      requisitadoModel.addLivroRequisitado(
+                        widget.livroARequisitar,
+                      );
                       print('Livro requisitado');
                     });
                   },
@@ -134,13 +137,13 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                   ///
                   child: const Text('Devolver', style: TextStyle(fontSize: 16)),
 
-                  //** Fica devolvido */
+                  // Fica devolvido
                   onPressed: () async {
                     setState(() {
                       _referenciaParaRequisicao?.set(false);
                       widget.livroARequisitar.isRequisitado = false;
 
-                      detalheModel
+                      requisitadoModel
                           .devolverLivroRequisitado(widget.livroARequisitar);
                       print('Livro devolvido');
                     });

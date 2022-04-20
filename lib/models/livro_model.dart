@@ -21,9 +21,10 @@ class RepositorioDeLivros {
     return listaDeLivros;
   }
 
-  //** */ Obter os livros pelo id
-  LivroModel getPorId(String id) =>
-      livroModel.firstWhere((element) => element.id == id);
+  /// Obter os livros pelo id
+  LivroModel getPorId(String id) {
+    return livroModel.firstWhere((element) => element.id == id);
+  }
 }
 
 class LivroModel {

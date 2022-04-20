@@ -2,26 +2,42 @@ import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:flutter/material.dart';
 
 class LivroRequisitadoModel extends ChangeNotifier {
-  RepositorioDeLivros? _livrosComIds;
+  Map<String, LivroModel> _livrosRequisitado = {};
 
-  final List<String> _idsDoslivros = [];
+  Map<String, LivroModel> get livroR {
+    return {..._livrosRequisitado};
+  }
 
-  List<LivroModel> get livros =>
-      _idsDoslivros.map((id) => _livrosComIds!.getPorId(id)).toList();
+  int get itemCount {
+    return _livrosRequisitado.length;
+  }
 
-  // Adicionar o [livro requisitado] na lista pelo os ids. */
   void addLivroRequisitado(LivroModel livro) {
-    _idsDoslivros.add(livro.id.toString());
+    _livrosRequisitado.putIfAbsent(
+      livro.id,
+      () => LivroModel(
+        id: livro.id,
+        titulo: livro.titulo,
+        autor: livro.autor,
+        isbn: livro.isbn,
+        editora: livro.editora,
+        imagePath: livro.imagePath,
+        ano: livro.ano,
+        isRequisitado: livro.isRequisitado,
+      ),
+    );
     notifyListeners();
   }
 
   void devolverLivroRequisitado(LivroModel livro) {
-    _idsDoslivros.remove(livro.id);
+    _livrosRequisitado.remove(livro.id);
     notifyListeners();
   }
 
-  set livro(RepositorioDeLivros novoLivro) {
-    _livrosComIds = novoLivro;
+  Map<String, LivroModel> get livro => _livrosRequisitado;
+
+  set livro(Map<String, LivroModel> novoLivro) {
+    _livrosRequisitado = novoLivro;
     notifyListeners();
   }
 }
