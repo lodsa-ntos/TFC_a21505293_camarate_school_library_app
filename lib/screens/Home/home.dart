@@ -1,5 +1,4 @@
 import 'package:camarate_school_library/Database/base_de_dados.dart';
-import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/screens/detalhe/livro_detalhado.dart';
 import 'package:camarate_school_library/screens/pesquisa/pesquisar.dart';
 import 'package:camarate_school_library/view_models/auth_view_model.dart';
@@ -12,7 +11,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 //** VARIÁVEIS GLOBAIS */
-LivroModel? livroARequisitar;
 
 //* Espaçamento
 const espacamento = SizedBox(
@@ -258,36 +256,74 @@ class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
     return Consumer<LivroRequisitadoModel>(
       builder: (BuildContext context, LivroRequisitadoModel requisitadoModel,
           Widget? child) {
-        final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
-        final fazerLigacao = BaseDeDados();
+        return Expanded(
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemCount: requisitadoModel.livros.length,
+            itemBuilder: (context, index) {
+              final livro = requisitadoModel.livros.values.toList()[index];
 
-        return FutureBuilder(
-          future: fazerLigacao.carregarLivrosBD(referenciaBD), // async work
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            return Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: requisitadoModel.livros.length,
-                itemBuilder: (context, index) {
-                  final livro = requisitadoModel.livros.values.toList()[index];
-
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return const Center(child: CircularProgressIndicator());
-                    default:
-                      if (snapshot.hasError) {
-                        return Text('Erro: ${snapshot.error}');
-                      } else if (snapshot.data[index].isRequisitado == true) {
-                        return Text('tem livro requisitado');
-                      } else {
-                        return Text('nao tem nada aqui');
-                      }
-                  }
-                },
-              ),
-            );
-          },
+              return InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    //** Redireciona o utilizador para a página de detalhes do livro */
+                    builder: (context) => LivroDetalhado(
+                      livro: livro,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 111.0,
+                      margin: const EdgeInsets.only(left: 16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 121.66,
+                            height: 165.5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              image: DecorationImage(
+                                image: NetworkImage(livro.imagePath),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
+                          Text(
+                            livro.titulo,
+                            style: const TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5.0,
+                          ),
+                          Text(
+                            'Data de Entrega: ' + data,
+                            style: GoogleFonts.catamaran(
+                              textStyle: const TextStyle(
+                                fontSize: 13.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         );
       },
     );
