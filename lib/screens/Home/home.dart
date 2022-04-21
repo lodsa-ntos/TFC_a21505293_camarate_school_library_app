@@ -13,12 +13,12 @@ import 'package:provider/provider.dart';
 
 //** VARIÁVEIS GLOBAIS */
 
-//* Espaçamento
+// espaçamento
 const espacamento = SizedBox(
   height: 14,
 );
 
-//* TÍtulo [Prateleiras]
+// tÍtulo [Prateleiras]
 const prateleiras = Padding(
   padding: EdgeInsets.all(16.0),
   child: Text(
@@ -27,7 +27,7 @@ const prateleiras = Padding(
   ),
 );
 
-//* TÍtulo [Livros Requisitados]
+// tÍtulo [Livros Requisitados]
 const livrosRequisitados = Padding(
   padding: EdgeInsets.all(16.0),
   child: Text(
@@ -36,7 +36,7 @@ const livrosRequisitados = Padding(
   ),
 );
 
-//* PÁGINA HOME
+// PÁGINA HOME
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -47,9 +47,10 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    /// variável o carregamento da informação dos livros a serem apresentados
+    /// na interface
     var mostrarLivro = Consumer<LivroRequisitadoModel>(
-      builder: (BuildContext context, LivroRequisitadoModel detalheModel,
-          Widget? child) {
+      builder: (context, detalheModel, child) {
         // Um pequeno tema para o texto(titulo, subTitulo, etc)
         var textTheme = Theme.of(context).textTheme.headline6;
 
@@ -148,13 +149,15 @@ class _HomeState extends State<Home> {
       },
     );
 
+    /// variavel para obter a informacao Map<String, LivroModel> sobre o livro
+    /// requisitado
     final listaLivro = Provider.of<LivroRequisitadoModel>(context);
 
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
         return Scaffold(
           appBar: AppBar(
-            //** Icone de pesquisa */
+            // icone de pesquisa
             actions: <Widget>[
               IconButton(
                 icon: const Icon(Icons.search, color: Colors.white),
@@ -174,23 +177,15 @@ class _HomeState extends State<Home> {
           /// Menu Lateral
           drawer: Drawer(
             child: ListView(
-              // Importante: Remove qualquer preenchimento a mais do ListView.
+              // eemove qualquer preenchimento a mais do ListView.
               padding: EdgeInsets.zero,
+
+              /// menu lateral e campos
               children: [
                 const DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                  ),
-                  child: null,
-                ),
-                ListTile(
-                  title: const Text('Ajuda'),
-                  onTap: () {},
-                ),
-                ListTile(
-                  title: const Text('Estatistica'),
-                  onTap: () {},
-                ),
+                    decoration: BoxDecoration(color: Colors.blue), child: null),
+                ListTile(title: const Text('Ajuda'), onTap: () {}),
+                ListTile(title: const Text('Estatística'), onTap: () {}),
                 ListTile(
                   title: const Text('Notificação'),
                   onTap: () => Navigator.push(
@@ -200,9 +195,7 @@ class _HomeState extends State<Home> {
                         builder: (context) => const Notificacao()),
                   ),
                 ),
-                const SizedBox(
-                  height: 215.0,
-                ),
+                const SizedBox(height: 215.0),
                 ListTile(
                   title: const Text(
                     'Terminar sessão',
@@ -217,8 +210,8 @@ class _HomeState extends State<Home> {
             ),
           ),
 
-          //* Este SingleChildScrollView será geral para toda a página home e fará apenas
-          //* scroll na vertical
+          /// este SingleChildScrollView será geral para toda a página home
+          /// e fará apenas scroll na vertical
 
           body: SingleChildScrollView(
             child: Column(

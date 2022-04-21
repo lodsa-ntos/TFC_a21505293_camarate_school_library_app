@@ -29,11 +29,11 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
   @override
   void initState() {
     super.initState();
-    _controladorDoTexto = TextEditingController()..addListener(_onTextChanged);
+    _controladorDoTexto = TextEditingController()..addListener(_textoAlterado);
     _focarNaLetra = FocusNode();
   }
 
-  //* Limpar espaços da memória
+  /// libertar espaços da memória
   @override
   void dispose() {
     _focarNaLetra.dispose();
@@ -41,7 +41,8 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
     super.dispose();
   }
 
-  void _onTextChanged() {
+  /// controlar a mudança de texto caixa de pesquisa
+  void _textoAlterado() {
     setState(() {
       _condicao = _controladorDoTexto.text;
     });
@@ -60,10 +61,11 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
   @override
   Widget build(BuildContext context) {
     final pesquisarLivrosBD = Consumer<LivroRequisitadoModel>(
-      builder: (BuildContext context, LivroRequisitadoModel requisitadoModel,
-          Widget? child) {
+      builder: (context, requisitadoModel, child) {
+        //
         final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
         final fazerLigacao = BaseDeDados();
+
         return FutureBuilder(
           future: fazerLigacao.carregarLivrosBD(referenciaBD),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -78,17 +80,21 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
                   final livro = _filtrarPesquisa(snapshot.data);
                   return Flexible(
                     child: ListView.builder(
+                      /// comportamento para que o ListView
+                      /// ocupe apenas o espaço necessário dos dados
+                      /// a serem mostrados na interface
                       shrinkWrap: true,
 
-                      // Até ao último livro da lista
+                      // até ao último livro da lista
                       itemCount: livro.length,
-                      // Mostra todos os livros da lista contidos na base de dados
+
+                      // mostra todos os livros da lista contidos na base de dados
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              /// Redireciona o utilizador para a página de detalhes do livro
+                              /// redireciona o utilizador para a página de detalhes do livro
                               builder: (context) =>
                                   LivroDetalhado(livro: livro[index]),
                             ),
@@ -107,6 +113,8 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
                                 children: <Widget>[
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(4),
+
+                                    /// imagem do livro
                                     child: Image.network(
                                       livro[index].imagePath,
                                       fit: BoxFit.cover,
@@ -114,6 +122,8 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
                                       height: 115,
                                     ),
                                   ),
+
+                                  //
                                   Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -124,7 +134,8 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          //* Titulo do livro
+                                          //
+                                          //* titulo do livro
                                           Text(
                                             livro[index].titulo,
                                             style: const TextStyle(

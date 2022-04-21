@@ -15,8 +15,8 @@ class LivroDetalhado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LivroRequisitadoModel>(builder: (BuildContext context,
-        LivroRequisitadoModel requisitadoModel, Widget? child) {
+    return Consumer<LivroRequisitadoModel>(
+        builder: (context, requisitadoModel, child) {
       return Scaffold(
         appBar: AppBar(
           //** Titulo do livro */
@@ -94,8 +94,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   @override
   Widget build(BuildContext context) {
     return Consumer<LivroRequisitadoModel>(
-      builder: (BuildContext context, LivroRequisitadoModel requisitadoModel,
-          Widget? child) {
+      builder: (context, requisitadoModel, child) {
         //
         _referenciaParaRequisicao = FirebaseDatabase.instance
             .ref('livros')

@@ -21,13 +21,12 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
 
-  /// Controladores para os campos de texto do e-mail e da password.
+  /// Controladores para guardar o texto dos campos de texto do e-mail
+  /// e da password.
   TextEditingController emailInputController = TextEditingController();
   TextEditingController passwordInputController = TextEditingController();
 
   bool esconderPassword = true;
-  bool isDadosCorretos = false;
-  bool isInProgresso = false;
   final _chaveDeFormulario = GlobalKey<FormState>();
 
   @override
@@ -37,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
+  /// dispose para libertar a memória alocada das variáveis ​​
   @override
   void dispose() {
     emailInputController.dispose();
@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Variável
+    // variável do campo password
     final _decoracaoCampoDaPassword = InputDecoration(
       labelText: "Palavra-passe",
       labelStyle: const TextStyle(
@@ -75,6 +75,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return SafeArea(
       child: Scaffold(
+        /// evitar que os widgets sejam redimensionados se o teclado aparecer
+        /// de repente e tapar tudo.
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Padding(
