@@ -32,3 +32,13 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 ![Alt text](assets/images/outros/jdk8.png?raw=true "JDK8")
 
 - Após o isso, deverá definir o caminho do JAVA como variável de ambiente do sistema
+
+- Deverá ir no menu iniciar do computador e procurar por "variáveis de ambiente do sistema"
+
+- Depois, deverá escolher no ecrã de propriedades do sistema a opção com o nome "Variáveis de ambiente", tal como o passo anterio com o Flutter.
+
+- Na janela a seguir, nas opções abaixo, deverá clicar no botão novo e de seguida preencer os cmpos, com os seguintes dados:
+    ```
+    Nome da variavel: JAVA_HOME
+    Valor da variável: C:\Program Files (x86)\Java\jre1.8.0_311
+    ```
