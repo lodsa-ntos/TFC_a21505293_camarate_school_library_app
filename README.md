@@ -18,7 +18,11 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 - Seguidamente, deverá escolher no ecrã de propriedades do sistema a opção com o nome "Variáveis de ambiente".
 
+![Alt text](assets/images/outros/propriedades_do_sistema.png?raw=true "Propriedades do sistema")
+
 - Após definir o caminho do SDK Flutter, verificamos se estes primeiros passos correram bem, para isso, abrimos o cmd e corremos o "flutter doctor", que deverá dizernos se existe uma versão do flutter já instalada no sistema.
+
+![Alt text](assets/images/outros/cmd.png?raw=true "Cmd")
 
 
 > Passo 3 - Download e instalar o JDK 8 - Java SE Development Kit 8u202
@@ -27,4 +31,4 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 ![Alt text](assets/images/outros/jdk8.png?raw=true "JDK8")
 
-
+- Após o isso, deverá definir o caminho do JAVA como variável de ambiente do sistema
