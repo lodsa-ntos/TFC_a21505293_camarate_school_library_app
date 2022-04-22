@@ -6,9 +6,9 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 > Passo 1 - Baixar o SDK Flutter
 
-- Primeiramente, devem criar uma pasta [scr] no computador de forma a cumprir este diretório [C:\src\flutter] para o local de instalação do SDK Flutter
+- Primeiramente, devem criar uma pasta [src] no computador de forma a cumprir este diretório [C:\src\flutter] para o local de instalação do SDK Flutter.
 
-- De seguida, devem entrar no site do flutter [aqui](https://docs.flutter.dev/get-started/install/windows), para fazer o download e obter a versão estável mais recente do SDK Flutter
+- De seguida, devem entrar no site do flutter [aqui](https://docs.flutter.dev/get-started/install/windows), para fazer o download e obter a versão estável mais recente do SDK Flutter.
 
-- 
+- Depois do download, é descompactar o ficheiro zip e de seguida colocar a pasta flutter do ficheiro zip dentro da pasta [src]
 
