@@ -8,7 +8,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 - Primeiramente, será necessário criar uma pasta chamada "src" no computador de forma a cumprir este diretório [C:\src\flutter] para o local de instalação do SDK Flutter.
 
-- De seguida, deverão entrar no site do flutter [aqui](https://docs.flutter.dev/get-started/install/windows), para fazer o download e obter a versão estável mais recente do SDK Flutter.
+- De seguida, deverão entrar no site do flutter, "[aqui](https://docs.flutter.dev/get-started/install/windows)", para fazer o download e obter a versão estável mais recente do SDK Flutter.
 
 - Depois do download, é descompactar o ficheiro zip e de seguida colocar a pasta flutter do ficheiro zip dentro da pasta "src".
 
@@ -23,7 +23,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 > Passo 3 - Download e instalar o JDK 8 - Java SE Development Kit 8u202
 
-- Em primeiro lugar, deverá ir no site do Java [aqui](https://www.oracle.com/pt/java/technologies/javase/javase8-archive-downloads.html) e fazer o download do JDK 8 da versão Windows x64
+- Em primeiro lugar, deverá ir no site do Java, "[aqui](https://www.oracle.com/pt/java/technologies/javase/javase8-archive-downloads.html)" e fazer o download do JDK 8 da versão Windows x64
 
 ![Alt text](assets/images/outros/jdk8.png?raw=true "JDK8")
 
