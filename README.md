@@ -18,7 +18,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 - Seguidamente, deverá escolher no ecrã de propriedades do sistema a opção com o nome "Variáveis de ambiente".
 
-![Alt text](assets/images/outros/propriedades_do_sistema.png?raw=true "Propriedades do sistema")
+![Alt text](assets/images/outros/propriedades_do_sistema.png?raw=true "Propriedades do sistema"){ width: 50px; }
 
 - Após definir o caminho do SDK Flutter, verificamos se estes primeiros passos correram bem, para isso, abrimos o cmd e corremos o "flutter doctor", que deverá dizernos se existe uma versão do flutter já instalada no sistema.
 
