@@ -5,10 +5,8 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 # Como utilizar a aplicação
 
 > Passo 1 - Baixar o SDK Flutter
-```diff
-- This is a red colored line
-+++ This is a grey colored line
-@@ This is a purple colored line @@
 ```
+Primeiramente, devem entrar no site do [flutter](https://flutter.dev/). 
 
+```
 
