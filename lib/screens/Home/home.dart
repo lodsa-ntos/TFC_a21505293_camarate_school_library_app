@@ -155,6 +155,8 @@ class _HomeState extends State<Home> {
 
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
+        final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
+        final fazerLigacao = BaseDeDados();
         return Scaffold(
           appBar: AppBar(
             // icone de pesquisa

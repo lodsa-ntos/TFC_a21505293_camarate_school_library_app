@@ -22,7 +22,7 @@ abstract class StyleLoginScreen {
 
   /// Estilo da decoração do campo do e-mail
   static const InputDecoration decoracaoCampoDoEmail = InputDecoration(
-    labelText: "E-mail",
+    labelText: "E-mail ou nome de utilizador",
     labelStyle: TextStyle(
       fontFamily: 'Montserrat',
       fontSize: 15,

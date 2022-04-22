@@ -188,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             'Password: ${passwordInputController.text}');
 
                                         _messagemErro =
-                                            'Desculpa, mas o teu e-mail e a tua palavra-passe não pertence a nenhum conta. Verifique, e tenta novamente.';
+                                            'Desculpa, mas o teu e-mail e a tua palavra-passe não pertence a nenhuma conta. Verifique, e tenta novamente.';
                                         setState(() {
                                           _isLoading = false;
                                         });

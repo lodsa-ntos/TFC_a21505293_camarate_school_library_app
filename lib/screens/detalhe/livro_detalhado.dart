@@ -53,7 +53,7 @@ class LivroDetalhado extends StatelessWidget {
                   style: const TextStyle(color: Colors.grey),
                 ),
                 Text(
-                  "Disponível: " + livro.isRequisitado.toString(),
+                  "Requisitado: " + livro.isRequisitado.toString(),
                   style: const TextStyle(color: Colors.grey),
                 ),
 
@@ -111,39 +111,44 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                   child:
                       const Text('Requisitar', style: TextStyle(fontSize: 16)),
 
-                  onPressed: () async {
-                    // Fica requisitado
+                  onPressed: widget.livroARequisitar.isRequisitado
+                      ? null
+                      : () async {
+                          // Fica requisitado
 
-                    setState(() {
-                      _referenciaParaRequisicao?.set(true);
-                      widget.livroARequisitar.isRequisitado = true;
-                      requisitadoModel.addLivroRequisitado(
-                        widget.livroARequisitar,
-                      );
-                      print('Livro requisitado');
-                    });
-                  },
+                          setState(() {
+                            _referenciaParaRequisicao?.set(true);
+                            widget.livroARequisitar.isRequisitado = true;
+                            requisitadoModel.addLivroRequisitado(
+                              widget.livroARequisitar,
+                            );
+                            print('Livro requisitado');
+                          });
+                        },
                 ),
 
                 const SizedBox(width: 35),
 
                 // DEVOLVER
                 ElevatedButton(
-                  ///
-                  child: const Text('Devolver', style: TextStyle(fontSize: 16)),
 
-                  // Fica devolvido
-                  onPressed: () async {
-                    setState(() {
-                      _referenciaParaRequisicao?.set(false);
-                      widget.livroARequisitar.isRequisitado = false;
+                    ///
+                    child:
+                        const Text('Devolver', style: TextStyle(fontSize: 16)),
 
-                      requisitadoModel
-                          .devolverLivroRequisitado(widget.livroARequisitar);
-                      print('Livro devolvido');
-                    });
-                  },
-                ),
+                    // Fica devolvido
+                    onPressed: widget.livroARequisitar.isRequisitado
+                        ? () async {
+                            setState(() {
+                              _referenciaParaRequisicao?.set(false);
+                              widget.livroARequisitar.isRequisitado = false;
+
+                              requisitadoModel.devolverLivroRequisitado(
+                                  widget.livroARequisitar);
+                              print('Livro devolvido');
+                            });
+                          }
+                        : null),
               ],
             ),
 
