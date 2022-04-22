@@ -4,7 +4,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 # Como utilizar a aplicação
 
-> Passo 1
-###### Baixar o SDK Flutter
+> Passo 1 - Baixar o SDK Flutter
+
 
 
