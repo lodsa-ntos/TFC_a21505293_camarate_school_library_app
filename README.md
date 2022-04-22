@@ -10,5 +10,9 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 - De seguida, devem entrar no site do flutter [aqui](https://docs.flutter.dev/get-started/install/windows), para fazer o download e obter a versão estável mais recente do SDK Flutter.
 
-- Depois do download, é descompactar o ficheiro zip e de seguida colocar a pasta flutter do ficheiro zip dentro da pasta [src]
+- Depois do download, é descompactar o ficheiro zip e de seguida colocar a pasta flutter do ficheiro zip dentro da pasta [src].
+
+> Passo 2 - Definir o flutter como variável de ambiente do sistema
+
+
 
