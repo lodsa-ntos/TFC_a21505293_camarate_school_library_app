@@ -4,6 +4,6 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 # Como utilizar a aplicação
 
-#### Passo 1 in gray
+#### style="color:orange;">Passo 1</span>
 
 
