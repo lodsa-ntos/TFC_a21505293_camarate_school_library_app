@@ -4,6 +4,6 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 # Como utilizar a aplicação
 
-![GitHub Dark](https://github.com/github-dark.png#gh-light-mode-only)
+> Passo 1
 
 
