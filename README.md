@@ -42,3 +42,4 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
     Nome da variavel: JAVA_HOME
     Valor da variável: C:\Program Files (x86)\Java\jre1.8.0_311
     ```
+ ![Alt text](assets/images/outros/java_home.png?raw=true "java_home")   
