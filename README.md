@@ -8,8 +8,6 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 # Ferramentas Necessárias para correr o projeto
 
 
-Para correr este trabalho iremos necessitar de 5 softwares diferentes, 4 para correr o projeto e o
-outro para visualizar o código do mesmo. 
 
 # Video de demonstração
 
