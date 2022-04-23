@@ -28,10 +28,8 @@ Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/
 
 ### Instruções de instalação - Clonar o repositório
 
-> Passo 1
-   - C
+1. C
 
-> Passo 2
 
 
 ### Instruções de instalação 2 - instalar o ficheiro APK da aplicação
