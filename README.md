@@ -5,7 +5,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 # Instruções de instalação 
 
 
-# Ferramentas Necessárias para correr o projeto
+# Ferramentas necessárias para correr o projeto
 
 
 
