@@ -6,9 +6,11 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 
 # Ferramentas necessárias para correr o projeto
+- [Android Studio](https://developer.android.com/studio) para disponibilizar dispositivos Android de forma a conseguir correr o projeto num emulador.
 
+- O [Visual Studio Code](https://code.visualstudio.com/) para visualizar o código-fonte e desenvolver o projeto
 
 
 # Video de demonstração
 
-Uma demonstração funcional da solução desenvolvida até esta fase intercalar de 2º smestre pode ser vista [aqui](https://youtu.be/dZU8X6YIXI0)
+Uma demonstração funcional da solução desenvolvida até esta fase intercalar de 2º semestre pode ser vista [aqui](https://youtu.be/dZU8X6YIXI0)
