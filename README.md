@@ -12,18 +12,28 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 # Como correr o projeto
 
-### Configurar o flutter no sistema
-- Deverá fazer primeiramente o download e a instalação do SDK Flutter no computador e definir o flutter como variável de ambiente do sistema, especificando o caminho nas propriedades do sistema.
+### Configurar o flutter no sistema do computador
+- Deverá fazer primeiramente o download e a instalação do SDK Flutter no computador 
 
-- Fazer download e intalar o JDK 8, depois definir o Java também como variável de ambiente do sistema
+- Pesquisar no computador por variável de ambiente do sistema 
 
-- Deverá fazer download e instalar o android studio ou o SDK do android studio, mas para uma instalação mais rápida e completa de componentes, plugins e emuladores, recomendo a instalação do software android studio, em vez de apenas o SDK android studio
+- Definir o flutter como variável de ambiente do sistema, especificando o caminho nas propriedades do sistema.
+
+- Abrir o cmd e correr o "flutter doctor", depois pressionar enter, para verificar se os passos acima foram instalados corretamente
+
+- Fazer download e intalar o JDK 8
+
+- Pesquisar no computador por variável de ambiente do sistema e definir o Java também como variável de ambiente do sistema
+
+- A seguir, deverá fazer download e instalar o android studio ou o SDK do android studio, mas para uma instalação mais rápida e completa de componentes, plugins e emuladores, recomendo a instalação do software android studio, em vez de apenas o SDK android studio
+
+- Pesquisar no computador por variável de ambiente do sistema e definir o android studio também como variável de ambiente do sistema
 
 - De seguida, fazer download e instalar o visual stufio code e extinções do flutter e do dart.
 
 - Por último, abrir o cmd e correr o " flutter doctor", para verificar se tudo correu bem como esperado.
-##### Video de demonstração
-Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/yWg2fFnly9A)
+ - ##### Video de demonstração
+   Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/yWg2fFnly9A)
 
 
 ### Instruções de instalação - Clonar o repositório
@@ -33,8 +43,6 @@ Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/
 ```
 git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_app.git
 ```
-
-
 
 ### Instruções de instalação 2 - instalar o ficheiro APK da aplicação
 
@@ -56,5 +64,5 @@ git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_ap
 > Passo 6
 - Com a lista de aplicações aberta, encontre o navegador de sua preferência e abra-o ou habilite a opção para permitir, e depois poderá instalar o APK baixado.
 
-##### Video de demonstração
+ - ##### Video de demonstração
 
