@@ -15,7 +15,9 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 ## Instruções de instalação - Clonar o repositório
 
 > Passo 1
-  - - - Acima da lista de ficheiros, clique em código.
+   - Acima da lista de ficheiros, clique em código.
+
+> Passo 2
 
 
 ## Instruções de instalação 2
