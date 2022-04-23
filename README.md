@@ -31,7 +31,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 - De seguida, fazer download e instalar o visual stufio code e extinções do flutter e do dart.
 
-- Por último, abrir o cmd e correr o " flutter doctor", para verificar se tudo correu bem como esperado.
+- Por último, abrir o cmd e correr o " flutter doctor --android-licenses", para instalar todas licenças do android.
 #### Video de demonstração
 - Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/yWg2fFnly9A)
 
@@ -39,8 +39,8 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 ### Instruções de instalação - Clonar o repositório
 
-1. Criar o local em que deseja ter o projeto clonado.
-2. Copiar e colar no terminal a instrução abaixo "git clone + url" do repositório do github, pressionar enter e esperar cocnluir a instalação
+1. Criar o local em que deseja ter o projeto clonado;
+2. Copiar e colar no terminal a instrução abaixo "git clone + url" do repositório do github, pressionar enter e esperar cocnluir a instalação;
 ```
 git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_app.git
 ```
