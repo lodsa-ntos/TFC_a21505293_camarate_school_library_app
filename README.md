@@ -47,25 +47,3 @@ git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_ap
 #### Video de demonstração
 
 
-
-### Instruções de instalação 2 - instalar o ficheiro APK da aplicação
-
-> Passo 1
-- Transferir o ficheiro .apk da aplicação para o armazenamento interno ou externo do seu dispositivo;
-
-> Passo 2
-- Abra as “Configurações” do seu telemóvel e acesse ao separador “Aplicações”;
-
-> Passo 3
-- Em seguida, expanda a opção para “Configurações Avançadas”;
-
-> Passo 4
-- Clique em “Acesso especial”;
-
-> Passo 5
-- No ecrã seguinte, selecione “Instalar aplicações desconhecidas” ou "Acesso a dados sem restrições";
-
-> Passo 6
-- Com a lista de aplicações aberta, encontre o navegador de sua preferência e abra-o ou habilite a opção para permitir, e depois poderá instalar o APK baixado.
-#### Video de demonstração
-
