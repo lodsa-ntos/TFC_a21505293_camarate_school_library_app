@@ -22,7 +22,9 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 - Por último, abrir o cmd e correr o " flutter doctor", para verificar se tudo correu bem como esperado.
 
+#### Video de demonstração
 Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/yWg2fFnly9A)
+
 ### Instruções de instalação 2 - instalar o ficheiro APK da aplicação
 
 > Passo 1
@@ -43,6 +45,5 @@ Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/
 > Passo 6
 - Com a lista de aplicações aberta, encontre o navegador de sua preferência e abra-o ou habilite a opção para permitir, e depois poderá instalar o APK baixado.
 
-# Video de demonstração
+#### Video de demonstração
 
-Uma demonstração funcional da solução desenvolvida até esta fase intercalar de 2º semestre pode ser vista [aqui](https://youtu.be/dZU8X6YIXI0)
