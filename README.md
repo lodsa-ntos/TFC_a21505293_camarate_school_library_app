@@ -33,7 +33,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 - Por último, abrir o cmd e correr o " flutter doctor", para verificar se tudo correu bem como esperado.
     - ##### Video de demonstração
-    Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/yWg2fFnly9A)
+        Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/yWg2fFnly9A)
 
 
 ### Instruções de instalação - Clonar o repositório
@@ -43,7 +43,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 ```
 git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_app.git
 ```
-  - ##### Video de demonstração
+   - ##### Video de demonstração
 
 
 ### Instruções de instalação 2 - instalar o ficheiro APK da aplicação
