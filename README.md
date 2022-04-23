@@ -25,7 +25,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 - Pesquisar no computador por variável de ambiente do sistema e definir o Java também como variável de ambiente do sistema
 
-- A seguir, deverá fazer download e instalar o android studio ou o SDK do android studio, mas para uma instalação mais rápida e completa de componentes, plugins e emuladores, recomendo a instalação do software android studio, em vez de apenas o SDK android studio
+- A seguir, deverá fazer download e instalar o android studio ou o SDK tools
 
 - Pesquisar no computador por variável de ambiente do sistema e definir o android studio também como variável de ambiente do sistema
 
