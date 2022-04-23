@@ -37,6 +37,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 - Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/yWg2fFnly9A)
 
 
+#
 > Passo 2
 ### Instruções de instalação - Clonar o repositório
 
