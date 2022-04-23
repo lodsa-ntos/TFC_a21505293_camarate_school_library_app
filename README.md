@@ -12,7 +12,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 # Como correr o projeto
 
-## Configurar o flutter no sistema
+### Configurar o flutter no sistema
 - Deverá fazer primeiramente o download e a instalação do SDK Flutter no computador e definir o flutter como variável de ambiente do sistema, especificando o caminho nas propriedades do sistema.
 
 - Fazer download e intalar o JDK 8, depois definir o Java também como variável de ambiente do sistema
@@ -26,7 +26,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/yWg2fFnly9A)
 
 
-## Instruções de instalação - Clonar o repositório
+### Instruções de instalação - Clonar o repositório
 
 > Passo 1
    - C
@@ -34,7 +34,7 @@ Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/
 > Passo 2
 
 
-## Instruções de instalação 2 - instalar o ficheiro APK da aplicação
+### Instruções de instalação 2 - instalar o ficheiro APK da aplicação
 
 > Passo 1
 - Transferir o ficheiro .apk da aplicação para o armazenamento interno ou externo do seu dispositivo;
