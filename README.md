@@ -8,7 +8,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 - O [Visual Studio Code](https://code.visualstudio.com/) para visualizar o código-fonte e desenvolver o projeto
 
-- Instalar no visual studio code as extenções do flutter para obter as classes e os métodos Flutter
+- Instalar no visual studio code as extenções do flutter e no caso do android studio os plugins do flutter e do dart para obter as classes e os métodos Flutter
 
 # Como correr o projeto
 ### Instruções de instalação 
