@@ -12,6 +12,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 # Como correr o projeto
 
+> Passo 1
 ### Configurar o flutter no sistema do computador
 - Deverá fazer primeiramente o download e a instalação do SDK Flutter no computador 
 
@@ -36,7 +37,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 - Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/yWg2fFnly9A)
 
 
-
+> Passo 2
 ### Instruções de instalação - Clonar o repositório
 
 1. Criar o local em que deseja ter o projeto clonado;
