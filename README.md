@@ -14,27 +14,27 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 > Passo 1
 ### Configurar o flutter no sistema do computador
-- Deverá fazer primeiramente o download e a instalação do SDK Flutter no computador 
+- Deverá fazer primeiramente o download e a instalação do SDK Flutter no computador;
 
-- Pesquisar no computador por variável de ambiente do sistema 
+- Pesquisar no computador por variável de ambiente do sistema;
 
-- Definir o flutter como variável de ambiente do sistema, especificando o caminho nas propriedades do sistema.
+- Definir o flutter como variável de ambiente do sistema, especificando o caminho nas propriedades do sistema;
 
-- Abrir o cmd e correr o "flutter doctor", depois pressionar enter, para verificar se os passos acima foram instalados corretamente
+- Abrir o cmd e correr o "flutter doctor", depois pressionar enter, para verificar se os passos acima foram instalados corretamente;
 
-- Fazer download e intalar o JDK 8
+- Fazer download e intalar o JDK 8;
 
-- Pesquisar no computador por variável de ambiente do sistema e definir o Java também como variável de ambiente do sistema
+- Pesquisar no computador por variável de ambiente do sistema e definir o Java também como variável de ambiente do sistema;
 
-- A seguir, deverá fazer download e instalar o android studio ou o SDK tools
+- A seguir, deverá fazer download e instalar o android studio;
 
-- Pesquisar no computador por variável de ambiente do sistema e definir o android studio também como variável de ambiente do sistema
+- Pesquisar no computador por variável de ambiente do sistema e definir o android studio também como variável de ambiente do sistema;
 
-- De seguida, fazer download e instalar o visual stufio code e extinções do flutter e do dart.
+- De seguida, fazer download e instalar o visual stufio code e extinções do flutter e do dart;
 
-- Por último, abrir o cmd e correr o " flutter doctor --android-licenses", para instalar todas licenças do android.
+- Por último, abrir o cmd e correr o " flutter doctor --android-licenses", para instalar todas licenças do android;
 #### Video de demonstração
-- Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/Q6xtDV4KoMc)
+- Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/Q6xtDV4KoMc).
 
 
 #
@@ -47,5 +47,5 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_app.git
 ```
 #### Video de demonstração
-- Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/4XBF4MyBtRE)
+- Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/4XBF4MyBtRE).
 
