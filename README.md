@@ -36,6 +36,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
    Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/yWg2fFnly9A)
 
 
+
 ### Instruções de instalação - Clonar o repositório
 
 1. Criar o local em que deseja ter o projeto clonado.
@@ -44,6 +45,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_app.git
 ```
 #### Video de demonstração
+
 
 
 ### Instruções de instalação 2 - instalar o ficheiro APK da aplicação
