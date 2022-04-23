@@ -34,7 +34,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 - Por último, abrir o cmd e correr o " flutter doctor --android-licenses", para instalar todas licenças do android.
 #### Video de demonstração
-- Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/yWg2fFnly9A)
+- Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/Q6xtDV4KoMc)
 
 
 #
