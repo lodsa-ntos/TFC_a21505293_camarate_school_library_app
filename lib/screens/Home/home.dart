@@ -145,11 +145,6 @@ class _HomeState extends State<Home> {
                                     //** isRequisitado */
                                     Text(snapshot.data[index].isRequisitado
                                         .toString()),
-
-                                    const SizedBox(height: 5.0),
-
-                                    //** isRequisitado */
-                                    Text(snapshot.data[index].numRegisto),
                                   ],
                                 ),
                               ),
