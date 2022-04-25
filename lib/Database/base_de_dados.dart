@@ -1,10 +1,16 @@
 import 'dart:convert';
 
 import 'package:camarate_school_library/models/livro_model.dart';
+import 'package:camarate_school_library/screens/home/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async' show Future;
 
+import 'package:flutter/material.dart';
+
 class BaseDeDados {
+  BuildContext? context;
   List<LivroModel> livros = [];
 
   Future<List<LivroModel>> carregarLivrosBD(
@@ -38,5 +44,23 @@ class BaseDeDados {
 
     /// Retorno a lista com os dados vindos da base de dados em JSON
     return livros;
+  }
+
+  Future<FirebaseApp> initializeFirebase() async {
+    FirebaseApp firebaseApp = await Firebase.initializeApp();
+
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      Navigator.of(context!).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => Home(
+            user: user,
+          ),
+        ),
+      );
+    }
+
+    return firebaseApp;
   }
 }

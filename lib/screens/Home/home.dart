@@ -1,9 +1,11 @@
 import 'package:camarate_school_library/Database/base_de_dados.dart';
+import 'package:camarate_school_library/models/view_models/auth_view_model.dart';
+import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
+import 'package:camarate_school_library/screens/auth/login.dart';
 import 'package:camarate_school_library/screens/detalhe/livro_detalhado.dart';
 import 'package:camarate_school_library/screens/notificacao/notificacao.dart';
 import 'package:camarate_school_library/screens/pesquisa/pesquisar.dart';
-import 'package:camarate_school_library/view_models/auth_view_model.dart';
-import 'package:camarate_school_library/view_models/livro_requisitado_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart'; // DateFormat
 
@@ -38,13 +40,24 @@ const livrosRequisitados = Padding(
 
 // PÁGINA HOME
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  final User user;
+  const Home({Key? key, required this.user}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+
+  User? _currentUser;
+  bool _isSigningOut = false;
+
+  @override
+  void initState() {
+    _currentUser = widget.user;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     /// variável o carregamento da informação dos livros a serem apresentados
@@ -205,8 +218,11 @@ class _HomeState extends State<Home> {
                   ), // Titulo dentro do menu lateral
 
                   /// Aceder ao metodo com o provider para terminar sessão
-                  onTap: () async =>
-                      await context.read<AuthModel>().terminarSessao(),
+                  onTap: () async {
+                    await context.read<AuthModel>().terminarSessao();
+                   
+                  }
+                      
                 ),
               ],
             ),
