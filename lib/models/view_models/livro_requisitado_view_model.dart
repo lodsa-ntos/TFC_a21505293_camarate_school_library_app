@@ -33,6 +33,7 @@ class LivroRequisitadoModel extends ChangeNotifier {
         editora: livro.editora,
         imagePath: livro.imagePath,
         ano: livro.ano,
+        numRegisto: livro.numRegisto,
         isRequisitado: livro.isRequisitado,
       ),
     );

@@ -38,6 +38,7 @@ class LivroModel {
   final String isbn;
   final String editora;
   final String imagePath;
+  final String numRegisto;
   final int ano;
   bool isRequisitado;
 
@@ -48,6 +49,7 @@ class LivroModel {
     required this.isbn,
     required this.editora,
     required this.imagePath,
+    required this.numRegisto,
     required this.ano,
     required this.isRequisitado,
   });
@@ -60,8 +62,10 @@ class LivroModel {
     map["isbn"] = isbn;
     map["editora"] = editora;
     map["imagePath"] = imagePath;
+    map["numRegisto"] = numRegisto;
     map["ano"] = ano;
     map["isRequisitado"] = isRequisitado;
+
     return map;
   }
 
@@ -73,6 +77,7 @@ class LivroModel {
       isbn: json['isbn'] ?? '',
       editora: json['editora'] ?? '',
       imagePath: json['imagePath'] ?? '',
+      numRegisto: json['numRegisto'] ?? '',
       ano: json['ano']?.toInt() ?? 0,
       isRequisitado: json['isRequisitado'] ?? false,
     );

@@ -2,6 +2,7 @@ import 'package:camarate_school_library/Styles/style_login_screen.dart';
 import 'package:camarate_school_library/models/view_models/auth_view_model.dart';
 import 'package:camarate_school_library/screens/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 // ignore: implementation_imports
@@ -45,7 +46,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final fazerLigacao = BaseDeDados();
+    Future<FirebaseApp> initializeFirebase() async {
+      FirebaseApp firebaseApp = await Firebase.initializeApp();
+
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => Home(
+              user: user,
+            ),
+          ),
+        );
+      }
+
+      return firebaseApp;
+    }
+
     // variável do campo password
     final _decoracaoCampoDaPassword = InputDecoration(
       labelText: "Palavra-passe",
@@ -79,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
         /// de repente e tapar tudo.
         resizeToAvoidBottomInset: true,
         body: FutureBuilder(
-          future: fazerLigacao.initializeFirebase(),
+          future: initializeFirebase(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return Padding(

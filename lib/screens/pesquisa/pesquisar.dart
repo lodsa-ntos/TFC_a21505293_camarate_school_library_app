@@ -2,7 +2,6 @@ import 'package:camarate_school_library/Database/base_de_dados.dart';
 import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 
-
 import 'package:firebase_database/firebase_database.dart';
 
 import 'package:flutter/material.dart';
@@ -244,7 +243,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
   }
 }
 
-//* Regra para filtrar a pesquisar
+//* Regra para filtrar a pesquisa
 List<LivroModel> _filtrarPesquisa(List<LivroModel>? caixaDePesquisa) {
   if (_condicao.isNotEmpty == true) {
     //* Título
