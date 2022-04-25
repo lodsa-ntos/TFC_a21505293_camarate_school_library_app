@@ -48,12 +48,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  User? _currentUser;
-  bool _isSigningOut = false;
+  User? utilizadorAtual;
 
   @override
   void initState() {
-    _currentUser = widget.user;
+    utilizadorAtual = widget.user;
     super.initState();
   }
 
