@@ -48,7 +48,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   User? _currentUser;
   bool _isSigningOut = false;
 
@@ -168,8 +167,6 @@ class _HomeState extends State<Home> {
 
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
-        final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
-        final fazerLigacao = BaseDeDados();
         return Scaffold(
           appBar: AppBar(
             // icone de pesquisa
@@ -212,18 +209,16 @@ class _HomeState extends State<Home> {
                 ),
                 const SizedBox(height: 215.0),
                 ListTile(
-                  title: const Text(
-                    'Terminar sessão',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ), // Titulo dentro do menu lateral
+                    title: const Text(
+                      'Terminar sessão',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ), // Titulo dentro do menu lateral
 
-                  /// Aceder ao metodo com o provider para terminar sessão
-                  onTap: () async {
-                    await context.read<AuthModel>().terminarSessao();
-                   
-                  }
-                      
-                ),
+                    /// Aceder ao metodo com o provider para terminar sessão
+                    onTap: () async {
+                      await context.read<AuthModel>().terminarSessao();
+                    }),
               ],
             ),
           ),
@@ -341,7 +336,7 @@ class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
                             height: 5.0,
                           ),
                           Text(
-                            'Data de Entrega: ' + data,
+                            'Data de requisição: ' + data,
                             style: GoogleFonts.catamaran(
                               textStyle: const TextStyle(
                                 fontSize: 13.0,
