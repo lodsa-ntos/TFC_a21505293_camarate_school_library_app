@@ -49,3 +49,8 @@ git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_ap
 #### Video de demonstração
 - Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/4XBF4MyBtRE).
 
+# Credenciais para entrar na aplicação
+
+> E-mail : entregaSemestre2@gmail.com
+> Password : 12345678
+

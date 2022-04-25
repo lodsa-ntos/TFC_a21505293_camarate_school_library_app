@@ -5,11 +5,9 @@ import 'package:camarate_school_library/view_models/livro_requisitado_view_model
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
 
 Future<void> main() async {
   /// Necessário para usar canais para chamar o código nativo
