@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             decoration: _decoracaoCampoDaPassword,
                           ),
 
-                          const SizedBox(height: 24.0),
+                          const Padding(padding: EdgeInsets.only(bottom: 35)),
 
                           //* --> Botão Iniciar Sessão <--
                           _isLoading
@@ -182,6 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 });
                                               } on FirebaseAuthException catch (error) {
                                                 error.message!;
+                                                // ignore: avoid_print
                                                 print(error);
                                               }
 
