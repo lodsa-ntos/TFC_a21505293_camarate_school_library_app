@@ -4,11 +4,9 @@ import 'package:camarate_school_library/screens/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
-import '../../Database/base_de_dados.dart';
 import '../../util/validator.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,6 +18,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
+  String _messagemErro = '';
 
   /// Controladores para guardar o texto dos campos de texto do e-mail
   /// e da password.
@@ -54,15 +53,21 @@ class _LoginScreenState extends State<LoginScreen> {
       if (user != null) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => Home(
-              user: user,
-            ),
+            builder: (context) => const Home(),
           ),
         );
       }
 
       return firebaseApp;
     }
+
+    var aCarregarAutenticacao = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const <Widget>[
+        CircularProgressIndicator(),
+        Text(" A autenticar... aguarde")
+      ],
+    );
 
     // variável do campo password
     final _decoracaoCampoDaPassword = InputDecoration(
@@ -150,11 +155,33 @@ class _LoginScreenState extends State<LoginScreen> {
                             decoration: _decoracaoCampoDaPassword,
                           ),
 
+                          const SizedBox(height: 20),
+
+                          if (_chaveDeFormulario.currentState == null) ...[
+                            Center(
+                              child: Text(
+                                _messagemErro,
+                                style: const TextStyle(
+                                  color: Colors.red,
+                                  letterSpacing: 1.0,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ] else ...[
+                            const Center(
+                              child: Text(
+                                '',
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
+
                           const Padding(padding: EdgeInsets.only(bottom: 35)),
 
                           //* --> Botão Iniciar Sessão <--
                           _isLoading
-                              ? const CircularProgressIndicator()
+                              ? aCarregarAutenticacao
                               : Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -178,7 +205,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                               try {
                                                 _chaveDeFormulario.currentState
                                                     ?.save();
-                                                await AuthModel.login(
+                                                await Provider.of<AuthModel>(
+                                                        context,
+                                                        listen: false)
+                                                    .login(
                                                   email: _emailInputController
                                                       .text
                                                       .trim(),
@@ -195,13 +225,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 print(
                                                     'Password: ${_passwordInputController.text}');
 
+                                                _messagemErro =
+                                                    'Desculpa, mas o teu e-mail e a tua palavra-passe não pertence a nenhuma conta. Verifique, e tenta novamente.';
                                                 setState(() {
                                                   _isLoading = false;
                                                 });
                                               } on FirebaseAuthException catch (error) {
-                                                error.message!;
+                                                _messagemErro = error.message!;
                                                 // ignore: avoid_print
-                                                print(error);
+                                                print(error.message!);
                                               }
 
                                               setState(() {

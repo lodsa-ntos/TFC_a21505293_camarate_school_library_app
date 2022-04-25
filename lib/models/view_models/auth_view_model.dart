@@ -3,35 +3,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AuthModel with ChangeNotifier {
-  static FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  // Construtor para iniciar a instância do FirebaseAuth
+  AuthModel({required this.firebaseAuth});
 
   /// O Stream vai ser para ouvir continuamente o estado da autenticação
   /// do utilizador (se está conectado ou não) para atualizar o id token
   /// do utilizador.
   Stream<User?> get estadoDeAutenticacao => firebaseAuth.idTokenChanges();
 
-  // Método login para o utilizador (já registado)
-  static Future<User?> login({
-    required String email,
-    required String password,
-  }) async {
-    User? utilizador;
-
+  // MÉTODO DE LOGIN
+  Future<Object> login(
+      {required String email, required String password}) async {
     try {
-      UserCredential credenciasDoUtilizador = await firebaseAuth.signInWithEmailAndPassword(
+      var resultadoAuth = await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      utilizador = credenciasDoUtilizador.user;
+      notifyListeners();
+      return resultadoAuth.user != null;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'utilizador-não-encontrado') {
-        print('Nenhum utilizador encontrado com esse e-mail.');
-      } else if (e.code == 'palavra-passe-incorreta') {
-        print('Palavra-passe incorreta fornecida.');
-      }
+      return e.message.toString();
     }
-
-    return utilizador;
   }
 
   /// MÉTODO SAIR

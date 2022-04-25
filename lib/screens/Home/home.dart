@@ -40,22 +40,13 @@ const livrosRequisitados = Padding(
 
 // PÁGINA HOME
 class Home extends StatefulWidget {
-  final User user;
-  const Home({Key? key, required this.user}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  User? utilizadorAtual;
-
-  @override
-  void initState() {
-    utilizadorAtual = widget.user;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     /// variável o carregamento da informação dos livros a serem apresentados
