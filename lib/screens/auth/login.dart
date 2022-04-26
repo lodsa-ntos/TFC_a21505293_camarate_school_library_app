@@ -194,8 +194,14 @@ class _LoginScreenState extends State<LoginScreen> {
           .registar(_emailInputController.text, _passwordInputController.text);
     } on AuthException catch (erro) {
       setState(() => _isLoading = false);
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(erro.mensagem)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        duration: const Duration(seconds: 10),
+        content: Text(
+          erro.mensagem,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        backgroundColor: Colors.red,
+      ));
     }
   }
 }
