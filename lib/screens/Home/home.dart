@@ -226,8 +226,6 @@ class _HomeState extends State<Home> {
                   margin: const EdgeInsets.only(left: 3.0),
                   child: FutureBuilder(
                     future: fazerLigacao.carregarLivrosBD(referenciaBD),
-
-                    // async work
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
