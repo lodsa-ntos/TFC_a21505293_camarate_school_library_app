@@ -38,7 +38,7 @@ class AuthServices with ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw AuthException('A palavra-passe é muito fraca!');
-      } else if (e.code == 'email-already-in-use') {
+      } else if (e.code == 'email-already-exists') {
         throw AuthException('Este email já está registado');
       }
     }
