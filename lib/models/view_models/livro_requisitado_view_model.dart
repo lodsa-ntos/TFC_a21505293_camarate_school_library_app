@@ -1,8 +1,9 @@
 import 'package:camarate_school_library/models/livro_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class LivroRequisitadoModel extends ChangeNotifier {
-  /// Map para guardar o formato de como os livros forem addLivroRequisitado
+  /// Map para guardar o formato de como os livros serao addLivroRequisitado
   /*id: livro.id,
         titulo: livro.titulo,
         autor: livro.autor,

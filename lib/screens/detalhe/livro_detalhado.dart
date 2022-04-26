@@ -1,5 +1,6 @@
 import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -90,6 +91,7 @@ class _BotaoRequisitar extends StatefulWidget {
 
 class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaParaRequisicao;
+  DocumentSnapshot? doc;
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +124,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             requisitadoModel.addLivroRequisitado(
                               widget.livroARequisitar,
                             );
+
                             print('Livro requisitado');
                           });
                         },

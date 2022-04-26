@@ -1,9 +1,7 @@
-import 'package:camarate_school_library/models/view_models/auth_view_model.dart';
+import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:camarate_school_library/screens/auth/login.dart';
 import 'package:camarate_school_library/screens/home/home.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,16 +16,7 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LivroRequisitadoModel()),
-
-        ChangeNotifierProvider<AuthModel>(
-            create: (_) => AuthModel(firebaseAuth: FirebaseAuth.instance)),
-
-        /// O StreamProvider() será importante para ler o valor do método
-        /// estadoDeAutenticacao no AuthModel.
-        StreamProvider(
-          create: (context) => context.read<AuthModel>().estadoDeAutenticacao,
-          initialData: null,
-        ),
+        ChangeNotifierProvider(create: (_) => AuthServices()),
       ],
 
       //** APLICAÇÃO */
@@ -54,17 +43,22 @@ class AutenticarUtilizador extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /// Instância para saber o estado de autenticação.
-    final firebaseUser = context.watch<User?>();
+    AuthServices autenticacao = Provider.of<AuthServices>(context);
 
-    // ignore: unnecessary_null_comparison
-    if (firebaseUser != null) {
-      /// O utilizador já está logado e, portanto, é redirecionado
-      /// até a HomePage
+    if (autenticacao.isLoading) {
+      return aCarregar();
+    } else if (autenticacao.utilizador == null) {
+      return const LoginScreen();
+    } else {
       return const Home();
     }
+  }
 
-    /// O utilizador não está conectado e, portanto, é redirecionado
-    /// até LoginScreen.
-    return const LoginScreen();
+  aCarregar() {
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 }

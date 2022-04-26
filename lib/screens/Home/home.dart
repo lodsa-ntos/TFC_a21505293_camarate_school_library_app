@@ -1,5 +1,5 @@
 import 'package:camarate_school_library/Database/base_de_dados.dart';
-import 'package:camarate_school_library/models/view_models/auth_view_model.dart';
+import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:camarate_school_library/screens/auth/login.dart';
 import 'package:camarate_school_library/screens/detalhe/livro_detalhado.dart';
@@ -75,8 +75,6 @@ class _HomeState extends State<Home> {
                     itemBuilder: (BuildContext context, int index) {
                       //
                       return GestureDetector(
-                        //* Aqui o utilizador consegue carregar em cima do livro
-                        //* e ser direcionado para o ecrã de livro detalhado
                         onTap: () {
                           Navigator.push(
                             context,
@@ -157,6 +155,8 @@ class _HomeState extends State<Home> {
 
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
+        final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
+        final fazerLigacao = BaseDeDados();
         return Scaffold(
           appBar: AppBar(
             // icone de pesquisa
@@ -207,7 +207,7 @@ class _HomeState extends State<Home> {
 
                     /// Aceder ao metodo com o provider para terminar sessão
                     onTap: () async {
-                      await context.read<AuthModel>().terminarSessao();
+                      await context.read<AuthServices>().terminarSessao();
                     }),
               ],
             ),
@@ -221,26 +221,126 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (listaLivro.livros.isNotEmpty) ...[
-                  //* Título
-                  livrosRequisitados,
+                livrosRequisitados,
+                Container(
+                  margin: const EdgeInsets.only(left: 3.0),
+                  child: FutureBuilder(
+                    future: fazerLigacao.carregarLivrosBD(referenciaBD),
 
-                  //** Este SingleChildScrollView vai fazer scroll na horizontal
-                  //** vai apresentar os livros que foram requisitados */
-                  SingleChildScrollView(
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 276.0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _FormatoLivroRequisitadoParaUtilizador(),
-                        ],
-                      ),
-                    ),
+                    // async work
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        default:
+                          if (snapshot.hasError) {
+                            return Text('Erro: ${snapshot.error}');
+                          } else {
+                            return Container(
+                              margin: const EdgeInsets.symmetric(vertical: 8.0),
+                              height: 255.0,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      shrinkWrap: true,
+                                      itemCount: snapshot.data.length,
+                                      itemBuilder: (context, index) {
+                                        if (snapshot
+                                                .data[index].isRequisitado ==
+                                            true) {
+                                          return InkWell(
+                                            onTap: () => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                //** Redireciona o utilizador para a página de detalhes do livro */
+                                                builder: (context) =>
+                                                    LivroDetalhado(
+                                                  livro: snapshot.data[index],
+                                                ),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  width: 111.0,
+                                                  margin: const EdgeInsets.only(
+                                                      left: 16.0),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Container(
+                                                        width: 121.66,
+                                                        height: 165.5,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                          image:
+                                                              DecorationImage(
+                                                            image: NetworkImage(
+                                                              snapshot
+                                                                  .data[index]
+                                                                  .imagePath,
+                                                            ),
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 12.0,
+                                                      ),
+                                                      Text(
+                                                        snapshot
+                                                            .data[index].titulo,
+                                                        style: const TextStyle(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontSize: 14.0,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5.0,
+                                                      ),
+                                                      Text(
+                                                        'Data de requisição: ',
+                                                        style: GoogleFonts
+                                                            .catamaran(
+                                                          textStyle:
+                                                              const TextStyle(
+                                                            fontSize: 13.0,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }
+                                        return const Text('');
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                      }
+                    },
                   ),
-                ],
+                ),
 
                 //* Título
                 prateleiras,
