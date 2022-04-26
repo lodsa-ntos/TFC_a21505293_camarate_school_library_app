@@ -1,5 +1,6 @@
 import 'package:camarate_school_library/Styles/style_login_screen.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
@@ -20,7 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordInputController =
       TextEditingController();
 
-  bool isLoginScreen = true;
   bool esconderPassword = true;
   bool _isLoading = false;
 
@@ -139,24 +139,47 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     onPressed: () async {
                                       if (_chaveForm.currentState!.validate()) {
-                                        if (isLoginScreen) {
-                                          fazerLogin();
-                                          // ignore: avoid_print
-                                          print(
-                                            'E-mail: ${_emailInputController.text}',
-                                          );
-                                          // ignore: avoid_print
-                                          print(
-                                            'Password: ${_passwordInputController.text}',
-                                          );
-                                        } else {
-                                          registarUtilizador();
-                                        }
+                                        fazerLogin();
+                                        // ignore: avoid_print
+                                        print(
+                                          'E-mail: ${_emailInputController.text}',
+                                        );
+                                        // ignore: avoid_print
+                                        print(
+                                          'Password: ${_passwordInputController.text}',
+                                        );
                                       }
                                     }),
                               ),
                             ],
                           ),
+
+                    const Padding(padding: EdgeInsets.only(bottom: 35)),
+
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: "Não tens uma conta? ",
+                        style: const TextStyle(
+                          fontFamily: 'Montserrat',
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            recognizer: TapGestureRecognizer()..onTap = () {},
+                            text: ' Regista-te.',
+                            style: const TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Colors.blue,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
