@@ -14,7 +14,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 > Passo 1
 ### Configurar o flutter no sistema do computador
-- Deverá fazer primeiramente o download e a instalação do SDK Flutter no computador;
+- Deverá fazer primeiramente o download e a instalação do [SDK Flutter](https://docs.flutter.dev/get-started/install/windows) no computador;
 
 - Pesquisar no computador por variável de ambiente do sistema;
 
@@ -22,15 +22,15 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 - Abrir o cmd e correr o "flutter doctor", depois pressionar enter, para verificar se os passos acima foram instalados corretamente;
 
-- Fazer download e intalar o JDK 8;
+- Fazer download e intalar o [JDK 8](https://www.oracle.com/pt/java/technologies/javase/javase8-archive-downloads.html);
 
 - Pesquisar no computador por variável de ambiente do sistema e definir o Java também como variável de ambiente do sistema;
 
-- A seguir, deverá fazer download e instalar o android studio;
+- A seguir, deverá fazer download e instalar o [android studio](https://developer.android.com/studio);
 
 - Pesquisar no computador por variável de ambiente do sistema e definir o android studio também como variável de ambiente do sistema;
 
-- De seguida, fazer download e instalar o visual stufio code e extinções do flutter e do dart;
+- De seguida, fazer download e instalar o [visual studio code](https://code.visualstudio.com/) e extinções do flutter e do dart;
 
 - Por último, abrir o cmd e correr o " flutter doctor --android-licenses", para instalar todas licenças do android;
 #### Video de demonstração

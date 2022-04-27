@@ -1,5 +1,5 @@
 class AlunoModel {
-  final int numCartaoAluno;
+  final String numCartaoAluno;
   final String primeiroNomeAluno;
   final String segundoNomeAluno;
   final int numAluno;
@@ -36,7 +36,7 @@ class AlunoModel {
 
   factory AlunoModel.fromJson(Map<String, dynamic> json) {
     return AlunoModel(
-      numCartaoAluno: json['numCartaoAluno'] ?? 0,
+      numCartaoAluno: json['numCartaoAluno'] ?? 'a1234',
       primeiroNomeAluno: json['primeiroNomeAluno'] ?? '',
       segundoNomeAluno: json['segundoNomeAluno'] ?? '',
       numAluno: json['numAluno'] ?? '',
@@ -49,7 +49,7 @@ class AlunoModel {
 }
 
 class ProfessorModel {
-  final int numCartaoProf;
+  final String numCartaoProf;
   final String primeiroNomeProf;
   final String segundoNomeProf;
   final String turma;
@@ -80,7 +80,7 @@ class ProfessorModel {
 
   factory ProfessorModel.fromJson(Map<String, dynamic> json) {
     return ProfessorModel(
-      numCartaoProf: json['numCartaoProf'] ?? 0,
+      numCartaoProf: json['numCartaoProf'] ?? 'p1234',
       primeiroNomeProf: json['primeiroNomeProf'] ?? '',
       segundoNomeProf: json['segundoNomeProf'] ?? '',
       turma: json['turma'] ?? '',
@@ -91,7 +91,7 @@ class ProfessorModel {
 }
 
 class FuncionarioModel {
-  final int numCartaoFunc;
+  final String numCartaoFunc;
   final String primeiroNomeFunc;
   final String segundoNomeFunc;
   final String emailFunc;
@@ -119,7 +119,7 @@ class FuncionarioModel {
 
   factory FuncionarioModel.fromJson(Map<String, dynamic> json) {
     return FuncionarioModel(
-      numCartaoFunc: json['numCartaoFunc'] ?? 0,
+      numCartaoFunc: json['numCartaoFunc'] ?? 'f1234',
       primeiroNomeFunc: json['primeiroNomeFunc'] ?? '',
       segundoNomeFunc: json['segundoNomeFunc'] ?? '',
       emailFunc: json['emailFunc'] ?? '',
