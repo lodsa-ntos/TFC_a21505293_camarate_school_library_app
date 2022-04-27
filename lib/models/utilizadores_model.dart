@@ -1,3 +1,4 @@
+//? Alunos
 class AlunoModel {
   final String numCartaoAluno;
   final String primeiroNomeAluno;
@@ -48,6 +49,7 @@ class AlunoModel {
   }
 }
 
+//* Professores
 class ProfessorModel {
   final String numCartaoProf;
   final String primeiroNomeProf;
@@ -90,6 +92,7 @@ class ProfessorModel {
   }
 }
 
+//! Funcionario
 class FuncionarioModel {
   final String numCartaoFunc;
   final String primeiroNomeFunc;
