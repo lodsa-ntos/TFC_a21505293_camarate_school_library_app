@@ -1,5 +1,6 @@
 //? Alunos
 class AlunoModel {
+  final String uidAluno;
   final String numCartaoAluno;
   final String primeiroNomeAluno;
   final String segundoNomeAluno;
@@ -9,8 +10,9 @@ class AlunoModel {
   final String emailAluno;
   final String passwordAluno;
 
-  // Construtor
+  // Construtor AlunoModel
   AlunoModel({
+    required this.uidAluno,
     required this.numCartaoAluno,
     required this.primeiroNomeAluno,
     required this.segundoNomeAluno,
@@ -23,6 +25,7 @@ class AlunoModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> dadosAluno = <String, dynamic>{};
+    dadosAluno["uidAluno"] = uidAluno;
     dadosAluno["numCartaoAluno"] = numCartaoAluno;
     dadosAluno["primeiroNomeAluno"] = primeiroNomeAluno;
     dadosAluno["segundoNomeAluno"] = segundoNomeAluno;
@@ -37,6 +40,7 @@ class AlunoModel {
 
   factory AlunoModel.fromJson(Map<String, dynamic> json) {
     return AlunoModel(
+      uidAluno: json['uidAluno'] ?? '',
       numCartaoAluno: json['numCartaoAluno'] ?? 'a1234',
       primeiroNomeAluno: json['primeiroNomeAluno'] ?? '',
       segundoNomeAluno: json['segundoNomeAluno'] ?? '',
@@ -51,6 +55,7 @@ class AlunoModel {
 
 //* Professores
 class ProfessorModel {
+  final String uidProf;
   final String numCartaoProf;
   final String primeiroNomeProf;
   final String segundoNomeProf;
@@ -58,8 +63,9 @@ class ProfessorModel {
   final String emailProf;
   final String passwordProf;
 
-  // Construtor
+  // Construtor ProfessorModel
   ProfessorModel({
+    required this.uidProf,
     required this.numCartaoProf,
     required this.primeiroNomeProf,
     required this.segundoNomeProf,
@@ -69,19 +75,21 @@ class ProfessorModel {
   });
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> dadosAluno = <String, dynamic>{};
-    dadosAluno["numCartaoProf"] = numCartaoProf;
-    dadosAluno["primeiroNomeProf"] = primeiroNomeProf;
-    dadosAluno["segundoNomeProf"] = segundoNomeProf;
-    dadosAluno["turma"] = turma;
-    dadosAluno["emailProf"] = emailProf;
-    dadosAluno["passwordProf"] = passwordProf;
+    final Map<String, dynamic> dadosProf = <String, dynamic>{};
+    dadosProf["uidProf"] = uidProf;
+    dadosProf["numCartaoProf"] = numCartaoProf;
+    dadosProf["primeiroNomeProf"] = primeiroNomeProf;
+    dadosProf["segundoNomeProf"] = segundoNomeProf;
+    dadosProf["turma"] = turma;
+    dadosProf["emailProf"] = emailProf;
+    dadosProf["passwordProf"] = passwordProf;
 
-    return dadosAluno;
+    return dadosProf;
   }
 
   factory ProfessorModel.fromJson(Map<String, dynamic> json) {
     return ProfessorModel(
+      uidProf: json['uidProf'] ?? '',
       numCartaoProf: json['numCartaoProf'] ?? 'p1234',
       primeiroNomeProf: json['primeiroNomeProf'] ?? '',
       segundoNomeProf: json['segundoNomeProf'] ?? '',
@@ -94,14 +102,16 @@ class ProfessorModel {
 
 //! Funcionario
 class FuncionarioModel {
+  final String uidFunc;
   final String numCartaoFunc;
   final String primeiroNomeFunc;
   final String segundoNomeFunc;
   final String emailFunc;
   final String passwordFunc;
 
-  // Construtor
+  // Construtor FuncionarioModel
   FuncionarioModel({
+    required this.uidFunc,
     required this.numCartaoFunc,
     required this.primeiroNomeFunc,
     required this.segundoNomeFunc,
@@ -110,18 +120,20 @@ class FuncionarioModel {
   });
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> dadosAluno = <String, dynamic>{};
-    dadosAluno["numCartaoFunc"] = numCartaoFunc;
-    dadosAluno["primeiroNomeFunc"] = primeiroNomeFunc;
-    dadosAluno["segundoNomeFunc"] = segundoNomeFunc;
-    dadosAluno["emailFunc"] = emailFunc;
-    dadosAluno["passwordFunc"] = passwordFunc;
+    final Map<String, dynamic> dadosFunc = <String, dynamic>{};
+    dadosFunc["uidFunc"] = uidFunc;
+    dadosFunc["numCartaoFunc"] = numCartaoFunc;
+    dadosFunc["primeiroNomeFunc"] = primeiroNomeFunc;
+    dadosFunc["segundoNomeFunc"] = segundoNomeFunc;
+    dadosFunc["emailFunc"] = emailFunc;
+    dadosFunc["passwordFunc"] = passwordFunc;
 
-    return dadosAluno;
+    return dadosFunc;
   }
 
   factory FuncionarioModel.fromJson(Map<String, dynamic> json) {
     return FuncionarioModel(
+      uidFunc: json['uidFunc'] ?? '',
       numCartaoFunc: json['numCartaoFunc'] ?? 'f1234',
       primeiroNomeFunc: json['primeiroNomeFunc'] ?? '',
       segundoNomeFunc: json['segundoNomeFunc'] ?? '',
