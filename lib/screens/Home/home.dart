@@ -208,6 +208,12 @@ class _HomeState extends State<Home> {
                     /// Aceder ao metodo com o provider para terminar sessão
                     onTap: () async {
                       await context.read<AuthServices>().terminarSessao();
+                      await Navigator.pushAndRemoveUntil(
+                        (context),
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()),
+                        (route) => false,
+                      );
                     }),
               ],
             ),

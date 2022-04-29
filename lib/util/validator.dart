@@ -1,5 +1,4 @@
 class Validator {
-
   static String? validarEmail({required String? email}) {
     if (email == null) {
       return "Nenhum e-mail encontrado";
@@ -8,9 +7,9 @@ class Validator {
     RegExp emailRegExp = RegExp(
         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
-    if (email.isEmpty) {
-      return "O campo do e-mail não pode ser vazio";
-    } else if (!emailRegExp.hasMatch(email)) {
+    if (email.trim().isEmpty) {
+      return "Este campo é obrigatório";
+    } else if (!emailRegExp.hasMatch(email.trim())) {
       return "Por favor, introduza um email válido";
     }
 
@@ -19,13 +18,78 @@ class Validator {
 
   static String? validarPassword({required String? password}) {
     if (password == null) {
-     return "A tua palavra-passe estava incorreta. Verifica-a novamente.";
+      return "A tua palavra-passe estava incorreta. Verifica-a novamente.";
     }
 
-    if (password.isEmpty) {
-      return "O campo da palavra-passe não pode ser vazio";
-    } else if (password.length < 8) {
+    if (password.trim().isEmpty) {
+      return "Este campo é obrigatório";
+    } else if (password.trim().length < 8) {
       return "A palavra-passe deve conter mais de 8 caracteres";
+    }
+
+    return null;
+  }
+
+  static String? validarNumeroCartao({required String? numCartao}) {
+    if (numCartao == null) {
+      return "O número do cartão estava incorreta. Verifica-a novamente.";
+    }
+
+    RegExp _validNumero = RegExp("[0-9]+");
+
+    if (numCartao.trim().isEmpty) {
+      return "Este campo é obrigatório";
+    } else if (!_validNumero.hasMatch(numCartao.trim())) {
+      return "Por favor, introduza um número de cartão válido";
+    }
+
+    return null;
+  }
+
+  static String? validarNomeCompleto({required String? nome}) {
+    if (nome == null) {
+      return "O nome completo estava incorreta. Verifica novamente.";
+    }
+
+    RegExp _validNumero = RegExp(r'^[a-z A-Z,.\-]+$');
+
+    if (nome.trim().isEmpty) {
+      return "Este campo é obrigatório";
+    } else if (!_validNumero.hasMatch(nome.trim())) {
+      return "Por favor, introduza um nome válido. Apenas o primeiro nome e so último";
+    }
+
+    return null;
+  }
+
+  static String? validarUsername({required String? username}) {
+    if (username == null) {
+      return "O nome de utilizador estava incorreta. Verifica novamente.";
+    }
+
+    if (username.trim().isEmpty) {
+      return "Este campo é obrigatório";
+    } else if (username.trim().length < 4) {
+      return "O nome de utilizador deve ter pelo menos 4 caracteres";
+    }
+
+    return null;
+  }
+
+  static String? validarPasswordRegisto({required String? password}) {
+    if (password == null) {
+      return "A tua palavra-passe estava incorreta. Verifica-a novamente.";
+    }
+
+    RegExp passRegExp =
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+
+    if (password.trim().isEmpty) {
+      return "Este campo é obrigatório";
+    } else if (password.trim().length < 8) {
+      return "A palavra-passe deve conter mais de 8 caracteres";
+    } else if (!passRegExp.hasMatch(password.trim())) {
+      return "A palavra-passe deve conter pelo menos uma letra maiúscula, uma minúscula, um número e caractere especial";
     }
 
     return null;

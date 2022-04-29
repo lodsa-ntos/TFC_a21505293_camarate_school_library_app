@@ -42,7 +42,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 ### Instruções de instalação - Clonar o repositório
 
 1. Criar o local em que deseja ter o projeto clonado;
-2. Copiar e colar no terminal a instrução abaixo "git clone + url" do repositório do github, pressionar enter e esperar cocnluir a instalação;
+2. Copiar e colar no terminal a instrução abaixo "git clone + url" do repositório do github, pressionar enter e esperar concluir a instalação;
 ```
 git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_app.git
 ```

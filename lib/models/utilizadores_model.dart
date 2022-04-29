@@ -1,34 +1,35 @@
 //? Alunos
 class AlunoModel {
-  final String uidAluno;
-  final String numCartaoAluno;
-  final String primeiroNomeAluno;
-  final String segundoNomeAluno;
-  final int numAluno;
-  final int ano;
-  final String turma;
-  final String emailAluno;
-  final String passwordAluno;
+  String? uidAluno;
+  String? numCartaoAluno;
+  String? nomeCompletoAluno;
+  String? nomeUtilizadorAluno;
+  int? numAluno;
+  String? ano;
+  String? turma;
+  String? emailAluno;
+  String? passwordAluno;
 
   // Construtor AlunoModel
   AlunoModel({
-    required this.uidAluno,
-    required this.numCartaoAluno,
-    required this.primeiroNomeAluno,
-    required this.segundoNomeAluno,
-    required this.numAluno,
-    required this.ano,
-    required this.turma,
-    required this.emailAluno,
-    required this.passwordAluno,
+    this.uidAluno,
+    this.numCartaoAluno,
+    this.nomeCompletoAluno,
+    this.nomeUtilizadorAluno,
+    this.numAluno,
+    this.ano,
+    this.turma,
+    this.emailAluno,
+    this.passwordAluno,
   });
 
+  // Enviar dados para o firebase
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> dadosAluno = <String, dynamic>{};
     dadosAluno["uidAluno"] = uidAluno;
     dadosAluno["numCartaoAluno"] = numCartaoAluno;
-    dadosAluno["primeiroNomeAluno"] = primeiroNomeAluno;
-    dadosAluno["segundoNomeAluno"] = segundoNomeAluno;
+    dadosAluno["nomeCompletoAluno"] = nomeCompletoAluno;
+    dadosAluno["nomeUtilizadorAluno"] = nomeUtilizadorAluno;
     dadosAluno["numAluno"] = numAluno;
     dadosAluno["ano"] = ano;
     dadosAluno["turma"] = turma;
@@ -38,14 +39,15 @@ class AlunoModel {
     return dadosAluno;
   }
 
+  // Receber dados do firebase
   factory AlunoModel.fromJson(Map<String, dynamic> json) {
     return AlunoModel(
       uidAluno: json['uidAluno'] ?? '',
       numCartaoAluno: json['numCartaoAluno'] ?? 'a1234',
-      primeiroNomeAluno: json['primeiroNomeAluno'] ?? '',
-      segundoNomeAluno: json['segundoNomeAluno'] ?? '',
+      nomeCompletoAluno: json['nomeCompletoAluno'] ?? '',
+      nomeUtilizadorAluno: json['nomeUtilizadorAluno'] ?? '',
       numAluno: json['numAluno'] ?? '',
-      ano: json['ano'] ?? 0,
+      ano: json['ano'] ?? '',
       turma: json['turma'] ?? '',
       emailAluno: json['emailAluno'] ?? '',
       passwordAluno: json['passwordAluno'] ?? '',
@@ -57,8 +59,7 @@ class AlunoModel {
 class ProfessorModel {
   final String uidProf;
   final String numCartaoProf;
-  final String primeiroNomeProf;
-  final String segundoNomeProf;
+  final String nomeCompletoProf;
   final String turma;
   final String emailProf;
   final String passwordProf;
@@ -67,19 +68,18 @@ class ProfessorModel {
   ProfessorModel({
     required this.uidProf,
     required this.numCartaoProf,
-    required this.primeiroNomeProf,
-    required this.segundoNomeProf,
+    required this.nomeCompletoProf,
     required this.turma,
     required this.emailProf,
     required this.passwordProf,
   });
 
+  // Enviar dados para o firebase
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> dadosProf = <String, dynamic>{};
     dadosProf["uidProf"] = uidProf;
     dadosProf["numCartaoProf"] = numCartaoProf;
-    dadosProf["primeiroNomeProf"] = primeiroNomeProf;
-    dadosProf["segundoNomeProf"] = segundoNomeProf;
+    dadosProf["primeiroNomeProf"] = nomeCompletoProf;
     dadosProf["turma"] = turma;
     dadosProf["emailProf"] = emailProf;
     dadosProf["passwordProf"] = passwordProf;
@@ -87,12 +87,12 @@ class ProfessorModel {
     return dadosProf;
   }
 
+  // Receber dados do firebase
   factory ProfessorModel.fromJson(Map<String, dynamic> json) {
     return ProfessorModel(
       uidProf: json['uidProf'] ?? '',
       numCartaoProf: json['numCartaoProf'] ?? 'p1234',
-      primeiroNomeProf: json['primeiroNomeProf'] ?? '',
-      segundoNomeProf: json['segundoNomeProf'] ?? '',
+      nomeCompletoProf: json['primeiroNomeProf'] ?? '',
       turma: json['turma'] ?? '',
       emailProf: json['emailProf'] ?? '',
       passwordProf: json['passwordProf'] ?? '',
@@ -104,8 +104,7 @@ class ProfessorModel {
 class FuncionarioModel {
   final String uidFunc;
   final String numCartaoFunc;
-  final String primeiroNomeFunc;
-  final String segundoNomeFunc;
+  final String nomeCompletoFunc;
   final String emailFunc;
   final String passwordFunc;
 
@@ -113,30 +112,29 @@ class FuncionarioModel {
   FuncionarioModel({
     required this.uidFunc,
     required this.numCartaoFunc,
-    required this.primeiroNomeFunc,
-    required this.segundoNomeFunc,
+    required this.nomeCompletoFunc,
     required this.emailFunc,
     required this.passwordFunc,
   });
 
+  // Enviar dados para o firebase
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> dadosFunc = <String, dynamic>{};
     dadosFunc["uidFunc"] = uidFunc;
     dadosFunc["numCartaoFunc"] = numCartaoFunc;
-    dadosFunc["primeiroNomeFunc"] = primeiroNomeFunc;
-    dadosFunc["segundoNomeFunc"] = segundoNomeFunc;
+    dadosFunc["primeiroNomeFunc"] = nomeCompletoFunc;
     dadosFunc["emailFunc"] = emailFunc;
     dadosFunc["passwordFunc"] = passwordFunc;
 
     return dadosFunc;
   }
 
+  // Receber dados do firebase
   factory FuncionarioModel.fromJson(Map<String, dynamic> json) {
     return FuncionarioModel(
       uidFunc: json['uidFunc'] ?? '',
       numCartaoFunc: json['numCartaoFunc'] ?? 'f1234',
-      primeiroNomeFunc: json['primeiroNomeFunc'] ?? '',
-      segundoNomeFunc: json['segundoNomeFunc'] ?? '',
+      nomeCompletoFunc: json['primeiroNomeFunc'] ?? '',
       emailFunc: json['emailFunc'] ?? '',
       passwordFunc: json['passwordFunc'] ?? '',
     );
