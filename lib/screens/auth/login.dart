@@ -99,6 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         // Obter o valor do email escrito pelo user
                         controller: _emailInputController,
+
                         keyboardType: TextInputType.emailAddress,
 
                         // Estilo dentro do campo de e-mail

@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../services/auth_services.dart';
 import '../../styles/style_login_screen.dart';
+import '../../util/form.dart';
 import '../../util/validator.dart';
 
 class Registar extends StatefulWidget {
@@ -23,24 +24,33 @@ class _RegistarState extends State<Registar> {
   //? Chave para identificar a validação do formulario
   final _chaveFormRegisto = GlobalKey<FormState>();
 
-  //? Esconder a password
+//? Esconder a password
   bool esconderPassword = true;
 
   bool _isLoading = false;
 
-  //! Alcançar a instancia da abse de dados para autenticação do utilizador atual
-  final _auth = FirebaseAuth.instance;
-
-  //? Controladores para guardar o texto dos campos
+//? Controladores para guardar o texto dos campos
   final _emailInputController = TextEditingController();
   final _passwordInputController = TextEditingController();
   final _nomeCompletoController = TextEditingController();
   final _usernameController = TextEditingController();
   final _numCartaoAlunoController = TextEditingController();
 
+  //! Alcançar a instancia da abse de dados para autenticação do utilizador atual
+  final _auth = FirebaseAuth.instance;
+
+//! Simular chamada de espera para criar utilizador
+  final _aCriarUtilizador = Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: const <Widget>[
+      CircularProgressIndicator(),
+      Text(" A criar utilizador... aguarde")
+    ],
+  );
+
   @override
   Widget build(BuildContext context) {
-    //? variável do campo da password
+//? variável do campo da password
     final _decoracaoCampoDaPassword = InputDecoration(
       contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       filled: true,
@@ -69,15 +79,6 @@ class _RegistarState extends State<Registar> {
       ),
     );
 
-    //! Simular chamada de espera para criar utilizador
-    var _aCriarUtilizador = Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: const <Widget>[
-        CircularProgressIndicator(),
-        Text(" A criar utilizador... aguarde")
-      ],
-    );
-
     return SafeArea(
       child: Scaffold(
         /// evitar que os widgets sejam redimensionados se o teclado aparecer
@@ -103,40 +104,6 @@ class _RegistarState extends State<Registar> {
                   key: _chaveFormRegisto,
                   child: Column(
                     children: <Widget>[
-                      //? Nome de utilizador
-                      TextFormField(
-                        validator: (username) =>
-                            Validator.validarUsername(username: username),
-
-                        // Obter o valor do email escrito pelo user
-                        controller: _usernameController,
-
-                        // Estilo dentro do campo de e-mail
-                        style: StyleRegistoScreen.estiloNomeUtilizador,
-
-                        // Estilo da decoração do campo do e-mail
-                        decoration: StyleRegistoScreen.decoracaoNomeUtilizador,
-                      ),
-
-                      const SizedBox(height: 16.0),
-
-                      //? Nome próprio e apelido
-                      TextFormField(
-                        validator: (nome) =>
-                            Validator.validarNomeCompleto(nome: nome),
-
-                        // Obter o valor do email escrito pelo user
-                        controller: _nomeCompletoController,
-
-                        // Estilo dentro do campo de e-mail
-                        style: StyleRegistoScreen.estiloNomeCompleto,
-
-                        // Estilo da decoração do campo do e-mail
-                        decoration: StyleRegistoScreen.decoracaoNomeCompleto,
-                      ),
-
-                      const SizedBox(height: 16.0),
-
                       //? Número do cartão
                       TextFormField(
                         validator: (numCartao) =>
@@ -210,7 +177,11 @@ class _RegistarState extends State<Registar> {
                                       onPressed: () async {
                                         if (_chaveFormRegisto.currentState!
                                             .validate()) {
-                                          registarUtilizador();
+                                          if (_numCartaoAlunoController.text
+                                              .trim()
+                                              .contains('a')) {
+                                            registarUtilizador();
+                                          }
                                         }
                                       }),
                                 ),
@@ -222,7 +193,7 @@ class _RegistarState extends State<Registar> {
                       RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(
-                          text: "Tens uma conta? ",
+                          text: "Já tens uma conta? ",
                           style: const TextStyle(
                             fontFamily: 'Montserrat',
                             color: Colors.black,
@@ -298,8 +269,6 @@ class _RegistarState extends State<Registar> {
     // Guardar todos os valores do aluno
     alunoModel.emailAluno = utilizador!.email;
     alunoModel.uidAluno = utilizador.uid;
-    alunoModel.nomeUtilizadorAluno = _usernameController.text.trim();
-    alunoModel.nomeCompletoAluno = _nomeCompletoController.text.trim();
     alunoModel.numCartaoAluno = _numCartaoAlunoController.text.trim();
     alunoModel.passwordAluno = _passwordInputController.text.trim();
 
@@ -312,14 +281,14 @@ class _RegistarState extends State<Registar> {
         .set(alunoModel.toJson());
     // mensagem de sucesso para user interface
     Fluttertoast.showToast(
-      msg: "Conta criada com sucesso :) ",
+      msg: "Bem-vindo aluno :) ",
       backgroundColor: Colors.green,
     );
 
     // Redireciona o utilizador para a página home
     Navigator.pushAndRemoveUntil(
       (context),
-      MaterialPageRoute(builder: (context) => const Home()),
+      MaterialPageRoute(builder: (context) => formularioParaAluno()),
       (route) => false,
     );
   }
