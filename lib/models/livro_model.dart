@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:camarate_school_library/models/utilizadores_model.dart';
+
 class RepositorioDeLivros {
   List<LivroModel> livroModel;
 
@@ -41,6 +43,7 @@ class LivroModel {
   final String numRegisto;
   final int ano;
   bool isRequisitado;
+  // colocar uid para saber que está requisitado
 
   LivroModel({
     required this.id,

@@ -51,11 +51,11 @@ class Validator {
       return "O nome completo estava incorreta. Verifica novamente.";
     }
 
-    RegExp _validNumero = RegExp(r'^[a-z A-Z,.\-]+$');
+    RegExp _validNomeCompleto = RegExp(r'^[a-z A-Z,.\-]+$');
 
     if (nome.trim().isEmpty) {
       return "Este campo é obrigatório";
-    } else if (!_validNumero.hasMatch(nome.trim())) {
+    } else if (!_validNomeCompleto.hasMatch(nome.trim())) {
       return "Por favor, introduza um nome válido. Apenas o primeiro nome e so último";
     }
 
@@ -90,6 +90,38 @@ class Validator {
       return "A palavra-passe deve conter mais de 8 caracteres";
     } else if (!passRegExp.hasMatch(password.trim())) {
       return "A palavra-passe deve conter pelo menos uma letra maiúscula, uma minúscula, um número e caractere especial";
+    }
+
+    return null;
+  }
+
+  static String? validarAno({required String? ano}) {
+    if (ano == null) {
+      return "O ano estava incorreto. Verifica novamente.";
+    }
+
+    RegExp _validNumero = RegExp(r'[0-9]');
+
+    if (ano.trim().isEmpty) {
+      return "Este campo é obrigatório";
+    } else if (!_validNumero.hasMatch(ano.trim())) {
+      return "Por favor, introduza um ano válido.";
+    }
+
+    return null;
+  }
+
+  static String? validarTurma({required String? turma}) {
+    if (turma == null) {
+      return "A turma estava incorreta. Verifica novamente.";
+    }
+
+    RegExp _validNumero = RegExp(r'[a-z A-Z]');
+
+    if (turma.trim().isEmpty) {
+      return "Este campo é obrigatório";
+    } else if (!_validNumero.hasMatch(turma.trim())) {
+      return "Por favor, introduza a tua turma.";
     }
 
     return null;

@@ -203,7 +203,7 @@ class _HomeState extends State<Home> {
                       'Terminar sessão',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                    ), // Titulo dentro do menu lateral
+                    ), // Título dentro do menu lateral
 
                     /// Aceder ao metodo com o provider para terminar sessão
                     onTap: () async {

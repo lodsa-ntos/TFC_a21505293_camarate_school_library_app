@@ -57,21 +57,21 @@ class AlunoModel {
 
 //* Professores
 class ProfessorModel {
-  final String uidProf;
-  final String numCartaoProf;
-  final String nomeCompletoProf;
-  final String turma;
-  final String emailProf;
-  final String passwordProf;
+  String? uidProf;
+  String? numCartaoProf;
+  String? nomeCompletoProf;
+  String? turma;
+  String? emailProf;
+  String? passwordProf;
 
   // Construtor ProfessorModel
   ProfessorModel({
-    required this.uidProf,
-    required this.numCartaoProf,
-    required this.nomeCompletoProf,
-    required this.turma,
-    required this.emailProf,
-    required this.passwordProf,
+    this.uidProf,
+    this.numCartaoProf,
+    this.nomeCompletoProf,
+    this.turma,
+    this.emailProf,
+    this.passwordProf,
   });
 
   // Enviar dados para o firebase

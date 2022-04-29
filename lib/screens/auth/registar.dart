@@ -1,6 +1,7 @@
 import 'package:camarate_school_library/models/utilizadores_model.dart';
 import 'package:camarate_school_library/screens/auth/login.dart';
 import 'package:camarate_school_library/screens/home/home.dart';
+import 'package:camarate_school_library/util/formulario_professor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -10,7 +11,7 @@ import 'package:provider/provider.dart';
 
 import '../../services/auth_services.dart';
 import '../../styles/style_login_screen.dart';
-import '../../util/form.dart';
+import '../../util/formulario_aluno.dart';
 import '../../util/validator.dart';
 
 class Registar extends StatefulWidget {
@@ -180,7 +181,12 @@ class _RegistarState extends State<Registar> {
                                           if (_numCartaoAlunoController.text
                                               .trim()
                                               .contains('a')) {
-                                            registarUtilizador();
+                                            registarAluno();
+                                          } else if (_numCartaoAlunoController
+                                              .text
+                                              .trim()
+                                              .contains('p')) {
+                                            registarProfessor();
                                           }
                                         }
                                       }),
@@ -233,14 +239,14 @@ class _RegistarState extends State<Registar> {
     );
   }
 
-  //! Registar utilizador na app
-  registarUtilizador() async {
+  //* Registar utilizador na app
+  registarAluno() async {
     setState(() => _isLoading = true);
     try {
       await context
           .read<AuthServices>()
           .registar(_emailInputController.text, _passwordInputController.text)
-          .then((value) => {saveUtilizadorNoFirestore()});
+          .then((value) => {saveUserAlunoNoFirestore()});
       //* Mensagens de erro
     } on AuthException catch (erro) {
       setState(() => _isLoading = false);
@@ -255,8 +261,8 @@ class _RegistarState extends State<Registar> {
     }
   }
 
-  //! Guardar os dados do utilizador na base de dados do firestore
-  saveUtilizadorNoFirestore() async {
+  //* Guardar os dados do utilizador na base de dados do firestore
+  saveUserAlunoNoFirestore() async {
     // Instâcia par alcançar a base de dados firestore do firebase
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
@@ -288,7 +294,67 @@ class _RegistarState extends State<Registar> {
     // Redireciona o utilizador para a página home
     Navigator.pushAndRemoveUntil(
       (context),
-      MaterialPageRoute(builder: (context) => formularioParaAluno()),
+      MaterialPageRoute(builder: (context) => FormularioAluno()),
+      (route) => false,
+    );
+  }
+
+  //? Registar professor na app
+  registarProfessor() async {
+    setState(() => _isLoading = true);
+    try {
+      await context
+          .read<AuthServices>()
+          .registar(_emailInputController.text, _passwordInputController.text)
+          .then((value) => {saveUserProfessorNoFirestore()});
+      //* Mensagens de erro
+    } on AuthException catch (erro) {
+      setState(() => _isLoading = false);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        duration: const Duration(seconds: 10),
+        content: Text(
+          erro.mensagem,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        backgroundColor: Colors.red,
+      ));
+    }
+  }
+
+  //? Guardar os dados do professor na base de dados do firestore
+  saveUserProfessorNoFirestore() async {
+    // Instâcia par alcançar a base de dados firestore do firebase
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+    // Utilizador atual que preencheu o formulário
+    User? userProfessor = _auth.currentUser;
+
+    // Variável do tipo aluno para alcançar os atributos do aluno
+    ProfessorModel professorModel = ProfessorModel();
+
+    // Guardar todos os valores do aluno
+    professorModel.emailProf = userProfessor!.email;
+    professorModel.uidProf = userProfessor.uid;
+    professorModel.numCartaoProf = _numCartaoAlunoController.text.trim();
+    professorModel.passwordProf = _passwordInputController.text.trim();
+
+    // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
+    // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
+    //... e enviar para a base de dados
+    await firebaseFirestore
+        .collection("Utilizadores")
+        .doc(userProfessor.uid)
+        .set(professorModel.toJson());
+    // mensagem de sucesso para user interface
+    Fluttertoast.showToast(
+      msg: "Bem-vindo professor :) ",
+      backgroundColor: Colors.orange,
+    );
+
+    // Redireciona o utilizador para a página home
+    Navigator.pushAndRemoveUntil(
+      (context),
+      MaterialPageRoute(builder: (context) => const FormularioProfessor()),
       (route) => false,
     );
   }

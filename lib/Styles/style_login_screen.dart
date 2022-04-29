@@ -74,7 +74,7 @@ abstract class StyleRegistoScreen {
     fontWeight: FontWeight.bold,
   );
 
-  //*____________________________Número de Cartao_________________________________________
+  //*____________________________NÚMERO DE CARTÃO_________________________________________
 
   /// Estilo dentro do campo de e-mail
   static const TextStyle estiloNumCartao = TextStyle(
@@ -132,7 +132,7 @@ abstract class StyleRegistoScreen {
     ),
   );
 
-  //*____________________________Nome Completo_________________________________________
+  //*____________________________NOME COMPLETO_________________________________________
 
   /// Estilo dentro do campo de e-mail
   static const TextStyle estiloNomeCompleto = TextStyle(
@@ -161,7 +161,7 @@ abstract class StyleRegistoScreen {
     ),
   );
 
-  //*____________________________Nome de utilizador_________________________________________
+  //*____________________________NOME DE UTILIZADOR_________________________________________
 
   /// Estilo dentro do campo de e-mail
   static const TextStyle estiloNomeUtilizador = TextStyle(
@@ -176,6 +176,93 @@ abstract class StyleRegistoScreen {
     contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
     filled: true,
     labelText: "Nome de utilizador",
+    labelStyle: TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      color: Color.fromRGBO(127, 127, 127, 2),
+    ),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(
+        width: 2.0,
+        color: Color.fromRGBO(204, 204, 204, 2),
+      ),
+    ),
+  );
+
+  //*____________________________NÚMERO ALUNO_________________________________________
+
+  /// Estilo dentro do campo de e-mail
+  static const TextStyle estiloNumeroAluno = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    height: 2.0,
+  );
+
+  /// Estilo da decoração do campo do e-mail
+  static const InputDecoration decoracaoNumeroAluno = InputDecoration(
+    contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+    filled: true,
+    labelText: "Nº",
+    labelStyle: TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      color: Color.fromRGBO(127, 127, 127, 2),
+    ),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(
+        width: 2.0,
+        color: Color.fromRGBO(204, 204, 204, 2),
+      ),
+    ),
+  );
+
+  //*____________________________ANO_________________________________________
+
+  /// Estilo dentro do campo de e-mail
+  static const TextStyle estiloAno = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    height: 2.0,
+  );
+
+  /// Estilo da decoração do campo do e-mail
+  static const InputDecoration decoracaoAno = InputDecoration(
+    contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+    filled: true,
+    labelText: "Ano",
+    labelStyle: TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      color: Color.fromRGBO(127, 127, 127, 2),
+    ),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(
+        width: 2.0,
+        color: Color.fromRGBO(204, 204, 204, 2),
+      ),
+    ),
+  );
+
+  //*____________________________TURMA_________________________________________
+
+  /// Estilo dentro do campo de e-mail
+  static const TextStyle estiloTurma = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    height: 2.0,
+  );
+
+  /// Estilo da decoração do campo do e-mail
+  static const InputDecoration decoracaoTurma = InputDecoration(
+    contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+    filled: true,
+    labelText: "Turma ",
     labelStyle: TextStyle(
       fontFamily: 'Montserrat',
       fontSize: 16,

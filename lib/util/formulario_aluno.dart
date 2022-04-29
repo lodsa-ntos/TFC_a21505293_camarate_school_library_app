@@ -5,17 +5,18 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../models/utilizadores_model.dart';
 import '../screens/auth/login.dart';
 import '../screens/home/home.dart';
 import '../styles/style_login_screen.dart';
 
-class formularioParaAluno extends StatefulWidget {
+class FormularioAluno extends StatefulWidget {
+  const FormularioAluno({Key? key}) : super(key: key);
+
   @override
-  State<formularioParaAluno> createState() => formularioParaAlunoState();
+  State<FormularioAluno> createState() => FormularioAlunoState();
 }
 
-class formularioParaAlunoState extends State<formularioParaAluno> {
+class FormularioAlunoState extends State<FormularioAluno> {
   //? Chave para identificar a validação do formulario
   final _chaveFormRegisto = GlobalKey<FormState>();
 
@@ -27,6 +28,9 @@ class formularioParaAlunoState extends State<formularioParaAluno> {
 //? Controladores para guardar o texto dos campos
   final _nomeCompletoController = TextEditingController();
   final _usernameController = TextEditingController();
+  final _numAlunoController = TextEditingController();
+  final _anoController = TextEditingController();
+  final _turmaController = TextEditingController();
 
   //! Alcançar a instancia da abse de dados para autenticação do utilizador atual
   final _auth = FirebaseAuth.instance;
@@ -55,7 +59,7 @@ class formularioParaAlunoState extends State<formularioParaAluno> {
             children: [
               const Padding(padding: EdgeInsets.only(bottom: 45)),
               const Text(
-                "Regista-te", //? titulo
+                "ALUNOS", //? titulo
                 textAlign: TextAlign.center,
                 style: StyleRegistoScreen.estiloTituloRegisto,
                 overflow: TextOverflow.ellipsis,
@@ -95,6 +99,64 @@ class formularioParaAlunoState extends State<formularioParaAluno> {
 
                       // Estilo da decoração do campo do e-mail
                       decoration: StyleRegistoScreen.decoracaoNomeCompleto,
+                    ),
+
+                    const SizedBox(height: 16.0),
+
+                    //? Número do aluno
+                    TextFormField(
+                      validator: (numAluno) =>
+                          Validator.validarAno(ano: numAluno),
+
+                      keyboardType: TextInputType.number,
+
+                      maxLength: 2,
+
+                      // Obter o valor do email escrito pelo user
+                      controller: _numAlunoController,
+
+                      // Estilo dentro do campo de e-mail
+                      style: StyleRegistoScreen.estiloNumeroAluno,
+
+                      // Estilo da decoração do campo do e-mail
+                      decoration: StyleRegistoScreen.decoracaoNumeroAluno,
+                    ),
+
+                    const SizedBox(height: 16.0),
+
+                    //? Ano
+                    TextFormField(
+                      validator: (ano) => Validator.validarAno(ano: ano),
+
+                      // Obter o valor do email escrito pelo user
+                      controller: _anoController,
+
+                      keyboardType: TextInputType.number,
+
+                      maxLength: 2,
+
+                      // Estilo dentro do campo de e-mail
+                      style: StyleRegistoScreen.estiloAno,
+
+                      // Estilo da decoração do campo do e-mail
+                      decoration: StyleRegistoScreen.decoracaoAno,
+                    ),
+
+                    const SizedBox(height: 16.0),
+
+                    //? Turma
+                    TextFormField(
+                      validator: (turma) =>
+                          Validator.validarTurma(turma: turma),
+
+                      // Obter o valor do email escrito pelo user
+                      controller: _turmaController,
+
+                      // Estilo dentro do campo de e-mail
+                      style: StyleRegistoScreen.estiloTurma,
+
+                      // Estilo da decoração do campo do e-mail
+                      decoration: StyleRegistoScreen.decoracaoTurma,
                     ),
 
                     const Padding(padding: EdgeInsets.only(bottom: 15)),
@@ -188,8 +250,21 @@ class formularioParaAlunoState extends State<formularioParaAluno> {
               element.reference.update(
                 {"nomeUtilizadorAluno": _usernameController.text.trim()},
               );
+
               element.reference.update(
                 {"nomeCompletoAluno": _nomeCompletoController.text.trim()},
+              );
+
+              element.reference.update(
+                {"numAluno": _numAlunoController.text.trim()},
+              );
+
+              element.reference.update(
+                {"ano": _anoController.text.trim()},
+              );
+
+              element.reference.update(
+                {"turma": _turmaController.text.trim()},
               );
             }));
     // mensagem de sucesso para user interface
