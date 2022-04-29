@@ -118,7 +118,7 @@ class formularioParaAlunoState extends State<formularioParaAluno> {
                                     onPressed: () async {
                                       if (_chaveFormRegisto.currentState!
                                           .validate()) {
-                                        saveUtilizadorNoFirestore();
+                                        saveUtilizadorAlunoNoFirestore();
                                       }
                                     }),
                               ),
@@ -170,7 +170,7 @@ class formularioParaAlunoState extends State<formularioParaAluno> {
   }
 
   //! Guardar os dados do utilizador na base de dados do firestore
-  saveUtilizadorNoFirestore() async {
+  saveUtilizadorAlunoNoFirestore() async {
     // Instâcia par alcançar a base de dados firestore do firebase
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
