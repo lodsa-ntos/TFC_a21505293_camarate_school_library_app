@@ -1,5 +1,4 @@
 import 'package:camarate_school_library/models/livro_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class LivroRequisitadoModel extends ChangeNotifier {
@@ -19,13 +18,14 @@ class LivroRequisitadoModel extends ChangeNotifier {
     return {..._livrosRequisitado};
   }
 
-  int get itemCount {
+  int get livroCount {
     return _livrosRequisitado.length;
   }
 
-  void addLivroRequisitado(LivroModel livro) {
+  Future<void> addLivroRequisitado(LivroModel livro) async {
+    // Se a chave já existir, o valor atual é retornado.
     _livrosRequisitado.putIfAbsent(
-      livro.id,
+      livro.id.toString(),
       () => LivroModel(
         id: livro.id,
         titulo: livro.titulo,
@@ -36,6 +36,7 @@ class LivroRequisitadoModel extends ChangeNotifier {
         ano: livro.ano,
         numRegisto: livro.numRegisto,
         isRequisitado: livro.isRequisitado,
+        uid: livro.uid,
       ),
     );
     notifyListeners();

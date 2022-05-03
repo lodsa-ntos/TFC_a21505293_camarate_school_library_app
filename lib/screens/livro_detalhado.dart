@@ -1,10 +1,8 @@
 import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/src/provider.dart';
 
 /// Classe para apresentar os widgets que compoêm o formato para representarem
 /// os detalhes dos livros
@@ -31,7 +29,7 @@ class LivroDetalhado extends StatelessWidget {
               children: [
                 //** Título */
                 Text(
-                  livro.titulo,
+                  livro.titulo.toString(),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
@@ -42,15 +40,15 @@ class LivroDetalhado extends StatelessWidget {
 
                 //** Autor */
                 Text(
-                  livro.autor,
+                  livro.autor.toString(),
                   style: const TextStyle(color: Colors.grey),
                 ),
                 Text(
-                  "ISBN: " + livro.isbn,
+                  "ISBN: " + livro.isbn.toString(),
                   style: const TextStyle(color: Colors.grey),
                 ),
                 Text(
-                  "Editora: " + livro.editora,
+                  "Editora: " + livro.editora.toString(),
                   style: const TextStyle(color: Colors.grey),
                 ),
                 Text(
@@ -63,7 +61,7 @@ class LivroDetalhado extends StatelessWidget {
                 //** Capa */
                 SizedBox(
                   height: 350,
-                  child: Image.network(livro.imagePath),
+                  child: Image.network(livro.imagePath.toString()),
                 ),
 
                 const SizedBox(height: 12),
@@ -91,7 +89,6 @@ class _BotaoRequisitar extends StatefulWidget {
 
 class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaParaRequisicao;
-  DocumentSnapshot? doc;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +97,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
         //
         _referenciaParaRequisicao = FirebaseDatabase.instance
             .ref('livros')
-            .child(widget.livroARequisitar.id)
+            .child(widget.livroARequisitar.id.toString())
             .child('isRequisitado');
 
         return Column(
@@ -113,13 +110,14 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                   child:
                       const Text('Requisitar', style: TextStyle(fontSize: 16)),
 
-                  onPressed: widget.livroARequisitar.isRequisitado
+                  onPressed: widget.livroARequisitar.isRequisitado!
                       ? null
                       : () async {
                           // Fica requisitado
 
                           setState(() {
                             _referenciaParaRequisicao?.set(true);
+
                             widget.livroARequisitar.isRequisitado = true;
                             requisitadoModel.addLivroRequisitado(
                               widget.livroARequisitar,
@@ -140,9 +138,10 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                         const Text('Devolver', style: TextStyle(fontSize: 16)),
 
                     // Fica devolvido
-                    onPressed: widget.livroARequisitar.isRequisitado
+                    onPressed: widget.livroARequisitar.isRequisitado!
                         ? () async {
                             setState(() {
+                              // Gravar ou atualiza dados de um caminho definido
                               _referenciaParaRequisicao?.set(false);
                               widget.livroARequisitar.isRequisitado = false;
 
@@ -161,7 +160,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             Row(
               children: [
                 Text(
-                  widget.livroARequisitar.isRequisitado
+                  widget.livroARequisitar.isRequisitado!
                       ? 'Livro requisitado...'
                       : '',
                   style: const TextStyle(color: Colors.green, fontSize: 18),

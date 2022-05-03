@@ -7,9 +7,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../Components/construir_caixa_pesquisa.dart';
-import '../Components/construir_filtros_pesquisa.dart';
-import '../detalhe/livro_detalhado.dart';
+import 'Components/construir_caixa_pesquisa.dart';
+import 'Components/construir_filtros_pesquisa.dart';
+import 'livro_detalhado.dart';
 
 String _condicao = '';
 
@@ -116,7 +116,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
                                     /// imagem do livro
                                     child: Image.network(
-                                      livro[index].imagePath,
+                                      livro[index].imagePath.toString(),
                                       fit: BoxFit.cover,
                                       width: 80,
                                       height: 115,
@@ -137,7 +137,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
                                           //
                                           //* titulo do livro
                                           Text(
-                                            livro[index].titulo,
+                                            livro[index].titulo.toString(),
                                             style: const TextStyle(
                                               color:
                                                   Color.fromRGBO(0, 0, 0, 0.8),
@@ -152,7 +152,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
                                           //* Autor
                                           Text(
-                                            livro[index].autor,
+                                            livro[index].autor.toString(),
                                             style: const TextStyle(
                                               color: Color(0xFF8E8E93),
                                               fontSize: 13,

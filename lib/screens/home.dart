@@ -1,13 +1,12 @@
 import 'package:camarate_school_library/Database/base_de_dados.dart';
+import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
-import 'package:camarate_school_library/screens/auth/login.dart';
-import 'package:camarate_school_library/screens/detalhe/livro_detalhado.dart';
-import 'package:camarate_school_library/screens/notificacao/notificacao.dart';
-import 'package:camarate_school_library/screens/pesquisa/pesquisar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:camarate_school_library/screens/login.dart';
+import 'package:camarate_school_library/screens/livro_detalhado.dart';
+import 'package:camarate_school_library/screens/notificacao.dart';
+import 'package:camarate_school_library/screens/pesquisar.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:intl/intl.dart'; // DateFormat
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,6 +46,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<RepositorioDeLivros> livrosRequisitadosBD = [];
+  LivroModel? livroModel;
+
   @override
   Widget build(BuildContext context) {
     /// variável o carregamento da informação dos livros a serem apresentados
@@ -64,7 +66,18 @@ class _HomeState extends State<Home> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return const Center(child: CircularProgressIndicator());
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[
+                    CircularProgressIndicator(),
+                    Text(" A carregar livros...")
+                  ],
+                );
+              case ConnectionState.none:
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[Text("Sem livros para mostrar...")],
+                );
               default:
                 if (snapshot.hasError) {
                   return Text('Erro: ${snapshot.error}');
@@ -149,14 +162,11 @@ class _HomeState extends State<Home> {
       },
     );
 
-    /// variavel para obter a informacao Map<String, LivroModel> sobre o livro
-    /// requisitado
-    final listaLivro = Provider.of<LivroRequisitadoModel>(context);
-
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
         final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
         final fazerLigacao = BaseDeDados();
+
         return Scaffold(
           appBar: AppBar(
             // icone de pesquisa
@@ -219,36 +229,133 @@ class _HomeState extends State<Home> {
             ),
           ),
 
-          /// este SingleChildScrollView será geral para toda a página home
-          /// e fará apenas scroll na vertical
+          //? INTERFACE PARA O UTILIZADOR
+          //* LIVROS REQUISITADOS + LIVROS PRATELEIRAS
 
           body: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (listaLivro.livros.isNotEmpty) ...[
-                  //* Título
-                  livrosRequisitados,
-
-                  //** Este SingleChildScrollView vai fazer scroll na horizontal
-                  //** vai apresentar os livros que foram requisitados */
-                  SingleChildScrollView(
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 276.0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _FormatoLivroRequisitadoParaUtilizador(),
-                        ],
-                      ),
-                    ),
+                livrosRequisitados,
+                Container(
+                  margin: const EdgeInsets.only(left: 3.0, right: 5.0),
+                  child: FutureBuilder(
+                    future: fazerLigacao.carregarLivrosBD(referenciaBD),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        default:
+                          if (snapshot.hasError) {
+                            return Text('Erro: ${snapshot.error}');
+                          } else {
+                            return Container(
+                              margin: const EdgeInsets.symmetric(vertical: 8.0),
+                              height: 255.0,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      shrinkWrap: true,
+                                      itemCount: snapshot.data.length,
+                                      itemBuilder: (context, index) {
+                                        if (snapshot
+                                                .data[index].isRequisitado ==
+                                            true) {
+                                          return InkWell(
+                                            onTap: () => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                //** Redireciona o utilizador para a página de detalhes do livro */
+                                                builder: (context) =>
+                                                    LivroDetalhado(
+                                                  livro: snapshot.data[index],
+                                                ),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  width: 103.0,
+                                                  margin: const EdgeInsets.only(
+                                                      left: 16.0),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Container(
+                                                        width: 120.66,
+                                                        height: 155.5,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                          image:
+                                                              DecorationImage(
+                                                            image: NetworkImage(
+                                                                snapshot
+                                                                    .data[index]
+                                                                    .imagePath),
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 12.0,
+                                                      ),
+                                                      Text(
+                                                        snapshot
+                                                            .data[index].titulo,
+                                                        style: const TextStyle(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontSize: 14.0,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5.0,
+                                                      ),
+                                                      Text(
+                                                        'Data de requisição: ',
+                                                        style: GoogleFonts
+                                                            .catamaran(
+                                                          textStyle:
+                                                              const TextStyle(
+                                                            fontSize: 13.0,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }
+                                        return const Text('');
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                      }
+                    },
                   ),
-                ],
+                ),
 
-                //* Título
+                //? Título
                 prateleiras,
 
                 SingleChildScrollView(
@@ -260,92 +367,6 @@ class _HomeState extends State<Home> {
                 ),
               ],
             ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _FormatoLivroRequisitadoParaUtilizador extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // Aqui obtenho a data do dia atual
-    // E guardo o formato de como quero que a data apareça para o utilizador
-    var dataDeHoje = DateTime.now();
-    var formato = DateFormat('dd-MM-yyyy');
-    String data = formato.format(dataDeHoje);
-
-    return Consumer<LivroRequisitadoModel>(
-      builder: (BuildContext context, LivroRequisitadoModel requisitadoModel,
-          Widget? child) {
-        return Expanded(
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemCount: requisitadoModel.livros.length,
-            itemBuilder: (context, index) {
-              final livro = requisitadoModel.livros.values.toList()[index];
-
-              return InkWell(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    //** Redireciona o utilizador para a página de detalhes do livro */
-                    builder: (context) => LivroDetalhado(
-                      livro: livro,
-                    ),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 111.0,
-                      margin: const EdgeInsets.only(left: 16.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 121.66,
-                            height: 165.5,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              image: DecorationImage(
-                                image: NetworkImage(livro.imagePath),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 12.0,
-                          ),
-                          Text(
-                            livro.titulo,
-                            style: const TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14.0,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            'Data de requisição: ' + data,
-                            style: GoogleFonts.catamaran(
-                              textStyle: const TextStyle(
-                                fontSize: 13.0,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
           ),
         );
       },

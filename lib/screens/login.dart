@@ -1,4 +1,4 @@
-import 'package:camarate_school_library/screens/auth/registar.dart';
+import 'package:camarate_school_library/screens/registar.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +6,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
-import '../../styles/style_login_screen.dart';
-import '../../util/validator.dart';
+import '../styles/style_login_screen.dart';
+import '../util/validator.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

@@ -1,7 +1,8 @@
+import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
-import 'package:camarate_school_library/screens/auth/login.dart';
-import 'package:camarate_school_library/screens/home/home.dart';
+import 'package:camarate_school_library/screens/login.dart';
+import 'package:camarate_school_library/screens/home.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class AutenticarUtilizador extends StatelessWidget {
     AuthServices autenticacao = Provider.of<AuthServices>(context);
 
     if (autenticacao.isLoading) {
-      return aCarregar();
+      return aCarregarPagina();
     } else if (autenticacao.utilizador == null) {
       return const LoginScreen();
     } else {
@@ -54,7 +55,7 @@ class AutenticarUtilizador extends StatelessWidget {
     }
   }
 
-  aCarregar() {
+  aCarregarPagina() {
     return const Scaffold(
       body: Center(
         child: CircularProgressIndicator(),

@@ -79,7 +79,7 @@ class ProfessorModel {
     final Map<String, dynamic> dadosProf = <String, dynamic>{};
     dadosProf["uidProf"] = uidProf;
     dadosProf["numCartaoProf"] = numCartaoProf;
-    dadosProf["primeiroNomeProf"] = nomeCompletoProf;
+    dadosProf["nomeCompletoProf"] = nomeCompletoProf;
     dadosProf["turma"] = turma;
     dadosProf["emailProf"] = emailProf;
     dadosProf["passwordProf"] = passwordProf;
@@ -92,7 +92,7 @@ class ProfessorModel {
     return ProfessorModel(
       uidProf: json['uidProf'] ?? '',
       numCartaoProf: json['numCartaoProf'] ?? 'p1234',
-      nomeCompletoProf: json['primeiroNomeProf'] ?? '',
+      nomeCompletoProf: json['nomeCompletoProf'] ?? '',
       turma: json['turma'] ?? '',
       emailProf: json['emailProf'] ?? '',
       passwordProf: json['passwordProf'] ?? '',
@@ -122,7 +122,7 @@ class FuncionarioModel {
     final Map<String, dynamic> dadosFunc = <String, dynamic>{};
     dadosFunc["uidFunc"] = uidFunc;
     dadosFunc["numCartaoFunc"] = numCartaoFunc;
-    dadosFunc["primeiroNomeFunc"] = nomeCompletoFunc;
+    dadosFunc["nomeCompletoFunc"] = nomeCompletoFunc;
     dadosFunc["emailFunc"] = emailFunc;
     dadosFunc["passwordFunc"] = passwordFunc;
 
@@ -134,7 +134,7 @@ class FuncionarioModel {
     return FuncionarioModel(
       uidFunc: json['uidFunc'] ?? '',
       numCartaoFunc: json['numCartaoFunc'] ?? 'f1234',
-      nomeCompletoFunc: json['primeiroNomeFunc'] ?? '',
+      nomeCompletoFunc: json['nomeCompletoFunc'] ?? '',
       emailFunc: json['emailFunc'] ?? '',
       passwordFunc: json['passwordFunc'] ?? '',
     );

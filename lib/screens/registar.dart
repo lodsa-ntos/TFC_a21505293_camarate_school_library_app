@@ -1,6 +1,6 @@
 import 'package:camarate_school_library/models/utilizadores_model.dart';
-import 'package:camarate_school_library/screens/auth/login.dart';
-import 'package:camarate_school_library/screens/home/home.dart';
+import 'package:camarate_school_library/screens/login.dart';
+import 'package:camarate_school_library/screens/home.dart';
 import 'package:camarate_school_library/util/formulario_professor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-import '../../services/auth_services.dart';
-import '../../styles/style_login_screen.dart';
-import '../../util/formulario_aluno.dart';
-import '../../util/validator.dart';
+import '../services/auth_services.dart';
+import '../styles/style_login_screen.dart';
+import '../util/formulario_aluno.dart';
+import '../util/validator.dart';
 
 class Registar extends StatefulWidget {
   const Registar({Key? key}) : super(key: key);
