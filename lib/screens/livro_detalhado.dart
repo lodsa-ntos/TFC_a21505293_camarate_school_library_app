@@ -161,8 +161,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                         const Text('Devolver', style: TextStyle(fontSize: 16)),
 
                     // Fica devolvido
-                    onPressed: widget.livroARequisitar.isRequisitado! &&
-                            teste.uidLivro!.contains(utilizador!.uid)
+                    onPressed: widget.livroARequisitar.uidLivro!
+                            .contains(utilizador!.uid)
                         ? () async {
                             setState(() {
                               // Gravar ou atualiza dados de um caminho definido
