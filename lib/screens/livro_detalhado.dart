@@ -5,12 +5,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/utilizadores_model.dart';
-
 /// Classe para apresentar os widgets que compoêm o formato para representarem
 /// os detalhes dos livros
 ///
-//! Alcançar a instancia da abse de dados para autenticação do utilizador atual
+//? Alcançar a instância da base de dados para autenticação do utilizador atual
 final _auth = FirebaseAuth.instance;
 
 class LivroDetalhado extends StatelessWidget {
@@ -83,69 +81,67 @@ class LivroDetalhado extends StatelessWidget {
   }
 }
 
-class _BotaoRequisitar extends StatefulWidget {
-  final Livro livroARequisitar;
-
-  const _BotaoRequisitar({required this.livroARequisitar, Key? key})
-      : super(key: key);
-
-  @override
-  State<_BotaoRequisitar> createState() => _BotaoRequisitarState();
-}
-
 class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaParaRequisicao;
   DatabaseReference? _referenciaUID;
 
-  // Utilizador atual que preencheu o formulário
+  // Utilizador atual
   User? utilizador = _auth.currentUser;
 
-  // Variável do tipo aluno para alcançar os atributos do aluno
-  Livro teste = Livro();
+  // Variável do tipo Livro para alcançar os atributos do livro
+  Livro livro = Livro();
 
   @override
   Widget build(BuildContext context) {
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
-        //
+        //? atualizar a requisição e devolução na base de dados
         _referenciaParaRequisicao = FirebaseDatabase.instance
             .ref('livros')
             .child(widget.livroARequisitar.id.toString())
             .child('isRequisitado');
 
+        //? referencia para registar o utilizador como dono do livro requisitado na base de dados
         _referenciaUID = FirebaseDatabase.instance
             .ref('livros')
             .child(widget.livroARequisitar.id.toString())
             .child('uidLivro');
 
-        teste.uidLivro = utilizador!.uid;
+        //? o uid do Livro recebe o uid do utilizador na requisição e devolução do livro
+        livro.uidLivro = utilizador!.uid;
 
         return Column(
           children: [
             Row(
               children: [
-                // REQUISITAR
+                //* REQUISITAR
                 ElevatedButton(
                   ///
                   child:
                       const Text('Requisitar', style: TextStyle(fontSize: 16)),
 
+                  //? Botão fica indisponível depois de fazer a requisição
                   onPressed: widget.livroARequisitar.isRequisitado!
                       ? null
                       : () async {
                           // Fica requisitado
 
                           setState(() {
+                            //? muda o estado de requisição
                             _referenciaParaRequisicao?.set(true);
 
-                            _referenciaUID?.set(teste.uidLivro);
+                            //? regista o id do utilizador que fez a requisição
+                            _referenciaUID?.set(livro.uidLivro);
 
+                            //? o livro fica requisitado
                             widget.livroARequisitar.isRequisitado = true;
 
+                            //! adicionar o livro na lista de livros requisitados
                             requisitadoModel.addLivroRequisitado(
                               widget.livroARequisitar,
                             );
 
+                            // ignore: avoid_print
                             print('Livro requisitado');
                           });
                         },
@@ -153,29 +149,34 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                 const SizedBox(width: 35),
 
-                // DEVOLVER
+                //* DEVOLVER
                 ElevatedButton(
+                  ///
+                  child: const Text('Devolver', style: TextStyle(fontSize: 16)),
 
-                    ///
-                    child:
-                        const Text('Devolver', style: TextStyle(fontSize: 16)),
+                  //? Botão de fazer requisição fica disponível se o utilizador devolver o seu livro requisitado
+                  onPressed: widget.livroARequisitar.isRequisitado! &&
+                          widget.livroARequisitar.uidLivro!
+                              .contains(utilizador!.uid)
+                      ? () async {
+                          setState(() {
+                            //? atulizado o estado de requisição para devolvido
+                            _referenciaParaRequisicao?.set(false);
 
-                    // Fica devolvido
-                    onPressed: widget.livroARequisitar.uidLivro!
-                                .contains(utilizador!.uid) &&
-                            widget.livroARequisitar.isRequisitado!
-                        ? () async {
-                            setState(() {
-                              // Gravar ou atualiza dados de um caminho definido
-                              _referenciaParaRequisicao?.set(false);
-                              widget.livroARequisitar.isRequisitado = false;
+                            //? o livro fica devolvido
+                            widget.livroARequisitar.isRequisitado = false;
 
-                              requisitadoModel.devolverLivroRequisitado(
-                                  widget.livroARequisitar);
-                              print('Livro devolvido');
-                            });
-                          }
-                        : null),
+                            //! adicionar o livro na lista de livros devolvidos
+                            requisitadoModel.devolverLivroRequisitado(
+                              widget.livroARequisitar,
+                            );
+
+                            // ignore: avoid_print
+                            print('Livro devolvido');
+                          });
+                        }
+                      : null,
+                ),
               ],
             ),
 
@@ -197,4 +198,14 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
       },
     );
   }
+}
+
+class _BotaoRequisitar extends StatefulWidget {
+  final Livro livroARequisitar;
+
+  const _BotaoRequisitar({required this.livroARequisitar, Key? key})
+      : super(key: key);
+
+  @override
+  State<_BotaoRequisitar> createState() => _BotaoRequisitarState();
 }
