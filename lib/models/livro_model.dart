@@ -83,12 +83,12 @@ class Livro {
       ano: json['ano']?.toInt() ?? 0,
       isRequisitado: json['isRequisitado'] ?? false,
       uidLivro: json['uidLivro'] ?? '',
-      data: json['data'] ?? DateTime.now(),
+      data: (DateTime.tryParse(json['data'])),
     );
   }
 }
 
-List menuDoFiltro = [
+List<dynamic> menuDoFiltro = [
   'Todos',
   'Autor',
   'Título',

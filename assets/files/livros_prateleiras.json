@@ -9,7 +9,7 @@
     "isbn" : "9789722524223",
     "titulo" : "O Alquimista",
     "numRegisto": "0001",
-    "uid": "CgbVRlwz2iXJfAAmWEPVFD5pzVl2",
+    "uidLivro": "CgbVRlwz2iXJfAAmWEPVFD5pzVl2",
     "data": ""
   }, {
     "ano" : 2004,
@@ -21,7 +21,7 @@
     "isbn" : "9789898838889",
     "titulo" : "Que número é este",
     "numRegisto": "0002",
-    "uid": "CgbVRlwz2iXJfAAmWEPVFD5pzVl2",
+    "uidLivro": "CgbVRlwz2iXJfAAmWEPVFD5pzVl2",
     "data": ""
   }, {
     "ano" : 2004,
@@ -33,7 +33,7 @@
     "isbn" : "9789892326153",
     "titulo" : "14 - Uma Vida nos Tectos do Mundo",
     "numRegisto": "0003",
-    "uid": "CgbVRlwz2iXJfAAmWEPVFD5pzVl2",
+    "uidLivro": "CgbVRlwz2iXJfAAmWEPVFD5pzVl2",
     "data": ""
   }, {
     "ano" : 1998,
@@ -45,7 +45,7 @@
     "isbn" : "9789897242915",
     "titulo" : "Planisfério Pessoal",
     "numRegisto": "0004",
-    "uid": "CgbVRlwz2iXJfAAmWEPVFD5pzVl2",
+    "uidLivro": "CgbVRlwz2iXJfAAmWEPVFD5pzVl2",
     "data": ""
   } ]
 }

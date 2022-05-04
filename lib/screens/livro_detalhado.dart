@@ -1,11 +1,17 @@
 import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/utilizadores_model.dart';
+
 /// Classe para apresentar os widgets que compoêm o formato para representarem
 /// os detalhes dos livros
+///
+//! Alcançar a instancia da abse de dados para autenticação do utilizador atual
+final _auth = FirebaseAuth.instance;
 
 class LivroDetalhado extends StatelessWidget {
   const LivroDetalhado({Key? key, required this.livro}) : super(key: key);
@@ -89,6 +95,13 @@ class _BotaoRequisitar extends StatefulWidget {
 
 class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaParaRequisicao;
+  DatabaseReference? _referenciaUID;
+
+  // Utilizador atual que preencheu o formulário
+  User? utilizador = _auth.currentUser;
+
+  // Variável do tipo aluno para alcançar os atributos do aluno
+  Livro teste = Livro();
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +112,13 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .ref('livros')
             .child(widget.livroARequisitar.id.toString())
             .child('isRequisitado');
+
+        _referenciaUID = FirebaseDatabase.instance
+            .ref('livros')
+            .child(widget.livroARequisitar.id.toString())
+            .child('uidLivro');
+
+        teste.uidLivro = utilizador!.uid;
 
         return Column(
           children: [
@@ -118,7 +138,10 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           setState(() {
                             _referenciaParaRequisicao?.set(true);
 
+                            _referenciaUID?.set(teste.uidLivro);
+
                             widget.livroARequisitar.isRequisitado = true;
+
                             requisitadoModel.addLivroRequisitado(
                               widget.livroARequisitar,
                             );
@@ -138,7 +161,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                         const Text('Devolver', style: TextStyle(fontSize: 16)),
 
                     // Fica devolvido
-                    onPressed: widget.livroARequisitar.isRequisitado!
+                    onPressed: widget.livroARequisitar.isRequisitado! &&
+                            utilizador!.uid == teste.uidLivro
                         ? () async {
                             setState(() {
                               // Gravar ou atualiza dados de um caminho definido

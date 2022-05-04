@@ -6,6 +6,7 @@ import 'package:camarate_school_library/screens/login.dart';
 import 'package:camarate_school_library/screens/livro_detalhado.dart';
 import 'package:camarate_school_library/screens/notificacao.dart';
 import 'package:camarate_school_library/screens/pesquisar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import 'package:flutter/material.dart';
@@ -166,6 +167,16 @@ class _HomeState extends State<Home> {
       builder: (context, requisitadoModel, child) {
         final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
         final fazerLigacao = BaseDeDados();
+
+        //! Alcançar a instancia da abse de dados para autenticação do utilizador atual
+        final _auth = FirebaseAuth.instance;
+        // Utilizador atual que preencheu o formulário
+        User? utilizador = _auth.currentUser;
+
+        // Variável do tipo aluno para alcançar os atributos do aluno
+        Livro teste = Livro();
+
+        teste.uidLivro = utilizador!.uid;
 
         return Scaffold(
           appBar: AppBar(
