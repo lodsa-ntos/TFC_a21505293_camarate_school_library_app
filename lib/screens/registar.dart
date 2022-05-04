@@ -270,7 +270,7 @@ class _RegistarState extends State<Registar> {
     User? utilizador = _auth.currentUser;
 
     // Variável do tipo aluno para alcançar os atributos do aluno
-    AlunoModel alunoModel = AlunoModel();
+    Aluno alunoModel = Aluno();
 
     // Guardar todos os valores do aluno
     alunoModel.emailAluno = utilizador!.email;
@@ -330,7 +330,7 @@ class _RegistarState extends State<Registar> {
     User? userProfessor = _auth.currentUser;
 
     // Variável do tipo aluno para alcançar os atributos do aluno
-    ProfessorModel professorModel = ProfessorModel();
+    Professor professorModel = Professor();
 
     // Guardar todos os valores do aluno
     professorModel.emailProf = userProfessor!.email;

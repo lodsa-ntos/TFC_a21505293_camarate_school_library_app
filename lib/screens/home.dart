@@ -46,8 +46,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<RepositorioDeLivros> livrosRequisitadosBD = [];
-  LivroModel? livroModel;
+  List<LivroModel> livrosRequisitadosBD = [];
+  Livro? livroModel;
 
   @override
   Widget build(BuildContext context) {

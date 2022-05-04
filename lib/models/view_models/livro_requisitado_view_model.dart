@@ -12,9 +12,9 @@ class LivroRequisitadoModel extends ChangeNotifier {
         ano: livro.ano,
         isRequisitado: livro.isRequisitado,*/
 
-  Map<String, LivroModel> _livrosRequisitado = {};
+  Map<String, Livro> _livrosRequisitado = {};
 
-  Map<String, LivroModel> get livros {
+  Map<String, Livro> get livros {
     return {..._livrosRequisitado};
   }
 
@@ -22,11 +22,11 @@ class LivroRequisitadoModel extends ChangeNotifier {
     return _livrosRequisitado.length;
   }
 
-  Future<void> addLivroRequisitado(LivroModel livro) async {
+  Future<void> addLivroRequisitado(Livro livro) async {
     // Se a chave já existir, o valor atual é retornado.
     _livrosRequisitado.putIfAbsent(
       livro.id.toString(),
-      () => LivroModel(
+      () => Livro(
         id: livro.id,
         titulo: livro.titulo,
         autor: livro.autor,
@@ -36,20 +36,20 @@ class LivroRequisitadoModel extends ChangeNotifier {
         ano: livro.ano,
         numRegisto: livro.numRegisto,
         isRequisitado: livro.isRequisitado,
-        uid: livro.uid,
+        uidLivro: livro.uidLivro,
       ),
     );
     notifyListeners();
   }
 
-  void devolverLivroRequisitado(LivroModel livro) {
+  void devolverLivroRequisitado(Livro livro) {
     _livrosRequisitado.remove(livro.id);
     notifyListeners();
   }
 
-  Map<String, LivroModel> get livro => _livrosRequisitado;
+  Map<String, Livro> get livro => _livrosRequisitado;
 
-  set livro(Map<String, LivroModel> novoLivro) {
+  set livro(Map<String, Livro> novoLivro) {
     _livrosRequisitado = novoLivro;
     notifyListeners();
   }

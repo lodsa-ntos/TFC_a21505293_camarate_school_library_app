@@ -8,7 +8,9 @@
     "isRequisitado" : false,
     "isbn" : "9789722524223",
     "titulo" : "O Alquimista",
-    "numRegisto": "0001"
+    "numRegisto": "0001",
+    "uid": "CgbVRlwz2iXJfAAmWEPVFD5pzVl2",
+    "data": ""
   }, {
     "ano" : 2004,
     "autor" : "Ricardo Garcia",
@@ -18,7 +20,9 @@
     "isRequisitado" : false,
     "isbn" : "9789898838889",
     "titulo" : "Que número é este",
-    "numRegisto": "0002"
+    "numRegisto": "0002",
+    "uid": "CgbVRlwz2iXJfAAmWEPVFD5pzVl2",
+    "data": ""
   }, {
     "ano" : 2004,
     "autor" : "João Garcia",
@@ -28,7 +32,9 @@
     "isRequisitado" : false,
     "isbn" : "9789892326153",
     "titulo" : "14 - Uma Vida nos Tectos do Mundo",
-    "numRegisto": "0003"
+    "numRegisto": "0003",
+    "uid": "CgbVRlwz2iXJfAAmWEPVFD5pzVl2",
+    "data": ""
   }, {
     "ano" : 1998,
     "autor" : "Gonçalo Cadilhe",
@@ -38,48 +44,8 @@
     "isRequisitado" : false,
     "isbn" : "9789897242915",
     "titulo" : "Planisfério Pessoal",
-    "numRegisto": "0004"
-  } ],
-
-  "requisitadps" : [ {
-    "ano" : 2013,
-    "autor" : "Paulo Coelho",
-    "editora" : "11 X 17",
-    "id" : "0",
-    "imagePath" : "https://img.wook.pt/images/o-alquimista-paulo-coelho/MXwxNTIzNzEzOXwxMDcyNTQ3NXwxMzgzNTIzMjAwMDAwfHdlYnA=/502x",
-    "isRequisitado" : true,
-    "isbn" : "9789722524223",
-    "titulo" : "O Alquimista",
-    "numRegisto": "0001"
-  }, {
-    "ano" : 2004,
-    "autor" : "Ricardo Garcia",
-    "editora" : "Fundação Francisco Manuel dos Santos",
-    "id" : "1",
-    "imagePath" : "https://img.wook.pt/images/que-numero-e-este-ricardo-garcia/MXwyNDAwNjIyNHwyMDA1MjUxN3wxNTg3NDIzNjAwMDAwfHdlYnA=/502x",
-    "isRequisitado" : true,
-    "isbn" : "9789898838889",
-    "titulo" : "Que número é este",
-    "numRegisto": "0002"
-  }, {
-    "ano" : 2004,
-    "autor" : "João Garcia",
-    "editora" : "Lua de Papel",
-    "id" : "2",
-    "imagePath" : "https://img.wook.pt/images/14-uma-vida-nos-tectos-do-mundo-joao-garcia/MXwxNTcyNDIwNXwxMTIxOTMwMnwxMzk4OTg1MjAwMDAwfHdlYnA=/502x",
-    "isRequisitado" : true,
-    "isbn" : "9789892326153",
-    "titulo" : "14 - Uma Vida nos Tectos do Mundo",
-    "numRegisto": "0003"
-  }, {
-    "ano" : 1998,
-    "autor" : "Gonçalo Cadilhe",
-    "editora" : "Clube do Autor",
-    "id" : "3",
-    "imagePath" : "https://img.wook.pt/images/planisferio-pessoal-goncalo-cadilhe/MXwxNzgxNzY4M3wxMzQ1ODk0NnwxNDYwNDE1NjAwMDAwfHdlYnA=/502x",
-    "isRequisitado" : true,
-    "isbn" : "9789897242915",
-    "titulo" : "Planisfério Pessoal",
-    "numRegisto": "0004"
+    "numRegisto": "0004",
+    "uid": "CgbVRlwz2iXJfAAmWEPVFD5pzVl2",
+    "data": ""
   } ]
 }

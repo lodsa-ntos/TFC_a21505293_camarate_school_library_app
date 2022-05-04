@@ -244,7 +244,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 }
 
 //* Regra para filtrar a pesquisa
-List<LivroModel> _filtrarPesquisa(List<LivroModel>? caixaDePesquisa) {
+List<Livro> _filtrarPesquisa(List<Livro>? caixaDePesquisa) {
   if (_condicao.isNotEmpty == true) {
     //* Título
     if (selecionarFiltro == 0) {
@@ -256,7 +256,7 @@ List<LivroModel> _filtrarPesquisa(List<LivroModel>? caixaDePesquisa) {
                     .contains(_condicao.toLowerCase()),
               )
               .toList() ??
-          <LivroModel>[];
+          <Livro>[];
 
       //* Autor
     } else if (selecionarFiltro == 1) {
@@ -268,7 +268,7 @@ List<LivroModel> _filtrarPesquisa(List<LivroModel>? caixaDePesquisa) {
                     .contains(_condicao.toLowerCase()),
               )
               .toList() ??
-          <LivroModel>[];
+          <Livro>[];
 
       //* Título
     } else if (selecionarFiltro == 2) {
@@ -280,7 +280,7 @@ List<LivroModel> _filtrarPesquisa(List<LivroModel>? caixaDePesquisa) {
                     .contains(_condicao.toLowerCase()),
               )
               .toList() ??
-          <LivroModel>[];
+          <Livro>[];
 
       //* Ano de publicação
     } else if (selecionarFiltro == 3) {
@@ -292,9 +292,9 @@ List<LivroModel> _filtrarPesquisa(List<LivroModel>? caixaDePesquisa) {
                     .contains(_condicao.toLowerCase()),
               )
               .toList() ??
-          <LivroModel>[];
+          <Livro>[];
     }
   }
 
-  return caixaDePesquisa ?? <LivroModel>[];
+  return caixaDePesquisa ?? <Livro>[];
 }

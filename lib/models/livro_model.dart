@@ -1,17 +1,17 @@
 import 'dart:convert';
 
-import 'package:camarate_school_library/models/utilizadores_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+class LivroModel {
+  List<Livro> livros;
 
-class RepositorioDeLivros {
-  List<LivroModel> livroModel;
-
-  RepositorioDeLivros({
-    required this.livroModel,
+  LivroModel({
+    required this.livros,
   });
 
-  static List<LivroModel> verificarLivros(livroJSON) {
+  factory LivroModel.fromJson(List<dynamic> json) {
+    return LivroModel(livros: verificarLivros(json));
+  }
+
+  static List<Livro> verificarLivros(livroJSON) {
     /// jsonEncode tranforma os dados JSON em string
     /// jsonDecode descodifica os dados e coloca no formato de Lista dynamic
 
@@ -19,23 +19,14 @@ class RepositorioDeLivros {
     ///  lista dinamica
     List<dynamic> isLivro = jsonDecode(jsonEncode(livroJSON));
 
-    List<LivroModel> listaDeLivros =
-        isLivro.map((dados) => LivroModel.fromJson(dados)).toList();
+    List<Livro> listaDeLivros =
+        isLivro.map((dados) => Livro.fromJson(dados)).toList();
 
     return listaDeLivros;
   }
-
-  factory RepositorioDeLivros.fromJSON(List<dynamic> json) {
-    return RepositorioDeLivros(livroModel: verificarLivros(json));
-  }
-
-  /// Obter os livros pelo id
-  LivroModel getPorId(String id) {
-    return livroModel.firstWhere((element) => element.id == id);
-  }
 }
 
-class LivroModel {
+class Livro {
   String? id;
   String? titulo;
   String? autor;
@@ -45,11 +36,11 @@ class LivroModel {
   String? numRegisto;
   int? ano;
   bool? isRequisitado;
-  String? uid;
+  String? uidLivro;
   DateTime? data;
   // colocar uid para saber que está requisitado
 
-  LivroModel({
+  Livro({
     this.id,
     this.titulo,
     this.autor,
@@ -59,7 +50,7 @@ class LivroModel {
     this.numRegisto,
     this.ano,
     this.isRequisitado,
-    this.uid,
+    this.uidLivro,
     this.data,
   });
 
@@ -74,14 +65,14 @@ class LivroModel {
     map["numRegisto"] = numRegisto;
     map["ano"] = ano;
     map["isRequisitado"] = isRequisitado;
-    map["uid"] = uid;
+    map["uidLivro"] = uidLivro;
     map["data"] = data;
 
     return map;
   }
 
-  factory LivroModel.fromJson(Map<String, dynamic> json) {
-    return LivroModel(
+  factory Livro.fromJson(Map<String, dynamic> json) {
+    return Livro(
       id: json['id'] ?? '',
       titulo: json['titulo'] ?? '',
       autor: json['autor'] ?? '',
@@ -91,7 +82,7 @@ class LivroModel {
       numRegisto: json['numRegisto'] ?? '',
       ano: json['ano']?.toInt() ?? 0,
       isRequisitado: json['isRequisitado'] ?? false,
-      uid: json['uid'] ?? '',
+      uidLivro: json['uidLivro'] ?? '',
       data: json['data'] ?? DateTime.now(),
     );
   }

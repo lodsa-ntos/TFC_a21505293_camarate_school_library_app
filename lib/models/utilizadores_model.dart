@@ -1,5 +1,5 @@
 //? Alunos
-class AlunoModel {
+class Aluno {
   String? uidAluno;
   String? numCartaoAluno;
   String? nomeCompletoAluno;
@@ -11,7 +11,7 @@ class AlunoModel {
   String? passwordAluno;
 
   // Construtor AlunoModel
-  AlunoModel({
+  Aluno({
     this.uidAluno,
     this.numCartaoAluno,
     this.nomeCompletoAluno,
@@ -40,8 +40,8 @@ class AlunoModel {
   }
 
   // Receber dados do firebase
-  factory AlunoModel.fromJson(Map<String, dynamic> json) {
-    return AlunoModel(
+  factory Aluno.fromJson(Map<String, dynamic> json) {
+    return Aluno(
       uidAluno: json['uidAluno'] ?? '',
       numCartaoAluno: json['numCartaoAluno'] ?? 'a1234',
       nomeCompletoAluno: json['nomeCompletoAluno'] ?? '',
@@ -56,7 +56,7 @@ class AlunoModel {
 }
 
 //* Professores
-class ProfessorModel {
+class Professor {
   String? uidProf;
   String? numCartaoProf;
   String? nomeCompletoProf;
@@ -65,7 +65,7 @@ class ProfessorModel {
   String? passwordProf;
 
   // Construtor ProfessorModel
-  ProfessorModel({
+  Professor({
     this.uidProf,
     this.numCartaoProf,
     this.nomeCompletoProf,
@@ -88,8 +88,8 @@ class ProfessorModel {
   }
 
   // Receber dados do firebase
-  factory ProfessorModel.fromJson(Map<String, dynamic> json) {
-    return ProfessorModel(
+  factory Professor.fromJson(Map<String, dynamic> json) {
+    return Professor(
       uidProf: json['uidProf'] ?? '',
       numCartaoProf: json['numCartaoProf'] ?? 'p1234',
       nomeCompletoProf: json['nomeCompletoProf'] ?? '',
@@ -101,7 +101,7 @@ class ProfessorModel {
 }
 
 //! Funcionario
-class FuncionarioModel {
+class Funcionario {
   final String uidFunc;
   final String numCartaoFunc;
   final String nomeCompletoFunc;
@@ -109,7 +109,7 @@ class FuncionarioModel {
   final String passwordFunc;
 
   // Construtor FuncionarioModel
-  FuncionarioModel({
+  Funcionario({
     required this.uidFunc,
     required this.numCartaoFunc,
     required this.nomeCompletoFunc,
@@ -130,8 +130,8 @@ class FuncionarioModel {
   }
 
   // Receber dados do firebase
-  factory FuncionarioModel.fromJson(Map<String, dynamic> json) {
-    return FuncionarioModel(
+  factory Funcionario.fromJson(Map<String, dynamic> json) {
+    return Funcionario(
       uidFunc: json['uidFunc'] ?? '',
       numCartaoFunc: json['numCartaoFunc'] ?? 'f1234',
       nomeCompletoFunc: json['nomeCompletoFunc'] ?? '',

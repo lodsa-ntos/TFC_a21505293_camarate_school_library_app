@@ -5,34 +5,33 @@ import 'package:firebase_database/firebase_database.dart';
 import 'dart:async' show Future;
 
 class BaseDeDados {
-  List<LivroModel> livros = [];
+  List<Livro> livros = [];
 
-  Future<List<LivroModel>> carregarLivrosBD(
+  Future<List<Livro>> carregarLivrosBD(
       DatabaseReference referenciaLivrosBD) async {
     //
-    RepositorioDeLivros listaDeLivros;
+    LivroModel listaDeLivros;
 
     /// Obter os dados de só uma vez da referencia do firebase na base de dados
-    DatabaseEvent dadosSnapshot = await referenciaLivrosBD.once();
+    DatabaseEvent dadosBD = await referenciaLivrosBD.once();
 
     // Com jsonEncode Converter todos os valor da base de dados numa string JSON
-    //[{"id":1,"nome":"Livro #1"},{"id":2,"nome":"Livro #2"}]
+    //[{"id":1,"nome":"Livro>  #1"},{"id":2,"nome":"Livro>  #2"}]
 
     /// Com o jsonDecode, os valores vao ser codificados e transformados e
     /// guardados no formato de uma List<dynamic>
-    List<dynamic> respostaJSON =
-        jsonDecode(jsonEncode(dadosSnapshot.snapshot.value));
+    List<dynamic> respostaJSON = jsonDecode(jsonEncode(dadosBD.snapshot.value));
 
     /// Depois de receber os dados que quero guardar do RepositorioDeLivros
     /// de acoddo ao Modelo de livro, coloco esses dados na List<LivroModel> livros = [];
     /// que é uma lista dynamica mas do tipo LivroModel
-    listaDeLivros = RepositorioDeLivros.fromJSON(respostaJSON);
+    listaDeLivros = LivroModel.fromJson(respostaJSON);
 
     /// Coloco esses dados na lista
-    livros.addAll(listaDeLivros.livroModel);
+    livros.addAll(listaDeLivros.livros);
 
     if (!livros.isNotEmpty) {
-      // ignore: avoid_print
+      // ignlivro_print
       print('Sem livros para mostrar');
     }
 

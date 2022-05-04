@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class LivroDetalhado extends StatelessWidget {
   const LivroDetalhado({Key? key, required this.livro}) : super(key: key);
 
-  final LivroModel livro;
+  final Livro livro;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class LivroDetalhado extends StatelessWidget {
 }
 
 class _BotaoRequisitar extends StatefulWidget {
-  final LivroModel livroARequisitar;
+  final Livro livroARequisitar;
 
   const _BotaoRequisitar({required this.livroARequisitar, Key? key})
       : super(key: key);
