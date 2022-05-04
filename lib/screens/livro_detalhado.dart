@@ -162,7 +162,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                     // Fica devolvido
                     onPressed: widget.livroARequisitar.uidLivro!
-                            .contains(utilizador!.uid)
+                                .contains(utilizador!.uid) &&
+                            widget.livroARequisitar.isRequisitado!
                         ? () async {
                             setState(() {
                               // Gravar ou atualiza dados de um caminho definido
