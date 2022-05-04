@@ -273,7 +273,8 @@ class _HomeState extends State<Home> {
                                       shrinkWrap: true,
                                       itemCount: snapshot.data.length,
                                       itemBuilder: (context, index) {
-                                        if (teste.uidLivro == utilizador.uid &&
+                                        if (snapshot.data[index].uidLivro ==
+                                                utilizador.uid &&
                                             snapshot.data[index]
                                                     .isRequisitado ==
                                                 true) {
