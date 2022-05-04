@@ -273,9 +273,10 @@ class _HomeState extends State<Home> {
                                       shrinkWrap: true,
                                       itemCount: snapshot.data.length,
                                       itemBuilder: (context, index) {
-                                        if (snapshot
-                                                .data[index].isRequisitado ==
-                                            true) {
+                                        if (teste.uidLivro == utilizador.uid &&
+                                            snapshot.data[index]
+                                                    .isRequisitado ==
+                                                true) {
                                           return InkWell(
                                             onTap: () => Navigator.push(
                                               context,
