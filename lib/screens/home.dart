@@ -273,6 +273,11 @@ class _HomeState extends State<Home> {
                                       shrinkWrap: true,
                                       itemCount: snapshot.data.length,
                                       itemBuilder: (context, index) {
+                                        //* LÓGICA PARA O INTERFACE
+                                        /// se o id do utilizador corresponder ao utilizador atual
+                                        /// e se o mesmo fez alguma requisição, então, mostramos
+                                        /// os livros requisitados na interface para o utilizador
+
                                         if (snapshot.data[index].uidLivro ==
                                                 utilizador.uid &&
                                             snapshot.data[index]
