@@ -264,7 +264,7 @@ class _HomeState extends State<Home> {
                           } else {
                             return Container(
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
-                              height: 255.0,
+                              height: 290.0,
                               child: Column(
                                 children: [
                                   Expanded(
@@ -344,7 +344,9 @@ class _HomeState extends State<Home> {
                                                         height: 5.0,
                                                       ),
                                                       Text(
-                                                        'Data de requisição: ',
+                                                        'Data de requisição: ' +
+                                                            snapshot.data[index]
+                                                                .dataRequisicao,
                                                         style: GoogleFonts
                                                             .catamaran(
                                                           textStyle:

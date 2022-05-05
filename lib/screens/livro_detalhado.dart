@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart'; // DateFormat
 
 /// Classe para apresentar os widgets que compoêm o formato para representarem
 /// os detalhes dos livros
@@ -84,6 +85,8 @@ class LivroDetalhado extends StatelessWidget {
 class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaParaRequisicao;
   DatabaseReference? _referenciaUID;
+  DatabaseReference? _referenciaDataRequisicao;
+  DatabaseReference? _referenciaDataDevolucao;
 
   // Utilizador atual
   User? utilizador = _auth.currentUser;
@@ -95,6 +98,10 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   Widget build(BuildContext context) {
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
+        var dataAtual = DateTime.now().toLocal();
+        var formato = DateFormat('dd-MM-yyyy – HH:mm');
+        String datas = formato.format(dataAtual.add(const Duration(hours: 1)));
+
         //? atualizar a requisição e devolução na base de dados
         _referenciaParaRequisicao = FirebaseDatabase.instance
             .ref('livros')
@@ -107,7 +114,19 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .child(widget.livroARequisitar.id.toString())
             .child('uidLivro');
 
-        //? o uid do Livro recebe o uid do utilizador na requisição e devolução do livro
+        //? referencia para registar a data de requisicao na base de dados
+        _referenciaDataRequisicao = FirebaseDatabase.instance
+            .ref('livros')
+            .child(widget.livroARequisitar.id.toString())
+            .child('dataRequisicao');
+
+        //? referencia para registar a data de devolucao na base de dados
+        _referenciaDataDevolucao = FirebaseDatabase.instance
+            .ref('livros')
+            .child(widget.livroARequisitar.id.toString())
+            .child('dataDevolucao');
+
+        //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
 
         return Column(
@@ -132,6 +151,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                             //? regista o id do utilizador que fez a requisição
                             _referenciaUID?.set(livro.uidLivro);
+
+                            _referenciaDataRequisicao?.set(datas..toString());
 
                             //? o livro fica requisitado
                             widget.livroARequisitar.isRequisitado = true;
@@ -162,6 +183,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           setState(() {
                             //? atulizado o estado de requisição para devolvido
                             _referenciaParaRequisicao?.set(false);
+
+                            _referenciaDataDevolucao?.set(datas.toString());
 
                             //? o livro fica devolvido
                             widget.livroARequisitar.isRequisitado = false;

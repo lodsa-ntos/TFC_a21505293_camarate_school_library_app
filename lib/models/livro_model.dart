@@ -36,8 +36,10 @@ class Livro {
   String? numRegisto;
   int? ano;
   bool? isRequisitado;
+  String? dataRequisicao;
+  String? dataDevolucao;
   String? uidLivro;
-  DateTime? data;
+
   // colocar uid para saber que está requisitado
 
   Livro({
@@ -50,8 +52,9 @@ class Livro {
     this.numRegisto,
     this.ano,
     this.isRequisitado,
+    this.dataRequisicao,
+    this.dataDevolucao,
     this.uidLivro,
-    this.data,
   });
 
   Map<String, dynamic> toJson() {
@@ -65,8 +68,9 @@ class Livro {
     map["numRegisto"] = numRegisto;
     map["ano"] = ano;
     map["isRequisitado"] = isRequisitado;
+    map["dataRequisicao"] = dataRequisicao;
+    map["dataDevolucao"] = dataDevolucao;
     map["uidLivro"] = uidLivro;
-    map["data"] = data;
 
     return map;
   }
@@ -82,8 +86,9 @@ class Livro {
       numRegisto: json['numRegisto'] ?? '',
       ano: json['ano']?.toInt() ?? 0,
       isRequisitado: json['isRequisitado'] ?? false,
+      dataRequisicao: json['dataRequisicao'] ?? '',
+      dataDevolucao: json['dataDevolucao'] ?? '',
       uidLivro: json['uidLivro'] ?? '',
-      data: (DateTime.tryParse(json['data'])),
     );
   }
 }
