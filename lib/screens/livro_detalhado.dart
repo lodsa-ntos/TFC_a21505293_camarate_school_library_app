@@ -100,7 +100,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
       builder: (context, requisitadoModel, child) {
         var dataAtual = DateTime.now().toLocal();
         var formato = DateFormat('dd-MM-yyyy – HH:mm');
-        String datas = formato.format(dataAtual.add(const Duration(hours: 1)));
+        String datas = formato.format(
+            dataAtual.add(const Duration(hours: 1))); //? hora de verão hours: 1
 
         //? atualizar a requisição e devolução na base de dados
         _referenciaParaRequisicao = FirebaseDatabase.instance
