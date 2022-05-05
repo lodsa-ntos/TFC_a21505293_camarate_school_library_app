@@ -256,35 +256,132 @@ class _HomeState extends State<Home> {
                   child: StreamBuilder(
                     stream: FirebaseDatabase.instance.ref("livros").onValue,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData &&
-                          !snapshot.hasError &&
-                          snapshot.data.snapshot.value != null) {
-                        List<dynamic> dadosBaseDeDados = jsonDecode(
-                            jsonEncode(snapshot.data.snapshot.value));
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        default:
+                          if (snapshot.hasData &&
+                              !snapshot.hasError &&
+                              snapshot.data.snapshot.value != null) {
+                            List<dynamic> dadosBaseDeDados = jsonDecode(
+                                jsonEncode(snapshot.data.snapshot.value));
 
-                        LivroModel listaDeLivros =
-                            LivroModel.fromJson(dadosBaseDeDados);
+                            LivroModel listaDeLivros =
+                                LivroModel.fromJson(dadosBaseDeDados);
 
-                        List<Livro> _livros = [];
+                            List<Livro> _livros = [];
 
-                        _livros.addAll(listaDeLivros.livros);
+                            _livros.addAll(listaDeLivros.livros);
 
-                        print(listaDeLivros);
+                            print(listaDeLivros.livros.length);
 
-                        return ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: dadosBaseDeDados.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text(
-                                _livros[index].ano.toString(),
+                            return Container(
+                              margin: const EdgeInsets.symmetric(vertical: 8.0),
+                              height: 290.0,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      shrinkWrap: true,
+                                      itemCount: dadosBaseDeDados.length,
+                                      itemBuilder: (context, index) {
+                                        if (_livros[index].uidLivro ==
+                                                utilizador.uid &&
+                                            _livros[index].isRequisitado ==
+                                                true) {
+                                          return InkWell(
+                                            onTap: () => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                //** Redireciona o utilizador para a página de detalhes do livro */
+                                                builder: (context) =>
+                                                    LivroDetalhado(
+                                                  livro: _livros[index],
+                                                ),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  width: 103.0,
+                                                  margin: const EdgeInsets.only(
+                                                      left: 16.0),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Container(
+                                                        width: 120.66,
+                                                        height: 155.5,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                          image:
+                                                              DecorationImage(
+                                                            image: NetworkImage(
+                                                                _livros[index]
+                                                                    .imagePath
+                                                                    .toString()),
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 12.0,
+                                                      ),
+                                                      Text(
+                                                        _livros[index]
+                                                            .titulo
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontSize: 14.0,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5.0,
+                                                      ),
+                                                      Text(
+                                                        'Data de requisição: ' +
+                                                            _livros[index]
+                                                                .dataRequisicao
+                                                                .toString(),
+                                                        style: GoogleFonts
+                                                            .catamaran(
+                                                          textStyle:
+                                                              const TextStyle(
+                                                            fontSize: 13.0,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }
+                                        return const Text('sem dados');
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                             );
-                          },
-                        );
-                      } else
-                        return Text("No data");
+                          } else
+                            return Text("No data");
+                      }
                     },
                   ),
                 ),
