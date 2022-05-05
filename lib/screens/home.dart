@@ -372,15 +372,16 @@ class _HomeState extends State<Home> {
                                             ),
                                           );
                                         }
-                                        return const Text('sem dados');
+                                        return const Text('');
                                       },
                                     ),
                                   ),
                                 ],
                               ),
                             );
-                          } else
-                            return Text("No data");
+                          } else {
+                            return const Text("No data");
+                          }
                       }
                     },
                   ),
