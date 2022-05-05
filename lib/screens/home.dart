@@ -40,18 +40,11 @@ const livrosRequisitados = Padding(
   ),
 );
 
-// PÁGINA HOME
-
+//? PÁGINA HOME
 class _HomeState extends State<Home> {
-  final List<Livro> _livros = [];
-
-  //? Alcançar a instancia da base de dados para autenticação do utilizador atual
-  final _auth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context) {
-    /// variável da informação dos livros a serem apresentados
-    /// na interface
+    /// variável de informação dos livros a serem apresentados na interface
     var _livroPrateleira = Consumer<LivroRequisitadoModel>(
       builder: (context, detalheModel, child) {
         return StreamBuilder(
@@ -186,6 +179,9 @@ class _HomeState extends State<Home> {
 
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
+        //? Alcançar a instancia da base de dados para autenticação do utilizador atual
+        final _auth = FirebaseAuth.instance;
+
         // Utilizador atual
         User? utilizador = _auth.currentUser;
 
@@ -298,6 +294,8 @@ class _HomeState extends State<Home> {
                             LivroModel listaDeLivros =
                                 LivroModel.fromJson(dadosBaseDeDados);
 
+                            final List<Livro> _livros = [];
+
                             _livros.addAll(listaDeLivros.livros);
 
                             return Container(
@@ -404,7 +402,7 @@ class _HomeState extends State<Home> {
                               ),
                             );
                           } else {
-                            return const Text("No data");
+                            return const Text("Sem dados");
                           }
                       }
                     },
