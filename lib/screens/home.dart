@@ -349,9 +349,10 @@ class _HomeState extends State<Home> {
                                                           image:
                                                               DecorationImage(
                                                             image: NetworkImage(
-                                                                _livros[index]
-                                                                    .imagePath
-                                                                    .toString()),
+                                                              _livros[index]
+                                                                  .imagePath
+                                                                  .toString(),
+                                                            ),
                                                             fit: BoxFit.cover,
                                                           ),
                                                         ),
