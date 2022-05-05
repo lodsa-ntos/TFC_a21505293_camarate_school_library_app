@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:camarate_school_library/Database/base_de_dados.dart';
 import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
@@ -251,126 +253,38 @@ class _HomeState extends State<Home> {
                 livrosRequisitados,
                 Container(
                   margin: const EdgeInsets.only(left: 3.0, right: 5.0),
-                  child: FutureBuilder(
-                    future: fazerLigacao.carregarLivrosBD(referenciaBD),
+                  child: StreamBuilder(
+                    stream: FirebaseDatabase.instance.ref("livros").onValue,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        default:
-                          if (snapshot.hasError) {
-                            return Text('Erro: ${snapshot.error}');
-                          } else {
-                            return Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8.0),
-                              height: 290.0,
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      shrinkWrap: true,
-                                      itemCount: snapshot.data.length,
-                                      itemBuilder: (context, index) {
-                                        //* LÓGICA PARA O INTERFACE
-                                        /// se o id do utilizador corresponder ao utilizador atual
-                                        /// e se o mesmo fez alguma requisição, então, mostramos
-                                        /// os livros requisitados na interface para o utilizador
+                      if (snapshot.hasData &&
+                          !snapshot.hasError &&
+                          snapshot.data.snapshot.value != null) {
+                        List<dynamic> dadosBaseDeDados = jsonDecode(
+                            jsonEncode(snapshot.data.snapshot.value));
 
-                                        if (snapshot.data[index].uidLivro ==
-                                                utilizador.uid &&
-                                            snapshot.data[index]
-                                                    .isRequisitado ==
-                                                true) {
-                                          return InkWell(
-                                            onTap: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                //** Redireciona o utilizador para a página de detalhes do livro */
-                                                builder: (context) =>
-                                                    LivroDetalhado(
-                                                  livro: snapshot.data[index],
-                                                ),
-                                              ),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  width: 103.0,
-                                                  margin: const EdgeInsets.only(
-                                                      left: 16.0),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Container(
-                                                        width: 120.66,
-                                                        height: 155.5,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                          image:
-                                                              DecorationImage(
-                                                            image: NetworkImage(
-                                                                snapshot
-                                                                    .data[index]
-                                                                    .imagePath),
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 12.0,
-                                                      ),
-                                                      Text(
-                                                        snapshot
-                                                            .data[index].titulo,
-                                                        style: const TextStyle(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          fontSize: 14.0,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 5.0,
-                                                      ),
-                                                      Text(
-                                                        'Data de requisição: ' +
-                                                            snapshot.data[index]
-                                                                .dataRequisicao,
-                                                        style: GoogleFonts
-                                                            .catamaran(
-                                                          textStyle:
-                                                              const TextStyle(
-                                                            fontSize: 13.0,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        }
-                                        return const Text('');
-                                      },
-                                    ),
-                                  ),
-                                ],
+                        LivroModel listaDeLivros =
+                            LivroModel.fromJson(dadosBaseDeDados);
+
+                        List<Livro> _livros = [];
+
+                        _livros.addAll(listaDeLivros.livros);
+
+                        print(listaDeLivros);
+
+                        return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: dadosBaseDeDados.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text(
+                                _livros[index].ano.toString(),
                               ),
                             );
-                          }
-                      }
+                          },
+                        );
+                      } else
+                        return Text("No data");
                     },
                   ),
                 ),

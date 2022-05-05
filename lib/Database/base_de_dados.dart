@@ -23,8 +23,8 @@ class BaseDeDados {
     List<dynamic> respostaJSON = jsonDecode(jsonEncode(dadosBD.snapshot.value));
 
     /// Depois de receber os dados que quero guardar do RepositorioDeLivros
-    /// de acoddo ao Modelo de livro, coloco esses dados na List<LivroModel> livros = [];
-    /// que é uma lista dynamica mas do tipo LivroModel
+    /// de acordo ao Modelo de livro, coloco esses dados na List<LivroModel> livros = [];
+    /// que é uma lista dinamica mas do tipo LivroModel
     listaDeLivros = LivroModel.fromJson(respostaJSON);
 
     /// Coloco esses dados na lista

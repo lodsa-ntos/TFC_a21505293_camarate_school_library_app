@@ -100,8 +100,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
       builder: (context, requisitadoModel, child) {
         var dataAtual = DateTime.now().toLocal();
         var formato = DateFormat('dd-MM-yyyy – HH:mm');
-        String datas = formato.format(
-            dataAtual.add(const Duration(hours: 1))); //? hora de verão hours: 1
+        String datas = formato.format(dataAtual.add(const Duration(hours: 1)));
 
         //? atualizar a requisição e devolução na base de dados
         _referenciaParaRequisicao = FirebaseDatabase.instance
@@ -153,7 +152,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             //? regista o id do utilizador que fez a requisição
                             _referenciaUID?.set(livro.uidLivro);
 
-                            _referenciaDataRequisicao?.set(datas..toString());
+                            //? Data de Requisicao
+                            _referenciaDataRequisicao?.set(datas.toString());
 
                             //? o livro fica requisitado
                             widget.livroARequisitar.isRequisitado = true;
@@ -185,6 +185,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             //? atulizado o estado de requisição para devolvido
                             _referenciaParaRequisicao?.set(false);
 
+                            //? Data de devolução
                             _referenciaDataDevolucao?.set(datas.toString());
 
                             //? o livro fica devolvido
