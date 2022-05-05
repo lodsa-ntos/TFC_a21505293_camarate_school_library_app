@@ -41,29 +41,19 @@ const livrosRequisitados = Padding(
 );
 
 // PÁGINA HOME
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
-
-  @override
-  State<Home> createState() => _HomeState();
-}
 
 class _HomeState extends State<Home> {
-  List<LivroModel> livrosRequisitadosBD = [];
-  Livro? livroModel;
+  final List<Livro> _livros = [];
+
+  //? Alcançar a instancia da base de dados para autenticação do utilizador atual
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
-    /// variável o carregamento da informação dos livros a serem apresentados
+    /// variável da informação dos livros a serem apresentados
     /// na interface
-    var mostrarLivro = Consumer<LivroRequisitadoModel>(
+    var _livroPrateleira = Consumer<LivroRequisitadoModel>(
       builder: (context, detalheModel, child) {
-        // Um pequeno tema para o texto(titulo, subTitulo, etc)
-        var textTheme = Theme.of(context).textTheme.headline6;
-
-        final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
-        final fazerLigacao = BaseDeDados();
-
         return StreamBuilder(
           stream: FirebaseDatabase.instance.ref("livros").onValue, // async work
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -156,7 +146,9 @@ class _HomeState extends State<Home> {
                                         _livrosPrateleira[index]
                                             .titulo
                                             .toString(),
-                                        style: textTheme,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6,
                                       ),
 
                                       const SizedBox(height: 5.0),
@@ -185,7 +177,7 @@ class _HomeState extends State<Home> {
                     );
                   }
                 }
-                return const Text("No data");
+                return const Text("Sem dados...");
             }
           },
         );
@@ -194,18 +186,13 @@ class _HomeState extends State<Home> {
 
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
-        final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
-        final fazerLigacao = BaseDeDados();
-
-        //! Alcançar a instancia da abse de dados para autenticação do utilizador atual
-        final _auth = FirebaseAuth.instance;
-        // Utilizador atual que preencheu o formulário
+        // Utilizador atual
         User? utilizador = _auth.currentUser;
 
-        // Variável do tipo aluno para alcançar os atributos do aluno
-        Livro teste = Livro();
+        // Variável do tipo Livro para alcançar os atributos do livro
+        Livro _livro = Livro();
 
-        teste.uidLivro = utilizador!.uid;
+        _livro.uidLivro = utilizador!.uid;
 
         return Scaffold(
           appBar: AppBar(
@@ -270,7 +257,7 @@ class _HomeState extends State<Home> {
           ),
 
           //? INTERFACE PARA O UTILIZADOR
-          //* LIVROS REQUISITADOS + LIVROS PRATELEIRAS
+          //* LIVROS REQUISITADOS
 
           body: SingleChildScrollView(
             child: Column(
@@ -285,8 +272,22 @@ class _HomeState extends State<Home> {
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return const Center(
-                              child: CircularProgressIndicator());
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const <Widget>[
+                              CircularProgressIndicator(),
+                              Text(" A carregar livro requisitado...")
+                            ],
+                          );
+
+                        case ConnectionState.none:
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const <Widget>[
+                              Text("Sem livros para mostrar...")
+                            ],
+                          );
+
                         default:
                           if (snapshot.hasData &&
                               !snapshot.hasError &&
@@ -296,8 +297,6 @@ class _HomeState extends State<Home> {
 
                             LivroModel listaDeLivros =
                                 LivroModel.fromJson(dadosBaseDeDados);
-
-                            List<Livro> _livros = [];
 
                             _livros.addAll(listaDeLivros.livros);
 
@@ -412,6 +411,9 @@ class _HomeState extends State<Home> {
                   ),
                 ),
 
+                //? INTERFACE PARA O UTILIZADOR
+                //* LIVROS PRATELEIRAS
+
                 //? Título
                 prateleiras,
 
@@ -419,7 +421,7 @@ class _HomeState extends State<Home> {
                   child: SizedBox(
                     width: double.infinity,
                     height: 375.0,
-                    child: mostrarLivro,
+                    child: _livroPrateleira,
                   ),
                 ),
               ],
@@ -429,4 +431,11 @@ class _HomeState extends State<Home> {
       },
     );
   }
+}
+
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
 }

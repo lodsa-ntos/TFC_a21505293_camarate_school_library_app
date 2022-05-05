@@ -13,9 +13,9 @@ import 'package:intl/intl.dart'; // DateFormat
 final _auth = FirebaseAuth.instance;
 
 class LivroDetalhado extends StatelessWidget {
-  const LivroDetalhado({Key? key, required this.livro}) : super(key: key);
+  LivroDetalhado({Key? key, required this.livro}) : super(key: key);
 
-  final Livro livro;
+  Livro livro;
 
   @override
   Widget build(BuildContext context) {
