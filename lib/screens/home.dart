@@ -206,6 +206,7 @@ class _HomeState extends State<Home> {
                 },
               ),
             ],
+            title: const Text('Home'),
           ),
 
           /// Menu Lateral
@@ -306,7 +307,7 @@ class _HomeState extends State<Home> {
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       shrinkWrap: true,
-                                      itemCount: dadosBaseDeDados.length,
+                                      itemCount: _livros.length,
                                       itemBuilder: (context, index) {
                                         if (_livros[index].uidLivro ==
                                                 utilizador.uid &&
