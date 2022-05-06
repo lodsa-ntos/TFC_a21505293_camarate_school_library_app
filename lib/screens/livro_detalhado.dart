@@ -4,7 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart'; // DateFormat
+import 'package:intl/intl.dart';
+
+import '../database/base_de_dados.dart'; // DateFormat
 
 /// Classe para apresentar os widgets que compoêm o formato para representarem
 /// os detalhes dos livros
@@ -13,9 +15,9 @@ import 'package:intl/intl.dart'; // DateFormat
 final _auth = FirebaseAuth.instance;
 
 class LivroDetalhado extends StatelessWidget {
-  LivroDetalhado({Key? key, required this.livro}) : super(key: key);
+  const LivroDetalhado({Key? key, required this.livro}) : super(key: key);
 
-  Livro livro;
+  final Livro livro;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class LivroDetalhado extends StatelessWidget {
         builder: (context, requisitadoModel, child) {
       return Scaffold(
         appBar: AppBar(
-          //** Titulo do livro */
+          //? Titulo na barra
           title: const Text('Detalhe'), // Título
         ),
         body: Padding(

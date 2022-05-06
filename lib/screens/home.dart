@@ -181,7 +181,7 @@ class _HomeState extends State<Home> {
         //? Alcançar a instancia da base de dados para autenticação do utilizador atual
         final _auth = FirebaseAuth.instance;
 
-        // Utilizador atual
+        // Utilizador actual
         User? utilizador = _auth.currentUser;
 
         // Variável do tipo Livro para alcançar os atributos do livro

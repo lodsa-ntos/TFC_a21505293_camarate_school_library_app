@@ -73,6 +73,7 @@ class AuthServices with ChangeNotifier {
   }
 }
 
+// EXCEPTION
 class AuthException implements Exception {
   String mensagem;
   AuthException(this.mensagem);

@@ -30,11 +30,6 @@ class BaseDeDados {
     /// Coloco esses dados na lista
     livros.addAll(listaDeLivros.livros);
 
-    if (!livros.isNotEmpty) {
-      // ignlivro_print
-      print('Sem livros para mostrar');
-    }
-
     /// Retorno a lista com os dados vindos da base de dados em JSON
     return livros;
   }
