@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-import '../database/base_de_dados.dart'; // DateFormat
-
 /// Classe para apresentar os widgets que compoêm o formato para representarem
 /// os detalhes dos livros
 ///
@@ -26,7 +24,7 @@ class LivroDetalhado extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           //? Titulo na barra
-          title: const Text('Detalhe'), // Título
+          title: const Text('Detalhe'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -34,7 +32,7 @@ class LivroDetalhado extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //** Título */
+                //** Título do livro*/
                 Text(
                   livro.titulo.toString(),
                   style: const TextStyle(
