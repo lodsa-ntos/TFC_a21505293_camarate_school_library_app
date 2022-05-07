@@ -92,7 +92,7 @@ class _HomeState extends State<Home> {
                               MaterialPageRoute(
                                 //** Redireciona o utilizador para a página de detalhes do livro */
                                 builder: (context) => LivroDetalhado(
-                                  livro: _livrosPrateleira[index],
+                                  index: index,
                                 ),
                               ),
                             );
@@ -272,7 +272,7 @@ class _HomeState extends State<Home> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const <Widget>[
                               CircularProgressIndicator(),
-                              Text(" A carregar livro requisitado...")
+                              Text(" A carregar livros requisitados...")
                             ],
                           );
 
@@ -320,7 +320,7 @@ class _HomeState extends State<Home> {
                                                 //** Redireciona o utilizador para a página de detalhes do livro */
                                                 builder: (context) =>
                                                     LivroDetalhado(
-                                                  livro: _livros[index],
+                                                  index: index,
                                                 ),
                                               ),
                                             ),
@@ -376,9 +376,9 @@ class _HomeState extends State<Home> {
                                                         height: 5.0,
                                                       ),
                                                       Text(
-                                                        'Data de requisição: ' +
+                                                        'Data de devolução: ' +
                                                             _livros[index]
-                                                                .dataRequisicao
+                                                                .dataDevolucao
                                                                 .toString(),
                                                         style: GoogleFonts
                                                             .catamaran(

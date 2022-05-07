@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,12 +15,14 @@ import 'package:intl/intl.dart';
 final _auth = FirebaseAuth.instance;
 
 class LivroDetalhado extends StatelessWidget {
-  const LivroDetalhado({Key? key, required this.livro}) : super(key: key);
+  LivroDetalhado({Key? key, required this.index}) : super(key: key);
 
-  final Livro livro;
+  int index;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     return Consumer<LivroRequisitadoModel>(
         builder: (context, requisitadoModel, child) {
       return Scaffold(
@@ -32,47 +36,84 @@ class LivroDetalhado extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //** Título do livro*/
-                Text(
-                  livro.titulo.toString(),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                  ),
-                ),
+                StreamBuilder(
+                  stream: FirebaseDatabase.instance.ref("livros").onValue,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.none:
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const <Widget>[
+                            Text("Sem livros para mostrar...")
+                          ],
+                        );
 
-                const SizedBox(height: 8),
+                      default:
+                        if (snapshot.hasData &&
+                            !snapshot.hasError &&
+                            snapshot.data.snapshot.value != null) {
+                          List<dynamic> dadosBaseDeDados = jsonDecode(
+                              jsonEncode(snapshot.data.snapshot.value));
 
-                //** Autor */
-                Text(
-                  livro.autor.toString(),
-                  style: const TextStyle(color: Colors.grey),
-                ),
-                Text(
-                  "ISBN: " + livro.isbn.toString(),
-                  style: const TextStyle(color: Colors.grey),
-                ),
-                Text(
-                  "Editora: " + livro.editora.toString(),
-                  style: const TextStyle(color: Colors.grey),
-                ),
-                Text(
-                  "Requisitado: " + livro.isRequisitado.toString(),
-                  style: const TextStyle(color: Colors.grey),
-                ),
+                          LivroModel listaDeLivros =
+                              LivroModel.fromJson(dadosBaseDeDados);
 
-                const SizedBox(height: 16),
+                          final List<Livro> _livros = [];
 
-                //** Capa */
-                SizedBox(
-                  height: 350,
-                  child: Image.network(livro.imagePath.toString()),
+                          _livros.addAll(listaDeLivros.livros);
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _livros[index].titulo.toString(),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
+                                ),
+                              ),
+
+                              const SizedBox(height: 8),
+
+                              //** Autor */
+                              Text(
+                                _livros[index].autor.toString(),
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                              Text(
+                                "ISBN: " + _livros[index].isbn.toString(),
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                              Text(
+                                "Editora: " + _livros[index].editora.toString(),
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                              Text(
+                                "Requisitado: " +
+                                    _livros[index].isRequisitado.toString(),
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+
+                              const SizedBox(height: 16),
+
+                              //** Capa */
+                              SizedBox(
+                                height: 350,
+                                child: Image.network(
+                                    _livros[index].imagePath.toString()),
+                              ),
+
+                              const SizedBox(height: 12),
+
+                              //*  _Botão Requisitar */
+                              _BotaoRequisitar(livroARequisitar: _livros[index])
+                            ],
+                          );
+                        }
+                    }
+                    return const Text('sem dados');
+                  },
                 ),
-
-                const SizedBox(height: 12),
-
-                //*  _Botão Requisitar */
-                _BotaoRequisitar(livroARequisitar: livro)
               ],
             ),
           ),
@@ -100,7 +141,9 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
       builder: (context, requisitadoModel, child) {
         var dataAtual = DateTime.now().toLocal();
         var formato = DateFormat('dd-MM-yyyy – HH:mm');
+        var formatoDevolucao = DateFormat('dd-MM-yyyy');
         String datas = formato.format(dataAtual.add(const Duration(hours: 1)));
+        String dataDevolvido = formatoDevolucao.format(dataAtual);
 
         //? atualizar a requisição e devolução na base de dados
         _referenciaParaRequisicao = FirebaseDatabase.instance
@@ -146,13 +189,13 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           // Fica requisitado
 
                           setState(() {
-                            //? muda o estado de requisição
+                            //? altera o estado de requisição
                             _referenciaParaRequisicao?.set(true);
 
                             //? regista o id do utilizador que fez a requisição
                             _referenciaUID?.set(livro.uidLivro);
 
-                            //? Data de Requisicao
+                            //? Regista a data de Requisicao
                             _referenciaDataRequisicao?.set(datas.toString());
 
                             //? o livro fica requisitado
@@ -182,11 +225,12 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                               .contains(utilizador!.uid)
                       ? () async {
                           setState(() {
-                            //? atulizado o estado de requisição para devolvido
+                            //? atuliza o estado de requisição para devolvido
                             _referenciaParaRequisicao?.set(false);
 
-                            //? Data de devolução
-                            _referenciaDataDevolucao?.set(datas.toString());
+                            //? Regista a data de devolução
+                            _referenciaDataDevolucao
+                                ?.set(dataDevolvido.toString());
 
                             //? o livro fica devolvido
                             widget.livroARequisitar.isRequisitado = false;

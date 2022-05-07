@@ -96,7 +96,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
                             MaterialPageRoute(
                               /// redireciona o utilizador para a página de detalhes do livro
                               builder: (context) =>
-                                  LivroDetalhado(livro: livro[index]),
+                                  LivroDetalhado(index: index),
                             ),
                           ),
                           child: SafeArea(
