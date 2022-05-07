@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 //? Alcançar a instância da base de dados para autenticação do utilizador atual
 final _auth = FirebaseAuth.instance;
 
+// ignore: must_be_immutable
 class LivroDetalhado extends StatelessWidget {
   LivroDetalhado({Key? key, required this.index}) : super(key: key);
 
@@ -40,6 +41,7 @@ class LivroDetalhado extends StatelessWidget {
                   stream: FirebaseDatabase.instance.ref("livros").onValue,
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     switch (snapshot.connectionState) {
+                      //? Caso não esteja conectado, mostra mensagem
                       case ConnectionState.none:
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.center,
