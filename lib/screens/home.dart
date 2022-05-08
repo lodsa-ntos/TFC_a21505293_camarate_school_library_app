@@ -313,6 +313,7 @@ class _HomeState extends State<Home> {
                                                 utilizador.uid &&
                                             _livros[index].isRequisitado ==
                                                 true) {
+                                          const doisDias = Duration(days: 2);
                                           return InkWell(
                                             onTap: () => Navigator.push(
                                               context,

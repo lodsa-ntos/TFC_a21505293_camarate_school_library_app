@@ -146,10 +146,10 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
         String datas = formato.format(dataAtual.add(const Duration(hours: 1)));
 
         var formatoDevolucao = DateFormat('dd-MM-yyyy');
-        String dataDevolvido =
+        String dataDevolucao =
             formatoDevolucao.format(dataAtual.add(const Duration(days: 10)));
 
-        //? atualizar a requisição e devolução na base de dados
+        //? referencia para atualizar a requisição e devolução na base de dados
         _referenciaParaRequisicao = FirebaseDatabase.instance
             .ref('livros')
             .child(widget.livroARequisitar.id.toString())
@@ -204,7 +204,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                             //? Regista a data de devolução
                             _referenciaDataDevolucao
-                                ?.set(dataDevolvido.toString());
+                                ?.set(dataDevolucao.toString());
 
                             //? o livro fica requisitado
                             widget.livroARequisitar.isRequisitado = true;
