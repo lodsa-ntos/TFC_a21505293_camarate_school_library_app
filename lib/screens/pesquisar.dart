@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:camarate_school_library/Database/base_de_dados.dart';
 import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
@@ -62,22 +64,41 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
   Widget build(BuildContext context) {
     final pesquisarLivrosBD = Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
-        //
-        final referenciaBD = FirebaseDatabase.instance.ref().child('livros');
-        final fazerLigacao = BaseDeDados();
-
-        return FutureBuilder(
-          future: fazerLigacao.carregarLivrosBD(referenciaBD),
+        return StreamBuilder(
+          stream: FirebaseDatabase.instance.ref("livros").onValue,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return const Center(child: CircularProgressIndicator());
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[
+                    CircularProgressIndicator(),
+                    Text(" A carregar livros...")
+                  ],
+                );
+
+              case ConnectionState.none:
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[Text("Sem livros para mostrar...")],
+                );
+
               default:
-                if (snapshot.hasError) {
-                  return Text('Erro: ${snapshot.error}');
-                } else {
+                if (snapshot.hasData &&
+                    !snapshot.hasError &&
+                    snapshot.data.snapshot.value != null) {
+                  List<dynamic> dadosBaseDeDados =
+                      jsonDecode(jsonEncode(snapshot.data.snapshot.value));
+
+                  LivroModel listaDeLivros =
+                      LivroModel.fromJson(dadosBaseDeDados);
+
+                  List<Livro> _livros = [];
+
+                  _livros.addAll(listaDeLivros.livros);
+
                   /// snapshot.data --> livros da bases de dados
-                  final livro = _filtrarPesquisa(snapshot.data);
+                  final livroBD = _filtrarPesquisa(_livros);
                   return Flexible(
                     child: ListView.builder(
                       /// comportamento para que o ListView
@@ -86,7 +107,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
                       shrinkWrap: true,
 
                       // até ao último livro da lista
-                      itemCount: livro.length,
+                      itemCount: livroBD.length,
 
                       // mostra todos os livros da lista contidos na base de dados
                       itemBuilder: (context, index) {
@@ -116,7 +137,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
                                     /// imagem do livro
                                     child: Image.network(
-                                      livro[index].imagePath.toString(),
+                                      livroBD[index].imagePath.toString(),
                                       fit: BoxFit.cover,
                                       width: 80,
                                       height: 115,
@@ -137,7 +158,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
                                           //
                                           //* titulo do livro
                                           Text(
-                                            livro[index].titulo.toString(),
+                                            livroBD[index].titulo.toString(),
                                             style: const TextStyle(
                                               color:
                                                   Color.fromRGBO(0, 0, 0, 0.8),
@@ -152,7 +173,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
                                           //* Autor
                                           Text(
-                                            livro[index].autor.toString(),
+                                            livroBD[index].autor.toString(),
                                             style: const TextStyle(
                                               color: Color(0xFF8E8E93),
                                               fontSize: 13,
@@ -165,7 +186,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
                                           Text(
                                             'Ano de publicação: ' +
-                                                livro[index].ano.toString(),
+                                                livroBD[index].ano.toString(),
                                             style: const TextStyle(
                                               color: Color(0xFF8E8E93),
                                               fontSize: 13,
@@ -178,7 +199,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
                                           Text(
                                             'Disponível: ' +
-                                                livro[index]
+                                                livroBD[index]
                                                     .isRequisitado
                                                     .toString(),
                                             style: const TextStyle(
@@ -200,6 +221,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
                     ),
                   );
                 }
+                return const Text("Sem dados");
             }
           },
         );
