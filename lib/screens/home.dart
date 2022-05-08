@@ -178,7 +178,7 @@ class _HomeState extends State<Home> {
 
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
-        //? Alcançar a instancia da base de dados para autenticação do utilizador atual
+        //? Alcançar a instância da base de dados para autenticação do utilizador atual
         final _auth = FirebaseAuth.instance;
 
         // Utilizador actual
