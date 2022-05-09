@@ -147,7 +147,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
         var formatoDevolucao = DateFormat('dd-MM-yyyy');
         String dataDevolucao =
-            formatoDevolucao.format(dataAtual.add(const Duration(days: 10)));
+            formatoDevolucao.format(dataAtual.add(const Duration(days: 1)));
 
         //? referencia para atualizar a requisição e devolução na base de dados
         _referenciaParaRequisicao = FirebaseDatabase.instance
