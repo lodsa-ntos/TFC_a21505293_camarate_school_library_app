@@ -42,7 +42,7 @@ const livrosRequisitados = Padding(
 
 //? PÁGINA HOME
 class _HomeState extends State<Home> {
-  bool isEntrega = true;
+  bool isPrazoEntrega = true;
 
   @override
   void initState() {
