@@ -42,17 +42,19 @@ const livrosRequisitados = Padding(
 
 //? PÁGINA HOME
 class _HomeState extends State<Home> {
-  bool isPrazoEntrega = true;
+  bool isPrazoEntrega = false;
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      _alertarUtilizador();
-    });
     super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      if (isPrazoEntrega == true) {
+        _alertarUtilizador();
+      }
+    });
   }
 
-  _alertarUtilizador() async {
+  _alertarUtilizador() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -66,7 +68,9 @@ class _HomeState extends State<Home> {
             TextButton(
               child: const Text("OK"),
               onPressed: () {
-                Navigator.of(context).pop();
+                setState(() {
+                  Navigator.of(context).pop();
+                });
               },
             ),
           ],
@@ -428,7 +432,7 @@ class _HomeState extends State<Home> {
                                                       ),
 
                                                       //* AVISO DATA DE ENTREGA
-                                                      //? LÓGICAS MENSAGEM
+                                                      //? LÓGICAS PARA MENSAGEM
 
                                                       if (
                                                       //? Próprio dia para entrega
@@ -510,7 +514,7 @@ class _HomeState extends State<Home> {
                                                             ),
                                                           ),
                                                         ),
-                                                      ]
+                                                      ],
                                                     ],
                                                   ),
                                                 ),
