@@ -1,55 +1,64 @@
 {
-  "livros" : [ {
-    "ano" : 2013,
-    "autor" : "Paulo Coelho",
-    "editora" : "11 X 17",
-    "id" : "0",
-    "imagePath" : "https://img.wook.pt/images/o-alquimista-paulo-coelho/MXwxNTIzNzEzOXwxMDcyNTQ3NXwxMzgzNTIzMjAwMDAwfHdlYnA=/502x",
-    "isRequisitado" : true,
-    "isbn" : "9789722524223",
-    "titulo" : "O Alquimista",
-    "numRegisto": "0001",
-    "uidLivro": "lQX4OO7mVQO9c6d4YcEGqYDOYv02",
-    "dataRequisicao": "05-05-2022",
-    "dataDevolucao": "05-05-2022"
-  }, {
-    "ano" : 2004,
-    "autor" : "Ricardo Garcia",
-    "editora" : "Fundação Francisco Manuel dos Santos",
-    "id" : "1",
-    "imagePath" : "https://img.wook.pt/images/que-numero-e-este-ricardo-garcia/MXwyNDAwNjIyNHwyMDA1MjUxN3wxNTg3NDIzNjAwMDAwfHdlYnA=/502x",
-    "isRequisitado" : true,
-    "isbn" : "9789898838889",
-    "titulo" : "Que número é este",
-    "numRegisto": "0002",
-    "uidLivro": "6UxpfRiDaMTiawDpMrkz1ldr0m52",
-    "dataRequisicao": "05-05-2022",
-    "dataDevolucao": "05-05-2022"
-  }, {
-    "ano" : 2004,
-    "autor" : "João Garcia",
-    "editora" : "Lua de Papel",
-    "id" : "2",
-    "imagePath" : "https://img.wook.pt/images/14-uma-vida-nos-tectos-do-mundo-joao-garcia/MXwxNTcyNDIwNXwxMTIxOTMwMnwxMzk4OTg1MjAwMDAwfHdlYnA=/502x",
-    "isRequisitado" : true,
-    "isbn" : "9789892326153",
-    "titulo" : "14 - Uma Vida nos Tectos do Mundo",
-    "numRegisto": "0003",
-    "uidLivro": "6UxpfRiDaMTiawDpMrkz1ldr0m52",
-    "dataRequisicao": "05-02-2022",
-    "dataDevolucao": "05-05-2022"
-  }, {
-    "ano" : 1998,
-    "autor" : "Gonçalo Cadilhe",
-    "editora" : "Clube do Autor",
-    "id" : "3",
-    "imagePath" : "https://img.wook.pt/images/planisferio-pessoal-goncalo-cadilhe/MXwxNzgxNzY4M3wxMzQ1ODk0NnwxNDYwNDE1NjAwMDAwfHdlYnA=/502x",
-    "isRequisitado" : false,
-    "isbn" : "9789897242915",
-    "titulo" : "Planisfério Pessoal",
-    "numRegisto": "0004",
-    "uidLivro": "CgbVRlwz2iXJfAAmWEPVFD5pzVl2",
-    "dataRequisicao": "05-03-2022",
-    "dataDevolucao": "05-05-2022"
-  } ]
+  "livros": [
+    {
+      "ano": 2013,
+      "autor": "Paulo Coelho",
+      "dataDevolucao": "09-05-2022",
+      "dataRequisicao": "08-05-2022 – 22:08",
+      "editora": "11 X 17",
+      "id": "0",
+      "imagePath": "https://img.wook.pt/images/o-alquimista-paulo-coelho/MXwxNTIzNzEzOXwxMDcyNTQ3NXwxMzgzNTIzMjAwMDAwfHdlYnA=/502x",
+      "isRequisitado": false,
+      "isbn": "9789722524223",
+      "numRegisto": "0001",
+      "titulo": "O Alquimista",
+      "uidLivro": "6UxpfRiDaMTiawDpMrkz1ldr0m52",
+      "numColecao": "0"
+    },
+    {
+      "ano": 2004,
+      "autor": "Ricardo Garcia",
+      "dataDevolucao": "20-05-2022",
+      "dataRequisicao": "10-05-2022 – 22:01",
+      "editora": "Fundação Francisco Manuel dos Santos",
+      "id": "1",
+      "imagePath": "https://img.wook.pt/images/que-numero-e-este-ricardo-garcia/MXwyNDAwNjIyNHwyMDA1MjUxN3wxNTg3NDIzNjAwMDAwfHdlYnA=/502x",
+      "isRequisitado": true,
+      "isbn": "9789898838889",
+      "numRegisto": "0002",
+      "titulo": "Que número é este",
+      "uidLivro": "6UxpfRiDaMTiawDpMrkz1ldr0m52",
+      "numColecao": "0"
+    },
+    {
+      "ano": 2004,
+      "autor": "João Garcia",
+      "dataDevolucao": "12-05-2022",
+      "dataRequisicao": "08-05-2022 – 18:15",
+      "editora": "Lua de Papel",
+      "id": "2",
+      "imagePath": "https://img.wook.pt/images/14-uma-vida-nos-tectos-do-mundo-joao-garcia/MXwxNTcyNDIwNXwxMTIxOTMwMnwxMzk4OTg1MjAwMDAwfHdlYnA=/502x",
+      "isRequisitado": true,
+      "isbn": "9789892326153",
+      "numRegisto": "0003",
+      "titulo": "14 - Uma Vida nos Tectos do Mundo",
+      "uidLivro": "lQX4OO7mVQO9c6d4YcEGqYDOYv02",
+      "numColecao": "0"
+    },
+    {
+      "ano": 1998,
+      "autor": "Gonçalo Cadilhe",
+      "dataDevolucao": "10-05-2022",
+      "dataRequisicao": "10-05-2022 – 00:10",
+      "editora": "Clube do Autor",
+      "id": "3",
+      "imagePath": "https://img.wook.pt/images/planisferio-pessoal-goncalo-cadilhe/MXwxNzgxNzY4M3wxMzQ1ODk0NnwxNDYwNDE1NjAwMDAwfHdlYnA=/502x",
+      "isRequisitado": false,
+      "isbn": "9789897242915",
+      "numRegisto": "0004",
+      "titulo": "Planisfério Pessoal",
+      "uidLivro": "6UxpfRiDaMTiawDpMrkz1ldr0m52",
+      "numColecao": "0"
+    }
+  ]
 }

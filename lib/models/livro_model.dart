@@ -39,6 +39,7 @@ class Livro {
   String? dataRequisicao;
   String? dataDevolucao;
   String? uidLivro;
+  String? numColecao;
 
   // colocar uid para saber que está requisitado
 
@@ -55,6 +56,7 @@ class Livro {
     this.dataRequisicao,
     this.dataDevolucao,
     this.uidLivro,
+    this.numColecao,
   });
 
   Map<String, dynamic> toJson() {
@@ -71,6 +73,7 @@ class Livro {
     map["dataRequisicao"] = dataRequisicao;
     map["dataDevolucao"] = dataDevolucao;
     map["uidLivro"] = uidLivro;
+    map["numColecao"] = numColecao;
 
     return map;
   }
@@ -89,6 +92,7 @@ class Livro {
       dataRequisicao: json['dataRequisicao'] ?? '',
       dataDevolucao: json['dataDevolucao'] ?? '',
       uidLivro: json['uidLivro'] ?? '',
+      numColecao: json['numColecao'] ?? '',
     );
   }
 }

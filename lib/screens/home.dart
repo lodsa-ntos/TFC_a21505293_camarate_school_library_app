@@ -42,47 +42,11 @@ const livrosRequisitados = Padding(
 
 //? PÁGINA HOME
 class _HomeState extends State<Home> {
-  bool isPrazoEntrega = false;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      if (isPrazoEntrega == true) {
-        _alertarUtilizador();
-      }
-    });
-  }
-
-  _alertarUtilizador() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: const Text("Prazo de entrega"),
-          content: const Text(
-              "Tem de fazer a entrega do livro até a data indica, obrigado!"),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            TextButton(
-              child: const Text("OK"),
-              onPressed: () {
-                setState(() {
-                  Navigator.of(context).pop();
-                });
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    //
     //? variável de informação dos livros a serem apresentados na interface
-    var _livroPrateleira = Consumer<LivroRequisitadoModel>(
+    final _livrosDasPrateleiras = Consumer<LivroRequisitadoModel>(
       builder: (context, detalheModel, child) {
         return StreamBuilder(
           stream: FirebaseDatabase.instance.ref("livros").onValue, // async work
@@ -96,11 +60,13 @@ class _HomeState extends State<Home> {
                     Text(" A carregar livros...")
                   ],
                 );
+
               case ConnectionState.none:
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const <Widget>[Text("Sem livros para mostrar...")],
                 );
+
               default:
                 if (snapshot.hasError) {
                   return Text('Erro: ${snapshot.error}');
@@ -123,6 +89,10 @@ class _HomeState extends State<Home> {
                       itemCount: _livrosPrateleira.length,
                       itemBuilder: (BuildContext context, int index) {
                         //
+                        //? variável para representar o estado de requisição
+                        String _estadoDeRequisicao =
+                            _livrosPrateleira[index].isRequisitado.toString();
+
                         return GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -173,13 +143,11 @@ class _HomeState extends State<Home> {
 
                                       //** Titulo */
                                       Text(
-                                        _livrosPrateleira[index]
-                                            .titulo
-                                            .toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6,
-                                      ),
+                                          _livrosPrateleira[index]
+                                              .titulo
+                                              .toString(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w700)),
 
                                       const SizedBox(height: 5.0),
 
@@ -191,11 +159,7 @@ class _HomeState extends State<Home> {
                                       const SizedBox(height: 5.0),
 
                                       //** isRequisitado */
-                                      Text(
-                                        _livrosPrateleira[index]
-                                            .isRequisitado
-                                            .toString(),
-                                      ),
+                                      Text(_estadoDeRequisicao.toString()),
                                     ],
                                   ),
                                 ),
@@ -203,6 +167,7 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                         );
+                        //
                       },
                     );
                   }
@@ -234,13 +199,15 @@ class _HomeState extends State<Home> {
               IconButton(
                 icon: const Icon(Icons.search, color: Colors.white),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      //** Redireciona o utilizador para a página de detalhes do livro */
-                      builder: (context) => const PesquisaDeLivro(),
-                    ),
-                  );
+                  setState(() {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        //** Redireciona o utilizador para a página de detalhes do livro */
+                        builder: (context) => const PesquisaDeLivro(),
+                      ),
+                    );
+                  });
                 },
               ),
             ],
@@ -420,12 +387,9 @@ class _HomeState extends State<Home> {
                                                             .titulo
                                                             .toString(),
                                                         style: const TextStyle(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          fontSize: 14.0,
-                                                        ),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w700),
                                                       ),
                                                       const SizedBox(
                                                         height: 5.0,
@@ -547,7 +511,7 @@ class _HomeState extends State<Home> {
                   child: SizedBox(
                     width: double.infinity,
                     height: 375.0,
-                    child: _livroPrateleira,
+                    child: _livrosDasPrateleiras,
                   ),
                 ),
               ],
@@ -555,6 +519,61 @@ class _HomeState extends State<Home> {
           ),
         );
       },
+    );
+  }
+
+//! Para separar as categorias
+  _construirTituloDeColecoes(String titulo) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 0.0),
+              child: Row(
+                children: [
+                  //_livroPrateleira,
+                  if (titulo == "Generalidades") ...[
+                    const CircleAvatar(
+                      backgroundColor: Colors.yellow,
+                      minRadius: 15,
+                    ),
+                  ] else if (titulo == "Filosofia e Psicologia") ...[
+                    const CircleAvatar(
+                      backgroundColor: Colors.brown,
+                      minRadius: 15,
+                    ),
+                  ],
+
+                  Padding(
+                    // espaço entre o circulo e o título da classe
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Text(
+                      titulo,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        fontFamily: 'Poppins',
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {},
+            child: const Icon(
+              Icons.open_in_new,
+              color: Colors.blue,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

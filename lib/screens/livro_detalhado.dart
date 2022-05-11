@@ -95,6 +95,11 @@ class LivroDetalhado extends StatelessWidget {
                                     _livros[index].isRequisitado.toString(),
                                 style: const TextStyle(color: Colors.grey),
                               ),
+                              Text(
+                                "Coleção: " +
+                                    _livros[index].numColecao.toString(),
+                                style: const TextStyle(color: Colors.grey),
+                              ),
 
                               const SizedBox(height: 16),
 
@@ -147,7 +152,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
         var formatoDevolucao = DateFormat('dd-MM-yyyy');
         String dataDevolucao =
-            formatoDevolucao.format(dataAtual.add(const Duration(days: 1)));
+            formatoDevolucao.format(dataAtual.add(const Duration(days: 10)));
 
         //? referencia para atualizar a requisição e devolução na base de dados
         _referenciaParaRequisicao = FirebaseDatabase.instance
@@ -215,7 +220,9 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             );
 
                             // ignore: avoid_print
-                            print('Livro requisitado');
+                            print('Livro [ ' +
+                                widget.livroARequisitar.titulo.toString() +
+                                ' ] requisitado');
                           });
                         },
                 ),
@@ -245,7 +252,9 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             );
 
                             // ignore: avoid_print
-                            print('Livro devolvido');
+                            print('Livro [ ' +
+                                widget.livroARequisitar.titulo.toString() +
+                                ' ] devolvido');
                           });
                         }
                       : null,
