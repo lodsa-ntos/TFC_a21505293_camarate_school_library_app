@@ -1,19 +1,22 @@
-
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ConstruirCaixaDePesquisa extends StatelessWidget {
+class ConstruirCaixaDePesquisa extends StatefulWidget {
   const ConstruirCaixaDePesquisa({
     required this.controlador,
-    required this.foco,
     Key? key,
   }) : super(key: key);
 
   final TextEditingController controlador;
-  final FocusNode foco;
 
+  @override
+  State<ConstruirCaixaDePesquisa> createState() =>
+      _ConstruirCaixaDePesquisaState();
+}
+
+class _ConstruirCaixaDePesquisaState extends State<ConstruirCaixaDePesquisa> {
   @override
   Widget build(BuildContext context) {
     return Consumer<LivroRequisitadoModel>(
@@ -47,8 +50,7 @@ class ConstruirCaixaDePesquisa extends StatelessWidget {
                       //* Caixa de texto
                       Expanded(
                         child: CupertinoTextField(
-                          controller: controlador,
-                          focusNode: foco,
+                          controller: widget.controlador,
                           cursorColor: Colors.black,
                           decoration: null,
                           style: const TextStyle(
@@ -63,7 +65,7 @@ class ConstruirCaixaDePesquisa extends StatelessWidget {
 
                       //* X --> para apagar a palavra que foi escrita
                       GestureDetector(
-                        onTap: controlador.clear,
+                        onTap: widget.controlador.clear,
                         child: const Icon(
                           CupertinoIcons.clear_thick_circled,
                           color: Colors.blue,

@@ -28,7 +28,7 @@ class LivroDetalhado extends StatelessWidget {
         builder: (context, requisitadoModel, child) {
       return Scaffold(
         appBar: AppBar(
-          //? Titulo na barra
+          //? Título na barra
           title: const Text('Detalhe'),
         ),
         body: Padding(
@@ -67,6 +67,7 @@ class LivroDetalhado extends StatelessWidget {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              //** Titulo do livro */
                               Text(
                                 _livros[index].titulo.toString(),
                                 style: const TextStyle(
@@ -93,11 +94,6 @@ class LivroDetalhado extends StatelessWidget {
                               Text(
                                 "Requisitado: " +
                                     _livros[index].isRequisitado.toString(),
-                                style: const TextStyle(color: Colors.grey),
-                              ),
-                              Text(
-                                "Coleção: " +
-                                    _livros[index].numColecao.toString(),
                                 style: const TextStyle(color: Colors.grey),
                               ),
 

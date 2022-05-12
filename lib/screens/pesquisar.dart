@@ -25,20 +25,17 @@ class PesquisaDeLivro extends StatefulWidget {
 }
 
 class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
-  late final TextEditingController _controladorDoTexto;
-  late final FocusNode _focarNaLetra;
+  TextEditingController _controladorDoTexto = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _controladorDoTexto = TextEditingController()..addListener(_textoAlterado);
-    _focarNaLetra = FocusNode();
   }
 
   /// libertar espaços da memória
   @override
   void dispose() {
-    _focarNaLetra.dispose();
     _controladorDoTexto.dispose();
     super.dispose();
   }
@@ -50,12 +47,12 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
     });
   }
 
-  Widget _controladorCaixaDePesquisa() {
+  Widget _barraDePesquisa() {
+    _condicao = _controladorDoTexto.text;
     return Padding(
       padding: const EdgeInsets.all(8),
       child: ConstruirCaixaDePesquisa(
         controlador: _controladorDoTexto,
-        foco: _focarNaLetra,
       ),
     );
   }
@@ -99,126 +96,145 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 
                   /// snapshot.data --> livros da bases de dados
                   final livroBD = _filtrarPesquisa(_livros);
+
                   return Flexible(
-                    child: ListView.builder(
-                      /// comportamento para que o ListView
-                      /// ocupe apenas o espaço necessário dos dados
-                      /// a serem mostrados na interface
-                      shrinkWrap: true,
+                    child: livroBD.isNotEmpty
+                        ? ListView.builder(
+                            /// comportamento para que o ListView
+                            /// ocupe apenas o espaço necessário dos dados
+                            /// a serem mostrados na interface
+                            shrinkWrap: true,
 
-                      // até ao último livro da lista
-                      itemCount: livroBD.length,
+                            // até ao último livro da lista
+                            itemCount: livroBD.length,
 
-                      // mostra todos os livros da lista contidos na base de dados
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              /// redireciona o utilizador para a página de detalhes do livro
-                              builder: (context) =>
-                                  LivroDetalhado(index: index),
-                            ),
-                          ),
-                          child: SafeArea(
-                            top: false,
-                            bottom: false,
-                            minimum: const EdgeInsets.only(
-                              left: 16,
-                              top: 8,
-                              bottom: 8,
-                              right: 8,
-                            ),
-                            child: SingleChildScrollView(
-                              child: Row(
-                                children: <Widget>[
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(4),
-
-                                    /// imagem do livro
-                                    child: Image.network(
-                                      livroBD[index].imagePath.toString(),
-                                      fit: BoxFit.cover,
-                                      width: 80,
-                                      height: 115,
+                            // mostra todos os livros da lista contidos na base de dados
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    /// redireciona o utilizador para a página de detalhes do livro
+                                    builder: (context) => LivroDetalhado(
+                                      index: _livros.indexOf(livroBD[index]),
                                     ),
                                   ),
+                                ),
+                                child: SafeArea(
+                                  top: false,
+                                  bottom: false,
+                                  minimum: const EdgeInsets.only(
+                                    left: 16,
+                                    top: 8,
+                                    bottom: 8,
+                                    right: 8,
+                                  ),
+                                  child: SingleChildScrollView(
+                                    child: Row(
+                                      children: <Widget>[
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(4),
 
-                                  //
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 12),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          //
-                                          //* titulo do livro
-                                          Text(
-                                            livroBD[index].titulo.toString(),
-                                            style: const TextStyle(
-                                              color:
-                                                  Color.fromRGBO(0, 0, 0, 0.8),
-                                              fontSize: 18,
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.normal,
+                                          /// imagem do livro
+                                          child: Image.network(
+                                            livroBD[index].imagePath.toString(),
+                                            fit: BoxFit.cover,
+                                            width: 80,
+                                            height: 115,
+                                          ),
+                                        ),
+
+                                        //
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 12),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                //
+                                                //* título do livro
+                                                Text(
+                                                  livroBD[index]
+                                                      .titulo
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        0, 0, 0, 0.8),
+                                                    fontSize: 18,
+                                                    fontStyle: FontStyle.normal,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                                ),
+
+                                                const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 8)),
+
+                                                //* Autor
+                                                Text(
+                                                  livroBD[index]
+                                                      .autor
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                    color: Color(0xFF8E8E93),
+                                                    fontSize: 13,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                ),
+
+                                                const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 8)),
+
+                                                Text(
+                                                  'Ano de publicação: ' +
+                                                      livroBD[index]
+                                                          .ano
+                                                          .toString(),
+                                                  style: const TextStyle(
+                                                    color: Color(0xFF8E8E93),
+                                                    fontSize: 13,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                ),
+
+                                                const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 8)),
+
+                                                Text(
+                                                  'Disponível: ' +
+                                                      livroBD[index]
+                                                          .isRequisitado
+                                                          .toString(),
+                                                  style: const TextStyle(
+                                                    color: Color(0xFF8E8E93),
+                                                    fontSize: 13,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-
-                                          const Padding(
-                                              padding: EdgeInsets.only(top: 8)),
-
-                                          //* Autor
-                                          Text(
-                                            livroBD[index].autor.toString(),
-                                            style: const TextStyle(
-                                              color: Color(0xFF8E8E93),
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                          ),
-
-                                          const Padding(
-                                              padding: EdgeInsets.only(top: 8)),
-
-                                          Text(
-                                            'Ano de publicação: ' +
-                                                livroBD[index].ano.toString(),
-                                            style: const TextStyle(
-                                              color: Color(0xFF8E8E93),
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                          ),
-
-                                          const Padding(
-                                              padding: EdgeInsets.only(top: 8)),
-
-                                          Text(
-                                            'Disponível: ' +
-                                                livroBD[index]
-                                                    .isRequisitado
-                                                    .toString(),
-                                            style: const TextStyle(
-                                              color: Color(0xFF8E8E93),
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                                ),
+                              );
+                            },
+                          )
+                        : const Center(
+                            child: Text(
+                            "Livro não encontrado...",
+                            style: TextStyle(color: Colors.black),
+                          )),
                   );
                 }
                 return const Text("Sem dados");
@@ -244,7 +260,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
                   const SizedBox(height: 10),
 
                   //* Barra de pesquisa
-                  _controladorCaixaDePesquisa(),
+                  _barraDePesquisa(),
 
                   const SizedBox(height: 15),
 
@@ -266,7 +282,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
 }
 
 //* Regra para filtrar a pesquisa
-List<Livro> _filtrarPesquisa(List<Livro>? caixaDePesquisa) {
+List<Livro> _filtrarPesquisa(caixaDePesquisa) {
   if (_condicao.isNotEmpty == true) {
     //* Título
     if (selecionarFiltro == 0) {

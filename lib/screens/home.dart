@@ -147,7 +147,9 @@ class _HomeState extends State<Home> {
                                               .titulo
                                               .toString(),
                                           style: const TextStyle(
-                                              fontWeight: FontWeight.w700)),
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 15,
+                                          )),
 
                                       const SizedBox(height: 5.0),
 
@@ -159,7 +161,9 @@ class _HomeState extends State<Home> {
                                       const SizedBox(height: 5.0),
 
                                       //** isRequisitado */
-                                      Text(_estadoDeRequisicao.toString()),
+                                      Text(
+                                        _estadoDeRequisicao.toString(),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -199,15 +203,13 @@ class _HomeState extends State<Home> {
               IconButton(
                 icon: const Icon(Icons.search, color: Colors.white),
                 onPressed: () {
-                  setState(() {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        //** Redireciona o utilizador para a página de detalhes do livro */
-                        builder: (context) => const PesquisaDeLivro(),
-                      ),
-                    );
-                  });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      //** Redireciona o utilizador para a página de detalhes do livro */
+                      builder: (context) => const PesquisaDeLivro(),
+                    ),
+                  );
                 },
               ),
             ],
