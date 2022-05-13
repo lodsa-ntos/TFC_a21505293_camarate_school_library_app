@@ -43,37 +43,6 @@ const livrosRequisitados = Padding(
 //? PÁGINA HOME
 class _HomeState extends State<Home> {
   @override
-  void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      _alertarUtilizador();
-    });
-    super.initState();
-  }
-
-  _alertarUtilizador() async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: const Text("Prazo de entrega"),
-          content: const Text(
-              "Tem de fazer a entrega do livro até a data indica, obrigado!"),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            TextButton(
-              child: const Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     //
     //? variável de informação dos livros das prateleiras a serem apresentados na interface
@@ -431,88 +400,19 @@ class _HomeState extends State<Home> {
                                                       //* AVISO DATA DE ENTREGA
                                                       //? LÓGICAS PARA MENSAGEM
 
-                                                      if (
-                                                      //? Próprio dia para entrega
-                                                      _livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString() ==
-                                                              dataAtual
-                                                                  .toString() ||
-
-                                                          //? Dois dias para entrega
-                                                          _livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString() ==
-                                                              pertoDaEntregaDois
-                                                                  .toString() ||
-
-                                                          //? Um dia para entrega
-                                                          _livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString() ==
-                                                              pertoDaEntregaUm
-                                                                  .toString()) ...[
-                                                        _alertarUtilizador(),
-                                                        Text(
-                                                          'Data de devolução: ' +
-                                                              _livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString(),
-                                                          style: GoogleFonts
-                                                              .catamaran(
-                                                            textStyle:
-                                                                const TextStyle(
-                                                              fontSize: 13.0,
-                                                              color: Colors.red,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
+                                                      Text(
+                                                        'Data de devolução: ' +
+                                                            _livros[index]
+                                                                .dataDevolucao
+                                                                .toString(),
+                                                        style: GoogleFonts
+                                                            .catamaran(
+                                                          textStyle:
+                                                              const TextStyle(
+                                                            fontSize: 13.0,
                                                           ),
                                                         ),
-                                                      ] else if (_livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString() ==
-                                                              terceiroDiaAntes
-                                                                  .toString() ||
-                                                          _livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString() ==
-                                                              quatroDiasAntes
-                                                                  .toString()) ...[
-                                                        Text(
-                                                          'Data de devolução: ' +
-                                                              _livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString(),
-                                                          style: GoogleFonts
-                                                              .catamaran(
-                                                            textStyle:
-                                                                const TextStyle(
-                                                              fontSize: 13.0,
-                                                              color:
-                                                                  Colors.orange,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ] else ...[
-                                                        Text(
-                                                          'Data de devolução: ' +
-                                                              _livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString(),
-                                                          style: GoogleFonts
-                                                              .catamaran(
-                                                            textStyle:
-                                                                const TextStyle(
-                                                              fontSize: 13.0,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
