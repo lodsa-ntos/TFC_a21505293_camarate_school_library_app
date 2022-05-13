@@ -278,18 +278,6 @@ class _HomeState extends State<Home> {
 
                       String dataAtual = formato.format(data);
 
-                      String pertoDaEntregaUm =
-                          formato.format(data.add(const Duration(days: 1)));
-
-                      String pertoDaEntregaDois =
-                          formato.format(data.add(const Duration(days: 2)));
-
-                      String terceiroDiaAntes =
-                          formato.format(data.add(const Duration(days: 3)));
-
-                      String quatroDiasAntes =
-                          formato.format(data.add(const Duration(days: 4)));
-
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
                           return Row(
@@ -400,87 +388,19 @@ class _HomeState extends State<Home> {
                                                       //* AVISO DATA DE ENTREGA
                                                       //? LÓGICAS PARA MENSAGEM
 
-                                                      if (
-                                                      //? Próprio dia para entrega
-                                                      _livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString() ==
-                                                              dataAtual
-                                                                  .toString() ||
-
-                                                          //? Dois dias para entrega
-                                                          _livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString() ==
-                                                              pertoDaEntregaDois
-                                                                  .toString() ||
-
-                                                          //? Um dia para entrega
-                                                          _livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString() ==
-                                                              pertoDaEntregaUm
-                                                                  .toString()) ...[
-                                                        Text(
-                                                          'Data de devolução: ' +
-                                                              _livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString(),
-                                                          style: GoogleFonts
-                                                              .catamaran(
-                                                            textStyle:
-                                                                const TextStyle(
-                                                              fontSize: 13.0,
-                                                              color: Colors.red,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
+                                                      Text(
+                                                        'Data de devolução: ' +
+                                                            _livros[index]
+                                                                .dataDevolucao
+                                                                .toString(),
+                                                        style: GoogleFonts
+                                                            .catamaran(
+                                                          textStyle:
+                                                              const TextStyle(
+                                                            fontSize: 13.0,
                                                           ),
                                                         ),
-                                                      ] else if (_livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString() ==
-                                                              terceiroDiaAntes
-                                                                  .toString() ||
-                                                          _livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString() ==
-                                                              quatroDiasAntes
-                                                                  .toString()) ...[
-                                                        Text(
-                                                          'Data de devolução: ' +
-                                                              _livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString(),
-                                                          style: GoogleFonts
-                                                              .catamaran(
-                                                            textStyle:
-                                                                const TextStyle(
-                                                              fontSize: 13.0,
-                                                              color:
-                                                                  Colors.orange,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ] else ...[
-                                                        Text(
-                                                          'Data de devolução: ' +
-                                                              _livros[index]
-                                                                  .dataDevolucao
-                                                                  .toString(),
-                                                          style: GoogleFonts
-                                                              .catamaran(
-                                                            textStyle:
-                                                                const TextStyle(
-                                                              fontSize: 13.0,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
