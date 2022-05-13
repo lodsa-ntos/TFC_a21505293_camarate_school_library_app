@@ -42,6 +42,39 @@ const livrosRequisitados = Padding(
 
 //? PÁGINA HOME
 class _HomeState extends State<Home> {
+  int? index;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      _alertarUtilizador();
+    });
+  }
+
+  _alertarUtilizador() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: const Text("Prazo de entrega"),
+          content: const Text(
+              "Tem de fazer a entrega do livro até a data indica, obrigado!"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     //
@@ -278,18 +311,6 @@ class _HomeState extends State<Home> {
 
                       String dataAtual = formato.format(data);
 
-                      String pertoDaEntregaUm =
-                          formato.format(data.add(const Duration(days: 1)));
-
-                      String pertoDaEntregaDois =
-                          formato.format(data.add(const Duration(days: 2)));
-
-                      String terceiroDiaAntes =
-                          formato.format(data.add(const Duration(days: 3)));
-
-                      String quatroDiasAntes =
-                          formato.format(data.add(const Duration(days: 4)));
-
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
                           return Row(
@@ -454,36 +475,6 @@ class _HomeState extends State<Home> {
         );
       },
     );
-  }
-
-  Object alertarUtilizador(bool isDataDeEntrega) {
-    //error message widget.
-    if (isDataDeEntrega == true) {
-      //if error is true then show error message box
-      return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          // return object of type Dialog
-          return AlertDialog(
-            title: const Text("Prazo de entrega"),
-            content: const Text(
-                "Tem de fazer a entrega do livro até a data indica, obrigado!"),
-            actions: <Widget>[
-              // usually buttons at the bottom of the dialog
-              TextButton(
-                child: const Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      return const Text('');
-      //if error is false, return empty container.
-    }
   }
 
 //! Para separar as categorias
