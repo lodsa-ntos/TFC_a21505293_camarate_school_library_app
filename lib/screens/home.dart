@@ -43,9 +43,40 @@ const livrosRequisitados = Padding(
 //? PÁGINA HOME
 class _HomeState extends State<Home> {
   @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      _alertarUtilizador();
+    });
+    super.initState();
+  }
+
+  _alertarUtilizador() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: const Text("Prazo de entrega"),
+          content: const Text(
+              "Tem de fazer a entrega do livro até a data indica, obrigado!"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     //
-    //? variável de informação dos livros a serem apresentados na interface
+    //? variável de informação dos livros das prateleiras a serem apresentados na interface
     final _livrosDasPrateleiras = Consumer<LivroRequisitadoModel>(
       builder: (context, detalheModel, child) {
         return StreamBuilder(
@@ -278,6 +309,18 @@ class _HomeState extends State<Home> {
 
                       String dataAtual = formato.format(data);
 
+                      String pertoDaEntregaUm =
+                          formato.format(data.add(const Duration(days: 1)));
+
+                      String pertoDaEntregaDois =
+                          formato.format(data.add(const Duration(days: 2)));
+
+                      String terceiroDiaAntes =
+                          formato.format(data.add(const Duration(days: 3)));
+
+                      String quatroDiasAntes =
+                          formato.format(data.add(const Duration(days: 4)));
+
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
                           return Row(
@@ -388,19 +431,88 @@ class _HomeState extends State<Home> {
                                                       //* AVISO DATA DE ENTREGA
                                                       //? LÓGICAS PARA MENSAGEM
 
-                                                      Text(
-                                                        'Data de devolução: ' +
-                                                            _livros[index]
-                                                                .dataDevolucao
-                                                                .toString(),
-                                                        style: GoogleFonts
-                                                            .catamaran(
-                                                          textStyle:
-                                                              const TextStyle(
-                                                            fontSize: 13.0,
+                                                      if (
+                                                      //? Próprio dia para entrega
+                                                      _livros[index]
+                                                                  .dataDevolucao
+                                                                  .toString() ==
+                                                              dataAtual
+                                                                  .toString() ||
+
+                                                          //? Dois dias para entrega
+                                                          _livros[index]
+                                                                  .dataDevolucao
+                                                                  .toString() ==
+                                                              pertoDaEntregaDois
+                                                                  .toString() ||
+
+                                                          //? Um dia para entrega
+                                                          _livros[index]
+                                                                  .dataDevolucao
+                                                                  .toString() ==
+                                                              pertoDaEntregaUm
+                                                                  .toString()) ...[
+                                                        _alertarUtilizador(),
+                                                        Text(
+                                                          'Data de devolução: ' +
+                                                              _livros[index]
+                                                                  .dataDevolucao
+                                                                  .toString(),
+                                                          style: GoogleFonts
+                                                              .catamaran(
+                                                            textStyle:
+                                                                const TextStyle(
+                                                              fontSize: 13.0,
+                                                              color: Colors.red,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
+                                                      ] else if (_livros[index]
+                                                                  .dataDevolucao
+                                                                  .toString() ==
+                                                              terceiroDiaAntes
+                                                                  .toString() ||
+                                                          _livros[index]
+                                                                  .dataDevolucao
+                                                                  .toString() ==
+                                                              quatroDiasAntes
+                                                                  .toString()) ...[
+                                                        Text(
+                                                          'Data de devolução: ' +
+                                                              _livros[index]
+                                                                  .dataDevolucao
+                                                                  .toString(),
+                                                          style: GoogleFonts
+                                                              .catamaran(
+                                                            textStyle:
+                                                                const TextStyle(
+                                                              fontSize: 13.0,
+                                                              color:
+                                                                  Colors.orange,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ] else ...[
+                                                        Text(
+                                                          'Data de devolução: ' +
+                                                              _livros[index]
+                                                                  .dataDevolucao
+                                                                  .toString(),
+                                                          style: GoogleFonts
+                                                              .catamaran(
+                                                            textStyle:
+                                                                const TextStyle(
+                                                              fontSize: 13.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ],
                                                   ),
                                                 ),
@@ -442,6 +554,36 @@ class _HomeState extends State<Home> {
         );
       },
     );
+  }
+
+  Object alertarUtilizador(bool isDataDeEntrega) {
+    //error message widget.
+    if (isDataDeEntrega == true) {
+      //if error is true then show error message box
+      return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: const Text("Prazo de entrega"),
+            content: const Text(
+                "Tem de fazer a entrega do livro até a data indica, obrigado!"),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              TextButton(
+                child: const Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      return const Text('');
+      //if error is false, return empty container.
+    }
   }
 
 //! Para separar as categorias
