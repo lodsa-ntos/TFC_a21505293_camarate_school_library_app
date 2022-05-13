@@ -41,8 +41,6 @@ class Livro {
   String? uidLivro;
   String? numColecao;
 
-  // colocar uid para saber que está requisitado
-
   Livro({
     this.id,
     this.titulo,
