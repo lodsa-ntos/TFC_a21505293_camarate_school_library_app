@@ -66,7 +66,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration.zero, () => alertarUtilizador(context));
     //
     //? variável de informação dos livros das prateleiras a serem apresentados na interface
     final _livrosDasPrateleiras = Consumer<LivroRequisitadoModel>(
@@ -319,6 +318,11 @@ class _HomeState extends State<Home> {
                           if (snapshot.hasData &&
                               !snapshot.hasError &&
                               snapshot.data.snapshot.value != null) {
+                            var data = DateTime.now().toLocal();
+                            var formato = DateFormat('dd-MM-yyyy');
+
+                            String dataAtual = formato.format(data);
+
                             List<dynamic> dadosBaseDeDados = jsonDecode(
                                 jsonEncode(snapshot.data.snapshot.value));
 
@@ -340,6 +344,15 @@ class _HomeState extends State<Home> {
                                       shrinkWrap: true,
                                       itemCount: _livros.length,
                                       itemBuilder: (context, index) {
+                                        if (_livros[index].uidLivro ==
+                                                utilizador.uid &&
+                                            _livros[index].isRequisitado ==
+                                                true &&
+                                            _livros[index].dataDevolucao ==
+                                                dataAtual) {
+                                          Future.delayed(Duration.zero,
+                                              () => alertarUtilizador(context));
+                                        }
                                         if (_livros[index].uidLivro ==
                                                 utilizador.uid &&
                                             _livros[index].isRequisitado ==
