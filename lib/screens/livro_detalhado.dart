@@ -131,6 +131,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaUID;
   DatabaseReference? _referenciaDataRequisicao;
   DatabaseReference? _referenciaDataDevolucao;
+  DatabaseReference? _referenciaDataEntrega;
 
   // Utilizador atual
   User? utilizador = _auth.currentUser;
@@ -147,7 +148,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
         String datas = formato.format(dataAtual.add(const Duration(hours: 1)));
 
         var formatoDevolucao = DateFormat('dd-MM-yyyy');
-        String dataDevolucao =
+        String dataDevolucaoEEntrega =
             formatoDevolucao.format(dataAtual.add(const Duration(days: 10)));
 
         //? referencia para atualizar a requisição e devolução na base de dados
@@ -173,6 +174,12 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .ref('livros')
             .child(widget.livroARequisitar.id.toString())
             .child('dataDevolucao');
+
+        //? referencia para registar a data de devolucao na base de dados
+        _referenciaDataEntrega = FirebaseDatabase.instance
+            .ref('livros')
+            .child(widget.livroARequisitar.id.toString())
+            .child('dataEntrega');
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
@@ -205,7 +212,11 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                             //? Regista a data de devolução
                             _referenciaDataDevolucao
-                                ?.set(dataDevolucao.toString());
+                                ?.set(dataDevolucaoEEntrega.toString());
+
+                            //? Regista a data de Entrega
+                            _referenciaDataEntrega
+                                ?.set(dataDevolucaoEEntrega.toString());
 
                             //? o livro fica requisitado
                             widget.livroARequisitar.isRequisitado = true;
@@ -236,7 +247,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                               .contains(utilizador!.uid)
                       ? () async {
                           setState(() {
-                            //? atuliza o estado de requisição para devolvido
+                            //? atualiza o estado de requisição para devolvido
                             _referenciaParaRequisicao?.set(false);
 
                             //? o livro fica devolvido

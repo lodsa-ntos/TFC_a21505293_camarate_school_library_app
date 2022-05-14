@@ -344,6 +344,7 @@ class _HomeState extends State<Home> {
                                       shrinkWrap: true,
                                       itemCount: _livros.length,
                                       itemBuilder: (context, index) {
+                                        //! Encontrar outra lógica
                                         if (_livros[index].uidLivro ==
                                                 utilizador.uid &&
                                             _livros[index].isRequisitado ==
@@ -353,6 +354,7 @@ class _HomeState extends State<Home> {
                                           Future.delayed(Duration.zero,
                                               () => alertarUtilizador(context));
                                         }
+
                                         if (_livros[index].uidLivro ==
                                                 utilizador.uid &&
                                             _livros[index].isRequisitado ==
