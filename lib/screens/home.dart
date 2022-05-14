@@ -42,31 +42,20 @@ const livrosRequisitados = Padding(
 
 //? PÁGINA HOME
 class _HomeState extends State<Home> {
-  int? index;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      _alertarUtilizador();
-    });
-  }
-
-  _alertarUtilizador() async {
-    showDialog(
+  void alertarUtilizador(BuildContext context) {
+    showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
-        // return object of type Dialog
         return AlertDialog(
           title: const Text("Prazo de entrega"),
           content: const Text(
-              "Tem de fazer a entrega do livro até a data indica, obrigado!"),
+            "Tem de fazer a entrega do livro até a data indica, obrigado!",
+          ),
           actions: <Widget>[
-            // usually buttons at the bottom of the dialog
             TextButton(
-              child: const Text("OK"),
+              child: const Text('OK'),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(true);
               },
             ),
           ],
@@ -77,6 +66,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () => alertarUtilizador(context));
     //
     //? variável de informação dos livros das prateleiras a serem apresentados na interface
     final _livrosDasPrateleiras = Consumer<LivroRequisitadoModel>(
@@ -218,7 +208,7 @@ class _HomeState extends State<Home> {
 
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
-        //? Alcançar a instância da base de dados para autenticação do utilizador atual
+        // Alcançar a instância da base de dados para autenticação do utilizador atual
         final _auth = FirebaseAuth.instance;
 
         // Utilizador actual
@@ -293,24 +283,20 @@ class _HomeState extends State<Home> {
           ),
 
           //? INTERFACE PARA O UTILIZADOR
-          //* LIVROS REQUISITADOS
 
           body: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                //* LIVROS REQUISITADOS
+
                 livrosRequisitados,
                 Container(
                   margin: const EdgeInsets.only(left: 3.0, right: 5.0),
                   child: StreamBuilder(
                     stream: FirebaseDatabase.instance.ref("livros").onValue,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      var data = DateTime.now().toLocal();
-                      var formato = DateFormat('dd-MM-yyyy');
-
-                      String dataAtual = formato.format(data);
-
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
                           return Row(
@@ -456,7 +442,6 @@ class _HomeState extends State<Home> {
                   ),
                 ),
 
-                //? INTERFACE PARA O UTILIZADOR
                 //* LIVROS PRATELEIRAS
 
                 //? Título
@@ -474,61 +459,6 @@ class _HomeState extends State<Home> {
           ),
         );
       },
-    );
-  }
-
-//! Para separar as categorias
-  _construirTituloDeColecoes(String titulo) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 0.0),
-              child: Row(
-                children: [
-                  //_livroPrateleira,
-                  if (titulo == "Generalidades") ...[
-                    const CircleAvatar(
-                      backgroundColor: Colors.yellow,
-                      minRadius: 15,
-                    ),
-                  ] else if (titulo == "Filosofia e Psicologia") ...[
-                    const CircleAvatar(
-                      backgroundColor: Colors.brown,
-                      minRadius: 15,
-                    ),
-                  ],
-
-                  Padding(
-                    // espaço entre o circulo e o título da classe
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Text(
-                      titulo,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        fontFamily: 'Poppins',
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: const Icon(
-              Icons.open_in_new,
-              color: Colors.blue,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
