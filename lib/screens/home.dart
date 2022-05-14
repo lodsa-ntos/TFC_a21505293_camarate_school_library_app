@@ -344,17 +344,18 @@ class _HomeState extends State<Home> {
                                       shrinkWrap: true,
                                       itemCount: _livros.length,
                                       itemBuilder: (context, index) {
-                                        //! Encontrar outra lógica
+                                        //* Mensagem de alerta para devolução do livro
                                         if (_livros[index].uidLivro ==
                                                 utilizador.uid &&
                                             _livros[index].isRequisitado ==
                                                 true &&
-                                            _livros[index].dataDevolucao ==
+                                            _livros[index].dataEntrega ==
                                                 dataAtual) {
                                           Future.delayed(Duration.zero,
                                               () => alertarUtilizador(context));
                                         }
 
+                                        //* Construir livro requisitado na interface
                                         if (_livros[index].uidLivro ==
                                                 utilizador.uid &&
                                             _livros[index].isRequisitado ==
@@ -422,19 +423,38 @@ class _HomeState extends State<Home> {
                                                       //* AVISO DATA DE ENTREGA
                                                       //? LÓGICAS PARA MENSAGEM
 
-                                                      Text(
-                                                        'Data de devolução: ' +
-                                                            _livros[index]
-                                                                .dataDevolucao
-                                                                .toString(),
-                                                        style: GoogleFonts
-                                                            .catamaran(
-                                                          textStyle:
-                                                              const TextStyle(
-                                                            fontSize: 13.0,
+                                                      if (_livros[index]
+                                                              .dataEntrega ==
+                                                          dataAtual) ...[
+                                                        Text(
+                                                          'Data de devolução: ' +
+                                                              _livros[index]
+                                                                  .dataEntrega
+                                                                  .toString(),
+                                                          style: GoogleFonts
+                                                              .catamaran(
+                                                            textStyle:
+                                                                const TextStyle(
+                                                              fontSize: 13.0,
+                                                              color: Colors.red,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
+                                                      ] else ...[
+                                                        Text(
+                                                          'Data de devolução: ' +
+                                                              _livros[index]
+                                                                  .dataEntrega
+                                                                  .toString(),
+                                                          style: GoogleFonts
+                                                              .catamaran(
+                                                            textStyle:
+                                                                const TextStyle(
+                                                              fontSize: 13.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ]
                                                     ],
                                                   ),
                                                 ),
