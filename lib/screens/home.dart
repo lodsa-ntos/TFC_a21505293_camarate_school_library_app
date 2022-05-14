@@ -321,7 +321,7 @@ class _HomeState extends State<Home> {
                             var data = DateTime.now().toLocal();
                             var formato = DateFormat('dd-MM-yyyy');
 
-                            String dataAtual = formato.format(data);
+                            String dataAtual = formato.format(data.toLocal());
 
                             List<dynamic> dadosBaseDeDados = jsonDecode(
                                 jsonEncode(snapshot.data.snapshot.value));
@@ -351,6 +351,8 @@ class _HomeState extends State<Home> {
                                                 true &&
                                             _livros[index].dataEntrega ==
                                                 dataAtual) {
+                                          /// Se o livro estiver requisitado e foi requisitado pelo utilizador atual
+                                          /// e se estiver no dia da data de entrega, então alerta o utilizador
                                           Future.delayed(Duration.zero,
                                               () => alertarUtilizador(context));
                                         }
