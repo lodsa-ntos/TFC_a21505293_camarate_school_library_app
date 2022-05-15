@@ -42,6 +42,7 @@ const livrosRequisitados = Padding(
 
 //? PÁGINA HOME
 class _HomeState extends State<Home> {
+  //* Mensagem para alertar o utilizador
   void alertarUtilizador(BuildContext context) {
     showDialog<bool>(
       context: context,
@@ -382,7 +383,7 @@ class _HomeState extends State<Home> {
                                             _livros[index].dataEntrega ==
                                                 data1DiaAntes) {
                                           // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
-                                          // e se estiver no dia da data de entrega, então alerta o utilizador
+                                          // e se estiver 1 dia antes da data de entrega, então alerta o utilizador
                                           Future.delayed(Duration.zero,
                                               () => alertarUtilizador(context));
                                         }
@@ -396,7 +397,7 @@ class _HomeState extends State<Home> {
                                             _livros[index].dataEntrega ==
                                                 data2DiasAntes) {
                                           // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
-                                          // e se estiver no dia da data de entrega, então alerta o utilizador
+                                          // e se estiver 2 dias antes da data de entrega, então alerta o utilizador
                                           Future.delayed(Duration.zero,
                                               () => alertarUtilizador(context));
                                         }
@@ -410,7 +411,7 @@ class _HomeState extends State<Home> {
                                             _livros[index].dataEntrega ==
                                                 data3DiasAntes) {
                                           // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
-                                          // e se estiver no dia da data de entrega, então alerta o utilizador
+                                          // e se estiver 3 dias antes da data de entrega, então alerta o utilizador
                                           Future.delayed(Duration.zero,
                                               () => alertarUtilizador(context));
                                         }
@@ -424,7 +425,7 @@ class _HomeState extends State<Home> {
                                             _livros[index].dataEntrega ==
                                                 data4DiasAntes) {
                                           // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
-                                          // e se estiver no dia da data de entrega, então alerta o utilizador
+                                          // e se estiver 4 dias antes da data de entrega, então alerta o utilizador
                                           Future.delayed(Duration.zero,
                                               () => alertarUtilizador(context));
                                         }
