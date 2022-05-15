@@ -322,13 +322,18 @@ class _HomeState extends State<Home> {
                             var formato = DateFormat('dd-MM-yyyy');
 
                             String dataAtual = formato.format(data.toLocal());
+                            String datas = formato
+                                .format(data.add(const Duration(days: -2)));
 
+                            //? tRanformar os dados da base de dados numa lista dinamica
                             List<dynamic> dadosBaseDeDados = jsonDecode(
                                 jsonEncode(snapshot.data.snapshot.value));
 
+                            //? Adaptar esses ao modelo de livro
                             LivroModel listaDeLivros =
                                 LivroModel.fromJson(dadosBaseDeDados);
 
+                            //? Lista para guardar os dados convertidos e decodificados
                             final List<Livro> _livros = [];
 
                             _livros.addAll(listaDeLivros.livros);
@@ -351,8 +356,8 @@ class _HomeState extends State<Home> {
                                                 true &&
                                             _livros[index].dataEntrega ==
                                                 dataAtual) {
-                                          /// Se o livro estiver requisitado e foi requisitado pelo utilizador atual
-                                          /// e se estiver no dia da data de entrega, então alerta o utilizador
+                                          // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
+                                          // e se estiver no dia da data de entrega, então alerta o utilizador
                                           Future.delayed(Duration.zero,
                                               () => alertarUtilizador(context));
                                         }
@@ -366,7 +371,7 @@ class _HomeState extends State<Home> {
                                             onTap: () => Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                //** Redireciona o utilizador para a página de detalhes do livro */
+                                                //? Redireciona o utilizador para a página de detalhes do livro */
                                                 builder: (context) =>
                                                     LivroDetalhado(
                                                   index: index,
@@ -479,7 +484,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
 
-                //* LIVROS PRATELEIRAS
+                //* LIVROS DAS PRATELEIRAS
 
                 //? Título
                 prateleiras,
