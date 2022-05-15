@@ -322,7 +322,7 @@ class _HomeState extends State<Home> {
                             var formato = DateFormat('dd-MM-yyyy');
 
                             String dataAtual = formato.format(data.toLocal());
-                            String datas = formato
+                            String data2DiasAntes = formato
                                 .format(data.add(const Duration(days: -2)));
 
                             //? tRanformar os dados da base de dados numa lista dinamica
@@ -349,13 +349,28 @@ class _HomeState extends State<Home> {
                                       shrinkWrap: true,
                                       itemCount: _livros.length,
                                       itemBuilder: (context, index) {
-                                        //* Mensagem de alerta para devolução do livro
+                                        //* Mensagem de alerta se
+                                        //* a data de devolução for igual a data de entrega(dataAtual)
                                         if (_livros[index].uidLivro ==
                                                 utilizador.uid &&
                                             _livros[index].isRequisitado ==
                                                 true &&
                                             _livros[index].dataEntrega ==
                                                 dataAtual) {
+                                          // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
+                                          // e se estiver no dia da data de entrega, então alerta o utilizador
+                                          Future.delayed(Duration.zero,
+                                              () => alertarUtilizador(context));
+                                        }
+
+                                        //* Mensagem de alerta se estiver 2 dias
+                                        //* antes da data para a devolução
+                                        if (_livros[index].uidLivro ==
+                                                utilizador.uid &&
+                                            _livros[index].isRequisitado ==
+                                                true &&
+                                            _livros[index].dataEntrega ==
+                                                data2DiasAntes) {
                                           // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
                                           // e se estiver no dia da data de entrega, então alerta o utilizador
                                           Future.delayed(Duration.zero,
