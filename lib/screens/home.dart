@@ -322,8 +322,18 @@ class _HomeState extends State<Home> {
                             var formato = DateFormat('dd-MM-yyyy');
 
                             String dataAtual = formato.format(data.toLocal());
+
+                            String data1DiaAntes = formato
+                                .format(data.add(const Duration(days: -1)));
+
                             String data2DiasAntes = formato
                                 .format(data.add(const Duration(days: -2)));
+
+                            String data3DiasAntes = formato
+                                .format(data.add(const Duration(days: -3)));
+
+                            String data4DiasAntes = formato
+                                .format(data.add(const Duration(days: -4)));
 
                             //? tRanformar os dados da base de dados numa lista dinamica
                             List<dynamic> dadosBaseDeDados = jsonDecode(
@@ -363,14 +373,56 @@ class _HomeState extends State<Home> {
                                               () => alertarUtilizador(context));
                                         }
 
+                                        //* Mensagem de alerta se estiver 1 dia
+                                        //* antes da data para a devolução
+                                        else if (_livros[index].uidLivro ==
+                                                utilizador.uid &&
+                                            _livros[index].isRequisitado ==
+                                                true &&
+                                            _livros[index].dataEntrega ==
+                                                data1DiaAntes) {
+                                          // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
+                                          // e se estiver no dia da data de entrega, então alerta o utilizador
+                                          Future.delayed(Duration.zero,
+                                              () => alertarUtilizador(context));
+                                        }
+
                                         //* Mensagem de alerta se estiver 2 dias
                                         //* antes da data para a devolução
-                                        if (_livros[index].uidLivro ==
+                                        else if (_livros[index].uidLivro ==
                                                 utilizador.uid &&
                                             _livros[index].isRequisitado ==
                                                 true &&
                                             _livros[index].dataEntrega ==
                                                 data2DiasAntes) {
+                                          // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
+                                          // e se estiver no dia da data de entrega, então alerta o utilizador
+                                          Future.delayed(Duration.zero,
+                                              () => alertarUtilizador(context));
+                                        }
+
+                                        //* Mensagem de alerta se estiver 3 dias
+                                        //* antes da data para a devolução
+                                        else if (_livros[index].uidLivro ==
+                                                utilizador.uid &&
+                                            _livros[index].isRequisitado ==
+                                                true &&
+                                            _livros[index].dataEntrega ==
+                                                data3DiasAntes) {
+                                          // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
+                                          // e se estiver no dia da data de entrega, então alerta o utilizador
+                                          Future.delayed(Duration.zero,
+                                              () => alertarUtilizador(context));
+                                        }
+
+                                        //* Mensagem de alerta se estiver 4 dias
+                                        //* antes da data para a devolução
+                                        else if (_livros[index].uidLivro ==
+                                                utilizador.uid &&
+                                            _livros[index].isRequisitado ==
+                                                true &&
+                                            _livros[index].dataEntrega ==
+                                                data4DiasAntes) {
                                           // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
                                           // e se estiver no dia da data de entrega, então alerta o utilizador
                                           Future.delayed(Duration.zero,
