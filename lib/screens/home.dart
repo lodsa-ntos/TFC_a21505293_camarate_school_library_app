@@ -340,23 +340,6 @@ class _HomeState extends State<Home> {
                                         //* Mensagem de alerta se
                                         //* a data de devolução for igual a data de entrega(dataAtual)
 
-                                        switch (_livros[index].isRequisitado) {
-                                          case true:
-                                            if (_livros[index].uidLivro ==
-                                                    utilizador.uid &&
-                                                _livros[index].dataEntrega ==
-                                                    dataAtual) {
-                                              // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
-                                              // e se estiver no dia da data de entrega, então alerta o utilizador
-                                              Future.delayed(
-                                                  Duration.zero,
-                                                  () => alertarUtilizador(
-                                                      context));
-                                            }
-                                            break;
-                                          default:
-                                        }
-
                                         //* Construir livro requisitado na interface
                                         if (_livros[index].uidLivro ==
                                                 utilizador.uid &&

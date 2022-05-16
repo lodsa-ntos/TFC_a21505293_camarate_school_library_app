@@ -130,7 +130,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaRequisicao;
   DatabaseReference? _referenciaUID;
   DatabaseReference? _referenciaDataRequisicao;
-  DatabaseReference? _referenciaEmprestado;
   DatabaseReference? _referenciaDataEntrega;
 
   // Utilizador atual
@@ -156,12 +155,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .ref('livros')
             .child(widget.livroARequisitar.id.toString())
             .child('isRequisitado');
-
-        //? referencia para atualizar a requisição e devolução na base de dados
-        _referenciaEmprestado = FirebaseDatabase.instance
-            .ref('livros')
-            .child(widget.livroARequisitar.id.toString())
-            .child('emprestado');
 
         //? referencia para registar o utilizador como dono do livro requisitado na base de dados
         _referenciaUID = FirebaseDatabase.instance
@@ -209,9 +202,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                             //? Regista a data de Requisicao
                             _referenciaDataRequisicao?.set(datas.toString());
-
-                            //? Regista a data de devolução
-                            _referenciaEmprestado?.set(true);
 
                             //? Regista a data de Entrega
                             _referenciaDataEntrega
