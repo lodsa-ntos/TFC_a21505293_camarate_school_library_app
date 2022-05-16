@@ -42,29 +42,6 @@ const livrosRequisitados = Padding(
 
 //? PÁGINA HOME
 class _HomeState extends State<Home> {
-  //* Mensagem para alertar o utilizador
-  void alertarUtilizador(BuildContext context) {
-    showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Prazo de entrega"),
-          content: const Text(
-            "Tem de fazer a entrega do livro até a data indica, obrigado!",
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     //
@@ -362,72 +339,22 @@ class _HomeState extends State<Home> {
                                       itemBuilder: (context, index) {
                                         //* Mensagem de alerta se
                                         //* a data de devolução for igual a data de entrega(dataAtual)
-                                        if (_livros[index].uidLivro ==
-                                                utilizador.uid &&
-                                            _livros[index].isRequisitado ==
-                                                true &&
-                                            _livros[index].dataEntrega ==
-                                                dataAtual) {
-                                          // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
-                                          // e se estiver no dia da data de entrega, então alerta o utilizador
-                                          Future.delayed(Duration.zero,
-                                              () => alertarUtilizador(context));
-                                        }
 
-                                        //* Mensagem de alerta se estiver 1 dia
-                                        //* antes da data para a devolução
-                                        else if (_livros[index].uidLivro ==
-                                                utilizador.uid &&
-                                            _livros[index].isRequisitado ==
-                                                true &&
-                                            _livros[index].dataEntrega ==
-                                                data1DiaAntes) {
-                                          // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
-                                          // e se estiver 1 dia antes da data de entrega, então alerta o utilizador
-                                          Future.delayed(Duration.zero,
-                                              () => alertarUtilizador(context));
-                                        }
-
-                                        //* Mensagem de alerta se estiver 2 dias
-                                        //* antes da data para a devolução
-                                        else if (_livros[index].uidLivro ==
-                                                utilizador.uid &&
-                                            _livros[index].isRequisitado ==
-                                                true &&
-                                            _livros[index].dataEntrega ==
-                                                data2DiasAntes) {
-                                          // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
-                                          // e se estiver 2 dias antes da data de entrega, então alerta o utilizador
-                                          Future.delayed(Duration.zero,
-                                              () => alertarUtilizador(context));
-                                        }
-
-                                        //* Mensagem de alerta se estiver 3 dias
-                                        //* antes da data para a devolução
-                                        else if (_livros[index].uidLivro ==
-                                                utilizador.uid &&
-                                            _livros[index].isRequisitado ==
-                                                true &&
-                                            _livros[index].dataEntrega ==
-                                                data3DiasAntes) {
-                                          // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
-                                          // e se estiver 3 dias antes da data de entrega, então alerta o utilizador
-                                          Future.delayed(Duration.zero,
-                                              () => alertarUtilizador(context));
-                                        }
-
-                                        //* Mensagem de alerta se estiver 4 dias
-                                        //* antes da data para a devolução
-                                        else if (_livros[index].uidLivro ==
-                                                utilizador.uid &&
-                                            _livros[index].isRequisitado ==
-                                                true &&
-                                            _livros[index].dataEntrega ==
-                                                data4DiasAntes) {
-                                          // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
-                                          // e se estiver 4 dias antes da data de entrega, então alerta o utilizador
-                                          Future.delayed(Duration.zero,
-                                              () => alertarUtilizador(context));
+                                        switch (_livros[index].isRequisitado) {
+                                          case true:
+                                            if (_livros[index].uidLivro ==
+                                                    utilizador.uid &&
+                                                _livros[index].dataEntrega ==
+                                                    dataAtual) {
+                                              // Se o livro estiver requisitado e foi requisitado pelo utilizador atual
+                                              // e se estiver no dia da data de entrega, então alerta o utilizador
+                                              Future.delayed(
+                                                  Duration.zero,
+                                                  () => alertarUtilizador(
+                                                      context));
+                                            }
+                                            break;
+                                          default:
                                         }
 
                                         //* Construir livro requisitado na interface
@@ -567,6 +494,29 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
+        );
+      },
+    );
+  }
+
+  //* Mensagem para alertar o utilizador
+  void alertarUtilizador(BuildContext context) {
+    showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Prazo de entrega"),
+          content: const Text(
+            "Tem de fazer a entrega do livro até a data indica, obrigado!",
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
         );
       },
     );

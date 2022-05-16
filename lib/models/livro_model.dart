@@ -37,7 +37,6 @@ class Livro {
   int? ano;
   bool? isRequisitado;
   String? dataRequisicao;
-  String? dataDevolucao;
   String? dataEntrega;
   String? uidLivro;
   String? numColecao;
@@ -53,7 +52,6 @@ class Livro {
     this.ano,
     this.isRequisitado,
     this.dataRequisicao,
-    this.dataDevolucao,
     this.dataEntrega,
     this.uidLivro,
     this.numColecao,
@@ -71,7 +69,6 @@ class Livro {
     map["ano"] = ano;
     map["isRequisitado"] = isRequisitado;
     map["dataRequisicao"] = dataRequisicao;
-    map["dataDevolucao"] = dataDevolucao;
     map["dataEntrega"] = dataEntrega;
     map["uidLivro"] = uidLivro;
     map["numColecao"] = numColecao;
@@ -91,7 +88,6 @@ class Livro {
       ano: json['ano']?.toInt() ?? 0,
       isRequisitado: json['isRequisitado'] ?? false,
       dataRequisicao: json['dataRequisicao'] ?? '',
-      dataDevolucao: json['dataDevolucao'] ?? '',
       dataEntrega: json['dataEntrega'] ?? '',
       uidLivro: json['uidLivro'] ?? '',
       numColecao: json['numColecao'] ?? '',
