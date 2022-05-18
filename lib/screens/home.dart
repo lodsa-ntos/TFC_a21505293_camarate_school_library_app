@@ -42,6 +42,29 @@ const livrosRequisitados = Padding(
 
 //? PÁGINA HOME
 class _HomeState extends State<Home> {
+  //* Mensagem para alertar o utilizador
+  void alertarUtilizador(BuildContext context) {
+    showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Prazo de entrega"),
+          content: const Text(
+            "Tem de fazer a entrega do livro até a data indica, obrigado!",
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     //
@@ -266,6 +289,7 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                //
                 //* LIVROS REQUISITADOS
 
                 livrosRequisitados,
@@ -301,18 +325,6 @@ class _HomeState extends State<Home> {
 
                             String dataAtual = formato.format(data.toLocal());
 
-                            String data1DiaAntes = formato
-                                .format(data.add(const Duration(days: -1)));
-
-                            String data2DiasAntes = formato
-                                .format(data.add(const Duration(days: -2)));
-
-                            String data3DiasAntes = formato
-                                .format(data.add(const Duration(days: -3)));
-
-                            String data4DiasAntes = formato
-                                .format(data.add(const Duration(days: -4)));
-
                             //? tRanformar os dados da base de dados numa lista dinamica
                             List<dynamic> dadosBaseDeDados = jsonDecode(
                                 jsonEncode(snapshot.data.snapshot.value));
@@ -337,9 +349,6 @@ class _HomeState extends State<Home> {
                                       shrinkWrap: true,
                                       itemCount: _livros.length,
                                       itemBuilder: (context, index) {
-                                        //* Mensagem de alerta se
-                                        //* a data de devolução for igual a data de entrega(dataAtual)
-
                                         //* Construir livro requisitado na interface
                                         if (_livros[index].uidLivro ==
                                                 utilizador.uid &&
@@ -404,42 +413,19 @@ class _HomeState extends State<Home> {
                                                       const SizedBox(
                                                         height: 5.0,
                                                       ),
-
-                                                      //* AVISO DATA DE ENTREGA
-                                                      //? LÓGICAS PARA MENSAGEM
-
-                                                      if (_livros[index]
-                                                              .dataEntrega ==
-                                                          dataAtual) ...[
-                                                        Text(
-                                                          'Data de devolução: ' +
-                                                              _livros[index]
-                                                                  .dataEntrega
-                                                                  .toString(),
-                                                          style: GoogleFonts
-                                                              .catamaran(
-                                                            textStyle:
-                                                                const TextStyle(
-                                                              fontSize: 13.0,
-                                                              color: Colors.red,
-                                                            ),
+                                                      Text(
+                                                        'Data de devolução: ' +
+                                                            _livros[index]
+                                                                .dataEntrega
+                                                                .toString(),
+                                                        style: GoogleFonts
+                                                            .catamaran(
+                                                          textStyle:
+                                                              const TextStyle(
+                                                            fontSize: 13.0,
                                                           ),
                                                         ),
-                                                      ] else ...[
-                                                        Text(
-                                                          'Data de devolução: ' +
-                                                              _livros[index]
-                                                                  .dataEntrega
-                                                                  .toString(),
-                                                          style: GoogleFonts
-                                                              .catamaran(
-                                                            textStyle:
-                                                                const TextStyle(
-                                                              fontSize: 13.0,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ]
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -477,29 +463,6 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-        );
-      },
-    );
-  }
-
-  //* Mensagem para alertar o utilizador
-  void alertarUtilizador(BuildContext context) {
-    showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Prazo de entrega"),
-          content: const Text(
-            "Tem de fazer a entrega do livro até a data indica, obrigado!",
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-            ),
-          ],
         );
       },
     );

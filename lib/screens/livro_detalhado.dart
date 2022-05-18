@@ -144,7 +144,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
       builder: (context, requisitadoModel, child) {
         var dataAtual = DateTime.now().toLocal();
         var formato = DateFormat('dd-MM-yyyy – HH:mm');
-        String datas = formato.format(dataAtual.add(const Duration(hours: 1)));
+        String dataRequisicao =
+            formato.format(dataAtual.add(const Duration(hours: 1)));
 
         var formatoDevolucao = DateFormat('dd-MM-yyyy');
         String dataDevolucaoEEntrega =
@@ -201,7 +202,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             _referenciaUID?.set(livro.uidLivro);
 
                             //? Regista a data de Requisicao
-                            _referenciaDataRequisicao?.set(datas.toString());
+                            _referenciaDataRequisicao
+                                ?.set(dataRequisicao.toString());
 
                             //? Regista a data de Entrega
                             _referenciaDataEntrega
