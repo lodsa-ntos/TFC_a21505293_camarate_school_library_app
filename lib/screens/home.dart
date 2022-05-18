@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:camarate_school_library/models/livro_model.dart';
-import 'package:camarate_school_library/screens/historico.dart';
+import 'package:camarate_school_library/screens/obras_requisitadas.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:camarate_school_library/screens/login.dart';
@@ -257,7 +257,7 @@ class _HomeState extends State<Home> {
                     context,
                     MaterialPageRoute(
                         //** Redireciona o utilizador para a página o histórico*/
-                        builder: (context) => const Historico()),
+                        builder: (context) => const ObrasRequisitadas()),
                   ),
                 ),
                 ListTile(
