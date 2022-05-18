@@ -250,7 +250,7 @@ class _HomeState extends State<Home> {
                 const DrawerHeader(
                     decoration: BoxDecoration(color: Colors.blue), child: null),
                 ListTile(title: const Text('Ajuda'), onTap: () {}),
-                ListTile(title: const Text('Estatística'), onTap: () {}),
+                ListTile(title: const Text('Histórico'), onTap: () {}),
                 ListTile(
                   title: const Text('Notificação'),
                   onTap: () => Navigator.push(
