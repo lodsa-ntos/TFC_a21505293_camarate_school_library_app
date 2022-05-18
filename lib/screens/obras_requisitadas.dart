@@ -18,10 +18,20 @@ class ObrasRequisitadas extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 20.0),
           child: Column(
-            children: const [
-              Text(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Text(
                 'Obras requisitadas',
                 style: TextStyle(fontSize: 25),
+              ),
+              const SizedBox(height: 34),
+              SingleChildScrollView(
+                child: Column(
+                  children: const [
+                    Text('dados'),
+                  ],
+                ),
               ),
             ],
           ),
