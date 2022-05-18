@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:camarate_school_library/models/livro_model.dart';
+import 'package:camarate_school_library/screens/historico.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:camarate_school_library/screens/login.dart';
@@ -250,7 +251,15 @@ class _HomeState extends State<Home> {
                 const DrawerHeader(
                     decoration: BoxDecoration(color: Colors.blue), child: null),
                 ListTile(title: const Text('Ajuda'), onTap: () {}),
-                ListTile(title: const Text('Histórico'), onTap: () {}),
+                ListTile(
+                  title: const Text('Histórico'),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        //** Redireciona o utilizador para a página o histórico*/
+                        builder: (context) => const Historico()),
+                  ),
+                ),
                 ListTile(
                   title: const Text('Notificação'),
                   onTap: () => Navigator.push(
