@@ -53,7 +53,14 @@ class ObrasRequisitadas extends StatelessWidget {
                           cells: <DataCell>[
                             DataCell(Text('Alquimista (16x)')),
                             DataCell(Text('Joaquín Santos')),
-                            DataCell(Text('16/05/2022')),
+                            DataCell(Text('16/05/2022 - 15:34')),
+                          ],
+                        ),
+                        DataRow(
+                          cells: <DataCell>[
+                            DataCell(Text('Que número é este (5x)')),
+                            DataCell(Text('João Silva')),
+                            DataCell(Text('19/05/2022 - 13:44')),
                           ],
                         ),
                       ],
