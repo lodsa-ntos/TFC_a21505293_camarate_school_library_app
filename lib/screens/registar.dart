@@ -270,13 +270,13 @@ class _RegistarState extends State<Registar> {
     User? utilizador = _auth.currentUser;
 
     // Variável do tipo aluno para alcançar os atributos do aluno
-    Aluno alunoModel = Aluno();
+    Pessoa alunoModel = Pessoa();
 
     // Guardar todos os valores do aluno
-    alunoModel.emailAluno = utilizador!.email;
-    alunoModel.uidAluno = utilizador.uid;
-    alunoModel.numCartaoAluno = _numCartaoAlunoController.text.trim();
-    alunoModel.passwordAluno = _passwordInputController.text.trim();
+    alunoModel.emailPessoa = utilizador!.email;
+    alunoModel.uidPessoa = utilizador.uid;
+    alunoModel.numCartaoPessoa = _numCartaoAlunoController.text.trim();
+    alunoModel.passwordPessoa = _passwordInputController.text.trim();
 
     // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
     // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
@@ -330,13 +330,13 @@ class _RegistarState extends State<Registar> {
     User? userProfessor = _auth.currentUser;
 
     // Variável do tipo aluno para alcançar os atributos do aluno
-    Professor professorModel = Professor();
+    Pessoa professorModel = Pessoa();
 
     // Guardar todos os valores do aluno
-    professorModel.emailProf = userProfessor!.email;
-    professorModel.uidProf = userProfessor.uid;
-    professorModel.numCartaoProf = _numCartaoAlunoController.text.trim();
-    professorModel.passwordProf = _passwordInputController.text.trim();
+    professorModel.emailPessoa = userProfessor!.email;
+    professorModel.uidPessoa = userProfessor.uid;
+    professorModel.numCartaoPessoa = _numCartaoAlunoController.text.trim();
+    professorModel.passwordPessoa = _passwordInputController.text.trim();
 
     // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
     // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador

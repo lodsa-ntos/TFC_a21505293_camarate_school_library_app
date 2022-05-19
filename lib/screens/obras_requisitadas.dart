@@ -15,7 +15,7 @@ class ObrasRequisitadas extends StatelessWidget {
         backgroundColor: Colors.white, //? Cor da barra do título
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(
-              30.0), //? distancia entre o título e a seta para voltar
+              30.0), //? distância entre o título e a seta para voltar
 
           //? Título
           child: Container(

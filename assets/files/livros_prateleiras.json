@@ -18,7 +18,7 @@
     {
       "ano": 2004,
       "autor": "Ricardo Garcia",
-      "dataEntrega": "",
+      "dataEntrega": "16-05-2022",
       "dataRequisicao": "10-05-2022 – 22:01",
       "editora": "Fundação Francisco Manuel dos Santos",
       "id": "1",
@@ -59,6 +59,19 @@
       "titulo": "Planisfério Pessoal",
       "uidLivro": "6UxpfRiDaMTiawDpMrkz1ldr0m52",
       "numColecao": "0"
+    }
+  ],
+
+  "Historico": [
+    {
+      "autor": "Paulo Coelho",
+      "dataRequisicao": "08-05-2022 – 22:08",
+      "id": "0",
+      "imagePath": "https://img.wook.pt/images/o-alquimista-paulo-coelho/MXwxNTIzNzEzOXwxMDcyNTQ3NXwxMzgzNTIzMjAwMDAwfHdlYnA=/502x",
+      "numRegisto": "0001",
+      "titulo": "O Alquimista",
+      "uidLivro": "6UxpfRiDaMTiawDpMrkz1ldr0m52",
+      "utilizador": "Ricardo Almeida"
     }
   ]
 }
