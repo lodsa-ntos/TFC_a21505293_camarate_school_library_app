@@ -28,8 +28,36 @@ class ObrasRequisitadas extends StatelessWidget {
               const SizedBox(height: 34),
               SingleChildScrollView(
                 child: Column(
-                  children: const [
-                    Text('dados'),
+                  children: [
+                    DataTable(
+                      columns: const <DataColumn>[
+                        DataColumn(
+                          label: Text(
+                            'Livro',
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
+                            'Requisitante',
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
+                            'Data de requisição',
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                      rows: const <DataRow>[
+                        DataRow(
+                          cells: <DataCell>[
+                            DataCell(Text('Alquimista (16x)')),
+                            DataCell(Text('Joaquín Santos')),
+                            DataCell(Text('16/05/2022')),
+                          ],
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

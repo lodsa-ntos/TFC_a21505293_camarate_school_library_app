@@ -252,7 +252,7 @@ class _HomeState extends State<Home> {
                     decoration: BoxDecoration(color: Colors.blue), child: null),
                 ListTile(title: const Text('Ajuda'), onTap: () {}),
                 ListTile(
-                  title: const Text('Histórico'),
+                  title: const Text('Obras requisitadas'),
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
