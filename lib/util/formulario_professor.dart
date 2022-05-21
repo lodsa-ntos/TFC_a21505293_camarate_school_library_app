@@ -1,3 +1,4 @@
+import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/util/validator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,7 +26,7 @@ class FormularioProfessorState extends State<FormularioProfessor> {
   //? Esconder a password
   bool esconderPassword = true;
 
-  final bool _isLoading = false;
+  bool _isLoading = false;
 
   //? Controladores para guardar o texto dos campos
   final _nomeCompletoPessoaController = TextEditingController();
@@ -35,11 +36,11 @@ class FormularioProfessorState extends State<FormularioProfessor> {
   final _authProfessor = FirebaseAuth.instance;
 
   //! Simular chamada de espera para criar utilizador
-  final _aCriarUtilizador = Row(
+  final _aCompletarDados = Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: const <Widget>[
       CircularProgressIndicator(),
-      Text(" A criar utilizador... aguarde")
+      Text(" A completar dados... aguarde")
     ],
   );
 
@@ -105,7 +106,7 @@ class FormularioProfessorState extends State<FormularioProfessor> {
 
                     //? --> Botão Seguinte <--
                     _isLoading
-                        ? _aCriarUtilizador
+                        ? _aCompletarDados
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -173,49 +174,63 @@ class FormularioProfessorState extends State<FormularioProfessor> {
     );
   }
 
-  //! Guardar os dados do utilizador na base de dados do firestore
+  //* Guardar os dados do utilizador na base de dados do firestore
   saveProfessorNoFirestore() async {
-    // Instâcia par alcançar a base de dados firestore do firebase
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    try {
+      setState(() => _isLoading = true);
+      // Instâcia par alcançar a base de dados firestore do firebase
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
-    // Utilizador atual que preencheu o formulário
-    User? utilizador = _authProfessor.currentUser;
+      // Utilizador atual que preencheu o formulário
+      User? utilizador = _authProfessor.currentUser;
 
-    widget.pessoa.nomeCompletoPessoa =
-        _nomeCompletoPessoaController.text.trim();
+      widget.pessoa.nomeCompletoPessoa =
+          _nomeCompletoPessoaController.text.trim();
 
-    widget.pessoa.turma = _turmaPessoaController.text.trim();
+      widget.pessoa.turma = _turmaPessoaController.text.trim();
 
-    // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
-    // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
-    //... e enviar para a base de dados
-    await firebaseFirestore
-        .collection("Utilizadores")
-        .where("uidPessoa", isEqualTo: utilizador!.uid)
-        .get()
-        .then((value) => value.docs.forEach((element) {
-              element.reference.update(
-                {
-                  "nomeCompletoPessoa":
-                      _nomeCompletoPessoaController.text.trim()
-                },
-              );
+      // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
+      // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
+      //... e enviar para a base de dados
+      await firebaseFirestore
+          .collection("Utilizadores")
+          .where("uidPessoa", isEqualTo: utilizador!.uid)
+          .get()
+          .then((value) => value.docs.forEach((element) {
+                element.reference.update(
+                  {
+                    "nomeCompletoPessoa":
+                        _nomeCompletoPessoaController.text.trim()
+                  },
+                );
 
-              element.reference.update(
-                {"turma": _turmaPessoaController.text.trim()},
-              );
-            }));
-    // mensagem de sucesso para user interface
-    Fluttertoast.showToast(
-      msg: "Conta criada com sucesso :) ",
-      backgroundColor: Colors.orange,
-    );
+                element.reference.update(
+                  {"turma": _turmaPessoaController.text.trim()},
+                );
+              }));
+      // mensagem de sucesso para user interface
+      Fluttertoast.showToast(
+        msg: "Conta criada com sucesso :) ",
+        backgroundColor: Colors.orange,
+      );
 
-    // Redireciona o utilizador para a página home
-    Navigator.pushAndRemoveUntil(
-      (context),
-      MaterialPageRoute(builder: (context) => const Home()),
-      (route) => false,
-    );
+      // Redireciona o utilizador para a página home
+      Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => const Home()),
+        (route) => false,
+      );
+    } on AuthException catch (erro) {
+      setState(() => _isLoading = false);
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        duration: const Duration(seconds: 10),
+        content: Text(
+          erro.mensagem,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        backgroundColor: Colors.red,
+      ));
+    }
   }
 }

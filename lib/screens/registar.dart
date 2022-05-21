@@ -17,22 +17,20 @@ class _RegistarState extends State<Registar> {
   //? Chave para identificar a validação do formulario
   final _chaveFormRegisto = GlobalKey<FormState>();
 
-//? Esconder a password
+  //? Esconder a password
   bool esconderPassword = true;
 
   bool _isLoading = false;
 
-//? Controladores para guardar o texto dos campos
+  //? Controladores para guardar o texto dos campos
   final _emailInputController = TextEditingController();
   final _passwordInputController = TextEditingController();
-  final _nomeCompletoController = TextEditingController();
-  final _usernameController = TextEditingController();
   final _numCartaoAlunoController = TextEditingController();
 
-  //! Alcançar a instancia da abse de dados para autenticação do utilizador atual
+  //? Alcançar a instancia da abse de dados para autenticação do utilizador atual
   final _auth = FirebaseAuth.instance;
 
-//! Simular chamada de espera para criar utilizador
+  //? Simular chamada de espera para criar utilizador
   final _aCriarUtilizador = Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: const <Widget>[
@@ -283,7 +281,10 @@ class _RegistarState extends State<Registar> {
     // Redireciona o utilizador para a página home
     Navigator.pushAndRemoveUntil(
       (context),
-      MaterialPageRoute(builder: (context) => const FormularioAluno()),
+      MaterialPageRoute(
+          builder: (context) => FormularioAluno(
+                aluno: widget.pessoa,
+              )),
       (route) => false,
     );
   }

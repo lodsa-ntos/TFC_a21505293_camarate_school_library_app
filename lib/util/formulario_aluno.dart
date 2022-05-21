@@ -1,3 +1,5 @@
+import 'package:camarate_school_library/models/utilizadores_model.dart';
+import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/util/validator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,13 +11,6 @@ import '../screens/login.dart';
 import '../screens/home.dart';
 import '../styles/style_login_screen.dart';
 
-class FormularioAluno extends StatefulWidget {
-  const FormularioAluno({Key? key}) : super(key: key);
-
-  @override
-  State<FormularioAluno> createState() => FormularioAlunoState();
-}
-
 class FormularioAlunoState extends State<FormularioAluno> {
   //? Chave para identificar a validação do formulario
   final _chaveFormRegisto = GlobalKey<FormState>();
@@ -25,24 +20,24 @@ class FormularioAlunoState extends State<FormularioAluno> {
 
   bool _isLoading = false;
 
-//? Controladores para guardar o texto dos campos
+  //? Controladores para guardar o texto dos campos
   final _nomeCompletoController = TextEditingController();
-  final _usernameController = TextEditingController();
   final _numAlunoController = TextEditingController();
   final _anoController = TextEditingController();
   final _turmaController = TextEditingController();
 
-  //! Alcançar a instancia da abse de dados para autenticação do utilizador atual
+  //? Alcançar a instância da abse de dados para autenticação do utilizador atual
   final _auth = FirebaseAuth.instance;
 
-//! Simular chamada de espera para criar utilizador
-  final _aCriarUtilizador = Row(
+  //? Simular chamada de espera para criar utilizador
+  final _aCompletarDados = Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: const <Widget>[
       CircularProgressIndicator(),
-      Text(" A criar utilizador... aguarde")
+      Text(" A completar dados... aguarde")
     ],
   );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,23 +64,6 @@ class FormularioAlunoState extends State<FormularioAluno> {
                 key: _chaveFormRegisto,
                 child: Column(
                   children: <Widget>[
-                    //? Nome de utilizador
-                    TextFormField(
-                      validator: (username) =>
-                          Validator.validarUsername(username: username),
-
-                      // Obter o valor do email escrito pelo user
-                      controller: _usernameController,
-
-                      // Estilo dentro do campo de e-mail
-                      style: StyleRegistoScreen.estiloNomeUtilizador,
-
-                      // Estilo da decoração do campo do e-mail
-                      decoration: StyleRegistoScreen.decoracaoNomeUtilizador,
-                    ),
-
-                    const SizedBox(height: 16.0),
-
                     //? Nome próprio e apelido
                     TextFormField(
                       validator: (nome) =>
@@ -163,7 +141,7 @@ class FormularioAlunoState extends State<FormularioAluno> {
 
                     //? --> Botão Seguinte <--
                     _isLoading
-                        ? _aCriarUtilizador
+                        ? _aCompletarDados
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -233,51 +211,74 @@ class FormularioAlunoState extends State<FormularioAluno> {
 
   //! Guardar os dados do utilizador na base de dados do firestore
   saveUtilizadorAlunoNoFirestore() async {
-    // Instâcia par alcançar a base de dados firestore do firebase
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    try {
+      setState(() => _isLoading = true);
+      // Instâcia par alcançar a base de dados firestore do firebase
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
-    // Utilizador atual que preencheu o formulário
-    User? utilizador = _auth.currentUser;
+      // Utilizador atual que preencheu o formulário
+      User? utilizador = _auth.currentUser;
 
-    // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
-    // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
-    //... e enviar para a base de dados
-    await firebaseFirestore
-        .collection("Utilizadores")
-        .where("uidAluno", isEqualTo: utilizador!.uid)
-        .get()
-        .then((value) => value.docs.forEach((element) {
-              element.reference.update(
-                {"nomeUtilizadorAluno": _usernameController.text.trim()},
-              );
+      widget.aluno.nomeCompletoPessoa = _nomeCompletoController.text.trim();
+      widget.aluno.numPessoa = _numAlunoController.text.trim();
+      widget.aluno.ano = _anoController.text.trim();
+      widget.aluno.turma = _turmaController.text.trim();
 
-              element.reference.update(
-                {"nomeCompletoAluno": _nomeCompletoController.text.trim()},
-              );
+      // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
+      // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
+      //... e enviar para a base de dados
+      await firebaseFirestore
+          .collection("Utilizadores")
+          .where("uidPessoa", isEqualTo: utilizador!.uid)
+          .get()
+          .then((value) => value.docs.forEach((element) {
+                element.reference.update(
+                  {"nomeCompletoPessoa": _nomeCompletoController.text.trim()},
+                );
 
-              element.reference.update(
-                {"numAluno": _numAlunoController.text.trim()},
-              );
+                element.reference.update(
+                  {"numPessoa": _numAlunoController.text.trim()},
+                );
 
-              element.reference.update(
-                {"ano": _anoController.text.trim()},
-              );
+                element.reference.update(
+                  {"ano": _anoController.text.trim()},
+                );
 
-              element.reference.update(
-                {"turma": _turmaController.text.trim()},
-              );
-            }));
-    // mensagem de sucesso para user interface
-    Fluttertoast.showToast(
-      msg: "Conta criada com sucesso :) ",
-      backgroundColor: Colors.green,
-    );
+                element.reference.update(
+                  {"turma": _turmaController.text.trim()},
+                );
+              }));
+      // mensagem de sucesso para user interface
+      Fluttertoast.showToast(
+        msg: "Conta criada com sucesso :) ",
+        backgroundColor: Colors.green,
+      );
 
-    // Redireciona o utilizador para a página home
-    Navigator.pushAndRemoveUntil(
-      (context),
-      MaterialPageRoute(builder: (context) => const Home()),
-      (route) => false,
-    );
+      // Redireciona o utilizador para a página home
+      Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => const Home()),
+        (route) => false,
+      );
+    } on AuthException catch (erro) {
+      setState(() => _isLoading = false);
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        duration: const Duration(seconds: 10),
+        content: Text(
+          erro.mensagem,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        backgroundColor: Colors.red,
+      ));
+    }
   }
+}
+
+class FormularioAluno extends StatefulWidget {
+  Pessoa aluno;
+  FormularioAluno({Key? key, required this.aluno}) : super(key: key);
+
+  @override
+  State<FormularioAluno> createState() => FormularioAlunoState();
 }

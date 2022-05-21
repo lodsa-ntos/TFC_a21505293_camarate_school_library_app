@@ -6,8 +6,7 @@ class Pessoa {
   String? uidPessoa;
   String? numCartaoPessoa;
   String? nomeCompletoPessoa;
-  String? nomeUtilizadorPessoa;
-  int? numPessoa;
+  String? numPessoa;
   String? ano;
   String? turma;
   String? emailPessoa;
@@ -19,7 +18,6 @@ class Pessoa {
     this.uidPessoa,
     this.numCartaoPessoa,
     this.nomeCompletoPessoa,
-    this.nomeUtilizadorPessoa,
     this.numPessoa,
     this.ano,
     this.turma,
@@ -74,7 +72,6 @@ Map<String, dynamic> pessoaToJson(Pessoa dadosPessoa) => <String, dynamic>{
       'uidPessoa': dadosPessoa.uidPessoa,
       'numCartaoPessoa': dadosPessoa.numCartaoPessoa,
       'nomeCompletoPessoa': dadosPessoa.nomeCompletoPessoa,
-      'nomeUtilizadorPessoa': dadosPessoa.nomeUtilizadorPessoa,
       'numPessoa': dadosPessoa.numPessoa,
       'ano': dadosPessoa.ano,
       'turma': dadosPessoa.turma,
@@ -90,7 +87,6 @@ Pessoa pessoaFromJson(Map<String, dynamic> json) {
     uidPessoa: json['uidPessoa'] ?? '',
     numCartaoPessoa: json['numCartaoPessoa'] ?? '',
     nomeCompletoPessoa: json['nomeCompletoPessoa'] ?? '',
-    nomeUtilizadorPessoa: json['nomeUtilizadorPessoa'] ?? '',
     numPessoa: json['numPessoa'] ?? '',
     ano: json['ano'] ?? '',
     turma: json['turma'] ?? '',
