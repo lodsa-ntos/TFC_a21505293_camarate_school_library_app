@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:camarate_school_library/models/livro_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async' show Future;
 
@@ -32,5 +33,13 @@ class BaseDeDados {
 
     /// Retorno a lista com os dados vindos da base de dados em JSON
     return livros;
+  }
+
+  final CollectionReference colecaoDoHistorico =
+      FirebaseFirestore.instance.collection('historico');
+
+  // obter um fluxo de instantâneos de toda informação da referencia 'historico' do Firestore.
+  Stream<QuerySnapshot> getStream() {
+    return colecaoDoHistorico.snapshots();
   }
 }

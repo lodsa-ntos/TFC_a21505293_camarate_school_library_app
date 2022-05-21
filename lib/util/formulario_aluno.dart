@@ -59,7 +59,7 @@ class FormularioAlunoState extends State<FormularioAluno> {
             children: [
               const Padding(padding: EdgeInsets.only(bottom: 45)),
               const Text(
-                "ALUNOS", //? titulo
+                "ALUNOS", //? título
                 textAlign: TextAlign.center,
                 style: StyleRegistoScreen.estiloTituloRegisto,
                 overflow: TextOverflow.ellipsis,

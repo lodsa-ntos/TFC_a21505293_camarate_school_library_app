@@ -62,16 +62,15 @@
     }
   ],
 
-  "Historico": [
+  "historico": [
     {
-      "autor": "Paulo Coelho",
-      "dataRequisicao": "08-05-2022 – 22:08",
+      "numDeVezes": 0,
+      "requisitante": "",
+      "dataRequisicao": "",
       "id": "0",
-      "imagePath": "https://img.wook.pt/images/o-alquimista-paulo-coelho/MXwxNTIzNzEzOXwxMDcyNTQ3NXwxMzgzNTIzMjAwMDAwfHdlYnA=/502x",
-      "numRegisto": "0001",
-      "titulo": "O Alquimista",
-      "uidLivro": "6UxpfRiDaMTiawDpMrkz1ldr0m52",
-      "utilizador": "Ricardo Almeida"
+      "capaPath": "",
+      "tituloLivro": "",
+      "uidRequisitante": ""
     }
   ]
 }

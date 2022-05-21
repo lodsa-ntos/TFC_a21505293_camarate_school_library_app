@@ -2,11 +2,14 @@ import 'dart:convert';
 
 import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+
+import '../models/utilizadores_model.dart';
 
 /// Classe para apresentar os widgets que compoêm o formato para representarem
 /// os detalhes dos livros
@@ -131,13 +134,16 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaUID;
   DatabaseReference? _referenciaDataRequisicao;
   DatabaseReference? _referenciaDataEntrega;
-  DatabaseReference? _referenciaHistorico;
+
+  int _contador = 0;
 
   // Utilizador atual
   User? utilizador = _auth.currentUser;
 
   // Variável do tipo Livro para alcançar os atributos do livro
   Livro livro = Livro();
+
+  Pessoa pessoa = Pessoa();
 
   @override
   Widget build(BuildContext context) {
@@ -176,14 +182,13 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .child(widget.livroARequisitar.id.toString())
             .child('dataEntrega');
 
-        //? referencia para registar a data de devolucao na base de dados
-        _referenciaHistorico = FirebaseDatabase.instance
-            .ref('Historico')
-            .child(widget.livroARequisitar.id.toString())
-            .child('dataRequisicao');
-
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
+
+        DocumentReference<Map<String, dynamic>> _criarHistorico =
+            FirebaseFirestore.instance
+                .collection('historico')
+                .doc(widget.livroARequisitar.id.toString());
 
         return Column(
           children: [
@@ -199,10 +204,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                   onPressed: widget.livroARequisitar.isRequisitado!
                       ? null
                       : () async {
-                          // Fica requisitado
-
                           setState(() {
-                            //? altera o estado de requisição
+                            //? alterar o estado da requisição
                             _referenciaRequisicao?.set(true);
 
                             //? regista o id do utilizador que fez a requisição
@@ -216,8 +219,16 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             _referenciaDataEntrega
                                 ?.set(dataDevolucaoEEntrega.toString());
 
-                            //? Regista a data de Entrega
-                            _referenciaHistorico?.push().set("");
+                            _contador++;
+                            _criarHistorico.set({
+                              "requisitante":
+                                  pessoa.nomeCompletoPessoa.toString(),
+                              "tituloLivro": widget.livroARequisitar.titulo,
+                              "numDeVezes": _contador,
+                              "dataRequisicao":
+                                  widget.livroARequisitar.dataRequisicao,
+                              "uidRequisitante": livro.uidLivro
+                            });
 
                             //? o livro fica requisitado
                             widget.livroARequisitar.isRequisitado = true;

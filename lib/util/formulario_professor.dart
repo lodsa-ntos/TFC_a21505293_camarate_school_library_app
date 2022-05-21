@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../models/utilizadores_model.dart';
 import '../screens/login.dart';
 import '../screens/home.dart';
 import '../styles/style_login_screen.dart';
@@ -20,19 +21,19 @@ class FormularioProfessorState extends State<FormularioProfessor> {
   //? Chave para identificar a validação do formulario
   final _chaveFormRegisto = GlobalKey<FormState>();
 
-//? Esconder a password
+  //? Esconder a password
   bool esconderPassword = true;
 
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
-//? Controladores para guardar o texto dos campos
-  final _nomeCompletoProfController = TextEditingController();
-  final _turmaProfController = TextEditingController();
+  //? Controladores para guardar o texto dos campos
+  final _nomeCompletoPessoaController = TextEditingController();
+  final _turmaPessoaController = TextEditingController();
 
   //! Alcançar a instancia da abse de dados para autenticação do utilizador atual
   final _authProfessor = FirebaseAuth.instance;
 
-//! Simular chamada de espera para criar utilizador
+  //! Simular chamada de espera para criar utilizador
   final _aCriarUtilizador = Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: const <Widget>[
@@ -40,6 +41,7 @@ class FormularioProfessorState extends State<FormularioProfessor> {
       Text(" A criar utilizador... aguarde")
     ],
   );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +74,7 @@ class FormularioProfessorState extends State<FormularioProfessor> {
                           Validator.validarNomeCompleto(nome: nome),
 
                       // Obter o valor do email escrito pelo user
-                      controller: _nomeCompletoProfController,
+                      controller: _nomeCompletoPessoaController,
 
                       // Estilo dentro do campo de e-mail
                       style: StyleRegistoScreen.estiloNomeCompleto,
@@ -89,7 +91,7 @@ class FormularioProfessorState extends State<FormularioProfessor> {
                           Validator.validarTurma(turma: turma),
 
                       // Obter o valor do email escrito pelo user
-                      controller: _turmaProfController,
+                      controller: _turmaPessoaController,
 
                       // Estilo dentro do campo de e-mail
                       style: StyleRegistoScreen.estiloTurma,
@@ -178,20 +180,30 @@ class FormularioProfessorState extends State<FormularioProfessor> {
     // Utilizador atual que preencheu o formulário
     User? utilizador = _authProfessor.currentUser;
 
+    // Variável do tipo aluno para alcançar os atributos do aluno
+    Pessoa professorModel = Pessoa();
+
+    professorModel.nomeCompletoPessoa =
+        _nomeCompletoPessoaController.text.trim();
+    professorModel.turma = _turmaPessoaController.text.trim();
+
     // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
     // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
     //... e enviar para a base de dados
     await firebaseFirestore
         .collection("Utilizadores")
-        .where("uidProf", isEqualTo: utilizador!.uid)
+        .where("uidPessoa", isEqualTo: utilizador!.uid)
         .get()
         .then((value) => value.docs.forEach((element) {
               element.reference.update(
-                {"nomeCompletoProf": _nomeCompletoProfController.text.trim()},
+                {
+                  "nomeCompletoPessoa":
+                      _nomeCompletoPessoaController.text.trim()
+                },
               );
 
               element.reference.update(
-                {"turma": _turmaProfController.text.trim()},
+                {"turma": _turmaPessoaController.text.trim()},
               );
             }));
     // mensagem de sucesso para user interface

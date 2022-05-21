@@ -329,10 +329,10 @@ class _RegistarState extends State<Registar> {
     // Utilizador atual que preencheu o formulário
     User? userProfessor = _auth.currentUser;
 
-    // Variável do tipo aluno para alcançar os atributos do aluno
+    // Variável do tipo Pessoa para alcançar os atributos do professor
     Pessoa professorModel = Pessoa();
 
-    // Guardar todos os valores do aluno
+    // Guardar todos os valores do Professor
     professorModel.emailPessoa = userProfessor!.email;
     professorModel.uidPessoa = userProfessor.uid;
     professorModel.numCartaoPessoa = _numCartaoAlunoController.text.trim();
