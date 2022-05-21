@@ -1,3 +1,4 @@
+import 'package:camarate_school_library/screens/home.dart';
 import 'package:camarate_school_library/screens/registar.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:flutter/gestures.dart';
@@ -6,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
+import '../models/utilizadores_model.dart';
 import '../styles/style_login_screen.dart';
 import '../util/validator.dart';
 
@@ -27,6 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //? Chave para identificar a validação do formulario
   final _chaveFormLogin = GlobalKey<FormState>();
+
+  Pessoa pessoa = Pessoa();
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +189,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const Registar(),
+                                      builder: (context) => Registar(
+                                        pessoa: pessoa,
+                                      ),
                                     ),
                                   );
                                 },
@@ -223,6 +229,13 @@ class _LoginScreenState extends State<LoginScreen> {
               backgroundColor: Colors.green,
             ),
           );
+
+      // Redireciona o utilizador para a página home
+      Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => const Home()),
+        (route) => false,
+      );
 
       //? Mensagens de erro
     } on AuthException catch (erro) {

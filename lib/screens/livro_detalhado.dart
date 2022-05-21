@@ -221,8 +221,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                             _contador++;
                             _criarHistorico.set({
-                              "requisitante":
-                                  pessoa.nomeCompletoPessoa.toString(),
+                              "requisitante": pessoa.nomeCompletoPessoa,
                               "tituloLivro": widget.livroARequisitar.titulo,
                               "numDeVezes": _contador,
                               "dataRequisicao":

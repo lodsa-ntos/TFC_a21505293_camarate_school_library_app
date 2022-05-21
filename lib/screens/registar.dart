@@ -1,6 +1,5 @@
 import 'package:camarate_school_library/models/utilizadores_model.dart';
 import 'package:camarate_school_library/screens/login.dart';
-import 'package:camarate_school_library/screens/home.dart';
 import 'package:camarate_school_library/util/formulario_professor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,13 +12,6 @@ import '../services/auth_services.dart';
 import '../styles/style_login_screen.dart';
 import '../util/formulario_aluno.dart';
 import '../util/validator.dart';
-
-class Registar extends StatefulWidget {
-  const Registar({Key? key}) : super(key: key);
-
-  @override
-  State<Registar> createState() => _RegistarState();
-}
 
 class _RegistarState extends State<Registar> {
   //? Chave para identificar a validação do formulario
@@ -269,14 +261,11 @@ class _RegistarState extends State<Registar> {
     // Utilizador atual que preencheu o formulário
     User? utilizador = _auth.currentUser;
 
-    // Variável do tipo aluno para alcançar os atributos do aluno
-    Pessoa alunoModel = Pessoa();
-
     // Guardar todos os valores do aluno
-    alunoModel.emailPessoa = utilizador!.email;
-    alunoModel.uidPessoa = utilizador.uid;
-    alunoModel.numCartaoPessoa = _numCartaoAlunoController.text.trim();
-    alunoModel.passwordPessoa = _passwordInputController.text.trim();
+    widget.pessoa.emailPessoa = utilizador!.email;
+    widget.pessoa.uidPessoa = utilizador.uid;
+    widget.pessoa.numCartaoPessoa = _numCartaoAlunoController.text.trim();
+    widget.pessoa.passwordPessoa = _passwordInputController.text.trim();
 
     // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
     // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
@@ -284,7 +273,7 @@ class _RegistarState extends State<Registar> {
     await firebaseFirestore
         .collection("Utilizadores")
         .doc(utilizador.uid)
-        .set(alunoModel.toJson());
+        .set(widget.pessoa.toJson());
     // mensagem de sucesso para user interface
     Fluttertoast.showToast(
       msg: "Bem-vindo aluno :) ",
@@ -294,7 +283,7 @@ class _RegistarState extends State<Registar> {
     // Redireciona o utilizador para a página home
     Navigator.pushAndRemoveUntil(
       (context),
-      MaterialPageRoute(builder: (context) => FormularioAluno()),
+      MaterialPageRoute(builder: (context) => const FormularioAluno()),
       (route) => false,
     );
   }
@@ -330,13 +319,12 @@ class _RegistarState extends State<Registar> {
     User? userProfessor = _auth.currentUser;
 
     // Variável do tipo Pessoa para alcançar os atributos do professor
-    Pessoa professorModel = Pessoa();
 
     // Guardar todos os valores do Professor
-    professorModel.emailPessoa = userProfessor!.email;
-    professorModel.uidPessoa = userProfessor.uid;
-    professorModel.numCartaoPessoa = _numCartaoAlunoController.text.trim();
-    professorModel.passwordPessoa = _passwordInputController.text.trim();
+    widget.pessoa.emailPessoa = userProfessor!.email;
+    widget.pessoa.uidPessoa = userProfessor.uid;
+    widget.pessoa.numCartaoPessoa = _numCartaoAlunoController.text.trim();
+    widget.pessoa.passwordPessoa = _passwordInputController.text.trim();
 
     // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
     // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
@@ -344,7 +332,7 @@ class _RegistarState extends State<Registar> {
     await firebaseFirestore
         .collection("Utilizadores")
         .doc(userProfessor.uid)
-        .set(professorModel.toJson());
+        .set(widget.pessoa.toJson());
     // mensagem de sucesso para user interface
     Fluttertoast.showToast(
       msg: "Bem-vindo professor :) ",
@@ -354,8 +342,17 @@ class _RegistarState extends State<Registar> {
     // Redireciona o utilizador para a página home
     Navigator.pushAndRemoveUntil(
       (context),
-      MaterialPageRoute(builder: (context) => const FormularioProfessor()),
+      MaterialPageRoute(
+          builder: (context) => FormularioProfessor(pessoa: widget.pessoa)),
       (route) => false,
     );
   }
+}
+
+class Registar extends StatefulWidget {
+  final Pessoa pessoa;
+  const Registar({Key? key, required this.pessoa}) : super(key: key);
+
+  @override
+  State<Registar> createState() => _RegistarState();
 }

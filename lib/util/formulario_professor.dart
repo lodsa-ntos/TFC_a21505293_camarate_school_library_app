@@ -11,7 +11,8 @@ import '../screens/home.dart';
 import '../styles/style_login_screen.dart';
 
 class FormularioProfessor extends StatefulWidget {
-  const FormularioProfessor({Key? key}) : super(key: key);
+  Pessoa pessoa;
+  FormularioProfessor({Key? key, required this.pessoa}) : super(key: key);
 
   @override
   State<FormularioProfessor> createState() => FormularioProfessorState();
@@ -180,12 +181,10 @@ class FormularioProfessorState extends State<FormularioProfessor> {
     // Utilizador atual que preencheu o formulário
     User? utilizador = _authProfessor.currentUser;
 
-    // Variável do tipo aluno para alcançar os atributos do aluno
-    Pessoa professorModel = Pessoa();
-
-    professorModel.nomeCompletoPessoa =
+    widget.pessoa.nomeCompletoPessoa =
         _nomeCompletoPessoaController.text.trim();
-    professorModel.turma = _turmaPessoaController.text.trim();
+
+    widget.pessoa.turma = _turmaPessoaController.text.trim();
 
     // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
     // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
