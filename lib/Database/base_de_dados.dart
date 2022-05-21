@@ -1,9 +1,13 @@
 import 'dart:convert';
 
 import 'package:camarate_school_library/models/livro_model.dart';
+import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async' show Future;
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseDeDados {
   List<Livro> livros = [];

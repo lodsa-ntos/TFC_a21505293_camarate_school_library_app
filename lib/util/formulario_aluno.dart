@@ -1,4 +1,4 @@
-import 'package:camarate_school_library/models/utilizadores_model.dart';
+import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/util/validator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -209,7 +209,7 @@ class FormularioAlunoState extends State<FormularioAluno> {
     );
   }
 
-  //! Guardar os dados do utilizador na base de dados do firestore
+  //* Guardar os dados do utilizador na base de dados do firestore
   saveUtilizadorAlunoNoFirestore() async {
     try {
       setState(() => _isLoading = true);
@@ -219,10 +219,12 @@ class FormularioAlunoState extends State<FormularioAluno> {
       // Utilizador atual que preencheu o formulário
       User? utilizador = _auth.currentUser;
 
-      widget.aluno.nomeCompletoPessoa = _nomeCompletoController.text.trim();
-      widget.aluno.numPessoa = _numAlunoController.text.trim();
-      widget.aluno.ano = _anoController.text.trim();
-      widget.aluno.turma = _turmaController.text.trim();
+      Pessoa _aluno = Pessoa();
+
+      _aluno.nomeCompletoPessoa = _nomeCompletoController.text.trim();
+      _aluno.numPessoa = _numAlunoController.text.trim();
+      _aluno.ano = _anoController.text.trim();
+      _aluno.turma = _turmaController.text.trim();
 
       // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
       // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
@@ -233,19 +235,19 @@ class FormularioAlunoState extends State<FormularioAluno> {
           .get()
           .then((value) => value.docs.forEach((element) {
                 element.reference.update(
-                  {"nomeCompletoPessoa": _nomeCompletoController.text.trim()},
+                  {"nomeCompletoPessoa": _aluno.nomeCompletoPessoa},
                 );
 
                 element.reference.update(
-                  {"numPessoa": _numAlunoController.text.trim()},
+                  {"numPessoa": _aluno.numPessoa},
                 );
 
                 element.reference.update(
-                  {"ano": _anoController.text.trim()},
+                  {"ano": _aluno.ano},
                 );
 
                 element.reference.update(
-                  {"turma": _turmaController.text.trim()},
+                  {"turma": _aluno.turma},
                 );
               }));
       // mensagem de sucesso para user interface
@@ -276,8 +278,7 @@ class FormularioAlunoState extends State<FormularioAluno> {
 }
 
 class FormularioAluno extends StatefulWidget {
-  Pessoa aluno;
-  FormularioAluno({Key? key, required this.aluno}) : super(key: key);
+  FormularioAluno({Key? key}) : super(key: key);
 
   @override
   State<FormularioAluno> createState() => FormularioAlunoState();

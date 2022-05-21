@@ -34,14 +34,38 @@ class Pessoa {
     return novaPessoa;
   }
 
-  // Um construtor de factory para criar uma Pessoa a partir do JSON.
-  factory Pessoa.fromJson(Map<String, dynamic> json) => pessoaFromJson(json);
-
   // Transformar os dados da Pessoa num mapa de pares chave/valor.
-  Map<String, dynamic> toJson() => pessoaToJson(this);
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> dadosPessoa = <String, dynamic>{};
+    dadosPessoa["uidPessoa"] = uidPessoa;
+    dadosPessoa["numCartaoPessoa"] = numCartaoPessoa;
+    dadosPessoa["nomeCompletoPessoa"] = nomeCompletoPessoa;
+    dadosPessoa["numPessoa"] = numPessoa;
+    dadosPessoa["ano"] = ano;
+    dadosPessoa["turma"] = turma;
+    dadosPessoa["emailPessoa"] = emailPessoa;
+    dadosPessoa["passwordPessoa"] = passwordPessoa;
+    dadosPessoa["livrosRequisitadosPessoa"] =
+        _listaLivrosRequisitados(livrosRequisitados);
 
-  @override
-  String toString() => 'Pessoa <$nomeCompletoPessoa>';
+    return dadosPessoa;
+  }
+
+  // Receber dados do firebase e convertê-los num mapa de pares chave/valor com informação da Pessoa
+  factory Pessoa.fromJson(Map<String, dynamic> json) {
+    return Pessoa(
+      uidPessoa: json['uidPessoa'] ?? '',
+      numCartaoPessoa: json['numCartaoPessoa'] ?? '',
+      nomeCompletoPessoa: json['nomeCompletoPessoa'] ?? '',
+      numPessoa: json['numPessoa'] ?? '',
+      ano: json['ano'] ?? '',
+      turma: json['turma'] ?? '',
+      emailPessoa: json['emailPessoa'] ?? '',
+      passwordPessoa: json['passwordPessoa'] ?? '',
+      livrosRequisitados:
+          _converterLivros(json['livrosRequisitados'] as List<dynamic>),
+    );
+  }
 }
 
 // Converter uma lista de mapas numa lista de livros.
@@ -65,34 +89,4 @@ List<Map<String, dynamic>>? _listaLivrosRequisitados(List<Livro>? livros) {
     mapLivro.add(livro.toJson());
   });
   return mapLivro;
-}
-
-// Enviar dados para o firebase
-Map<String, dynamic> pessoaToJson(Pessoa dadosPessoa) => <String, dynamic>{
-      'uidPessoa': dadosPessoa.uidPessoa,
-      'numCartaoPessoa': dadosPessoa.numCartaoPessoa,
-      'nomeCompletoPessoa': dadosPessoa.nomeCompletoPessoa,
-      'numPessoa': dadosPessoa.numPessoa,
-      'ano': dadosPessoa.ano,
-      'turma': dadosPessoa.turma,
-      'emailPessoa': dadosPessoa.emailPessoa,
-      'passwordPessoa': dadosPessoa.passwordPessoa,
-      'livrosRequisitadosPessoa':
-          _listaLivrosRequisitados(dadosPessoa.livrosRequisitados),
-    };
-
-// Receber dados do firebase e convertê-los num mapa de pares chave/valor com informação da Pessoa
-Pessoa pessoaFromJson(Map<String, dynamic> json) {
-  return Pessoa(
-    uidPessoa: json['uidPessoa'] ?? '',
-    numCartaoPessoa: json['numCartaoPessoa'] ?? '',
-    nomeCompletoPessoa: json['nomeCompletoPessoa'] ?? '',
-    numPessoa: json['numPessoa'] ?? '',
-    ano: json['ano'] ?? '',
-    turma: json['turma'] ?? '',
-    emailPessoa: json['emailPessoa'] ?? '',
-    passwordPessoa: json['passwordPessoa'] ?? '',
-    livrosRequisitados:
-        _converterLivros(json['livrosRequisitados'] as List<dynamic>),
-  );
 }

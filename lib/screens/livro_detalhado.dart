@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
+import 'package:camarate_school_library/util/formulario_professor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -9,13 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-import '../models/utilizadores_model.dart';
+import '../models/pessoa.dart';
 
 /// Classe para apresentar os widgets que compoêm o formato para representarem
 /// os detalhes dos livros
 ///
 //? Alcançar a instância da base de dados para autenticação do utilizador atual
 final _auth = FirebaseAuth.instance;
+
+Pessoa pessoa = Pessoa();
 
 // ignore: must_be_immutable
 class LivroDetalhado extends StatelessWidget {
@@ -80,7 +83,6 @@ class LivroDetalhado extends StatelessWidget {
                               ),
 
                               const SizedBox(height: 8),
-
                               //** Autor */
                               Text(
                                 _livros[index].autor.toString(),
@@ -112,7 +114,10 @@ class LivroDetalhado extends StatelessWidget {
                               const SizedBox(height: 12),
 
                               //*  _Botão Requisitar */
-                              _BotaoRequisitar(livroARequisitar: _livros[index])
+                              _BotaoRequisitar(
+                                livroARequisitar: _livros[index],
+                                pessoa: pessoa,
+                              )
                             ],
                           );
                         }
@@ -142,8 +147,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
   // Variável do tipo Livro para alcançar os atributos do livro
   Livro livro = Livro();
-
-  Pessoa pessoa = Pessoa();
 
   @override
   Widget build(BuildContext context) {
@@ -218,16 +221,18 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             //? Regista a data de Entrega
                             _referenciaDataEntrega
                                 ?.set(dataDevolucaoEEntrega.toString());
-
                             _contador++;
                             _criarHistorico.set({
-                              "requisitante": pessoa.emailPessoa,
+                              "requisitante":
+                                  utilizador!.displayName.toString(),
                               "tituloLivro": widget.livroARequisitar.titulo,
                               "numDeVezes": _contador,
                               "dataRequisicao":
                                   widget.livroARequisitar.dataRequisicao,
                               "uidRequisitante": livro.uidLivro
                             });
+
+                            print(widget.pessoa.nomeCompletoPessoa);
 
                             //? o livro fica requisitado
                             widget.livroARequisitar.isRequisitado = true;
@@ -302,8 +307,10 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
 class _BotaoRequisitar extends StatefulWidget {
   final Livro livroARequisitar;
+  final Pessoa pessoa;
 
-  const _BotaoRequisitar({required this.livroARequisitar, Key? key})
+  const _BotaoRequisitar(
+      {required this.livroARequisitar, required this.pessoa, Key? key})
       : super(key: key);
 
   @override

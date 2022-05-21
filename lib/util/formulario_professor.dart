@@ -6,18 +6,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../models/utilizadores_model.dart';
+import '../models/pessoa.dart';
 import '../screens/login.dart';
 import '../screens/home.dart';
 import '../styles/style_login_screen.dart';
-
-class FormularioProfessor extends StatefulWidget {
-  Pessoa pessoa;
-  FormularioProfessor({Key? key, required this.pessoa}) : super(key: key);
-
-  @override
-  State<FormularioProfessor> createState() => FormularioProfessorState();
-}
 
 class FormularioProfessorState extends State<FormularioProfessor> {
   //? Chave para identificar a validação do formulario
@@ -29,13 +21,13 @@ class FormularioProfessorState extends State<FormularioProfessor> {
   bool _isLoading = false;
 
   //? Controladores para guardar o texto dos campos
-  final _nomeCompletoPessoaController = TextEditingController();
+  final nomeCompletoPessoaController = TextEditingController();
   final _turmaPessoaController = TextEditingController();
 
-  //! Alcançar a instancia da abse de dados para autenticação do utilizador atual
+  //? Alcançar a instancia da abse de dados para autenticação do utilizador atual
   final _authProfessor = FirebaseAuth.instance;
 
-  //! Simular chamada de espera para criar utilizador
+  //? Simular chamada de espera para criar utilizador
   final _aCompletarDados = Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: const <Widget>[
@@ -76,7 +68,7 @@ class FormularioProfessorState extends State<FormularioProfessor> {
                           Validator.validarNomeCompleto(nome: nome),
 
                       // Obter o valor do email escrito pelo user
-                      controller: _nomeCompletoPessoaController,
+                      controller: nomeCompletoPessoaController,
 
                       // Estilo dentro do campo de e-mail
                       style: StyleRegistoScreen.estiloNomeCompleto,
@@ -182,30 +174,32 @@ class FormularioProfessorState extends State<FormularioProfessor> {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
       // Utilizador atual que preencheu o formulário
-      User? utilizador = _authProfessor.currentUser;
+      User? _utilizador = _authProfessor.currentUser;
 
-      widget.pessoa.nomeCompletoPessoa =
-          _nomeCompletoPessoaController.text.trim();
+      Pessoa _professor = Pessoa();
 
-      widget.pessoa.turma = _turmaPessoaController.text.trim();
+      _professor.nomeCompletoPessoa = nomeCompletoPessoaController.text.trim();
+
+      _professor.turma = _turmaPessoaController.text.trim();
 
       // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
       // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
       //... e enviar para a base de dados
       await firebaseFirestore
           .collection("Utilizadores")
-          .where("uidPessoa", isEqualTo: utilizador!.uid)
+          .where("uidPessoa", isEqualTo: _utilizador!.uid)
           .get()
           .then((value) => value.docs.forEach((element) {
                 element.reference.update(
                   {
-                    "nomeCompletoPessoa":
-                        _nomeCompletoPessoaController.text.trim()
+                    "nomeCompletoPessoa": _professor.nomeCompletoPessoa,
                   },
                 );
 
                 element.reference.update(
-                  {"turma": _turmaPessoaController.text.trim()},
+                  {
+                    "turma": _professor.turma,
+                  },
                 );
               }));
       // mensagem de sucesso para user interface
@@ -233,4 +227,11 @@ class FormularioProfessorState extends State<FormularioProfessor> {
       ));
     }
   }
+}
+
+class FormularioProfessor extends StatefulWidget {
+  const FormularioProfessor({Key? key}) : super(key: key);
+
+  @override
+  State<FormularioProfessor> createState() => FormularioProfessorState();
 }

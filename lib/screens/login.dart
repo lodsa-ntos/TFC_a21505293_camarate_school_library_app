@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
-import '../models/utilizadores_model.dart';
+import '../models/pessoa.dart';
 import '../styles/style_login_screen.dart';
 import '../util/validator.dart';
 
@@ -189,9 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => Registar(
-                                        pessoa: pessoa,
-                                      ),
+                                      builder: (context) => const Registar(),
                                     ),
                                   );
                                 },
@@ -218,8 +216,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   fazerLogin() async {
+    setState(() => _isLoading = true);
     try {
-      setState(() => _isLoading = true);
       await context
           .read<AuthServices>()
           .login(_emailInputController.text, _passwordInputController.text)

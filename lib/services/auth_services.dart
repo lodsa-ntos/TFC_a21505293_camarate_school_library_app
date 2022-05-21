@@ -1,6 +1,9 @@
+import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthServices with ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -16,15 +19,15 @@ class AuthServices with ChangeNotifier {
     _verificarAutenticacao();
   }
 
-  _verificarAutenticacao() {
-    _firebaseAuth.authStateChanges().listen((User? user) {
+  _verificarAutenticacao() async {
+    _firebaseAuth.authStateChanges().listen((User? user) async {
       utilizador = (user == null) ? null : user;
       isLoading = false;
       notifyListeners();
     });
   }
 
-  _getUtilizador() {
+  _getUtilizador() async {
     utilizador = _firebaseAuth.currentUser;
     notifyListeners();
   }
