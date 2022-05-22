@@ -221,10 +221,10 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             //? Regista a data de Entrega
                             _referenciaDataEntrega
                                 ?.set(dataDevolucaoEEntrega.toString());
+
                             _contador++;
                             _criarHistorico.set({
-                              "requisitante":
-                                  utilizador!.displayName.toString(),
+                              "requisitante": widget.pessoa.nomeCompletoPessoa,
                               "tituloLivro": widget.livroARequisitar.titulo,
                               "numDeVezes": _contador,
                               "dataRequisicao":

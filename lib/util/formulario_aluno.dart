@@ -249,6 +249,10 @@ class FormularioAlunoState extends State<FormularioAluno> {
                 element.reference.update(
                   {"turma": _aluno.turma},
                 );
+
+                element.reference.update(
+                  {"criado em": Timestamp.now()},
+                );
               }));
       // mensagem de sucesso para user interface
       Fluttertoast.showToast(

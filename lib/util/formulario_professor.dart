@@ -176,11 +176,11 @@ class FormularioProfessorState extends State<FormularioProfessor> {
       // Utilizador atual que preencheu o formulário
       User? _utilizador = _authProfessor.currentUser;
 
-      Pessoa _professor = Pessoa();
+      Pessoa professor = Pessoa();
 
-      _professor.nomeCompletoPessoa = nomeCompletoPessoaController.text.trim();
+      professor.nomeCompletoPessoa = nomeCompletoPessoaController.text.trim();
 
-      _professor.turma = _turmaPessoaController.text.trim();
+      professor.turma = _turmaPessoaController.text.trim();
 
       // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
       // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
@@ -192,13 +192,19 @@ class FormularioProfessorState extends State<FormularioProfessor> {
           .then((value) => value.docs.forEach((element) {
                 element.reference.update(
                   {
-                    "nomeCompletoPessoa": _professor.nomeCompletoPessoa,
+                    "nomeCompletoPessoa": professor.nomeCompletoPessoa,
                   },
                 );
 
                 element.reference.update(
                   {
-                    "turma": _professor.turma,
+                    "turma": professor.turma,
+                  },
+                );
+
+                element.reference.update(
+                  {
+                    "criado em": Timestamp.now(),
                   },
                 );
               }));

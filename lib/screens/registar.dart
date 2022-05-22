@@ -275,11 +275,6 @@ class _RegistarState extends State<Registar> {
         .collection("Utilizadores")
         .doc(utilizador.uid)
         .set(aluno.toJson());
-    // mensagem de sucesso para user interface
-    Fluttertoast.showToast(
-      msg: "Bem-vindo aluno :) ",
-      backgroundColor: Colors.green,
-    );
 
     // Redireciona o utilizador para a página home
     Navigator.pushAndRemoveUntil(
@@ -289,7 +284,7 @@ class _RegistarState extends State<Registar> {
     );
   }
 
-  //? Registar professor na app
+  //* Registar professor na app
   registarProfessor() async {
     setState(() => _isLoading = true);
     try {
@@ -311,7 +306,7 @@ class _RegistarState extends State<Registar> {
     }
   }
 
-  //? Guardar os dados do professor na base de dados do firestore
+  //* Guardar os dados do professor na base de dados do firestore
   saveUserProfessorNoFirestore() async {
     // Instâcia par alcançar a base de dados firestore do firebase
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -335,11 +330,6 @@ class _RegistarState extends State<Registar> {
         .collection("Utilizadores")
         .doc(userProfessor.uid)
         .set(professor.toJson());
-    // mensagem de sucesso para user interface
-    Fluttertoast.showToast(
-      msg: "Bem-vindo professor :) ",
-      backgroundColor: Colors.orange,
-    );
 
     // Redireciona o utilizador para a página home
     Navigator.pushAndRemoveUntil(
