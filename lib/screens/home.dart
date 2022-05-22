@@ -279,6 +279,7 @@ class _HomeState extends State<Home> {
 
                     /// Aceder ao metodo com o provider para terminar sessão
                     onTap: () async {
+                      setState(() {});
                       await context.read<AuthServices>().terminarSessao();
                       await Navigator.pushAndRemoveUntil(
                         (context),

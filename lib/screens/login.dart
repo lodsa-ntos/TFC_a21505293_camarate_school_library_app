@@ -216,8 +216,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   fazerLogin() async {
-    setState(() => _isLoading = true);
     try {
+      setState(() => _isLoading = true);
+
       await context
           .read<AuthServices>()
           .login(_emailInputController.text, _passwordInputController.text)
@@ -227,6 +228,12 @@ class _LoginScreenState extends State<LoginScreen> {
               backgroundColor: Colors.green,
             ),
           );
+
+      await Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => const Home()),
+        (route) => false,
+      );
 
       //? Mensagens de erro
     } on AuthException catch (erro) {
