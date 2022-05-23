@@ -17,7 +17,7 @@ class PessoaModel {
 
     /// Obter os dados da base de dados e guardar num formato de uma
     ///  lista dinamica
-    List<dynamic> isPessoa = jsonDecode(jsonEncode(livroJSON));
+    String isPessoa = jsonDecode(jsonEncode(livroJSON));
 
     List<Pessoa> listaDePessoas =
         isPessoa.map((dados) => Pessoa.fromJson(dados)).toList();
