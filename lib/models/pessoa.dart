@@ -8,16 +8,16 @@ class PessoaModel {
   });
 
   factory PessoaModel.fromJson(String json) {
-    return PessoaModel(pessoas: verificarLivros(json));
+    return PessoaModel(pessoas: verificarPessoa(json));
   }
 
-  static List<Pessoa> verificarLivros(livroJSON) {
+  static List<Pessoa> verificarPessoa(pessoaJSON) {
     /// jsonEncode tranforma os dados JSON em string
     /// jsonDecode descodifica os dados e coloca no formato de Lista dynamic
 
     /// Obter os dados da base de dados e guardar num formato de uma
     ///  lista dinamica
-    String isPessoa = jsonDecode(jsonEncode(livroJSON));
+    final isPessoa = jsonDecode(jsonEncode(pessoaJSON));
 
     List<Pessoa> listaDePessoas =
         isPessoa.map((dados) => Pessoa.fromJson(dados)).toList();
