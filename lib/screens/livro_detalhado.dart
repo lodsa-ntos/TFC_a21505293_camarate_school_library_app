@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:camarate_school_library/database/base_de_dados.dart';
 import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
-import 'package:camarate_school_library/util/formulario_professor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -17,8 +17,6 @@ import '../models/pessoa.dart';
 ///
 //? Alcançar a instância da base de dados para autenticação do utilizador atual
 final _auth = FirebaseAuth.instance;
-
-Pessoa pessoa = Pessoa();
 
 // ignore: must_be_immutable
 class LivroDetalhado extends StatelessWidget {
@@ -116,7 +114,6 @@ class LivroDetalhado extends StatelessWidget {
                               //*  _Botão Requisitar */
                               _BotaoRequisitar(
                                 livroARequisitar: _livros[index],
-                                pessoa: pessoa,
                               )
                             ],
                           );
@@ -140,6 +137,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaDataRequisicao;
   DatabaseReference? _referenciaDataEntrega;
 
+  BaseDeDados baseDeDados = BaseDeDados();
+
   int _contador = 0;
 
   // Utilizador atual
@@ -161,37 +160,38 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
         String dataDevolucaoEEntrega =
             formatoDevolucao.format(dataAtual.add(const Duration(days: 10)));
 
-        //? referencia para atualizar a requisição e devolução na base de dados
+        //? referência para atualizar a requisição e devolução na base de dados
         _referenciaRequisicao = FirebaseDatabase.instance
             .ref('livros')
             .child(widget.livroARequisitar.id.toString())
             .child('isRequisitado');
 
-        //? referencia para registar o utilizador como dono do livro requisitado na base de dados
+        //? referência para registar o utilizador como dono do livro requisitado na base de dados
         _referenciaUID = FirebaseDatabase.instance
             .ref('livros')
             .child(widget.livroARequisitar.id.toString())
             .child('uidLivro');
 
-        //? referencia para registar a data de requisicao na base de dados
+        //? referência para registar a data de requisicao na base de dados
         _referenciaDataRequisicao = FirebaseDatabase.instance
             .ref('livros')
             .child(widget.livroARequisitar.id.toString())
             .child('dataRequisicao');
 
-        //? referencia para registar a data de devolucao na base de dados
+        //? referência para registar a data de devolucao na base de dados
         _referenciaDataEntrega = FirebaseDatabase.instance
             .ref('livros')
             .child(widget.livroARequisitar.id.toString())
             .child('dataEntrega');
 
-        //? o uid do Livro recebe o uid do utilizador na requisição do livro
-        livro.uidLivro = utilizador!.uid;
-
+        //? referência para criar e armazenar dados para o histórico
         DocumentReference<Map<String, dynamic>> _criarHistorico =
             FirebaseFirestore.instance
                 .collection('historico')
                 .doc(widget.livroARequisitar.id.toString());
+
+        //? o uid do Livro recebe o uid do utilizador na requisição do livro
+        livro.uidLivro = utilizador!.uid;
 
         return Column(
           children: [
@@ -207,46 +207,49 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                   onPressed: widget.livroARequisitar.isRequisitado!
                       ? null
                       : () async {
-                          setState(() {
-                            //? alterar o estado da requisição
-                            _referenciaRequisicao?.set(true);
+                          setState(() {});
+                          //? alterar o estado da requisição
+                          _referenciaRequisicao?.set(true);
 
-                            //? regista o id do utilizador que fez a requisição
-                            _referenciaUID?.set(livro.uidLivro);
+                          //? regista o id do utilizador que fez a requisição
+                          _referenciaUID?.set(livro.uidLivro);
 
-                            //? Regista a data de Requisicao
-                            _referenciaDataRequisicao
-                                ?.set(dataRequisicao.toString());
+                          //? Regista a data de Requisicao
+                          _referenciaDataRequisicao
+                              ?.set(dataRequisicao.toString());
 
-                            //? Regista a data de Entrega
-                            _referenciaDataEntrega
-                                ?.set(dataDevolucaoEEntrega.toString());
+                          //? Regista a data de Entrega
+                          _referenciaDataEntrega
+                              ?.set(dataDevolucaoEEntrega.toString());
 
-                            _contador++;
-                            _criarHistorico.set({
-                              "requisitante": widget.pessoa.nomeCompletoPessoa,
-                              "tituloLivro": widget.livroARequisitar.titulo,
-                              "numDeVezes": _contador,
-                              "dataRequisicao":
-                                  widget.livroARequisitar.dataRequisicao,
-                              "uidRequisitante": livro.uidLivro
-                            });
+                          //? Obter os dados guardados pelo utilizador
+                          Pessoa dadosUtilizadorInseridos =
+                              await baseDeDados.getDadosGuardadosDoUtilizador();
 
-                            print(widget.pessoa.nomeCompletoPessoa);
-
-                            //? o livro fica requisitado
-                            widget.livroARequisitar.isRequisitado = true;
-
-                            //! adicionar o livro na lista de livros requisitados
-                            requisitadoModel.addLivroRequisitado(
-                              widget.livroARequisitar,
-                            );
-
-                            // ignore: avoid_print
-                            print('Livro [ ' +
-                                widget.livroARequisitar.titulo.toString() +
-                                ' ] requisitado');
+                          //? _Criar histórico dos livros requisitados
+                          _contador++;
+                          _criarHistorico.set({
+                            "requisitante":
+                                dadosUtilizadorInseridos.nomeCompletoPessoa,
+                            "tituloLivro": widget.livroARequisitar.titulo,
+                            "numDeVezes": _contador,
+                            "dataRequisicao":
+                                widget.livroARequisitar.dataRequisicao,
+                            "uidRequisitante": livro.uidLivro
                           });
+
+                          //? o livro fica requisitado
+                          widget.livroARequisitar.isRequisitado = true;
+
+                          //! adicionar o livro na lista de livros requisitados
+                          requisitadoModel.addLivroRequisitado(
+                            widget.livroARequisitar,
+                          );
+
+                          // ignore: avoid_print
+                          print('Livro [ ' +
+                              widget.livroARequisitar.titulo.toString() +
+                              ' ] requisitado');
                         },
                 ),
 
@@ -307,10 +310,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
 class _BotaoRequisitar extends StatefulWidget {
   final Livro livroARequisitar;
-  final Pessoa pessoa;
 
-  const _BotaoRequisitar(
-      {required this.livroARequisitar, required this.pessoa, Key? key})
+  const _BotaoRequisitar({required this.livroARequisitar, Key? key})
       : super(key: key);
 
   @override

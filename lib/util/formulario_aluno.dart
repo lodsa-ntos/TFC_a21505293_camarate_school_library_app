@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
+import 'package:camarate_school_library/util/preferencia_chave.dart';
 import 'package:camarate_school_library/util/validator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/login.dart';
 import '../screens/home.dart';
@@ -159,6 +163,7 @@ class FormularioAlunoState extends State<FormularioAluno> {
                                       if (_chaveFormRegisto.currentState!
                                           .validate()) {
                                         saveUtilizadorAlunoNoFirestore();
+                                        registarUtilizador();
                                       }
                                     }),
                               ),
@@ -279,10 +284,31 @@ class FormularioAlunoState extends State<FormularioAluno> {
       ));
     }
   }
+
+  // funçao para guardar os dados inseridos pelo utilizador
+  void registarUtilizador() {
+    Pessoa novoUtilizador = Pessoa(
+      nomeCompletoPessoa: _nomeCompletoController.text.trim(),
+      turma: _turmaController.text.trim(),
+      numPessoa: _numAlunoController.text.trim(),
+      ano: _anoController.text.trim(),
+    );
+
+    guardarDadosUtilizador(novoUtilizador);
+  }
+
+  void guardarDadosUtilizador(Pessoa aluno) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Salvo o texto do utilizador com o setString da função SharedPreferences
+    prefs.setString(
+      PreferenciaChave.utilizadorAtivo,
+      json.encode(aluno.toJson()),
+    );
+  }
 }
 
 class FormularioAluno extends StatefulWidget {
-  FormularioAluno({Key? key}) : super(key: key);
+  const FormularioAluno({Key? key}) : super(key: key);
 
   @override
   State<FormularioAluno> createState() => FormularioAlunoState();

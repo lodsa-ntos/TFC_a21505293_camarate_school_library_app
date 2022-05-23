@@ -1,12 +1,15 @@
+import 'dart:convert';
+
 import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:camarate_school_library/screens/login.dart';
 import 'package:camarate_school_library/util/formulario_professor.dart';
+import 'package:camarate_school_library/util/preferencia_chave.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/auth_services.dart';
 import '../styles/style_login_screen.dart';
@@ -177,6 +180,7 @@ class _RegistarState extends State<Registar> {
                                               .trim()
                                               .contains('p')) {
                                             registarProfessor();
+                                            registarUtilizadorProfessor();
                                           }
                                         }
                                       }),
@@ -336,6 +340,46 @@ class _RegistarState extends State<Registar> {
       (context),
       MaterialPageRoute(builder: (context) => const FormularioProfessor()),
       (route) => false,
+    );
+  }
+
+  // funçao para guardar os dados inseridos pelo utilizador
+  void registarUtilizadorAluno() {
+    Pessoa novoUtilizador = Pessoa(
+      emailPessoa: _emailInputController.text.trim(),
+      numCartaoPessoa: _numCartaoAlunoController.text.trim(),
+      passwordPessoa: _passwordInputController.text.trim(),
+    );
+
+    guardarDadosUtilizadorAluno(novoUtilizador);
+  }
+
+  void guardarDadosUtilizadorAluno(Pessoa aluno) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Salvo o texto do utilizador com o setString da função SharedPreferences
+    prefs.setString(
+      PreferenciaChave.utilizadorAtivo,
+      json.encode(aluno.toJson()),
+    );
+  }
+
+  // funçao para guardar os dados inseridos pelo utilizador
+  void registarUtilizadorProfessor() {
+    Pessoa novoUtilizador = Pessoa(
+      emailPessoa: _emailInputController.text.trim(),
+      numCartaoPessoa: _numCartaoAlunoController.text.trim(),
+      passwordPessoa: _passwordInputController.text.trim(),
+    );
+
+    guardarDadosUtilizadorProfessor(novoUtilizador);
+  }
+
+  void guardarDadosUtilizadorProfessor(Pessoa professor) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Salvo o texto do utilizador com o setString da função SharedPreferences
+    prefs.setString(
+      PreferenciaChave.utilizadorAtivo,
+      json.encode(professor.toJson()),
     );
   }
 }

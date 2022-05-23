@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/models/pessoa.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:camarate_school_library/util/preferencia_chave.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async' show Future;
 
@@ -39,11 +38,22 @@ class BaseDeDados {
     return livros;
   }
 
-  final CollectionReference colecaoDoHistorico =
-      FirebaseFirestore.instance.collection('historico');
+  Future<Pessoa> getDadosGuardadosDoUtilizador() async {
+    // Instância para poder armazenar dados localmente disponibilizados pelo utilizador no formato chave-valor
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  // obter um fluxo de instantâneos de toda informação da referencia 'historico' do Firestore.
-  Stream<QuerySnapshot> getStream() {
-    return colecaoDoHistorico.snapshots();
+    // Obtenho os dados armazenados pelo utilizador como Strings
+    String? jsonUtilizador = prefs.getString(PreferenciaChave.utilizadorAtivo);
+
+    // Com o jsonDecode, os dados vao ser codificados e guardados no formato de um Map<String, dynamic>
+    Map<String, dynamic> mapUtilizador = json.decode(jsonUtilizador.toString());
+
+    // Converter esses dados num mapa de pares chave/valor com informação da Pessoa de acordo ao modelo Pessoa que vai ser apresentado
+    Pessoa utilizador = Pessoa.fromJson(mapUtilizador);
+
+    // Imprimir o nome da pessoa
+    print(utilizador.nomeCompletoPessoa);
+
+    return utilizador;
   }
 }
