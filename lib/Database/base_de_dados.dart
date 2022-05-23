@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:camarate_school_library/util/preferencia_chave.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async' show Future;
 
@@ -10,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseDeDados {
   List<Livro> livros = [];
+  List<Pessoa> pessoas = [];
 
   Future<List<Livro>> carregarLivrosBD(
       DatabaseReference referenciaLivrosBD) async {
@@ -38,22 +40,20 @@ class BaseDeDados {
     return livros;
   }
 
-  Future<Pessoa> getDadosGuardadosDoUtilizador() async {
-    // Instância para poder armazenar dados localmente disponibilizados pelo utilizador no formato chave-valor
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  Future<List<Pessoa>> getDadosGuardadosDoUtilizador(
+      DocumentReference documentReference) async {
+    PessoaModel listaDePessoas;
 
-    // Obtenho os dados armazenados pelo utilizador como Strings
-    String? jsonUtilizador = prefs.getString(PreferenciaChave.utilizadorAtivo);
+    DocumentSnapshot docSnap = await documentReference.get();
 
-    // Com o jsonDecode, os dados vao ser codificados e guardados no formato de um Map<String, dynamic>
-    Map<String, dynamic> mapUtilizador = json.decode(jsonUtilizador.toString());
+    String respostaJSON = jsonDecode(jsonEncode(docSnap.data().toString()));
 
-    // Converter esses dados num mapa de pares chave/valor com informação da Pessoa de acordo ao modelo Pessoa que vai ser apresentado
-    Pessoa utilizador = Pessoa.fromJson(mapUtilizador);
+    listaDePessoas = PessoaModel.fromJson(respostaJSON);
 
-    // Imprimir o nome da pessoa
-    print(utilizador.nomeCompletoPessoa);
+    pessoas.addAll(listaDePessoas.pessoas);
 
-    return utilizador;
+    print(pessoas.length);
+
+    return pessoas;
   }
 }

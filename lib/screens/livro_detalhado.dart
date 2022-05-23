@@ -190,6 +190,10 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                 .collection('historico')
                 .doc(widget.livroARequisitar.id.toString());
 
+        DocumentReference<Map<String, dynamic>> uti = FirebaseFirestore.instance
+            .collection('Utilizadores')
+            .doc(livro.uidLivro);
+
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
 
@@ -223,14 +227,15 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                               ?.set(dataDevolucaoEEntrega.toString());
 
                           //? Obter os dados guardados pelo utilizador
-                          Pessoa dadosUtilizadorInseridos =
-                              await baseDeDados.getDadosGuardadosDoUtilizador();
+                          List<Pessoa> dadosUtilizadorInseridos =
+                              await baseDeDados
+                                  .getDadosGuardadosDoUtilizador(uti);
 
                           //? _Criar histórico dos livros requisitados
                           _contador++;
                           _criarHistorico.set({
                             "requisitante":
-                                dadosUtilizadorInseridos.nomeCompletoPessoa,
+                                dadosUtilizadorInseridos[4].nomeCompletoPessoa,
                             "tituloLivro": widget.livroARequisitar.titulo,
                             "numDeVezes": _contador,
                             "dataRequisicao":

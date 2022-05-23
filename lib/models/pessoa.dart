@@ -1,3 +1,31 @@
+import 'dart:convert';
+
+class PessoaModel {
+  List<Pessoa> pessoas;
+
+  PessoaModel({
+    required this.pessoas,
+  });
+
+  factory PessoaModel.fromJson(String json) {
+    return PessoaModel(pessoas: verificarLivros(json));
+  }
+
+  static List<Pessoa> verificarLivros(livroJSON) {
+    /// jsonEncode tranforma os dados JSON em string
+    /// jsonDecode descodifica os dados e coloca no formato de Lista dynamic
+
+    /// Obter os dados da base de dados e guardar num formato de uma
+    ///  lista dinamica
+    List<dynamic> isPessoa = jsonDecode(jsonEncode(livroJSON));
+
+    List<Pessoa> listaDePessoas =
+        isPessoa.map((dados) => Pessoa.fromJson(dados)).toList();
+
+    return listaDePessoas;
+  }
+}
+
 class Pessoa {
   // Atributos
   String? uidPessoa;
