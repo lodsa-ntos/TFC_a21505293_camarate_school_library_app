@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth_services.dart';
@@ -26,6 +27,10 @@ class _RegistarState extends State<Registar> {
   final _emailInputController = TextEditingController();
   final _passwordInputController = TextEditingController();
   final _numCartaoAlunoController = TextEditingController();
+  final _nomeCompletoController = TextEditingController();
+  final _numAlunoController = TextEditingController();
+  final _anoController = TextEditingController();
+  final _turmaController = TextEditingController();
 
   //? Alcançar a instancia da abse de dados para autenticação do utilizador atual
   final _auth = FirebaseAuth.instance;
@@ -147,6 +152,81 @@ class _RegistarState extends State<Registar> {
                         decoration: _decoracaoCampoDaPassword,
                       ),
 
+                      const SizedBox(height: 16.0),
+
+                      //? Nome próprio e apelido
+                      TextFormField(
+                        validator: (nome) =>
+                            Validator.validarNomeCompleto(nome: nome),
+
+                        // Obter o valor do email escrito pelo user
+                        controller: _nomeCompletoController,
+
+                        // Estilo dentro do campo de e-mail
+                        style: StyleRegistoScreen.estiloNomeCompleto,
+
+                        // Estilo da decoração do campo do e-mail
+                        decoration: StyleRegistoScreen.decoracaoNomeCompleto,
+                      ),
+
+                      const SizedBox(height: 16.0),
+
+                      //? Número do aluno
+                      TextFormField(
+                        validator: (numAluno) =>
+                            Validator.validarAno(ano: numAluno),
+
+                        keyboardType: TextInputType.number,
+
+                        maxLength: 2,
+
+                        // Obter o valor do email escrito pelo user
+                        controller: _numAlunoController,
+
+                        // Estilo dentro do campo de e-mail
+                        style: StyleRegistoScreen.estiloNumeroAluno,
+
+                        // Estilo da decoração do campo do e-mail
+                        decoration: StyleRegistoScreen.decoracaoNumeroAluno,
+                      ),
+
+                      const SizedBox(height: 16.0),
+
+                      //? Ano
+                      TextFormField(
+                        validator: (ano) => Validator.validarAno(ano: ano),
+
+                        // Obter o valor do email escrito pelo user
+                        controller: _anoController,
+
+                        keyboardType: TextInputType.number,
+
+                        maxLength: 2,
+
+                        // Estilo dentro do campo de e-mail
+                        style: StyleRegistoScreen.estiloAno,
+
+                        // Estilo da decoração do campo do e-mail
+                        decoration: StyleRegistoScreen.decoracaoAno,
+                      ),
+
+                      const SizedBox(height: 16.0),
+
+                      //? Turma
+                      TextFormField(
+                        validator: (turma) =>
+                            Validator.validarTurma(turma: turma),
+
+                        // Obter o valor do email escrito pelo user
+                        controller: _turmaController,
+
+                        // Estilo dentro do campo de e-mail
+                        style: StyleRegistoScreen.estiloTurma,
+
+                        // Estilo da decoração do campo do e-mail
+                        decoration: StyleRegistoScreen.decoracaoTurma,
+                      ),
+
                       const Padding(padding: EdgeInsets.only(bottom: 15)),
 
                       //? --> Botão Seguinte <--
@@ -168,16 +248,7 @@ class _RegistarState extends State<Registar> {
                                       onPressed: () async {
                                         if (_chaveFormRegisto.currentState!
                                             .validate()) {
-                                          if (_numCartaoAlunoController.text
-                                              .trim()
-                                              .contains('a')) {
-                                            registarAluno();
-                                          } else if (_numCartaoAlunoController
-                                              .text
-                                              .trim()
-                                              .contains('p')) {
-                                            registarProfessor();
-                                          }
+                                          registarAluno();
                                         }
                                       }),
                                 ),
@@ -254,7 +325,7 @@ class _RegistarState extends State<Registar> {
   //* Guardar os dados do Aluno na base de dados do firestore
   saveUserAlunoNoFirestore() async {
     // Instâcia par alcançar a base de dados firestore do firebase
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    final databaseRef = FirebaseDatabase.instance.ref('utilizadores');
 
     // Utilizador atual que preencheu o formulário
     User? utilizador = _auth.currentUser;
@@ -262,79 +333,31 @@ class _RegistarState extends State<Registar> {
     // Variável do tipo Pessoa para alcançar os atributos do professor
     Pessoa aluno = Pessoa();
 
-    // Guardar todos os valores do aluno
+    // Guardar todos os dados do aluno
     aluno.emailPessoa = utilizador!.email;
     aluno.uidPessoa = utilizador.uid;
     aluno.numCartaoPessoa = _numCartaoAlunoController.text.trim();
     aluno.passwordPessoa = _passwordInputController.text.trim();
+    aluno.nomeCompletoPessoa = _nomeCompletoController.text.trim();
+    aluno.numPessoa = _numAlunoController.text.trim();
+    aluno.ano = _anoController.text.trim();
+    aluno.turma = _turmaController.text.trim();
 
     // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
-    // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
+    // ... na base de dados realtime database e preencher o JSON com os dados fornecidos pelo utilizador
     //... e enviar para a base de dados
-    await firebaseFirestore
-        .collection("Utilizadores")
-        .doc(utilizador.uid)
-        .set(aluno.toJson());
+    await databaseRef.child(utilizador.uid).set(aluno.toJson());
+
+    // mensagem de sucesso para user interface
+    Fluttertoast.showToast(
+      msg: "Conta criada com sucesso :) ",
+      backgroundColor: Colors.orange,
+    );
 
     // Redireciona o utilizador para a página home
     Navigator.pushAndRemoveUntil(
       (context),
       MaterialPageRoute(builder: (context) => FormularioAluno()),
-      (route) => false,
-    );
-  }
-
-  //* Registar professor na app
-  registarProfessor() async {
-    setState(() => _isLoading = true);
-    try {
-      await context
-          .read<AuthServices>()
-          .registar(_emailInputController.text, _passwordInputController.text)
-          .then((value) => {saveUserProfessorNoFirestore()});
-      //* Mensagens de erro
-    } on AuthException catch (erro) {
-      setState(() => _isLoading = false);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        duration: const Duration(seconds: 10),
-        content: Text(
-          erro.mensagem,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        backgroundColor: Colors.red,
-      ));
-    }
-  }
-
-  //* Guardar os dados do professor na base de dados do firestore
-  saveUserProfessorNoFirestore() async {
-    // Instâcia par alcançar a base de dados firestore do firebase
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-
-    final databaseRef = FirebaseDatabase.instance.ref('utilizadores');
-
-    // Utilizador atual que preencheu o formulário
-    User? userProfessor = _auth.currentUser;
-
-    // Variável do tipo Pessoa para alcançar os atributos do professor
-    Pessoa professor = Pessoa();
-
-    // Guardar todos os valores do Professor
-    professor.emailPessoa = userProfessor!.email;
-    professor.uidPessoa = userProfessor.uid;
-    professor.numCartaoPessoa = _numCartaoAlunoController.text.trim();
-    professor.passwordPessoa = _passwordInputController.text.trim();
-
-    // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
-    // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
-    //... e enviar para a base de dados
-
-    await databaseRef.child(userProfessor.uid).set(professor.toJson());
-
-    // Redireciona o utilizador para a página home
-    Navigator.pushAndRemoveUntil(
-      (context),
-      MaterialPageRoute(builder: (context) => const FormularioProfessor()),
       (route) => false,
     );
   }
