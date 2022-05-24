@@ -1,14 +1,10 @@
-import 'dart:convert';
-
 import 'package:camarate_school_library/services/auth_services.dart';
-import 'package:camarate_school_library/util/preferencia_chave.dart';
 import 'package:camarate_school_library/util/validator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/pessoa.dart';
 import '../screens/login.dart';
@@ -120,7 +116,6 @@ class FormularioProfessorState extends State<FormularioProfessor> {
                                       if (_chaveFormRegisto.currentState!
                                           .validate()) {
                                         saveProfessorNoFirestore();
-                                        registarUtilizador();
                                       }
                                     }),
                               ),
@@ -237,25 +232,6 @@ class FormularioProfessorState extends State<FormularioProfessor> {
         backgroundColor: Colors.red,
       ));
     }
-  }
-
-  // funçao para guardar os dados inseridos pelo utilizador
-  void registarUtilizador() {
-    Pessoa novoUtilizador = Pessoa(
-      nomeCompletoPessoa: nomeCompletoPessoaController.text.trim(),
-      turma: _turmaPessoaController.text.trim(),
-    );
-
-    guardarDadosUtilizador(novoUtilizador);
-  }
-
-  void guardarDadosUtilizador(Pessoa professor) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Guardar o texto do utilizador com o setString da função SharedPreferences
-    prefs.setString(
-      PreferenciaChave.utilizadorAtivo,
-      json.encode(professor.toJson()),
-    );
   }
 }
 
