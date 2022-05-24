@@ -17,12 +17,12 @@ class PessoaModel {
 
     /// Obter os dados da base de dados e guardar num formato de uma
     ///  lista dinamica
-    final isPessoa = jsonDecode(jsonEncode(pessoaJSON));
+    List<dynamic> pessoaBD = jsonDecode(jsonEncode(pessoaJSON));
 
-    List<Pessoa> listaDePessoas =
-        isPessoa.map((dados) => Pessoa.fromJson(dados)).toList();
+    List<Pessoa> listaDeLivros =
+        pessoaBD.map((dados) => Pessoa.fromJson(dados)).toList();
 
-    return listaDePessoas;
+    return listaDeLivros;
   }
 }
 

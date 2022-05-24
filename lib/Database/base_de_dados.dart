@@ -52,8 +52,6 @@ class BaseDeDados {
 
     pessoas.addAll(listaDePessoas.pessoas);
 
-    print(pessoas.length);
-
     return pessoas;
   }
 }
