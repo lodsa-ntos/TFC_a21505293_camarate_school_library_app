@@ -215,11 +215,6 @@ class _HomeState extends State<Home> {
         // Utilizador actual
         User? utilizador = _auth.currentUser;
 
-        // Variável do tipo Livro para alcançar os atributos do livro
-        Livro _livro = Livro();
-
-        _livro.uidLivro = utilizador!.uid;
-
         return Scaffold(
           appBar: AppBar(
             // icone de pesquisa
@@ -361,7 +356,7 @@ class _HomeState extends State<Home> {
                                       itemBuilder: (context, index) {
                                         //* Construir livro requisitado na interface
                                         if (_livros[index].uidLivro ==
-                                                utilizador.uid &&
+                                                utilizador!.uid &&
                                             _livros[index].isRequisitado ==
                                                 true) {
                                           return InkWell(

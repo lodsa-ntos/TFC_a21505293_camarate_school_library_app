@@ -226,11 +226,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           _referenciaDataEntrega
                               ?.set(dataDevolucaoEEntrega.toString());
 
-                          //? Obter os dados guardados pelo utilizador
-                          List<Pessoa> dadosUtilizadorInseridos =
-                              await baseDeDados
-                                  .getDadosGuardadosDoUtilizador(uti);
-
                           //? _Criar histórico dos livros requisitados
                           _contador++;
                           _criarHistorico.set({

@@ -7,7 +7,7 @@ class PessoaModel {
     required this.pessoas,
   });
 
-  factory PessoaModel.fromJson(String json) {
+  factory PessoaModel.fromJson(List<dynamic> json) {
     return PessoaModel(pessoas: verificarPessoa(json));
   }
 
@@ -17,10 +17,10 @@ class PessoaModel {
 
     /// Obter os dados da base de dados e guardar num formato de uma
     ///  lista dinamica
-    List<dynamic> pessoaBD = jsonDecode(jsonEncode(pessoaJSON));
+    List<dynamic> utilizadoresBD = jsonDecode(jsonEncode(pessoaJSON));
 
     List<Pessoa> listaDeLivros =
-        pessoaBD.map((dados) => Pessoa.fromJson(dados)).toList();
+        utilizadoresBD.map((dados) => Pessoa.fromJson(dados)).toList();
 
     return listaDeLivros;
   }

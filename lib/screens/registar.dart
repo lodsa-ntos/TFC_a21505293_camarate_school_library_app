@@ -1,4 +1,5 @@
 import 'package:camarate_school_library/models/pessoa.dart';
+import 'package:camarate_school_library/screens/home.dart';
 import 'package:camarate_school_library/screens/login.dart';
 import 'package:camarate_school_library/util/formulario_professor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -357,7 +358,7 @@ class _RegistarState extends State<Registar> {
     // Redireciona o utilizador para a página home
     Navigator.pushAndRemoveUntil(
       (context),
-      MaterialPageRoute(builder: (context) => FormularioAluno()),
+      MaterialPageRoute(builder: (context) => const Home()),
       (route) => false,
     );
   }
