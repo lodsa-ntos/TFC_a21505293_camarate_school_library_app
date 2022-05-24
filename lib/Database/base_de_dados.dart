@@ -2,11 +2,8 @@ import 'dart:convert';
 
 import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:camarate_school_library/models/pessoa.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async' show Future;
-
-import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseDeDados {
   List<Livro> livros = [];
@@ -52,13 +49,14 @@ class BaseDeDados {
         jsonDecode(jsonEncode(dadosUtilizadorBD.snapshot.value));
 
     // Depois de receber os dados que quero guardar do RepositorioDeLivros
-    // de acordo ao Modelo de livro, coloco esses dados na List<LivroModel> livros = [];
+    // de acordo ao Modelo de pessoa, coloco esses dados na List<PessoaModel> livros = [];
     // que é uma lista dinamica mas do tipo LivroModel
     listaDeUtilizadores = PessoaModel.fromJson(respostaJSON);
 
-    // Coloco esses dados na lista
+    // Guardar os dados da BD na lista
     pessoas.addAll(listaDeUtilizadores.pessoas);
 
+    // Retorno a lista com os dados vindos da base de dados em JSON
     return pessoas;
   }
 }
