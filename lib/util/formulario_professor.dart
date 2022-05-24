@@ -2,6 +2,7 @@ import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/util/validator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -173,6 +174,8 @@ class FormularioProfessorState extends State<FormularioProfessor> {
       // Instâcia par alcançar a base de dados firestore do firebase
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
+      final databaseRef = FirebaseDatabase.instance.ref('utilizadores');
+
       // Utilizador atual que preencheu o formulário
       User? _utilizador = _authProfessor.currentUser;
 
@@ -182,32 +185,12 @@ class FormularioProfessorState extends State<FormularioProfessor> {
 
       professor.turma = _turmaPessoaController.text.trim();
 
+      professor.uidPessoa = _utilizador!.uid;
+
       // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
       // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
       //... e enviar para a base de dados
-      await firebaseFirestore
-          .collection("Utilizadores")
-          .where("uidPessoa", isEqualTo: _utilizador!.uid)
-          .get()
-          .then((value) => value.docs.forEach((element) {
-                element.reference.update(
-                  {
-                    "nomeCompletoPessoa": professor.nomeCompletoPessoa,
-                  },
-                );
-
-                element.reference.update(
-                  {
-                    "turma": professor.turma,
-                  },
-                );
-
-                element.reference.update(
-                  {
-                    "criado em": Timestamp.now(),
-                  },
-                );
-              }));
+      await databaseRef.child(_utilizador.uid).set(professor.toJson());
       // mensagem de sucesso para user interface
       Fluttertoast.showToast(
         msg: "Conta criada com sucesso :) ",

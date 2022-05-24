@@ -3,6 +3,7 @@ import 'package:camarate_school_library/screens/login.dart';
 import 'package:camarate_school_library/util/formulario_professor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -228,7 +229,7 @@ class _RegistarState extends State<Registar> {
     );
   }
 
-  //* Registar utilizador na app
+  //* Registar Aluno na app
   registarAluno() async {
     setState(() => _isLoading = true);
     try {
@@ -250,7 +251,7 @@ class _RegistarState extends State<Registar> {
     }
   }
 
-  //* Guardar os dados do utilizador na base de dados do firestore
+  //* Guardar os dados do Aluno na base de dados do firestore
   saveUserAlunoNoFirestore() async {
     // Instâcia par alcançar a base de dados firestore do firebase
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -310,6 +311,8 @@ class _RegistarState extends State<Registar> {
     // Instâcia par alcançar a base de dados firestore do firebase
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
+    final databaseRef = FirebaseDatabase.instance.ref('utilizadores');
+
     // Utilizador atual que preencheu o formulário
     User? userProfessor = _auth.currentUser;
 
@@ -325,10 +328,8 @@ class _RegistarState extends State<Registar> {
     // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
     // ... na base de dados firestore e preencher o JSON com os dados fornecidos pelo utilizador
     //... e enviar para a base de dados
-    await firebaseFirestore
-        .collection("Utilizadores")
-        .doc(userProfessor.uid)
-        .set(professor.toJson());
+
+    await databaseRef.child(userProfessor.uid).set(professor.toJson());
 
     // Redireciona o utilizador para a página home
     Navigator.pushAndRemoveUntil(
