@@ -2,7 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 
 class PessoaModel {
-  Map<String, dynamic> pessoas = <String, dynamic>{};
+  Map<String, dynamic> pessoas;
 
   PessoaModel({
     required this.pessoas,

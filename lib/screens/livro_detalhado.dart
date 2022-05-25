@@ -229,13 +229,14 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                               ?.set(dataDevolucaoEEntrega.toString());
 
                           //? Obter os dados guardados pelo utilizador
-                          Pessoa dadosUtilizadorInseridos = Pessoa();
+                          Map<String, dynamic>? dadosUtilizadorInseridos =
+                              await baseDeDados.getDadosGuardadosDoUtilizador(
+                                  _referenciaPessoa!);
 
                           //? _Criar histórico dos livros requisitados
                           _contador++;
                           _criarHistorico.set({
-                            "requisitante":
-                                dadosUtilizadorInseridos.nomeCompletoPessoa,
+                            "requisitante": dadosUtilizadorInseridos,
                             "tituloLivro": widget.livroARequisitar.titulo,
                             "numDeVezes": _contador,
                             "dataRequisicao":

@@ -7,7 +7,7 @@ import 'dart:async' show Future;
 
 class BaseDeDados {
   List<Livro> livros = [];
-  List<Pessoa> pessoas = [];
+  Map<String, dynamic> pessoas = <String, dynamic>{};
 
   Future<List<Livro>> carregarLivrosBD(
       DatabaseReference referenciaLivrosBD) async {
@@ -36,7 +36,7 @@ class BaseDeDados {
     return livros;
   }
 
-  Future<List<Pessoa>> getDadosGuardadosDoUtilizador(
+  Future<Map<String, dynamic>?> getDadosGuardadosDoUtilizador(
       DatabaseReference referenciaUtilizadoresBD) async {
     //
     PessoaModel listaDeUtilizadores;
