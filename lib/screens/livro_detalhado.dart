@@ -158,6 +158,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             formato.format(dataAtual.add(const Duration(hours: 1)));
 
         var formatoDevolucao = DateFormat('dd-MM-yyyy');
+
         String dataDevolucaoEEntrega =
             formatoDevolucao.format(dataAtual.add(const Duration(days: 10)));
 
@@ -185,15 +186,16 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .child(widget.livroARequisitar.id.toString())
             .child('dataEntrega');
 
+        //? referência para alcançar os dados do utilizador na base de dados
+        DatabaseReference _referenciaUtilizadorBD = FirebaseDatabase.instance
+            .ref('utilizadores')
+            .child(utilizador!.uid);
+
         //? referência para criar e armazenar dados para o histórico
         DocumentReference<Map<String, dynamic>> _criarHistorico =
             FirebaseFirestore.instance
                 .collection('historico')
                 .doc(widget.livroARequisitar.id.toString());
-
-        DatabaseReference _referenciaPessoa = FirebaseDatabase.instance
-            .ref('utilizadores')
-            .child(utilizador!.uid);
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
@@ -216,7 +218,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           //? alterar o estado da requisição
                           _referenciaRequisicao?.set(true);
 
-                          //? regista o id do utilizador que fez a requisição
+                          //? Regista o id do utilizador que fez a requisição
                           _referenciaUID?.set(livro.uidLivro);
 
                           //? Regista a data de Requisicao
@@ -228,16 +230,15 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                               ?.set(dataDevolucaoEEntrega.toString());
 
                           //? Obter os dados guardados pelo utilizador
-                          Map<String, dynamic> dadosUtilizadorInseridos =
+                          Map<String, dynamic> dadosUtilizador =
                               await baseDeDados.getDadosGuardadosDoUtilizador(
-                                  _referenciaPessoa);
+                                  _referenciaUtilizadorBD);
 
-                          //? _Criar histórico dos livros requisitados
+                          //? _Criar o histórico do livro requisitado
                           _contador++;
                           _criarHistorico.set({
-                            "requisitante":
-                                Pessoa.fromJson(dadosUtilizadorInseridos)
-                                    .nomeCompletoPessoa,
+                            "requisitante": Pessoa.fromJson(dadosUtilizador)
+                                .nomeCompletoPessoa,
                             "tituloLivro": widget.livroARequisitar.titulo,
                             "numDeVezes": _contador,
                             "dataRequisicao":
@@ -248,7 +249,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           //? o livro fica requisitado
                           widget.livroARequisitar.isRequisitado = true;
 
-                          //! adicionar o livro na lista de livros requisitados
+                          //? adicionar o livro na lista de livros requisitados
                           requisitadoModel.addLivroRequisitado(
                             widget.livroARequisitar,
                           );
@@ -257,7 +258,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           print('O livro [ ' +
                               widget.livroARequisitar.titulo.toString() +
                               ' ] foi requisitado pelo utilizador ' +
-                              Pessoa.fromJson(dadosUtilizadorInseridos)
+                              Pessoa.fromJson(dadosUtilizador)
                                   .nomeCompletoPessoa
                                   .toString());
                         },
@@ -282,7 +283,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             //? o livro fica devolvido
                             widget.livroARequisitar.isRequisitado = false;
 
-                            //! adicionar o livro na lista de livros devolvidos
+                            //? adicionar o livro na lista de livros devolvidos
                             requisitadoModel.devolverLivroRequisitado(
                               widget.livroARequisitar,
                             );

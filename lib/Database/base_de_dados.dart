@@ -44,7 +44,7 @@ class BaseDeDados {
     // Obter os dados de só uma vez da referencia do firebase na base de dados
     DatabaseEvent dadosUtilizadorBD = await referenciaUtilizadoresBD.once();
 
-    // Com o jsonDecode, os valores vao ser codificados e transformados e
+    // Com o jsonDecode, os valores vao ser codificados, transformados e
     // guardados no formato de um Map<String, dynamic>
     Map<String, dynamic> respostaJSON =
         jsonDecode(jsonEncode(dadosUtilizadorBD.snapshot.value));
