@@ -36,7 +36,7 @@ class BaseDeDados {
     return livros;
   }
 
-  Future<Map<String, dynamic>?> getDadosGuardadosDoUtilizador(
+  Future<Map<String, dynamic>> getDadosGuardadosDoUtilizador(
       DatabaseReference referenciaUtilizadoresBD) async {
     //
     PessoaModel listaDeUtilizadores;

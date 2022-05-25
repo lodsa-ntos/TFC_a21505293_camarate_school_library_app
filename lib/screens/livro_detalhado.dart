@@ -136,7 +136,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaUID;
   DatabaseReference? _referenciaDataRequisicao;
   DatabaseReference? _referenciaDataEntrega;
-  DatabaseReference? _referenciaPessoa;
 
   BaseDeDados baseDeDados = BaseDeDados();
 
@@ -192,9 +191,9 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                 .collection('historico')
                 .doc(widget.livroARequisitar.id.toString());
 
-        _referenciaPessoa = FirebaseDatabase.instance
+        DatabaseReference _referenciaPessoa = FirebaseDatabase.instance
             .ref('utilizadores')
-            .child(livro.uidLivro.toString());
+            .child(utilizador!.uid);
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
@@ -229,15 +228,15 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                               ?.set(dataDevolucaoEEntrega.toString());
 
                           //? Obter os dados guardados pelo utilizador
-                          Map<String, dynamic>? dadosUtilizadorInseridos =
+                          Map<String, dynamic> dadosUtilizadorInseridos =
                               await baseDeDados.getDadosGuardadosDoUtilizador(
-                                  _referenciaPessoa!);
+                                  _referenciaPessoa);
 
                           //? _Criar histórico dos livros requisitados
                           _contador++;
                           _criarHistorico.set({
                             "requisitante":
-                                Pessoa.fromJson(dadosUtilizadorInseridos!)
+                                Pessoa.fromJson(dadosUtilizadorInseridos)
                                     .nomeCompletoPessoa,
                             "tituloLivro": widget.livroARequisitar.titulo,
                             "numDeVezes": _contador,
@@ -255,9 +254,9 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           );
 
                           // ignore: avoid_print
-                          print('Livro [ ' +
+                          print('O livro [ ' +
                               widget.livroARequisitar.titulo.toString() +
-                              ' ] requisitado pelo utilizador ' +
+                              ' ] foi requisitado pelo utilizador ' +
                               Pessoa.fromJson(dadosUtilizadorInseridos)
                                   .nomeCompletoPessoa
                                   .toString());
