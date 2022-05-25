@@ -236,15 +236,15 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           //? _Criar histórico dos livros requisitados
                           _contador++;
                           _criarHistorico.set({
-                            "requisitante": dadosUtilizadorInseridos,
+                            "requisitante":
+                                Pessoa.fromJson(dadosUtilizadorInseridos!)
+                                    .nomeCompletoPessoa,
                             "tituloLivro": widget.livroARequisitar.titulo,
                             "numDeVezes": _contador,
                             "dataRequisicao":
                                 widget.livroARequisitar.dataRequisicao,
                             "uidRequisitante": livro.uidLivro
                           });
-
-                          print(pessoa.nomeCompletoPessoa);
 
                           //? o livro fica requisitado
                           widget.livroARequisitar.isRequisitado = true;
@@ -257,7 +257,10 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           // ignore: avoid_print
                           print('Livro [ ' +
                               widget.livroARequisitar.titulo.toString() +
-                              ' ] requisitado');
+                              ' ] requisitado pelo utilizador ' +
+                              Pessoa.fromJson(dadosUtilizadorInseridos)
+                                  .nomeCompletoPessoa
+                                  .toString());
                         },
                 ),
 
