@@ -287,12 +287,15 @@ List<Livro> _filtrarPesquisa(caixaDePesquisa) {
     //* Título
     if (selecionarFiltro == 0) {
       return caixaDePesquisa
-              ?.where(
-                (element) => element.tituloLivro
-                    .toString()
-                    .toLowerCase()
-                    .contains(_condicao.toLowerCase()),
-              )
+              ?.where((element) =>
+                  element.titulo
+                      .toString()
+                      .toLowerCase()
+                      .contains(_condicao.toLowerCase()) ||
+                  element.numRegisto
+                      .toString()
+                      .toLowerCase()
+                      .contains(_condicao.toLowerCase()))
               .toList() ??
           <Livro>[];
 
@@ -312,7 +315,7 @@ List<Livro> _filtrarPesquisa(caixaDePesquisa) {
     } else if (selecionarFiltro == 2) {
       return caixaDePesquisa
               ?.where(
-                (element) => element.tituloLivro
+                (element) => element.titulo
                     .toString()
                     .toLowerCase()
                     .contains(_condicao.toLowerCase()),

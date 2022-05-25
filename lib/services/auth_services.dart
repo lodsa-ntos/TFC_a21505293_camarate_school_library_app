@@ -58,7 +58,7 @@ class AuthServices with ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         throw AuthException(
-            'Desculpa, mas o teu e-mail e a tua palavra-passe não pertence a nenhuma conta. Verifica, e tenta novamente.');
+            'Desculpa, mas o teu e-mail ou tua palavra-passe não pertence a nenhuma conta. Verifica, e tenta novamente.');
       } else if (e.code == 'invalid-email') {
         throw AuthException(
             'O teu e-mail parece estar incorreto. Verifica-a novamente.');
