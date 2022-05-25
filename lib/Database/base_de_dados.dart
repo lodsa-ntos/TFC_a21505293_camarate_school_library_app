@@ -45,16 +45,16 @@ class BaseDeDados {
     DatabaseEvent dadosUtilizadorBD = await referenciaUtilizadoresBD.once();
 
     // Com o jsonDecode, os valores vao ser codificados e transformados e
-    // guardados no formato de uma List<dynamic>
+    // guardados no formato de um Map<String, dynamic>
     Map<String, dynamic> respostaJSON =
         jsonDecode(jsonEncode(dadosUtilizadorBD.snapshot.value));
 
-    // Depois de receber os dados que quero guardar do RepositorioDeLivros
-    // de acordo ao Modelo de pessoa, coloco esses dados na List<PessoaModel> livros = [];
-    // que é uma lista dinamica mas do tipo LivroModel
+    // Depois de receber os dados que quero guardar do RepositorioDeUtilizadores
+    // de acordo ao Modelo de pessoa, coloco esses dados num Map<String, dynamic>;
+    // que é uma coleção de pares chave/valor mas do tipo PessoaModel
     listaDeUtilizadores = PessoaModel.fromJson(respostaJSON);
 
-    // Guardar os dados da BD na lista
+    // Guardar os dados da BD no Map<String, dynamic>
     pessoas.addAll(listaDeUtilizadores.pessoas);
 
     // Retorno a lista com os dados vindos da base de dados em JSON
