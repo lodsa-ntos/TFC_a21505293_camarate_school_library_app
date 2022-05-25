@@ -136,6 +136,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaUID;
   DatabaseReference? _referenciaDataRequisicao;
   DatabaseReference? _referenciaDataEntrega;
+  DatabaseReference? _referenciaPessoa;
 
   BaseDeDados baseDeDados = BaseDeDados();
 
@@ -146,6 +147,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
   // Variável do tipo Livro para alcançar os atributos do livro
   Livro livro = Livro();
+  Pessoa pessoa = Pessoa();
 
   @override
   Widget build(BuildContext context) {
@@ -190,9 +192,9 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                 .collection('historico')
                 .doc(widget.livroARequisitar.id.toString());
 
-        DocumentReference<Map<String, dynamic>> uti = FirebaseFirestore.instance
-            .collection('Utilizadores')
-            .doc(livro.uidLivro);
+        _referenciaPessoa = FirebaseDatabase.instance
+            .ref('utilizadores')
+            .child(livro.uidLivro.toString());
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
@@ -226,16 +228,23 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           _referenciaDataEntrega
                               ?.set(dataDevolucaoEEntrega.toString());
 
+                          //? Obter os dados guardados pelo utilizador
+                          List<Pessoa> dadosUtilizadorInseridos =
+                              await baseDeDados.getDadosGuardadosDoUtilizador(
+                                  _referenciaPessoa!);
+
                           //? _Criar histórico dos livros requisitados
                           _contador++;
                           _criarHistorico.set({
-                            "requisitante": Pessoa().nomeCompletoPessoa,
+                            "requisitante": dadosUtilizadorInseridos,
                             "tituloLivro": widget.livroARequisitar.titulo,
                             "numDeVezes": _contador,
                             "dataRequisicao":
                                 widget.livroARequisitar.dataRequisicao,
                             "uidRequisitante": livro.uidLivro
                           });
+
+                          print(pessoa.nomeCompletoPessoa);
 
                           //? o livro fica requisitado
                           widget.livroARequisitar.isRequisitado = true;

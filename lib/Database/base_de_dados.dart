@@ -38,6 +38,7 @@ class BaseDeDados {
 
   Future<List<Pessoa>> getDadosGuardadosDoUtilizador(
       DatabaseReference referenciaUtilizadoresBD) async {
+    //
     PessoaModel listaDeUtilizadores;
 
     // Obter os dados de só uma vez da referencia do firebase na base de dados
@@ -45,7 +46,7 @@ class BaseDeDados {
 
     // Com o jsonDecode, os valores vao ser codificados e transformados e
     // guardados no formato de uma List<dynamic>
-    List<dynamic> respostaJSON =
+    Map<String, dynamic> respostaJSON =
         jsonDecode(jsonEncode(dadosUtilizadorBD.snapshot.value));
 
     // Depois de receber os dados que quero guardar do RepositorioDeLivros
