@@ -96,9 +96,10 @@ class ObrasRequisitadas extends StatelessWidget {
                   ));
             }
 
+            // Se não tem dados e conexão terminou
             if (!snapshot.hasData &&
                 snapshot.connectionState == ConnectionState.done) {
-              return const Text('No Players');
+              return const Text('');
             }
 
             if (snapshot.connectionState != ConnectionState.done) {
@@ -107,7 +108,7 @@ class ObrasRequisitadas extends StatelessWidget {
               );
             }
 
-            return const Text('No Data');
+            return const Text('');
           }),
     );
   }
