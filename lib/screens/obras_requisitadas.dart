@@ -78,7 +78,10 @@ class ObrasRequisitadas extends StatelessWidget {
                       DataColumn(label: Text('ID')),
                       DataColumn(label: Text('Título')),
                       DataColumn(label: Text('Requisitante')),
-                      DataColumn(label: Text('Data requisição')),
+                      DataColumn(
+                        label: Text('Data de requisição',
+                            overflow: TextOverflow.ellipsis),
+                      ),
                     ],
                     rows: [],
                   ));
