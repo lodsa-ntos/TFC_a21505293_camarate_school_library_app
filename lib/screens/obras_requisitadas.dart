@@ -1,3 +1,5 @@
+import 'package:camarate_school_library/models/livro_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ObrasRequisitadas extends StatelessWidget {
@@ -5,6 +7,9 @@ class ObrasRequisitadas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<QuerySnapshot<Map<String, dynamic>>> snapshot =
+        FirebaseFirestore.instance.collection('historico').get();
+
     return Scaffold(
       appBar: AppBar(
         //? seta para voltar a página anterior
@@ -37,18 +42,61 @@ class ObrasRequisitadas extends StatelessWidget {
 
       //? DADOS DAS OBRAS REQUISITADAS
 
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              SingleChildScrollView(),
-            ],
-          ),
-        ),
-      ),
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('historico')
+              .doc()
+              .snapshots(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting ||
+                snapshot.hasData == false) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[
+                  CircularProgressIndicator(),
+                  Text(" A carregar obras requisitadas...")
+                ],
+              );
+            }
+
+            if (snapshot.data == null) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[Text("Sem obras requisitadas...")],
+              );
+            }
+
+            if (snapshot.hasData) {
+              return SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: DataTable(
+                    columns: const [
+                      DataColumn(label: Text('ID')),
+                      DataColumn(label: Text('Título')),
+                      DataColumn(label: Text('Requisitante')),
+                      DataColumn(label: Text('Data requisição')),
+                    ],
+                    rows: [],
+                  ));
+            }
+
+            if (!snapshot.hasData &&
+                snapshot.connectionState == ConnectionState.done) {
+              return const Text('No Players');
+            }
+
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            return const Text('No Data');
+          }),
     );
   }
 }
