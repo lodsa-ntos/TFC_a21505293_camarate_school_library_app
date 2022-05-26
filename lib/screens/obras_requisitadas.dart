@@ -1,4 +1,3 @@
-import 'package:camarate_school_library/models/livro_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -7,9 +6,6 @@ class ObrasRequisitadas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<QuerySnapshot<Map<String, dynamic>>> snapshot =
-        FirebaseFirestore.instance.collection('historico').get();
-
     return Scaffold(
       appBar: AppBar(
         //? seta para voltar a página anterior
@@ -40,14 +36,13 @@ class ObrasRequisitadas extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
 
-      //? DADOS DAS OBRAS REQUISITADAS
+      //? HISTÓRICO DAS OBRAS REQUISITADAS
 
       body: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('historico')
-              .doc()
-              .snapshots(),
+          stream:
+              FirebaseFirestore.instance.collection('historico').snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
+            var map = Map<String, dynamic>.from(snapshot.data);
             //
             if (snapshot.hasError) {
               return Text(snapshot.error.toString());
@@ -97,7 +92,16 @@ class ObrasRequisitadas extends StatelessWidget {
                       ],
 
                       //? Linhas
-                      rows: [],
+                      rows: <DataRow>[
+                        DataRow(
+                          cells: <DataCell>[
+                            DataCell(Text(snapshot.data['idLivro'])),
+                            DataCell(Text('Joaquín Santos')),
+                            DataCell(Text('16/05/2022 - 15:34')),
+                            DataCell(Text('16/05/2022 - 15:34')),
+                          ],
+                        ),
+                      ],
                     ),
                   ));
             }

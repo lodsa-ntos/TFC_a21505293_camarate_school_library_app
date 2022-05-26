@@ -192,8 +192,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .child(utilizador!.uid);
 
         //? referência para criar e armazenar dados para o histórico
-        DocumentReference<Map<String, dynamic>> _criarHistorico =
-            FirebaseFirestore.instance.collection('historico').doc();
+        final databaseRef = FirebaseDatabase.instance.ref('historico');
+        String idAleatorio = databaseRef.push().key!;
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
@@ -235,7 +235,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           //? _Criar o histórico do livro requisitado
 
                           _contador++;
-                          _criarHistorico.set({
+                          await databaseRef.child(idAleatorio).set({
                             "requisitante": Pessoa.fromJson(dadosUtilizador)
                                 .nomeCompletoPessoa,
                             "tituloLivro": widget.livroARequisitar.titulo,
