@@ -43,49 +43,8 @@ class ObrasRequisitadas extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    DataTable(
-                      columns: const <DataColumn>[
-                        DataColumn(
-                          label: Text(
-                            'Livro',
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Requisitante',
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Data de requisição',
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                      rows: const <DataRow>[
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Text('Alquimista (16x)')),
-                            DataCell(Text('Joaquín Santos')),
-                            DataCell(Text('16/05/2022 - 15:34')),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Text('Que número é este (5x)')),
-                            DataCell(Text('João Silva')),
-                            DataCell(Text('19/05/2022 - 13:44')),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+            children: const [
+              SingleChildScrollView(),
             ],
           ),
         ),
