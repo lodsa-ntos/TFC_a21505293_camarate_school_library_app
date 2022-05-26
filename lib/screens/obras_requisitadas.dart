@@ -48,10 +48,12 @@ class ObrasRequisitadas extends StatelessWidget {
               .doc()
               .snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
+            //
             if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             }
 
+            // Se a conectação estiver em espera a aguardar interação, apresenta mensagem ao utilizador
             if (snapshot.connectionState == ConnectionState.waiting ||
                 snapshot.hasData == false) {
               return Row(
@@ -63,6 +65,7 @@ class ObrasRequisitadas extends StatelessWidget {
               );
             }
 
+            // Se os dados forem nulos e terem dados, apresenta mensagem ao utilizador
             if (snapshot.data == null) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -70,10 +73,14 @@ class ObrasRequisitadas extends StatelessWidget {
               );
             }
 
+            // Se existir dados, o hsitorico é construído...
             if (snapshot.hasData) {
               return SingleChildScrollView(
                   scrollDirection: Axis.vertical,
+
+                  // Constróir tabela
                   child: DataTable(
+                    //? Colunas
                     columns: const [
                       DataColumn(label: Text('ID')),
                       DataColumn(label: Text('Título')),
@@ -83,6 +90,8 @@ class ObrasRequisitadas extends StatelessWidget {
                             overflow: TextOverflow.ellipsis),
                       ),
                     ],
+
+                    //? Linhas
                     rows: [],
                   ));
             }
