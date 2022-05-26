@@ -96,19 +96,20 @@ class ObrasRequisitadas extends StatelessWidget {
                   ));
             }
 
-            // Se não tem dados e conexão terminou
+            // Se não tem dados e conexão terminou, apresenta mensagem vazia interface
             if (!snapshot.hasData &&
                 snapshot.connectionState == ConnectionState.done) {
               return const Text('');
             }
 
+            // Se a conexão terminou, apresenta mensagem vazia na interface
             if (snapshot.connectionState != ConnectionState.done) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
 
-            return const Text('');
+            return const Text('Sem obras');
           }),
     );
   }
