@@ -1,16 +1,19 @@
 import 'dart:convert';
 
-import 'package:camarate_school_library/models/livro_model.dart';
+import 'package:camarate_school_library/models/livro.dart';
 import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async' show Future;
 
+import '../models/historico.dart';
+
 class BaseDeDados {
   List<Livro> livros = [];
   Map<String, dynamic> pessoas = <String, dynamic>{};
+  List<Historico> obras = [];
 
-  Future<List<Livro>> carregarLivrosBD(
-      DatabaseReference referenciaLivrosBD) async {
+  //* Livros da base de dados
+  Future<List<Livro>> getLivrosBD(DatabaseReference referenciaLivrosBD) async {
     //
     LivroModel listaDeLivros;
 
@@ -36,7 +39,8 @@ class BaseDeDados {
     return livros;
   }
 
-  Future<Map<String, dynamic>> getDadosGuardadosDoUtilizador(
+  //* Utilizadores da base de dados
+  Future<Map<String, dynamic>> getUtilizadoresBD(
       DatabaseReference referenciaUtilizadoresBD) async {
     //
     PessoaModel listaDeUtilizadores;
@@ -59,5 +63,34 @@ class BaseDeDados {
 
     // Retorno a lista com os dados vindos da base de dados em JSON
     return pessoas;
+  }
+
+  //* Histórico da base de dados
+  Future<List<Historico>> getObrasRequisitadasBD(
+      DatabaseReference referenciaHistoricoBD) async {
+    //
+    HistoricoModel listaDeObrasRequisitadas;
+
+    // Obter os dados de só uma vez da referencia do firebase na base de dados
+    DatabaseEvent obrasRequisitadasBD = await referenciaHistoricoBD.once();
+
+    // Com jsonEncode Converter todos os valor da base de dados numa string JSON
+    // [{"id":1,"nome":"Livro>  #1"},{"id":2,"nome":"Livro>  #2"}]
+
+    // Com o jsonDecode, os valores vao ser codificados e transformados e
+    // guardados no formato de uma List<dynamic>
+    List<dynamic> respostaJSON =
+        jsonDecode(jsonEncode(obrasRequisitadasBD.snapshot.value));
+
+    // Depois de receber os dados que quero guardar do RepositorioDeLivros
+    // de acordo ao Modelo de livro, coloco esses dados na List<LivroModel> livros = [];
+    // que é uma lista dinamica mas do tipo LivroModel
+    listaDeObrasRequisitadas = HistoricoModel.fromJson(respostaJSON);
+
+    // Guardar os dados da BD na lista
+    obras.addAll(listaDeObrasRequisitadas.obrasRequisitadas);
+
+    // Retorno a lista com os dados vindos da base de dados em JSON
+    return obras;
   }
 }

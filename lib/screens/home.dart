@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:camarate_school_library/models/livro_model.dart';
+import 'package:camarate_school_library/models/livro.dart';
 import 'package:camarate_school_library/screens/obras_requisitadas.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';

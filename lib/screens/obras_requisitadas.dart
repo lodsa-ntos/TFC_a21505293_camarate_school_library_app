@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class ObrasRequisitadas extends StatelessWidget {
@@ -39,10 +40,8 @@ class ObrasRequisitadas extends StatelessWidget {
       //? HISTÓRICO DAS OBRAS REQUISITADAS
 
       body: StreamBuilder(
-          stream:
-              FirebaseFirestore.instance.collection('historico').snapshots(),
+          stream: FirebaseDatabase.instance.ref("historico").onValue,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            var map = Map<String, dynamic>.from(snapshot.data);
             //
             if (snapshot.hasError) {
               return Text(snapshot.error.toString());
@@ -92,10 +91,10 @@ class ObrasRequisitadas extends StatelessWidget {
                       ],
 
                       //? Linhas
-                      rows: <DataRow>[
+                      rows: const <DataRow>[
                         DataRow(
                           cells: <DataCell>[
-                            DataCell(Text(snapshot.data['idLivro'])),
+                            DataCell(Text('snapshot.data[]')),
                             DataCell(Text('Joaquín Santos')),
                             DataCell(Text('16/05/2022 - 15:34')),
                             DataCell(Text('16/05/2022 - 15:34')),

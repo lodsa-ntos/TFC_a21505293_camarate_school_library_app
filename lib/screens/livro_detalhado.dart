@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:camarate_school_library/database/base_de_dados.dart';
-import 'package:camarate_school_library/models/livro_model.dart';
+import 'package:camarate_school_library/models/livro.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -229,8 +229,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                           //? Obter os dados guardados pelo utilizador
                           Map<String, dynamic> dadosUtilizador =
-                              await baseDeDados.getDadosGuardadosDoUtilizador(
-                                  _referenciaUtilizadorBD);
+                              await baseDeDados
+                                  .getUtilizadoresBD(_referenciaUtilizadorBD);
 
                           //? _Criar o histórico do livro requisitado
 

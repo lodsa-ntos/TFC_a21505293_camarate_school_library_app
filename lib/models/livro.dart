@@ -1,31 +1,5 @@
 import 'dart:convert';
 
-class LivroModel {
-  List<Livro> livros;
-
-  LivroModel({
-    required this.livros,
-  });
-
-  factory LivroModel.fromJson(List<dynamic> json) {
-    return LivroModel(livros: verificarLivros(json));
-  }
-
-  static List<Livro> verificarLivros(livroJSON) {
-    /// jsonEncode tranforma os dados JSON em string
-    /// jsonDecode descodifica os dados e coloca no formato de Lista dynamic
-
-    /// Obter os dados da base de dados e guardar num formato de uma
-    /// lista dinamica
-    List<dynamic> isLivro = jsonDecode(jsonEncode(livroJSON));
-
-    List<Livro> listaDeLivros =
-        isLivro.map((dados) => Livro.fromJson(dados)).toList();
-
-    return listaDeLivros;
-  }
-}
-
 class Livro {
   String? id;
   String? titulo;
@@ -92,6 +66,32 @@ class Livro {
       uidLivro: json['uidLivro'] ?? '',
       numColecao: json['numColecao'] ?? '',
     );
+  }
+}
+
+class LivroModel {
+  List<Livro> livros;
+
+  LivroModel({
+    required this.livros,
+  });
+
+  factory LivroModel.fromJson(List<dynamic> json) {
+    return LivroModel(livros: verificarLivros(json));
+  }
+
+  static List<Livro> verificarLivros(livroJSON) {
+    /// jsonEncode tranforma os dados JSON em string
+    /// jsonDecode descodifica os dados e coloca no formato de Lista dynamic
+
+    /// Obter os dados da base de dados e guardar num formato de uma
+    /// lista dinamica
+    List<dynamic> isLivro = jsonDecode(jsonEncode(livroJSON));
+
+    List<Livro> listaDeLivros =
+        isLivro.map((dados) => Livro.fromJson(dados)).toList();
+
+    return listaDeLivros;
   }
 }
 
