@@ -76,23 +76,29 @@ class ObrasRequisitadas extends StatelessWidget {
             // Se existir dados, o hsitorico é construído...
             if (snapshot.hasData) {
               return SingleChildScrollView(
+                  //? Scroll na vertical para os dados nas linhas
                   scrollDirection: Axis.vertical,
+                  child: SingleChildScrollView(
+                    //? Scroll na horizontal para os dados nas colunas
+                    physics: const ClampingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
 
-                  // Constróir tabela
-                  child: DataTable(
-                    //? Colunas
-                    columns: const [
-                      DataColumn(label: Text('ID')),
-                      DataColumn(label: Text('Título')),
-                      DataColumn(label: Text('Requisitante')),
-                      DataColumn(
-                        label: Text('Data de requisição',
-                            overflow: TextOverflow.ellipsis),
-                      ),
-                    ],
+                    // Construir tabela
+                    child: DataTable(
+                      //? Colunas
+                      columns: const [
+                        DataColumn(label: Text('ID')),
+                        DataColumn(label: Text('Título')),
+                        DataColumn(label: Text('Requisitante')),
+                        DataColumn(
+                          label: Text('Data de requisição',
+                              overflow: TextOverflow.ellipsis),
+                        ),
+                      ],
 
-                    //? Linhas
-                    rows: [],
+                      //? Linhas
+                      rows: [],
+                    ),
                   ));
             }
 
