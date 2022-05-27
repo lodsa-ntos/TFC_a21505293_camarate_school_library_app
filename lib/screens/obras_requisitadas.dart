@@ -82,11 +82,13 @@ class ObrasRequisitadas extends StatelessWidget {
               Map<String, dynamic> dadosBaseDeDados =
                   jsonDecode(jsonEncode(snapshot.data.snapshot.value));
 
+              HistoricoModel obrasR = HistoricoModel.fromJson(dadosBaseDeDados);
+
               Map<String, dynamic> _obras = <String, dynamic>{};
 
-              _obras.addAll(dadosBaseDeDados);
+              _obras.addAll(obrasR.obrasRequisitadas);
 
-              Historico obrasR = Historico.fromJson(_obras);
+              print(_obras);
 
               return SingleChildScrollView(
                   //? Scroll na vertical para os dados nas linhas
