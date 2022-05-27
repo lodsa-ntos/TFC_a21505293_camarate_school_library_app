@@ -72,5 +72,17 @@
       "tituloLivro": "",
       "uidRequisitante": ""
     }
+  ],
+
+  "utilizadores": [
+    {
+      "numDeVezes": 0,
+      "requisitante": "",
+      "dataRequisicao": "",
+      "id": "0",
+      "capaPath": "",
+      "tituloLivro": "",
+      "uidRequisitante": ""
+    }
   ]
 }

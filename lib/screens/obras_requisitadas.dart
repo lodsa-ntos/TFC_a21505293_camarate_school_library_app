@@ -88,11 +88,11 @@ class ObrasRequisitadas extends StatelessWidget {
               Map<String, dynamic> dadosBaseDeDados =
                   jsonDecode(jsonEncode(snapshot.data.snapshot.value));
 
-              HistoricoModel obrasR = HistoricoModel.fromJson(dadosBaseDeDados);
-
-              Map<String, dynamic> _obras = <String, dynamic>{};
-
-              _obras.addAll(obrasR.obrasRequisitadas);
+              List<Historico> obras = [];
+              dadosBaseDeDados.forEach((key, data) {
+                final Historico hsitoricoBD = Historico.fromJson(data);
+                obras.add(hsitoricoBD);
+              });
 
               return SingleChildScrollView(
                   //? Scroll na vertical para os dados nas linhas
@@ -127,20 +127,20 @@ class ObrasRequisitadas extends StatelessWidget {
                       rows: <DataRow>[
                         DataRow(
                           cells: <DataCell>[
-                            DataCell(Text(
-                                Historico.fromJson(_obras).idLivro.toString())),
-                            DataCell(Text(Historico.fromJson(_obras)
-                                .tituloLivro
-                                .toString())),
-                            DataCell(Text(Historico.fromJson(_obras)
-                                .requisitante
-                                .toString())),
-                            DataCell(Text(Historico.fromJson(_obras)
-                                .dataRequisicao
-                                .toString())),
-                            DataCell(Text(Historico.fromJson(_obras)
-                                .dataEntrega
-                                .toString())),
+                            DataCell(Text(obras[0].idLivro.toString())),
+                            DataCell(Text(obras[0].tituloLivro.toString())),
+                            DataCell(Text(obras[0].requisitante.toString())),
+                            DataCell(Text(obras[0].dataRequisicao.toString())),
+                            DataCell(Text(obras[0].dataEntrega.toString())),
+                          ],
+                        ),
+                        DataRow(
+                          cells: <DataCell>[
+                            DataCell(Text(obras[1].idLivro.toString())),
+                            DataCell(Text(obras[1].tituloLivro.toString())),
+                            DataCell(Text(obras[1].requisitante.toString())),
+                            DataCell(Text(obras[1].dataRequisicao.toString())),
+                            DataCell(Text(obras[1].dataEntrega.toString())),
                           ],
                         ),
                       ],

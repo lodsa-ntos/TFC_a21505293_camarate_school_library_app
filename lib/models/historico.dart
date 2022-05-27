@@ -27,7 +27,6 @@ class HistoricoModel {
 
 class Historico {
   String? idLivro;
-  String? numDeVezes;
   String? dataRequisicao;
   String? requisitante;
   String? tituloLivro;
@@ -36,7 +35,6 @@ class Historico {
 
   Historico({
     this.idLivro,
-    this.numDeVezes,
     this.dataRequisicao,
     this.requisitante,
     this.tituloLivro,
@@ -48,7 +46,6 @@ class Historico {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> dadosHistorico = <String, dynamic>{};
     dadosHistorico["idLivro"] = idLivro;
-    dadosHistorico["numDeVezes"] = numDeVezes;
     dadosHistorico["dataRequisicao"] = dataRequisicao;
     dadosHistorico["requisitante"] = requisitante;
     dadosHistorico["tituloLivro"] = tituloLivro;
@@ -62,7 +59,6 @@ class Historico {
   factory Historico.fromJson(Map<String, dynamic> json) {
     return Historico(
       idLivro: json['idLivro'] ?? '',
-      numDeVezes: json['numDeVezes'] ?? '',
       dataRequisicao: json['dataRequisicao'] ?? '',
       requisitante: json['requisitante'] ?? '',
       tituloLivro: json['tituloLivro'] ?? '',

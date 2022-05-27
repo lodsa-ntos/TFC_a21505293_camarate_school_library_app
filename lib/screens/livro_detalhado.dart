@@ -140,8 +140,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
   BaseDeDados baseDeDados = BaseDeDados();
 
-  int _contador = 0;
-
   // Utilizador atual
   User? utilizador = _auth.currentUser;
 
@@ -239,8 +237,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                           historico.tituloLivro =
                               widget.livroARequisitar.titulo;
-
-                          historico.numDeVezes = _contador.toString();
 
                           historico.dataRequisicao =
                               widget.livroARequisitar.dataRequisicao;
