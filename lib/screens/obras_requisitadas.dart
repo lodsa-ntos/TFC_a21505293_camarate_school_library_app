@@ -20,10 +20,7 @@ class ObrasRequisitadas extends StatelessWidget {
   Widget build(BuildContext context) {
     hist.idLivro = utilizador!.uid;
     BaseDeDados baseDeDados = BaseDeDados();
-    final databaseRef = FirebaseDatabase.instance
-        .ref('historico')
-        .child(hist.idLivro.toString());
-    String idAleatorio = databaseRef.push().key!;
+    final databaseRef = FirebaseDatabase.instance.ref('historico');
 
     return Scaffold(
       appBar: AppBar(

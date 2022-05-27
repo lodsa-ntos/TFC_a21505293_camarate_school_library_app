@@ -254,7 +254,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                           await databaseRef
                               .child('historico')
-                              .child(livro.uidLivro.toString())
+                              .push()
                               .set(historico.toJson());
 
                           //? o livro fica requisitado
