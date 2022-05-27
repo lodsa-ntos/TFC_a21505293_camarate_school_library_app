@@ -334,7 +334,7 @@ class _HomeState extends State<Home> {
                             List<dynamic> dadosBaseDeDados = jsonDecode(
                                 jsonEncode(snapshot.data.snapshot.value));
 
-                            //? Adaptar esses ao modelo de livro
+                            //? Adaptar ao modelo de livro
                             LivroModel listaDeLivros =
                                 LivroModel.fromJson(dadosBaseDeDados);
 

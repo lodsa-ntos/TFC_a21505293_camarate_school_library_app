@@ -1,6 +1,15 @@
+import 'dart:convert';
+
+import 'package:camarate_school_library/models/historico.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+
+import '../database/base_de_dados.dart';
+
+BaseDeDados baseDeDados = BaseDeDados();
+final databaseRef = FirebaseDatabase.instance.ref('historico');
+String idAleatorio = databaseRef.push().key!;
 
 class ObrasRequisitadas extends StatelessWidget {
   const ObrasRequisitadas({Key? key}) : super(key: key);
@@ -40,7 +49,7 @@ class ObrasRequisitadas extends StatelessWidget {
       //? HISTÓRICO DAS OBRAS REQUISITADAS
 
       body: StreamBuilder(
-          stream: FirebaseDatabase.instance.ref("historico").onValue,
+          stream: databaseRef.orderByKey().onValue,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             //
             if (snapshot.hasError) {
@@ -68,7 +77,17 @@ class ObrasRequisitadas extends StatelessWidget {
             }
 
             // Se existir dados, o hsitorico é construído...
-            if (snapshot.hasData) {
+            if (snapshot.hasData && snapshot.data.snapshot.value != null) {
+              //? Obter os dados guardados pelo utilizador
+              Map<String, dynamic> dadosBaseDeDados =
+                  jsonDecode(jsonEncode(snapshot.data.snapshot.value));
+
+              Map<String, dynamic> _obras = <String, dynamic>{};
+
+              _obras.addAll(dadosBaseDeDados);
+
+              Historico obrasR = Historico.fromJson(dadosBaseDeDados);
+
               return SingleChildScrollView(
                   //? Scroll na vertical para os dados nas linhas
                   scrollDirection: Axis.vertical,
@@ -91,10 +110,10 @@ class ObrasRequisitadas extends StatelessWidget {
                       ],
 
                       //? Linhas
-                      rows: const <DataRow>[
+                      rows: <DataRow>[
                         DataRow(
                           cells: <DataCell>[
-                            DataCell(Text('snapshot.data[]')),
+                            DataCell(Text(obrasR.idLivro.toString())),
                             DataCell(Text('Joaquín Santos')),
                             DataCell(Text('16/05/2022 - 15:34')),
                             DataCell(Text('16/05/2022 - 15:34')),
@@ -113,8 +132,14 @@ class ObrasRequisitadas extends StatelessWidget {
 
             // Se a conexão terminou, apresenta mensagem vazia na interface
             if (snapshot.connectionState != ConnectionState.done) {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[
+                    CircularProgressIndicator(),
+                    Text("  A carregar obras requisitadas...")
+                  ],
+                ),
               );
             }
 

@@ -10,7 +10,7 @@ import '../models/historico.dart';
 class BaseDeDados {
   List<Livro> livros = [];
   Map<String, dynamic> pessoas = <String, dynamic>{};
-  List<Historico> obras = [];
+  Map<String, dynamic> obras = <String, dynamic>{};
 
   //* Livros da base de dados
   Future<List<Livro>> getLivrosBD(DatabaseReference referenciaLivrosBD) async {
@@ -66,7 +66,7 @@ class BaseDeDados {
   }
 
   //* Histórico da base de dados
-  Future<List<Historico>> getObrasRequisitadasBD(
+  Future<Map<String, dynamic>> getObrasRequisitadasBD(
       DatabaseReference referenciaHistoricoBD) async {
     //
     HistoricoModel listaDeObrasRequisitadas;
@@ -74,7 +74,7 @@ class BaseDeDados {
     // Obter os dados de só uma vez da referencia do firebase na base de dados
     DatabaseEvent obrasRequisitadasBD = await referenciaHistoricoBD.once();
 
-    List<dynamic> respostaJSON =
+    Map<String, dynamic> respostaJSON =
         jsonDecode(jsonEncode(obrasRequisitadasBD.snapshot.value));
 
     listaDeObrasRequisitadas = HistoricoModel.fromJson(respostaJSON);

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:camarate_school_library/database/base_de_dados.dart';
+import 'package:camarate_school_library/models/historico.dart';
 import 'package:camarate_school_library/models/livro.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -136,6 +137,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaUID;
   DatabaseReference? _referenciaDataRequisicao;
   DatabaseReference? _referenciaDataEntrega;
+  DatabaseReference? _referenciaHistorico;
 
   BaseDeDados baseDeDados = BaseDeDados();
 
@@ -191,9 +193,12 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .ref('utilizadores')
             .child(utilizador!.uid);
 
-        //? referência para criar e armazenar dados para o histórico
+        //! referência para criar e armazenar dados para o histórico
         final databaseRef = FirebaseDatabase.instance.ref('historico');
         String idAleatorio = databaseRef.push().key!;
+
+        _referenciaHistorico =
+            FirebaseDatabase.instance.ref('historico').child(idAleatorio);
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
@@ -233,18 +238,20 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                                   .getUtilizadoresBD(_referenciaUtilizadorBD);
 
                           //? _Criar o histórico do livro requisitado
+                          Historico historico = Historico();
+                          historico.requisitante =
+                              Pessoa.fromJson(dadosUtilizador)
+                                  .nomeCompletoPessoa;
 
-                          _contador++;
-                          await databaseRef.child(idAleatorio).set({
-                            "requisitante": Pessoa.fromJson(dadosUtilizador)
-                                .nomeCompletoPessoa,
-                            "tituloLivro": widget.livroARequisitar.titulo,
-                            "numDeVezes": _contador,
-                            "dataRequisicao":
-                                widget.livroARequisitar.dataRequisicao,
-                            "uidRequisitante": livro.uidLivro,
-                            "idLivro": widget.livroARequisitar.id,
-                          });
+                          historico.tituloLivro =
+                              widget.livroARequisitar.titulo;
+                          historico.numDeVezes = _contador;
+                          historico.dataRequisicao =
+                              widget.livroARequisitar.dataRequisicao;
+                          historico.uidRequisitante = livro.uidLivro;
+                          historico.idLivro = widget.livroARequisitar.id;
+
+                          _referenciaHistorico?.set(historico.toJson());
 
                           //? o livro fica requisitado
                           widget.livroARequisitar.isRequisitado = true;
