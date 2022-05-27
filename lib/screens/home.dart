@@ -329,6 +329,10 @@ class _HomeState extends State<Home> {
                             var formato = DateFormat('dd-MM-yyyy');
 
                             String dataAtual = formato.format(data.toLocal());
+                            String dataUmDiaAntes = formato
+                                .format(data.subtract(const Duration(days: 1)));
+                            String dataSemEntregar = formato
+                                .format(data.add(const Duration(days: 1)));
 
                             //? tRanformar os dados da base de dados numa lista dinamica
                             List<dynamic> dadosBaseDeDados = jsonDecode(
@@ -418,19 +422,45 @@ class _HomeState extends State<Home> {
                                                       const SizedBox(
                                                         height: 5.0,
                                                       ),
-                                                      Text(
-                                                        'Data de devolução: ' +
-                                                            _livros[index]
-                                                                .dataEntrega
-                                                                .toString(),
-                                                        style: GoogleFonts
-                                                            .catamaran(
-                                                          textStyle:
-                                                              const TextStyle(
-                                                            fontSize: 13.0,
+                                                      if (_livros[index]
+                                                                  .dataEntrega ==
+                                                              dataAtual ||
+                                                          _livros[index]
+                                                                  .dataEntrega ==
+                                                              dataUmDiaAntes ||
+                                                          _livros[index]
+                                                                  .dataEntrega ==
+                                                              dataSemEntregar) ...[
+                                                        Text(
+                                                          'Data de devolução: ' +
+                                                              _livros[index]
+                                                                  .dataEntrega
+                                                                  .toString(),
+                                                          style: GoogleFonts
+                                                              .catamaran(
+                                                            textStyle:
+                                                                const TextStyle(
+                                                                    fontSize:
+                                                                        13.0,
+                                                                    color: Colors
+                                                                        .red),
                                                           ),
                                                         ),
-                                                      ),
+                                                      ] else ...[
+                                                        Text(
+                                                          'Data de devolução: ' +
+                                                              _livros[index]
+                                                                  .dataEntrega
+                                                                  .toString(),
+                                                          style: GoogleFonts
+                                                              .catamaran(
+                                                            textStyle:
+                                                                const TextStyle(
+                                                              fontSize: 13.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ]
                                                     ],
                                                   ),
                                                 ),

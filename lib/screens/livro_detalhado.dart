@@ -192,8 +192,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .ref('utilizadores')
             .child(utilizador!.uid);
 
-        DatabaseReference _referenciaHistorico =
-            FirebaseDatabase.instance.ref('historico');
+        final databaseRef = FirebaseDatabase.instance.ref();
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
@@ -232,9 +231,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                               await baseDeDados
                                   .getUtilizadoresBD(_referenciaUtilizadorBD);
 
-                          Map<String, dynamic> dadosObras = await baseDeDados
-                              .getObrasRequisitadasBD(_referenciaHistorico);
-
                           //? _Criar o histórico do livro requisitado
                           Historico historico = Historico();
                           historico.requisitante =
@@ -243,15 +239,23 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                           historico.tituloLivro =
                               widget.livroARequisitar.titulo;
+
                           historico.numDeVezes = _contador.toString();
+
                           historico.dataRequisicao =
                               widget.livroARequisitar.dataRequisicao;
+
                           historico.uidRequisitante = livro.uidLivro;
+
                           historico.idLivro = widget.livroARequisitar.id;
 
-                          await _referenciaHistorico.set(historico.toJson());
+                          historico.dataEntrega =
+                              widget.livroARequisitar.dataEntrega;
 
-                          print(Historico.fromJson(dadosObras).requisitante);
+                          await databaseRef
+                              .child('historico')
+                              .child(livro.uidLivro.toString())
+                              .set(historico.toJson());
 
                           //? o livro fica requisitado
                           widget.livroARequisitar.isRequisitado = true;
