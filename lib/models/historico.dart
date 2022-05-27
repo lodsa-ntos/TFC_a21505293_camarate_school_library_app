@@ -19,15 +19,15 @@ class HistoricoModel {
     /// lista dinamica
     Map<String, dynamic> isObraRequisitada = jsonDecode(jsonEncode(obrasJSON));
 
-    Historico listaDoHistorico = Historico.fromJson(isObraRequisitada);
+    final _historico = Historico.fromJson(isObraRequisitada);
 
-    return listaDoHistorico.toJson();
+    return _historico.toJson();
   }
 }
 
 class Historico {
   String? idLivro;
-  int? numDeVezes;
+  String? numDeVezes;
   String? dataRequisicao;
   String? requisitante;
   String? tituloLivro;
@@ -59,7 +59,7 @@ class Historico {
   factory Historico.fromJson(Map<String, dynamic> json) {
     return Historico(
       idLivro: json['idLivro'] ?? '',
-      numDeVezes: json['numDeVezes'] ?? 0,
+      numDeVezes: json['numDeVezes'] ?? '',
       dataRequisicao: json['dataRequisicao'] ?? '',
       requisitante: json['requisitante'] ?? '',
       tituloLivro: json['tituloLivro'] ?? '',

@@ -88,8 +88,6 @@ class ObrasRequisitadas extends StatelessWidget {
 
               _obras.addAll(obrasR.obrasRequisitadas);
 
-              print(_obras);
-
               return SingleChildScrollView(
                   //? Scroll na vertical para os dados nas linhas
                   scrollDirection: Axis.vertical,

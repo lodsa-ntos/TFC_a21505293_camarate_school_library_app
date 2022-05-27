@@ -19,9 +19,9 @@ class PessoaModel {
     /// coleção de chave/valor
     Map<String, dynamic> utilizadoresBD = jsonDecode(jsonEncode(pessoaJSON));
 
-    final listaDeUtilizadores = Pessoa.fromJson(utilizadoresBD);
+    final _utilizadores = Pessoa.fromJson(utilizadoresBD);
 
-    return listaDeUtilizadores.toJson();
+    return _utilizadores.toJson();
   }
 }
 
