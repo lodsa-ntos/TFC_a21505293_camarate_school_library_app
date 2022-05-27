@@ -32,6 +32,7 @@ class Historico {
   String? requisitante;
   String? tituloLivro;
   String? uidRequisitante;
+  String? dataEntrega;
 
   Historico({
     this.idLivro,
@@ -40,6 +41,7 @@ class Historico {
     this.requisitante,
     this.tituloLivro,
     this.uidRequisitante,
+    this.dataEntrega,
   });
 
   // Transformar os dados da Pessoa num mapa de pares chave/valor.
@@ -51,6 +53,7 @@ class Historico {
     dadosHistorico["requisitante"] = requisitante;
     dadosHistorico["tituloLivro"] = tituloLivro;
     dadosHistorico["uidRequisitante"] = uidRequisitante;
+    dadosHistorico["dataEntrega"] = dataEntrega;
 
     return dadosHistorico;
   }
@@ -64,6 +67,7 @@ class Historico {
       requisitante: json['requisitante'] ?? '',
       tituloLivro: json['tituloLivro'] ?? '',
       uidRequisitante: json['uidRequisitante'] ?? '',
+      dataEntrega: json['dataEntrega'] ?? '',
     );
   }
 }

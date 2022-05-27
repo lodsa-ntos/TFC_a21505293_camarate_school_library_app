@@ -107,6 +107,10 @@ class ObrasRequisitadas extends StatelessWidget {
                           label: Text('Data de requisição',
                               overflow: TextOverflow.ellipsis),
                         ),
+                        DataColumn(
+                          label: Text('Data de entrega',
+                              overflow: TextOverflow.ellipsis),
+                        ),
                       ],
 
                       //? Linhas
@@ -123,6 +127,9 @@ class ObrasRequisitadas extends StatelessWidget {
                                 .toString())),
                             DataCell(Text(Historico.fromJson(_obras)
                                 .dataRequisicao
+                                .toString())),
+                            DataCell(Text(Historico.fromJson(_obras)
+                                .dataEntrega
                                 .toString())),
                           ],
                         ),
