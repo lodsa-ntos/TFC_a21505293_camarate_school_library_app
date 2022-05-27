@@ -49,7 +49,7 @@ class ObrasRequisitadas extends StatelessWidget {
       //? HISTÓRICO DAS OBRAS REQUISITADAS
 
       body: StreamBuilder(
-          stream: databaseRef.orderByKey().onValue,
+          stream: databaseRef.onValue,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             //
             if (snapshot.hasError) {
@@ -86,7 +86,7 @@ class ObrasRequisitadas extends StatelessWidget {
 
               _obras.addAll(dadosBaseDeDados);
 
-              Historico obrasR = Historico.fromJson(dadosBaseDeDados);
+              Historico obrasR = Historico.fromJson(_obras);
 
               return SingleChildScrollView(
                   //? Scroll na vertical para os dados nas linhas
@@ -113,7 +113,8 @@ class ObrasRequisitadas extends StatelessWidget {
                       rows: <DataRow>[
                         DataRow(
                           cells: <DataCell>[
-                            DataCell(Text(obrasR.idLivro.toString())),
+                            DataCell(Text(
+                                Historico.fromJson(_obras).idLivro.toString())),
                             DataCell(Text('Joaquín Santos')),
                             DataCell(Text('16/05/2022 - 15:34')),
                             DataCell(Text('16/05/2022 - 15:34')),
