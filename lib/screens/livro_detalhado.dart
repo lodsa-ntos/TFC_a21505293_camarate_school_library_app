@@ -193,7 +193,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .child(utilizador!.uid);
 
         DatabaseReference _referenciaHistorico =
-            FirebaseDatabase.instance.ref('historico').child(utilizador!.uid);
+            FirebaseDatabase.instance.ref('historico');
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
@@ -232,6 +232,9 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                               await baseDeDados
                                   .getUtilizadoresBD(_referenciaUtilizadorBD);
 
+                          Map<String, dynamic> dadosObras = await baseDeDados
+                              .getObrasRequisitadasBD(_referenciaHistorico);
+
                           //? _Criar o histórico do livro requisitado
                           Historico historico = Historico();
                           historico.requisitante =
@@ -246,7 +249,9 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           historico.uidRequisitante = livro.uidLivro;
                           historico.idLivro = widget.livroARequisitar.id;
 
-                          _referenciaHistorico.set(historico.toJson());
+                          await _referenciaHistorico.set(historico.toJson());
+
+                          print(Historico.fromJson(dadosObras).requisitante);
 
                           //? o livro fica requisitado
                           widget.livroARequisitar.isRequisitado = true;

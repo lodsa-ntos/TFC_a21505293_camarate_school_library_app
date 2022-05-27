@@ -115,9 +115,15 @@ class ObrasRequisitadas extends StatelessWidget {
                           cells: <DataCell>[
                             DataCell(Text(
                                 Historico.fromJson(_obras).idLivro.toString())),
-                            DataCell(Text('Joaquín Santos')),
-                            DataCell(Text('16/05/2022 - 15:34')),
-                            DataCell(Text('16/05/2022 - 15:34')),
+                            DataCell(Text(Historico.fromJson(_obras)
+                                .tituloLivro
+                                .toString())),
+                            DataCell(Text(Historico.fromJson(_obras)
+                                .requisitante
+                                .toString())),
+                            DataCell(Text(Historico.fromJson(_obras)
+                                .dataRequisicao
+                                .toString())),
                           ],
                         ),
                       ],
