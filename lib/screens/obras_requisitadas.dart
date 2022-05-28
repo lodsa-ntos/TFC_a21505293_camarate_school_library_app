@@ -106,18 +106,32 @@ class ObrasRequisitadas extends StatelessWidget {
                   children: [
                     const SizedBox(height: 15),
                     DataTable(
+                      dataRowHeight: 65,
+                      headingRowHeight: 45,
                       headingRowColor: MaterialStateColor.resolveWith(
                           (states) => Colors.grey),
+
                       //? Colunas
                       columns: const [
-                        DataColumn(label: Text('Título'), numeric: false),
                         DataColumn(
-                          label: Text('Data de requisição',
-                              overflow: TextOverflow.ellipsis),
+                          label: Text(
+                            'Título',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                         DataColumn(
-                          label: Text('Data de entrega',
-                              overflow: TextOverflow.ellipsis),
+                          label: Text(
+                            'Data de requisição',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
+                            'Data de entrega',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ],
 
@@ -141,28 +155,9 @@ class ObrasRequisitadas extends StatelessWidget {
                 ),
               ),
             );
+          } else {
+            return const CircularProgressIndicator();
           }
-
-          // Se não tem dados e conexão terminou, apresenta mensagem vazia interface
-          if (!snapshot.hasData &&
-              snapshot.connectionState == ConnectionState.done) {
-            return const Text('');
-          }
-
-          // Se a conexão terminou, apresenta mensagem vazia na interface
-          if (snapshot.connectionState != ConnectionState.done) {
-            return Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  CircularProgressIndicator(),
-                  Text("  A carregar obras requisitadas...")
-                ],
-              ),
-            );
-          }
-
-          return const Text('Sem obras');
         },
       ),
     );
