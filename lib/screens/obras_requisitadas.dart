@@ -54,7 +54,7 @@ class ObrasRequisitadas extends StatelessWidget {
       //? HISTÓRICO DAS OBRAS REQUISITADAS
 
       body: StreamBuilder(
-        stream: databaseRef.onValue,
+        stream: databaseRef.onValue.asBroadcastStream(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           //
           if (snapshot.hasError) {
@@ -102,41 +102,41 @@ class ObrasRequisitadas extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
 
                 // Construir tabela
-                child: DataTable(
-                  //? Colunas
-                  columns: const [
-                    DataColumn(
-                        label: Text(
-                      'ID',
-                      textAlign: TextAlign.center,
-                    )),
-                    DataColumn(label: Text('Título')),
-                    DataColumn(label: Text('Requisitante')),
-                    DataColumn(
-                      label: Text('Data de requisição',
-                          overflow: TextOverflow.ellipsis),
-                    ),
-                    DataColumn(
-                      label: Text('Data de entrega',
-                          overflow: TextOverflow.ellipsis),
-                    ),
-                  ],
-
-                  //? Linhas
-                  rows: <DataRow>[
-                    for (int i = 0; i < obras.length; i++)
-                      if (obras[i].uidRequisitante == utilizador!.uid) ...[
-                        DataRow.byIndex(
-                          index: i,
-                          cells: <DataCell>[
-                            DataCell(Text(obras[i].idLivro.toString())),
-                            DataCell(Text(obras[i].tituloLivro.toString())),
-                            DataCell(Text(obras[i].requisitante.toString())),
-                            DataCell(Text(obras[i].dataRequisicao.toString())),
-                            DataCell(Text(obras[i].dataEntrega.toString())),
-                          ],
+                child: Column(
+                  children: [
+                    const SizedBox(height: 15),
+                    DataTable(
+                      headingRowColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.grey),
+                      //? Colunas
+                      columns: const [
+                        DataColumn(label: Text('Título'), numeric: false),
+                        DataColumn(
+                          label: Text('Data de requisição',
+                              overflow: TextOverflow.ellipsis),
+                        ),
+                        DataColumn(
+                          label: Text('Data de entrega',
+                              overflow: TextOverflow.ellipsis),
                         ),
                       ],
+
+                      //? Linhas
+                      rows: <DataRow>[
+                        for (int i = 0; i < obras.length; i++)
+                          if (obras[i].uidRequisitante == utilizador!.uid) ...[
+                            DataRow.byIndex(
+                              index: i,
+                              cells: <DataCell>[
+                                DataCell(Text(obras[i].tituloLivro.toString())),
+                                DataCell(
+                                    Text(obras[i].dataRequisicao.toString())),
+                                DataCell(Text(obras[i].dataEntrega.toString())),
+                              ],
+                            ),
+                          ],
+                      ],
+                    ),
                   ],
                 ),
               ),
