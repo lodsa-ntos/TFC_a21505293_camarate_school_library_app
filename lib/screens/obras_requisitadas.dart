@@ -1,24 +1,19 @@
 import 'dart:convert';
 
 import 'package:camarate_school_library/models/historico.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-import '../database/base_de_dados.dart';
-
 //? Alcançar a instância da base de dados para autenticação do utilizador atual
 final _auth = FirebaseAuth.instance;
 User? utilizador = _auth.currentUser;
-Historico hist = Historico();
 
 class ObrasRequisitadas extends StatelessWidget {
   const ObrasRequisitadas({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    hist.uidRequisitante = utilizador!.uid;
     final databaseRef = FirebaseDatabase.instance.ref('historico');
 
     return Scaffold(
@@ -137,7 +132,7 @@ class ObrasRequisitadas extends StatelessWidget {
                       //? Linhas
                       rows: <DataRow>[
                         for (int i = 0; i < obras.length; i++)
-                          if (obras[i].uidRequisitante == utilizador!.uid) ...[
+                          if (utilizador!.uid == obras[i].uidRequisitante) ...[
                             DataRow.byIndex(
                               index: i,
                               cells: <DataCell>[
