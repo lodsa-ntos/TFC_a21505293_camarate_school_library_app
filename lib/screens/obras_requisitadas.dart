@@ -19,8 +19,9 @@ class ObrasRequisitadas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     hist.idLivro = utilizador!.uid;
-    BaseDeDados baseDeDados = BaseDeDados();
-    final databaseRef = FirebaseDatabase.instance.ref('historico');
+    final databaseRef = FirebaseDatabase.instance
+        .ref('historico')
+        .orderByChild(hist.idLivro.toString());
 
     return Scaffold(
       appBar: AppBar(
@@ -125,24 +126,18 @@ class ObrasRequisitadas extends StatelessWidget {
 
                       //? Linhas
                       rows: <DataRow>[
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Text(obras[0].idLivro.toString())),
-                            DataCell(Text(obras[0].tituloLivro.toString())),
-                            DataCell(Text(obras[0].requisitante.toString())),
-                            DataCell(Text(obras[0].dataRequisicao.toString())),
-                            DataCell(Text(obras[0].dataEntrega.toString())),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Text(obras[1].idLivro.toString())),
-                            DataCell(Text(obras[1].tituloLivro.toString())),
-                            DataCell(Text(obras[1].requisitante.toString())),
-                            DataCell(Text(obras[1].dataRequisicao.toString())),
-                            DataCell(Text(obras[1].dataEntrega.toString())),
-                          ],
-                        ),
+                        for (int i = 0; i < obras.length; i++)
+                          DataRow.byIndex(
+                            index: i,
+                            cells: <DataCell>[
+                              DataCell(Text(obras[i].idLivro.toString())),
+                              DataCell(Text(obras[i].tituloLivro.toString())),
+                              DataCell(Text(obras[i].requisitante.toString())),
+                              DataCell(
+                                  Text(obras[i].dataRequisicao.toString())),
+                              DataCell(Text(obras[i].dataEntrega.toString())),
+                            ],
+                          ),
                       ],
                     ),
                   ));
