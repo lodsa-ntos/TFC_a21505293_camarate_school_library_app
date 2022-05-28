@@ -62,8 +62,7 @@ class ObrasRequisitadas extends StatelessWidget {
           }
 
           // Se a conectação estiver em espera a aguardar interação, apresenta mensagem ao utilizador
-          if (snapshot.connectionState == ConnectionState.waiting ||
-              snapshot.hasData == false) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const <Widget>[
