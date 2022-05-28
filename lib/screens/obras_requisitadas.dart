@@ -90,8 +90,8 @@ class ObrasRequisitadas extends StatelessWidget {
                   jsonDecode(jsonEncode(snapshot.data.snapshot.value));
 
               List<Historico> obras = [];
-              dadosBaseDeDados.forEach((key, data) {
-                final Historico hsitoricoBD = Historico.fromJson(data);
+              dadosBaseDeDados.forEach((chave, valor) {
+                final Historico hsitoricoBD = Historico.fromJson(valor);
                 obras.add(hsitoricoBD);
               });
 
