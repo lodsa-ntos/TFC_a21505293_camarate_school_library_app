@@ -18,10 +18,8 @@ class ObrasRequisitadas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    hist.idLivro = utilizador!.uid;
-    final databaseRef = FirebaseDatabase.instance
-        .ref('historico')
-        .orderByChild(hist.idLivro.toString());
+    hist.uidRequisitante = utilizador!.uid;
+    final databaseRef = FirebaseDatabase.instance.ref('historico');
 
     return Scaffold(
       appBar: AppBar(
@@ -56,114 +54,117 @@ class ObrasRequisitadas extends StatelessWidget {
       //? HISTÓRICO DAS OBRAS REQUISITADAS
 
       body: StreamBuilder(
-          stream: databaseRef.onValue,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            //
-            if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            }
+        stream: databaseRef.onValue,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          //
+          if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          }
 
-            // Se a conectação estiver em espera a aguardar interação, apresenta mensagem ao utilizador
-            if (snapshot.connectionState == ConnectionState.waiting ||
-                snapshot.hasData == false) {
-              return Row(
+          // Se a conectação estiver em espera a aguardar interação, apresenta mensagem ao utilizador
+          if (snapshot.connectionState == ConnectionState.waiting ||
+              snapshot.hasData == false) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                CircularProgressIndicator(),
+                Text(" A carregar obras requisitadas...")
+              ],
+            );
+          }
+
+          // Se os dados forem nulos e terem dados, apresenta mensagem ao utilizador
+          if (snapshot.data == null) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[Text("Sem obras requisitadas...")],
+            );
+          }
+
+          // Se existir dados, o hsitorico é construído...
+          if (snapshot.hasData && snapshot.data.snapshot.value != null) {
+            //? Obter os dados guardados pelo utilizador
+            Map<String, dynamic> dadosBaseDeDados =
+                jsonDecode(jsonEncode(snapshot.data.snapshot.value));
+
+            List<Historico> obras = [];
+            dadosBaseDeDados.forEach((chave, valor) {
+              final Historico hsitoricoBD = Historico.fromJson(valor);
+              obras.add(hsitoricoBD);
+            });
+
+            return SingleChildScrollView(
+              //? Scroll na vertical para os dados nas linhas
+              scrollDirection: Axis.vertical,
+              child: SingleChildScrollView(
+                //? Scroll na horizontal para os dados nas colunas
+                physics: const ClampingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+
+                // Construir tabela
+                child: DataTable(
+                  //? Colunas
+                  columns: const [
+                    DataColumn(
+                        label: Text(
+                      'ID',
+                      textAlign: TextAlign.center,
+                    )),
+                    DataColumn(label: Text('Título')),
+                    DataColumn(label: Text('Requisitante')),
+                    DataColumn(
+                      label: Text('Data de requisição',
+                          overflow: TextOverflow.ellipsis),
+                    ),
+                    DataColumn(
+                      label: Text('Data de entrega',
+                          overflow: TextOverflow.ellipsis),
+                    ),
+                  ],
+
+                  //? Linhas
+                  rows: <DataRow>[
+                    for (int i = 0; i < obras.length; i++)
+                      if (obras[i].uidRequisitante == utilizador!.uid) ...[
+                        DataRow.byIndex(
+                          index: i,
+                          cells: <DataCell>[
+                            DataCell(Text(obras[i].idLivro.toString())),
+                            DataCell(Text(obras[i].tituloLivro.toString())),
+                            DataCell(Text(obras[i].requisitante.toString())),
+                            DataCell(Text(obras[i].dataRequisicao.toString())),
+                            DataCell(Text(obras[i].dataEntrega.toString())),
+                          ],
+                        ),
+                      ],
+                  ],
+                ),
+              ),
+            );
+          }
+
+          // Se não tem dados e conexão terminou, apresenta mensagem vazia interface
+          if (!snapshot.hasData &&
+              snapshot.connectionState == ConnectionState.done) {
+            return const Text('');
+          }
+
+          // Se a conexão terminou, apresenta mensagem vazia na interface
+          if (snapshot.connectionState != ConnectionState.done) {
+            return Center(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const <Widget>[
                   CircularProgressIndicator(),
-                  Text(" A carregar obras requisitadas...")
+                  Text("  A carregar obras requisitadas...")
                 ],
-              );
-            }
+              ),
+            );
+          }
 
-            // Se os dados forem nulos e terem dados, apresenta mensagem ao utilizador
-            if (snapshot.data == null) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[Text("Sem obras requisitadas...")],
-              );
-            }
-
-            // Se existir dados, o hsitorico é construído...
-            if (snapshot.hasData && snapshot.data.snapshot.value != null) {
-              //? Obter os dados guardados pelo utilizador
-              Map<String, dynamic> dadosBaseDeDados =
-                  jsonDecode(jsonEncode(snapshot.data.snapshot.value));
-
-              List<Historico> obras = [];
-              dadosBaseDeDados.forEach((chave, valor) {
-                final Historico hsitoricoBD = Historico.fromJson(valor);
-                obras.add(hsitoricoBD);
-              });
-
-              return SingleChildScrollView(
-                  //? Scroll na vertical para os dados nas linhas
-                  scrollDirection: Axis.vertical,
-                  child: SingleChildScrollView(
-                    //? Scroll na horizontal para os dados nas colunas
-                    physics: const ClampingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-
-                    // Construir tabela
-                    child: DataTable(
-                      //? Colunas
-                      columns: const [
-                        DataColumn(
-                            label: Text(
-                          'ID',
-                          textAlign: TextAlign.center,
-                        )),
-                        DataColumn(label: Text('Título')),
-                        DataColumn(label: Text('Requisitante')),
-                        DataColumn(
-                          label: Text('Data de requisição',
-                              overflow: TextOverflow.ellipsis),
-                        ),
-                        DataColumn(
-                          label: Text('Data de entrega',
-                              overflow: TextOverflow.ellipsis),
-                        ),
-                      ],
-
-                      //? Linhas
-                      rows: <DataRow>[
-                        for (int i = 0; i < obras.length; i++)
-                          DataRow.byIndex(
-                            index: i,
-                            cells: <DataCell>[
-                              DataCell(Text(obras[i].idLivro.toString())),
-                              DataCell(Text(obras[i].tituloLivro.toString())),
-                              DataCell(Text(obras[i].requisitante.toString())),
-                              DataCell(
-                                  Text(obras[i].dataRequisicao.toString())),
-                              DataCell(Text(obras[i].dataEntrega.toString())),
-                            ],
-                          ),
-                      ],
-                    ),
-                  ));
-            }
-
-            // Se não tem dados e conexão terminou, apresenta mensagem vazia interface
-            if (!snapshot.hasData &&
-                snapshot.connectionState == ConnectionState.done) {
-              return const Text('');
-            }
-
-            // Se a conexão terminou, apresenta mensagem vazia na interface
-            if (snapshot.connectionState != ConnectionState.done) {
-              return Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
-                    CircularProgressIndicator(),
-                    Text("  A carregar obras requisitadas...")
-                  ],
-                ),
-              );
-            }
-
-            return const Text('Sem obras');
-          }),
+          return const Text('Sem obras');
+        },
+      ),
     );
   }
 }

@@ -247,14 +247,17 @@ class _HomeState extends State<Home> {
                     decoration: BoxDecoration(color: Colors.blue), child: null),
                 ListTile(title: const Text('Ajuda'), onTap: () {}),
                 ListTile(
-                  title: const Text('Obras requisitadas'),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        //** Redireciona o utilizador para a página o histórico*/
-                        builder: (context) => const ObrasRequisitadas()),
-                  ),
-                ),
+                    title: const Text('Obras requisitadas'),
+                    onTap: () {
+                      setState(() {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              //** Redireciona o utilizador para a página o histórico*/
+                              builder: (context) => const ObrasRequisitadas()),
+                        );
+                      });
+                    }),
                 ListTile(
                   title: const Text('Notificação'),
                   onTap: () => Navigator.push(
