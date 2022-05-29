@@ -116,67 +116,84 @@ class ObrasRequisitadas extends StatelessWidget {
                             //? INTERFACE PARA UTILIZADOR
                             // CONSTRUÇÃO DA TABELA COM OS DADOS DA BASE DE DADOS
 
-                            return DataTable(
-                              dataRowHeight: 65,
-                              headingRowHeight: 45,
-                              headingRowColor: MaterialStateColor.resolveWith(
-                                  (states) => Colors.grey),
+                            return SingleChildScrollView(
+                              //? Scroll na horizontal para os dados nas colunas
+                              physics: const ClampingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 15),
+                                  DataTable(
+                                    dataRowHeight: 65,
+                                    headingRowHeight: 45,
+                                    headingRowColor:
+                                        MaterialStateColor.resolveWith(
+                                            (states) => Colors.grey),
 
-                              //? Colunas
+                                    //? Colunas
 
-                              columns: const [
-                                DataColumn(
-                                  label: Text(
-                                    'Título',
-                                    style: TextStyle(color: Colors.white),
+                                    columns: const [
+                                      DataColumn(
+                                        label: Text(
+                                          'Título',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                      DataColumn(
+                                        label: Text(
+                                          'Data de requisição',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                      DataColumn(
+                                        label: Text(
+                                          'Data entrega',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ],
+
+                                    //? Linhas
+
+                                    rows: <DataRow>[
+                                      for (int i = 0; i < _obrasBD.length; i++)
+                                        if (_obrasBD[i].uidRequisitante ==
+                                            utilizador!.uid) ...[
+                                          DataRow.byIndex(
+                                            index: i,
+                                            cells: <DataCell>[
+                                              //* TÍtulo do livro
+                                              DataCell(Text(
+                                                _obrasBD[i]
+                                                    .tituloLivro
+                                                    .toString(),
+                                              )),
+
+                                              //* Data de requisicão
+                                              DataCell(Text(
+                                                _obrasBD[i]
+                                                    .dataRequisicao
+                                                    .toString(),
+                                              )),
+
+                                              //* Data de entrega
+                                              DataCell(Text(
+                                                _obrasBD[i]
+                                                    .dataEntrega
+                                                    .toString(),
+                                              )),
+                                            ],
+                                          ),
+                                        ],
+                                    ],
                                   ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Data de requisição',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Data entrega',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ],
-
-                              //? Linhas
-
-                              rows: <DataRow>[
-                                for (int i = 0; i < _obrasBD.length; i++)
-                                  if (_obrasBD[i].uidRequisitante ==
-                                      utilizador!.uid) ...[
-                                    DataRow.byIndex(
-                                      index: i,
-                                      cells: <DataCell>[
-                                        //* TÍtulo do livro
-                                        DataCell(Text(
-                                          _obrasBD[i].tituloLivro.toString(),
-                                        )),
-
-                                        //* Data de requisicao
-                                        DataCell(Text(
-                                          _obrasBD[i].dataRequisicao.toString(),
-                                        )),
-
-                                        //* Data de entrega
-                                        DataCell(Text(
-                                          _obrasBD[i].dataEntrega.toString(),
-                                        )),
-                                      ],
-                                    ),
-                                  ],
-                              ],
+                                ],
+                              ),
                             );
                           } else {
-                            return const Text("");
+                            return const Text('');
                           }
                       }
                     },
