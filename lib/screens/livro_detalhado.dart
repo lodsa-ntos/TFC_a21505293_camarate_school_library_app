@@ -190,7 +190,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .ref('utilizadores')
             .child(utilizador!.uid);
 
-        final databaseRef = FirebaseDatabase.instance.ref();
+        DatabaseReference databaseRef = FirebaseDatabase.instance.ref();
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;

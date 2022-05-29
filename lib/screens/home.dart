@@ -249,14 +249,13 @@ class _HomeState extends State<Home> {
                 ListTile(
                     title: const Text('Obras requisitadas'),
                     onTap: () {
-                      setState(() {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              //** Redireciona o utilizador para a página o histórico*/
-                              builder: (context) => const ObrasRequisitadas()),
-                        );
-                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          //** Redireciona o utilizador para a página de detalhes do livro */
+                          builder: (context) => const ObrasRequisitadas(),
+                        ),
+                      );
                     }),
                 ListTile(
                   title: const Text('Notificação'),
