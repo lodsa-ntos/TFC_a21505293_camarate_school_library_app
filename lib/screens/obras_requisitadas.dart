@@ -148,7 +148,7 @@ class ObrasRequisitadas extends StatelessWidget {
                                       ),
                                       DataColumn(
                                         label: Text(
-                                          'Data entrega',
+                                          'Data de entrega',
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(color: Colors.white),
                                         ),
