@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:camarate_school_library/database/base_de_dados.dart';
 import 'package:camarate_school_library/models/historico.dart';
 import 'package:camarate_school_library/models/livro.dart';
+import 'package:camarate_school_library/models/livro_requisitado.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -190,7 +191,9 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .ref('utilizadores')
             .child(utilizador!.uid);
 
-        DatabaseReference databaseRef = FirebaseDatabase.instance.ref();
+        DatabaseReference criarHistorico = FirebaseDatabase.instance.ref();
+        DatabaseReference criarListaDeRequisicao =
+            FirebaseDatabase.instance.ref();
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
@@ -248,10 +251,35 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           historico.dataEntrega =
                               widget.livroARequisitar.dataEntrega;
 
-                          await databaseRef
+                          await criarHistorico
                               .child('historico')
                               .push()
                               .set(historico.toJson());
+
+                          //? _Criar o histórico do livro requisitado
+                          LivroRequisitado livroRequisitado =
+                              LivroRequisitado();
+                          livroRequisitado.capa =
+                              widget.livroARequisitar.imagePath;
+
+                          livroRequisitado.tituloDoLivro =
+                              widget.livroARequisitar.titulo;
+
+                          livroRequisitado.dataDeEntrega =
+                              widget.livroARequisitar.dataEntrega;
+
+                          livroRequisitado.idDoLivro =
+                              widget.livroARequisitar.id;
+
+                          livroRequisitado.estado =
+                              widget.livroARequisitar.isRequisitado.toString();
+
+                          livroRequisitado.uidRequisicao = livro.uidLivro;
+
+                          criarListaDeRequisicao
+                              .child('livrosRequisitados')
+                              .child(widget.livroARequisitar.id.toString())
+                              .set(livroRequisitado.toJson());
 
                           //? o livro fica requisitado
                           widget.livroARequisitar.isRequisitado = true;

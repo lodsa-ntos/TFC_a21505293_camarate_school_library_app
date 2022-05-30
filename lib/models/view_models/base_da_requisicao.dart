@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import '../livro_requisitado.dart';
 
 class BaseDeDadosRequisicao extends ChangeNotifier {
+  List<LivroRequisitadoModelBD> livros = [];
   Map<String, dynamic> livrosRequisitados = <String, dynamic>{};
 
   //?___________________________Requisição da base de dados___________________________________
