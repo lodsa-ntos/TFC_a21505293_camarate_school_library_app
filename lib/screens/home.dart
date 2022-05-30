@@ -16,31 +16,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-//** VARIÁVEIS GLOBAIS */
-
-// espaçamento
-const espacamento = SizedBox(
-  height: 14,
-);
-
-// tÍtulo [Prateleiras]
-const prateleiras = Padding(
-  padding: EdgeInsets.all(16.0),
-  child: Text(
-    'Prateleiras',
-    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-  ),
-);
-
-// tÍtulo [Livros Requisitados]
-const livrosRequisitados = Padding(
-  padding: EdgeInsets.all(16.0),
-  child: Text(
-    'Livros Requisitados',
-    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-  ),
-);
-
 //? PÁGINA HOME
 class _HomeState extends State<Home> {
   //* Mensagem para alertar o utilizador
@@ -505,6 +480,31 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
+//** VARIÁVEIS GLOBAIS */
+
+// espaçamento
+const espacamento = SizedBox(
+  height: 14,
+);
+
+// tÍtulo [Prateleiras]
+const prateleiras = Padding(
+  padding: EdgeInsets.all(16.0),
+  child: Text(
+    'Prateleiras',
+    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+  ),
+);
+
+// tÍtulo [Livros Requisitados]
+const livrosRequisitados = Padding(
+  padding: EdgeInsets.all(16.0),
+  child: Text(
+    'Livros Requisitados',
+    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+  ),
+);
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
