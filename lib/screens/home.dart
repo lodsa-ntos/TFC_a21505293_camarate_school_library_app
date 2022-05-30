@@ -425,7 +425,7 @@ class _HomeState extends State<Home> {
                                                         ),
                                                       ] else ...[
                                                         Text(
-                                                          'Data de devolução: ' +
+                                                          'Data de entrega: ' +
                                                               _livros[index]
                                                                   .dataEntrega
                                                                   .toString(),
