@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:camarate_school_library/database/base_de_dados.dart';
 import 'package:camarate_school_library/models/historico.dart';
 import 'package:camarate_school_library/models/livro.dart';
-import 'package:camarate_school_library/models/livro_requisitado.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -255,31 +254,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                               .child('historico')
                               .push()
                               .set(historico.toJson());
-
-                          //? _Criar o histórico do livro requisitado
-                          LivroRequisitado livroRequisitado =
-                              LivroRequisitado();
-                          livroRequisitado.capa =
-                              widget.livroARequisitar.imagePath;
-
-                          livroRequisitado.tituloDoLivro =
-                              widget.livroARequisitar.titulo;
-
-                          livroRequisitado.dataDeEntrega =
-                              widget.livroARequisitar.dataEntrega;
-
-                          livroRequisitado.idDoLivro =
-                              widget.livroARequisitar.id;
-
-                          livroRequisitado.estado =
-                              widget.livroARequisitar.isRequisitado.toString();
-
-                          livroRequisitado.uidRequisicao = livro.uidLivro;
-
-                          criarListaDeRequisicao
-                              .child('livrosRequisitados')
-                              .child(widget.livroARequisitar.id.toString())
-                              .set(livroRequisitado.toJson());
 
                           //? o livro fica requisitado
                           widget.livroARequisitar.isRequisitado = true;

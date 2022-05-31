@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:camarate_school_library/models/livro.dart';
-import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:flutter/material.dart';
 
 class LivroRequisitadoModel extends ChangeNotifier {
