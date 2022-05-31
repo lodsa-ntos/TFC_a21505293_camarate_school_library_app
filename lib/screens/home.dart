@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:camarate_school_library/database/base_de_dados.dart';
 import 'package:camarate_school_library/models/livro.dart';
 import 'package:camarate_school_library/screens/obras_requisitadas.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
@@ -15,8 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-
-DatabaseReference? referenciaLivrosBD;
 
 //? PÁGINA HOME
 class _HomeState extends State<Home> {

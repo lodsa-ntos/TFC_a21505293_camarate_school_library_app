@@ -40,6 +40,7 @@ class Livro {
   String? dataEntrega;
   String? uidLivro;
   String? numColecao;
+  int? contarVezesRequisitadas;
 
   Livro({
     this.id,
@@ -55,6 +56,7 @@ class Livro {
     this.dataEntrega,
     this.uidLivro,
     this.numColecao,
+    this.contarVezesRequisitadas,
   });
 
   Map<String, dynamic> toJson() {
@@ -72,6 +74,7 @@ class Livro {
     map["dataEntrega"] = dataEntrega;
     map["uidLivro"] = uidLivro;
     map["numColecao"] = numColecao;
+    map["contarVezesRequisitadas"] = contarVezesRequisitadas;
 
     return map;
   }
@@ -91,6 +94,7 @@ class Livro {
       dataEntrega: json['dataEntrega'] ?? '',
       uidLivro: json['uidLivro'] ?? '',
       numColecao: json['numColecao'] ?? '',
+      contarVezesRequisitadas: json['contarVezesRequisitadas'] ?? 0,
     );
   }
 }

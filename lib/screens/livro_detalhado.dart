@@ -137,6 +137,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaUID;
   DatabaseReference? _referenciaDataRequisicao;
   DatabaseReference? _referenciaDataEntrega;
+  DatabaseReference? _referenciaIncrementar;
 
   BaseDeDados baseDeDados = BaseDeDados();
 
@@ -185,14 +186,18 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .child(widget.livroARequisitar.id.toString())
             .child('dataEntrega');
 
+        //? referência para registar a data de devolucao na base de dados
+        _referenciaIncrementar = FirebaseDatabase.instance
+            .ref('livros')
+            .child(widget.livroARequisitar.id.toString())
+            .child('contarVezesRequisitadas');
+
         //? referência para alcançar os dados do utilizador na base de dados
         DatabaseReference _referenciaUtilizadorBD = FirebaseDatabase.instance
             .ref('utilizadores')
             .child(utilizador!.uid);
 
         DatabaseReference criarHistorico = FirebaseDatabase.instance.ref();
-        DatabaseReference criarListaDeRequisicao =
-            FirebaseDatabase.instance.ref();
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
@@ -217,6 +222,9 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                           //? Regista o id do utilizador que fez a requisição
                           _referenciaUID?.set(livro.uidLivro);
+
+                          //? Contar as vezes que o livro atual foi requisitado
+                          _referenciaIncrementar?.set(ServerValue.increment(1));
 
                           //? Regista a data de Requisicao
                           _referenciaDataRequisicao
