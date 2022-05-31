@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:camarate_school_library/database/base_de_dados.dart';
 import 'package:camarate_school_library/models/livro.dart';
 import 'package:camarate_school_library/screens/obras_requisitadas.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
@@ -24,12 +23,6 @@ class _HomeState extends State<Home> {
 
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
-        // Alcançar a instância da base de dados para autenticação do utilizador atual
-        final _auth = FirebaseAuth.instance;
-
-        // Utilizador actual
-        User? utilizador = _auth.currentUser;
-
         return Scaffold(
           appBar: AppBar(
             // icone de pesquisa
@@ -104,7 +97,7 @@ class _HomeState extends State<Home> {
             ),
           ),
 
-          //? INTERFACE PARA O UTILIZADOR
+          //? CONSTRUIR INTERFACE PARA O UTILIZADOR
 
           body: SingleChildScrollView(
             child: Column(
@@ -112,212 +105,14 @@ class _HomeState extends State<Home> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //
-                //* LIVROS REQUISITADOS
+                //* APRESENTAR LIVROS REQUISITADOS - INTERFACE PARA O UTILIZADOR
 
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    livrosRequisitados,
-                    Container(
-                      margin: const EdgeInsets.only(left: 3.0, right: 5.0),
-                      child: StreamBuilder(
-                        stream: FirebaseDatabase.instance.ref("livros").onValue,
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const <Widget>[
-                                  CircularProgressIndicator(),
-                                  Text(" A carregar livros requisitados...")
-                                ],
-                              );
-
-                            case ConnectionState.none:
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const <Widget>[
-                                  Text("Sem livros para mostrar...")
-                                ],
-                              );
-
-                            default:
-                              if (snapshot.hasData &&
-                                  !snapshot.hasError &&
-                                  snapshot.data.snapshot.value != null) {
-                                var data = DateTime.now().toLocal();
-                                var formato = DateFormat('dd-MM-yyyy');
-
-                                String dataAtual =
-                                    formato.format(data.toLocal());
-                                String dataUmDiaAntes = formato.format(
-                                    data.subtract(const Duration(days: 1)));
-                                String dataSemEntregar = formato
-                                    .format(data.add(const Duration(days: 1)));
-
-                                //? tRanformar os dados da base de dados numa lista dinamica
-                                List<dynamic> dadosBaseDeDados = jsonDecode(
-                                    jsonEncode(snapshot.data.snapshot.value));
-
-                                //? Adaptar ao modelo de livro
-                                LivroModel listaDeLivros =
-                                    LivroModel.fromJson(dadosBaseDeDados);
-
-                                //? Lista para guardar os dados convertidos e decodificados
-                                final List<Livro> _livros = [];
-
-                                _livros.addAll(listaDeLivros.livros);
-
-                                return Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 8.0),
-                                  height: 290.0,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          shrinkWrap: true,
-                                          itemCount: _livros.length,
-                                          itemBuilder: (context, index) {
-                                            //* Construir livro requisitado na interface
-                                            if (_livros[index].uidLivro ==
-                                                    utilizador!.uid &&
-                                                _livros[index].isRequisitado ==
-                                                    true) {
-                                              return InkWell(
-                                                onTap: () => Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    //? Redireciona o utilizador para a página de detalhes do livro */
-                                                    builder: (context) =>
-                                                        LivroDetalhado(
-                                                      index: index,
-                                                    ),
-                                                  ),
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    Container(
-                                                      width: 103.0,
-                                                      margin:
-                                                          const EdgeInsets.only(
-                                                              left: 16.0),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Container(
-                                                            width: 120.66,
-                                                            height: 155.5,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                              image:
-                                                                  DecorationImage(
-                                                                image:
-                                                                    NetworkImage(
-                                                                  _livros[index]
-                                                                      .imagePath
-                                                                      .toString(),
-                                                                ),
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 12.0,
-                                                          ),
-                                                          Text(
-                                                            _livros[index]
-                                                                .titulo
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700),
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 5.0,
-                                                          ),
-                                                          if (_livros[index]
-                                                                      .dataEntrega ==
-                                                                  dataAtual ||
-                                                              _livros[index]
-                                                                      .dataEntrega ==
-                                                                  dataUmDiaAntes ||
-                                                              _livros[index]
-                                                                      .dataEntrega ==
-                                                                  dataSemEntregar) ...[
-                                                            Text(
-                                                              'Data de devolução: ' +
-                                                                  _livros[index]
-                                                                      .dataEntrega
-                                                                      .toString(),
-                                                              style: GoogleFonts
-                                                                  .catamaran(
-                                                                textStyle: const TextStyle(
-                                                                    fontSize:
-                                                                        13.0,
-                                                                    color: Colors
-                                                                        .red),
-                                                              ),
-                                                            ),
-                                                          ] else ...[
-                                                            Text(
-                                                              'Data de entrega: ' +
-                                                                  _livros[index]
-                                                                      .dataEntrega
-                                                                      .toString(),
-                                                              style: GoogleFonts
-                                                                  .catamaran(
-                                                                textStyle:
-                                                                    const TextStyle(
-                                                                  fontSize:
-                                                                      13.0,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ]
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            }
-                                            return const Text('');
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              } else {
-                                return const Text("Sem dados");
-                              }
-                          }
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-
-                //* LIVROS DAS PRATELEIRAS
+                _livrosRequisitados,
 
                 //? Título
                 prateleiras,
 
+                //* APRESENTAR LIVROS DAS PRATELEIRAS - INTERFACE PARA O UTILIZADOR
                 SingleChildScrollView(
                   child: SizedBox(
                     width: double.infinity,
@@ -334,7 +129,32 @@ class _HomeState extends State<Home> {
   }
 }
 
-//? variável de informação dos livros das prateleiras a serem apresentados na interface
+//* Função da mensagem para alertar o utilizador
+void alertarUtilizador(BuildContext context) {
+  showDialog<bool>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Prazo de entrega"),
+        content: const Text(
+          "Tem de fazer a entrega do livro até a data indica, obrigado!",
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+//** VARIÁVEIS GLOBAIS */
+
+//? StreamBuilder para carregar da base de dados os livros das prateleiras
 final _livrosDasPrateleiras = Consumer<LivroRequisitadoModel>(
   builder: (context, detalheModel, child) {
     return StreamBuilder(
@@ -470,30 +290,179 @@ final _livrosDasPrateleiras = Consumer<LivroRequisitadoModel>(
   },
 );
 
-//** VARIÁVEIS GLOBAIS */
+final _livrosRequisitados = Column(
+  mainAxisAlignment: MainAxisAlignment.start,
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    livrosRequisitados,
+    Container(
+      margin: const EdgeInsets.only(left: 3.0, right: 5.0),
+      child: StreamBuilder(
+        stream: FirebaseDatabase.instance.ref("livros").onValue,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[
+                  CircularProgressIndicator(),
+                  Text(" A carregar livros requisitados...")
+                ],
+              );
 
-//* Mensagem para alertar o utilizador
-void alertarUtilizador(BuildContext context) {
-  showDialog<bool>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text("Prazo de entrega"),
-        content: const Text(
-          "Tem de fazer a entrega do livro até a data indica, obrigado!",
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+            case ConnectionState.none:
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[Text("Sem livros para mostrar...")],
+              );
+
+            default:
+              if (snapshot.hasData &&
+                  !snapshot.hasError &&
+                  snapshot.data.snapshot.value != null) {
+                // Alcançar a instância da base de dados para autenticação do utilizador atual
+                final _auth = FirebaseAuth.instance;
+
+                // Utilizador actual
+                User? utilizador = _auth.currentUser;
+
+                var data = DateTime.now().toLocal();
+                var formato = DateFormat('dd-MM-yyyy');
+
+                String dataAtual = formato.format(data.toLocal());
+                String dataUmDiaAntes =
+                    formato.format(data.subtract(const Duration(days: 1)));
+                String dataSemEntregar =
+                    formato.format(data.add(const Duration(days: 1)));
+
+                //? tRanformar os dados da base de dados numa lista dinamica
+                List<dynamic> dadosBaseDeDados =
+                    jsonDecode(jsonEncode(snapshot.data.snapshot.value));
+
+                //? Adaptar ao modelo de livro
+                LivroModel listaDeLivros =
+                    LivroModel.fromJson(dadosBaseDeDados);
+
+                //? Lista para guardar os dados convertidos e decodificados
+                final List<Livro> _livros = [];
+
+                _livros.addAll(listaDeLivros.livros);
+
+                return Container(
+                  margin: const EdgeInsets.symmetric(vertical: 8.0),
+                  height: 290.0,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: _livros.length,
+                          itemBuilder: (context, index) {
+                            //* Construir livro requisitado na interface
+                            if (_livros[index].uidLivro == utilizador!.uid &&
+                                _livros[index].isRequisitado == true) {
+                              return InkWell(
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    //? Redireciona o utilizador para a página de detalhes do livro */
+                                    builder: (context) => LivroDetalhado(
+                                      index: index,
+                                    ),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 103.0,
+                                      margin: const EdgeInsets.only(left: 16.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            width: 120.66,
+                                            height: 155.5,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                              image: DecorationImage(
+                                                image: NetworkImage(
+                                                  _livros[index]
+                                                      .imagePath
+                                                      .toString(),
+                                                ),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 12.0,
+                                          ),
+                                          Text(
+                                            _livros[index].titulo.toString(),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          const SizedBox(
+                                            height: 5.0,
+                                          ),
+                                          if (_livros[index].dataEntrega ==
+                                                  dataAtual ||
+                                              _livros[index].dataEntrega ==
+                                                  dataUmDiaAntes ||
+                                              _livros[index].dataEntrega ==
+                                                  dataSemEntregar) ...[
+                                            Text(
+                                              'Data de devolução: ' +
+                                                  _livros[index]
+                                                      .dataEntrega
+                                                      .toString(),
+                                              style: GoogleFonts.catamaran(
+                                                textStyle: const TextStyle(
+                                                    fontSize: 13.0,
+                                                    color: Colors.red),
+                                              ),
+                                            ),
+                                          ] else ...[
+                                            Text(
+                                              'Data de entrega: ' +
+                                                  _livros[index]
+                                                      .dataEntrega
+                                                      .toString(),
+                                              style: GoogleFonts.catamaran(
+                                                textStyle: const TextStyle(
+                                                  fontSize: 13.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ]
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                            return const Text('');
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                return const Text("Sem dados");
+              }
+          }
+        },
+      ),
+    ),
+  ],
+);
 
 // espaçamento
 const espacamento = SizedBox(
