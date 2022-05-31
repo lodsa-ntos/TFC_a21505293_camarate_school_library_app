@@ -100,6 +100,13 @@ class LivroDetalhado extends StatelessWidget {
                                     _livros[index].isRequisitado.toString(),
                                 style: const TextStyle(color: Colors.grey),
                               ),
+                              Text(
+                                "Nº de Requisições: " +
+                                    _livros[index]
+                                        .contarVezesRequisitadas
+                                        .toString(),
+                                style: const TextStyle(color: Colors.grey),
+                              ),
 
                               const SizedBox(height: 16),
 
