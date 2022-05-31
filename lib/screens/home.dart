@@ -17,7 +17,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-//? PÁGINA HOME
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {

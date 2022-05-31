@@ -87,4 +87,23 @@ class BaseDeDados {
     // Retorno a lista com os dados vindos da base de dados em JSON
     return obras;
   }
+
+  void criarHistoricoDeRequisicao(
+      Historico requisitante,
+      Historico tituloLivro,
+      Historico dataRequisicao,
+      Historico uidRequisitante,
+      Historico idLivro,
+      Historico dataEntrega) async {
+    DatabaseReference criarHistorico = FirebaseDatabase.instance.ref();
+
+    await criarHistorico.child('historico').push().set({
+      'tituloLivro': tituloLivro,
+      'requisitante': requisitante,
+      'idLivro': idLivro,
+      'uidRequisitante': uidRequisitante,
+      'dataEntrega': dataEntrega,
+      'dataRequisicao': dataRequisicao,
+    });
+  }
 }

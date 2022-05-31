@@ -192,13 +192,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .child(widget.livroARequisitar.id.toString())
             .child('contarVezesRequisitadas');
 
-        //? referência para alcançar os dados do utilizador na base de dados
-        DatabaseReference _referenciaUtilizadorBD = FirebaseDatabase.instance
-            .ref('utilizadores')
-            .child(utilizador!.uid);
-
-        DatabaseReference criarHistorico = FirebaseDatabase.instance.ref();
-
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
 
@@ -234,34 +227,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           _referenciaDataEntrega
                               ?.set(dataDevolucaoEEntrega.toString());
 
-                          //? Obter os dados guardados pelo utilizador
-                          Map<String, dynamic> dadosUtilizador =
-                              await baseDeDados
-                                  .getUtilizadoresBD(_referenciaUtilizadorBD);
-
-                          //? _Criar o histórico do livro requisitado
-                          Historico historico = Historico();
-                          historico.requisitante =
-                              Pessoa.fromJson(dadosUtilizador)
-                                  .nomeCompletoPessoa;
-
-                          historico.tituloLivro =
-                              widget.livroARequisitar.titulo;
-
-                          historico.dataRequisicao =
-                              widget.livroARequisitar.dataRequisicao;
-
-                          historico.uidRequisitante = livro.uidLivro;
-
-                          historico.idLivro = widget.livroARequisitar.id;
-
-                          historico.dataEntrega =
-                              widget.livroARequisitar.dataEntrega;
-
-                          await criarHistorico
-                              .child('historico')
-                              .push()
-                              .set(historico.toJson());
+                          //? _Colocar o histórico do livro requisitado pelo utilizador atual na BD
+                          criarHistoricoDeRequisicao();
 
                           //? o livro fica requisitado
                           widget.livroARequisitar.isRequisitado = true;
@@ -270,14 +237,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           requisitadoModel.addLivroRequisitado(
                             widget.livroARequisitar,
                           );
-
-                          // ignore: avoid_print
-                          print('O livro [ ' +
-                              widget.livroARequisitar.titulo.toString() +
-                              ' ] foi requisitado pelo utilizador ' +
-                              Pessoa.fromJson(dadosUtilizador)
-                                  .nomeCompletoPessoa
-                                  .toString());
                         },
                 ),
 
@@ -333,6 +292,44 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
         );
       },
     );
+  }
+
+  void criarHistoricoDeRequisicao() async {
+    //? referência para alcançar os dados do utilizador na base de dados
+    DatabaseReference _referenciaUtilizadorBD =
+        FirebaseDatabase.instance.ref('utilizadores').child(utilizador!.uid);
+
+    //? referência para criar os dados do historico na base de dados
+    DatabaseReference refHistoricoBD = FirebaseDatabase.instance.ref();
+
+    //? Obter os dados guardados pelo utilizador
+    Map<String, dynamic> dadosUtilizador =
+        await baseDeDados.getUtilizadoresBD(_referenciaUtilizadorBD);
+
+    //? _Criar o histórico do livro requisitado pelo utilizador atual
+    Historico historico = Historico();
+
+    historico.requisitante =
+        Pessoa.fromJson(dadosUtilizador).nomeCompletoPessoa;
+
+    historico.tituloLivro = widget.livroARequisitar.titulo;
+
+    historico.dataRequisicao = widget.livroARequisitar.dataRequisicao;
+
+    historico.uidRequisitante = livro.uidLivro;
+
+    historico.idLivro = widget.livroARequisitar.id;
+
+    historico.dataEntrega = widget.livroARequisitar.dataEntrega;
+
+    //? Enviar os dados de requisição para a referencia do historico para a base de dados
+    await refHistoricoBD.child('historico').push().set(historico.toJson());
+
+    // ignore: avoid_print
+    print('O livro [ ' +
+        widget.livroARequisitar.titulo.toString() +
+        ' ] foi requisitado pelo utilizador ' +
+        Pessoa.fromJson(dadosUtilizador).nomeCompletoPessoa.toString());
   }
 }
 
