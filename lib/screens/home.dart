@@ -113,15 +113,6 @@ class _HomeState extends State<Home> {
                 //? Título
                 prateleiras,
 
-                //* APRESENTAR LIVROS DAS PRATELEIRAS - INTERFACE PARA O UTILIZADOR
-                SingleChildScrollView(
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 375.0,
-                    child: _livrosDasPrateleiras,
-                  ),
-                ),
-
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: Row(
@@ -141,7 +132,7 @@ class _HomeState extends State<Home> {
                       GestureDetector(
                         onTap: () {},
                         child: Text(
-                          'See All',
+                          'mais',
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.secondary,
                             fontWeight: FontWeight.w400,
@@ -149,6 +140,15 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+
+                //* APRESENTAR LIVROS DAS PRATELEIRAS - INTERFACE PARA O UTILIZADOR
+                SingleChildScrollView(
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 375.0,
+                    child: _livrosDasPrateleiras,
                   ),
                 ),
               ],
@@ -233,108 +233,8 @@ final _livrosDasPrateleiras = Consumer<LivroRequisitadoModel>(
                     String _estadoDeRequisicao =
                         _livrosPrateleira[index].isRequisitado.toString();
 
-                    const Text(
-                      'Generalidades',
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    );
-
-                    if (_livrosPrateleira[index].numColecao == '0') {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              //** Redireciona o utilizador para a página de detalhes do livro */
-                              builder: (context) => LivroDetalhado(
-                                index: index,
-                              ),
-                            ),
-                          );
-                        },
-
-                        //** Widgets que vão desenvolver formato dos livros a serem apresentados
-                        //** no página home */
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 2, vertical: 8),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 122.0,
-                                margin: const EdgeInsets.only(left: 16.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: 121.66,
-                                      height: 190.5,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        image: DecorationImage(
-                                          //** Capa */
-                                          image: NetworkImage(
-                                            _livrosPrateleira[index]
-                                                .imagePath
-                                                .toString(),
-                                          ),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-
-                                    const SizedBox(height: 12.0),
-
-                                    //** Titulo */
-                                    Text(
-                                        _livrosPrateleira[index]
-                                            .titulo
-                                            .toString(),
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 15,
-                                        )),
-
-                                    const SizedBox(height: 5.0),
-
-                                    //** Autor */
-                                    Text(_livrosPrateleira[index]
-                                        .autor
-                                        .toString()),
-
-                                    const SizedBox(height: 5.0),
-
-                                    //** isRequisitado */
-                                    Text(
-                                      _estadoDeRequisicao.toString(),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }
-
                     switch (_livrosPrateleira[index].numColecao) {
                       case "0":
-                        const Text(
-                          'Generalidades',
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        );
-
                         return GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -363,6 +263,15 @@ final _livrosDasPrateleiras = Consumer<LivroRequisitadoModel>(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      const Text(
+                                        'Generalidades',
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                       Container(
                                         width: 121.66,
                                         height: 190.5,
