@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:camarate_school_library/models/livro.dart';
-
 class CategoriaModel {
   List<Categoria> categorias;
 

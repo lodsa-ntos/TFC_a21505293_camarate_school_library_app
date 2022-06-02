@@ -90,6 +90,8 @@ class BaseDeDados {
     return obras;
   }
 
+  //?_________________________________________Categorias da base de dados_________________________________________________________
+
   Future<List<Categoria>> getCategoriasBD(
       DatabaseReference referenciaLivrosBD) async {
     //
