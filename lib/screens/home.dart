@@ -2,7 +2,6 @@ import 'package:camarate_school_library/screens/obras_requisitadas.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:camarate_school_library/screens/login.dart';
-import 'package:camarate_school_library/screens/notificacao.dart';
 import 'package:camarate_school_library/screens/pesquisar.dart';
 import 'package:camarate_school_library/util/mostrar_seccoes_livros.dart';
 
@@ -58,15 +57,7 @@ class _HomeState extends State<Home> {
                       );
                     }),
                 ListTile(title: const Text('Ajuda'), onTap: () {}),
-                ListTile(
-                  title: const Text('Sobre nós'),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        //** Redireciona o utilizador para a página de notificacao*/
-                        builder: (context) => const Notificacao()),
-                  ),
-                ),
+                ListTile(title: const Text('Sobre nós'), onTap: () {}),
                 const SizedBox(height: 215.0),
                 ListTile(
                     title: const Text(
