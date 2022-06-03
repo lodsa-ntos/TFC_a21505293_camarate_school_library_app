@@ -46,7 +46,6 @@ class _HomeState extends State<Home> {
               children: [
                 const DrawerHeader(
                     decoration: BoxDecoration(color: Colors.blue), child: null),
-                ListTile(title: const Text('Ajuda'), onTap: () {}),
                 ListTile(
                     title: const Text('Obras requisitadas'),
                     onTap: () {
@@ -58,8 +57,9 @@ class _HomeState extends State<Home> {
                         ),
                       );
                     }),
+                ListTile(title: const Text('Ajuda'), onTap: () {}),
                 ListTile(
-                  title: const Text('Notificação'),
+                  title: const Text('Sobre nós'),
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
