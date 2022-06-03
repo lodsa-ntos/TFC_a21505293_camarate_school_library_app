@@ -13,6 +13,7 @@ import '../screens/livro_detalhado.dart';
 import 'package:intl/intl.dart';
 
 class Mostrar {
+  //? StreamBuilder para carregar livros que foram requisitados
   final livrosRequisitados = Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
     return Column(
@@ -204,7 +205,7 @@ class Mostrar {
     );
   });
 
-//? StreamBuilder para carregar da base de dados os livros das prateleiras
+  //? StreamBuilder para carregar da base de dados os livros com o número de coleção ZERO
   final livrosSeccaoAmarela = Consumer<LivroRequisitadoModel>(
     builder: (context, requisitadoModel, child) {
       return StreamBuilder(
@@ -349,7 +350,7 @@ class Mostrar {
     },
   );
 
-  //? StreamBuilder para carregar da base de dados os livros das prateleiras
+  //? StreamBuilder para carregar da base de dados os livros com o número de coleção UM
   final livrosSeccaoBeje = Consumer<LivroRequisitadoModel>(
     builder: (context, requisitadoModel, child) {
       return StreamBuilder(
@@ -494,7 +495,7 @@ class Mostrar {
     },
   );
 
-  //? StreamBuilder para carregar da base de dados os livros das prateleiras
+  //? StreamBuilder para carregar da base de dados os livros com o número de coleção DOIS
   final livrosSeccaoLaranja = Consumer<LivroRequisitadoModel>(
     builder: (context, requisitadoModel, child) {
       return StreamBuilder(
@@ -639,7 +640,7 @@ class Mostrar {
     },
   );
 
-  //? StreamBuilder para carregar da base de dados os livros das prateleiras
+  //? StreamBuilder para carregar da base de dados os livros com o número de coleção TRÊS
   final livrosSeccaoCastanho = Consumer<LivroRequisitadoModel>(
     builder: (context, requisitadoModel, child) {
       return StreamBuilder(
