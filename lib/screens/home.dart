@@ -100,7 +100,7 @@ class _HomeState extends State<Home> {
                 //
                 //* APRESENTAR LIVROS REQUISITADOS - INTERFACE PARA O UTILIZADOR
 
-                Mostrar().livrosRequisitados,
+                //Mostrar().livrosRequisitados,
 
                 //? Título [Prateleiras] na interface
                 prateleiras,
@@ -137,7 +137,7 @@ class _HomeState extends State<Home> {
 
                 espacamento,
 
-                //* CATEGORIA LIVROS FILOSOFIA E PSICOLOGIA
+                //* CATEGORIA LIVROS RELIGIÃO E TEOLOGIA
                 SingleChildScrollView(
                   child: SizedBox(
                     width: double.infinity,
@@ -150,7 +150,7 @@ class _HomeState extends State<Home> {
 
                 espacamento,
 
-                //* CATEGORIA LIVROS FILOSOFIA E PSICOLOGIA
+                //* CATEGORIA LIVROS CIENCIAS SOCIAIS
                 SingleChildScrollView(
                   child: SizedBox(
                     width: double.infinity,
@@ -219,6 +219,7 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
+          /*
           InkWell(
             onTap: () {},
             child: const Text(
@@ -226,33 +227,11 @@ class _HomeState extends State<Home> {
               style: TextStyle(color: Colors.blue),
             ),
           ),
+          */
         ],
       ),
     );
   }
-}
-
-//* Função da mensagem para alertar o utilizador
-void alertarUtilizador(BuildContext context) {
-  showDialog<bool>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text("Prazo de entrega"),
-        content: const Text(
-          "Tem de fazer a entrega do livro até a data indica, obrigado!",
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }
 
 //** VARIÁVEIS GLOBAIS */
