@@ -4,7 +4,6 @@ import 'package:camarate_school_library/database/base_de_dados.dart';
 import 'package:camarate_school_library/models/historico.dart';
 import 'package:camarate_school_library/models/livro.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -145,6 +144,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaDataRequisicao;
   DatabaseReference? _referenciaDataEntrega;
   DatabaseReference? _referenciaIncrementar;
+  DatabaseReference? _referenciaDataDevolucao;
 
   BaseDeDados baseDeDados = BaseDeDados();
 
@@ -166,8 +166,10 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
         var formatoDevolucao = DateFormat('dd-MM-yyyy');
 
-        String dataDevolucaoEEntrega =
+        String dataEntrega =
             formatoDevolucao.format(dataAtual.add(const Duration(days: 10)));
+
+        String dataDevolucao = formatoDevolucao.format(dataAtual);
 
         //? referência para atualizar a requisição e devolução na base de dados
         _referenciaRequisicao = FirebaseDatabase.instance
@@ -198,6 +200,11 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .ref('livros')
             .child(widget.livroARequisitar.id.toString())
             .child('contarVezesRequisitadas');
+
+        _referenciaDataDevolucao = FirebaseDatabase.instance
+            .ref('livros')
+            .child(widget.livroARequisitar.id.toString())
+            .child('dataDevolucao');
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
@@ -231,8 +238,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                               ?.set(dataRequisicao.toString());
 
                           //? Regista a data de Entrega
-                          _referenciaDataEntrega
-                              ?.set(dataDevolucaoEEntrega.toString());
+                          _referenciaDataEntrega?.set(dataEntrega.toString());
 
                           //? _Colocar o histórico do livro requisitado pelo utilizador atual na BD
                           criarHistoricoDeRequisicao();
@@ -262,6 +268,10 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           setState(() {
                             //? atualiza o estado de requisição para devolvido
                             _referenciaRequisicao?.set(false);
+
+                            //? Regista a data de Entrega
+                            _referenciaDataDevolucao
+                                ?.set(dataEntrega.toString());
 
                             //? o livro fica devolvido
                             widget.livroARequisitar.isRequisitado = false;

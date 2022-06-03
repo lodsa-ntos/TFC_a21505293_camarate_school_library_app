@@ -249,9 +249,6 @@ class Mostrar {
                     itemCount: _livrosPrateleira.length,
                     itemBuilder: (BuildContext context, int index) {
                       //
-                      //? variável para representar o estado de requisição
-                      String _estadoDeRequisicao =
-                          _livrosPrateleira[index].isRequisitado.toString();
 
                       switch (_livrosPrateleira[index].numColecao) {
                         case "0":

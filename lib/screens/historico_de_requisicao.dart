@@ -7,8 +7,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ObrasRequisitadas extends StatelessWidget {
-  const ObrasRequisitadas({Key? key}) : super(key: key);
+class HistoricoDeRequisicao extends StatelessWidget {
+  const HistoricoDeRequisicao({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class ObrasRequisitadas extends StatelessWidget {
                 child: Column(
                   children: const [
                     Text(
-                      'Obras requisitadas',
+                      'Histórico',
                       style: TextStyle(color: Colors.black, fontSize: 30.0),
                     ),
                   ],

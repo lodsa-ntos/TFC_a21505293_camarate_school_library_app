@@ -1,4 +1,4 @@
-import 'package:camarate_school_library/screens/obras_requisitadas.dart';
+import 'package:camarate_school_library/screens/historico_de_requisicao.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:camarate_school_library/screens/login.dart';
@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
                         context,
                         MaterialPageRoute(
                           //** Redireciona o utilizador para a página de detalhes do livro */
-                          builder: (context) => const ObrasRequisitadas(),
+                          builder: (context) => const HistoricoDeRequisicao(),
                         ),
                       );
                     }),
@@ -91,7 +91,7 @@ class _HomeState extends State<Home> {
                 //
                 //* APRESENTAR LIVROS REQUISITADOS - INTERFACE PARA O UTILIZADOR
 
-                //Mostrar().livrosRequisitados,
+                Mostrar().livrosRequisitados,
 
                 //? Título [Prateleiras] na interface
                 prateleiras,
