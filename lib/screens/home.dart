@@ -145,19 +145,6 @@ class _HomeState extends State<Home> {
                     child: Mostrar().livrosSeccaoLaranja,
                   ),
                 ),
-
-                _categoria("Ciências Sociais"),
-
-                espacamento,
-
-                //? CATEGORIA LIVROS CIENCIAS SOCIAIS
-                SingleChildScrollView(
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 375.0,
-                    child: Mostrar().livrosSeccaoCastanho,
-                  ),
-                ),
               ],
             ),
           ),
