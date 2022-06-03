@@ -98,7 +98,7 @@ class _HomeState extends State<Home> {
 
                 espacamento,
 
-                _categoria("Generalidades"),
+                _categoria("Generalidades. Dicionários"),
 
                 espacamento,
 
@@ -106,7 +106,7 @@ class _HomeState extends State<Home> {
                 SingleChildScrollView(
                   child: SizedBox(
                     width: double.infinity,
-                    height: 375.0,
+                    height: 333.0,
                     child: Mostrar().livrosSeccaoAmarela,
                   ),
                 ),
@@ -119,7 +119,7 @@ class _HomeState extends State<Home> {
                 SingleChildScrollView(
                   child: SizedBox(
                     width: double.infinity,
-                    height: 375.0,
+                    height: 333.0,
                     child: Mostrar().livrosSeccaoBeje,
                   ),
                 ),
@@ -132,7 +132,7 @@ class _HomeState extends State<Home> {
                 SingleChildScrollView(
                   child: SizedBox(
                     width: double.infinity,
-                    height: 375.0,
+                    height: 333.0,
                     child: Mostrar().livrosSeccaoLaranja,
                   ),
                 ),
@@ -157,7 +157,7 @@ class _HomeState extends State<Home> {
               child: Row(
                 children: [
                   //_livroPrateleira,
-                  if (titulo == "Generalidades") ...[
+                  if (titulo == "Generalidades. Dicionários") ...[
                     const CircleAvatar(
                       backgroundColor: Colors.yellow,
                       minRadius: 15,
