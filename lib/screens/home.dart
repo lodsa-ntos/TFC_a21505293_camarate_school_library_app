@@ -111,7 +111,7 @@ class _HomeState extends State<Home> {
 
                 espacamento,
 
-                //* CATEGORIA LIVROS GENERALIDADES
+                //? CATEGORIA LIVROS GENERALIDADES
                 SingleChildScrollView(
                   child: SizedBox(
                     width: double.infinity,
@@ -124,7 +124,7 @@ class _HomeState extends State<Home> {
 
                 espacamento,
 
-                //* CATEGORIA LIVROS FILOSOFIA E PSICOLOGIA
+                //? CATEGORIA LIVROS FILOSOFIA E PSICOLOGIA
                 SingleChildScrollView(
                   child: SizedBox(
                     width: double.infinity,
@@ -137,7 +137,7 @@ class _HomeState extends State<Home> {
 
                 espacamento,
 
-                //* CATEGORIA LIVROS RELIGIÃO E TEOLOGIA
+                //? CATEGORIA LIVROS RELIGIÃO E TEOLOGIA
                 SingleChildScrollView(
                   child: SizedBox(
                     width: double.infinity,
@@ -150,7 +150,7 @@ class _HomeState extends State<Home> {
 
                 espacamento,
 
-                //* CATEGORIA LIVROS CIENCIAS SOCIAIS
+                //? CATEGORIA LIVROS CIENCIAS SOCIAIS
                 SingleChildScrollView(
                   child: SizedBox(
                     width: double.infinity,
