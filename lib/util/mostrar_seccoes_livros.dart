@@ -324,9 +324,16 @@ class Mostrar {
                                         const SizedBox(height: 5.0),
 
                                         //** isRequisitado */
-                                        Text(
-                                          _estadoDeRequisicao.toString(),
-                                        ),
+
+                                        if (_livrosPrateleira[index]
+                                                .isRequisitado ==
+                                            true) ...[
+                                          const Text(
+                                            'Requisitado',
+                                            style:
+                                                TextStyle(color: Colors.green),
+                                          ),
+                                        ],
                                       ],
                                     ),
                                   ),
