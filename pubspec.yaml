@@ -49,6 +49,7 @@ dependencies:
   cloud_firestore: ^2.2.0
   firebase_database: ^9.0.7
   fluttertoast: ^8.0.9
+  uuid: ^3.0.6
 
 dependency_overrides:
   firebase_messaging_platform_interface: 3.1.6

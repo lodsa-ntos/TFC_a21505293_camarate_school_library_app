@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:camarate_school_library/Database/base_de_dados.dart';
 import 'package:camarate_school_library/models/livro.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 

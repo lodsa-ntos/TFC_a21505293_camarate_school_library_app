@@ -16,31 +16,7 @@ class HistoricoDeRequisicao extends StatelessWidget {
       builder: (context, requisitadoModel, child) {
         return Scaffold(
           appBar: AppBar(
-            //? seta para voltar a página anterior
-            iconTheme: const IconThemeData(
-              color: Colors.black,
-            ),
-            elevation: 0, //? retirar a sombra da barra do título
-            backgroundColor: Colors.white, //? Cor da barra do título
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(
-                  30.0), //? distância entre o título e a seta para voltar
-
-              //? Título
-              child: Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: const [
-                    Text(
-                      'Histórico',
-                      style: TextStyle(color: Colors.black, fontSize: 30.0),
-                    ),
-                  ],
-                ),
-              ),
-              //? _______________________________________________________________
-            ),
+            title: const Text('Histórico'),
           ),
           backgroundColor: Colors.white,
 
@@ -107,11 +83,13 @@ class HistoricoDeRequisicao extends StatelessWidget {
                             /// guardar na lista [_obrasBD], nesse caso é o valor que depois...
                             dadosBaseDeDados.forEach((chave, valor) {
                               /// atribuo esses dados no fromJson da classe modelo do historico
-                              final Historico hsitoricoBD =
-                                  Historico.fromJson(valor);
+                              Historico hsitoricoBD = Historico.fromJson(valor);
                               // guardar apenas os valores que vou apresentar na lista
                               _obrasBD.add(hsitoricoBD);
                             });
+
+                            List<Historico> novaLista =
+                                _obrasBD.reversed.toList();
 
                             //? INTERFACE PARA UTILIZADOR
                             // CONSTRUÇÃO DA TABELA COM OS DADOS DA BASE DE DADOS
@@ -162,7 +140,8 @@ class HistoricoDeRequisicao extends StatelessWidget {
                                         if (_obrasBD[i].uidRequisitante ==
                                             utilizador!.uid) ...[
                                           DataRow.byIndex(
-                                            index: i,
+                                            index:
+                                                _obrasBD.indexOf(novaLista[i]),
                                             cells: <DataCell>[
                                               //* TÍtulo do livro
                                               DataCell(Text(

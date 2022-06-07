@@ -73,14 +73,14 @@ class Mostrar {
                     List<dynamic> dadosBaseDeDados =
                         jsonDecode(jsonEncode(snapshot.data.snapshot.value));
 
-                    //? Adaptar ao modelo de livro
-                    LivroModel listaDeLivros =
-                        LivroModel.fromJson(dadosBaseDeDados);
-
                     //? Lista para guardar os dados convertidos e decodificados
-                    final List<Livro> _livros = [];
+                    List<Livro> _livros = dadosBaseDeDados
+                        .map((rawProduct) => Livro.fromJson(rawProduct))
+                        .toList();
 
-                    _livros.addAll(listaDeLivros.livros);
+                    List<Livro> novaLista = _livros.reversed.toList();
+
+                    //var ola = Livro.fromJson(snapshot.data.snapshot.value);
 
                     return Container(
                       margin: const EdgeInsets.symmetric(vertical: 8.0),
@@ -91,19 +91,22 @@ class Mostrar {
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
-                              itemCount: _livros.length,
+                              itemCount: novaLista.length,
                               itemBuilder: (context, index) {
+                                int reverterIndex = _livros.length - 1 - index;
+
                                 //* Construir livro requisitado na interface
-                                if (_livros[index].uidLivro ==
+                                if (_livros[reverterIndex].uidLivro ==
                                         utilizador!.uid &&
-                                    _livros[index].isRequisitado == true) {
+                                    _livros[reverterIndex].isRequisitado ==
+                                        true) {
                                   return InkWell(
                                     onTap: () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         //? Redireciona o utilizador para a página de detalhes do livro */
                                         builder: (context) => LivroDetalhado(
-                                          index: index,
+                                          index: reverterIndex,
                                         ),
                                       ),
                                     ),
@@ -128,7 +131,7 @@ class Mostrar {
                                                           8.0),
                                                   image: DecorationImage(
                                                     image: NetworkImage(
-                                                      _livros[index]
+                                                      _livros[reverterIndex]
                                                           .imagePath
                                                           .toString(),
                                                     ),
@@ -140,7 +143,7 @@ class Mostrar {
                                                 height: 12.0,
                                               ),
                                               Text(
-                                                _livros[index]
+                                                _livros[reverterIndex]
                                                     .titulo
                                                     .toString(),
                                                 style: const TextStyle(
@@ -150,15 +153,18 @@ class Mostrar {
                                               const SizedBox(
                                                 height: 5.0,
                                               ),
-                                              if (_livros[index].dataEntrega ==
+                                              if (_livros[reverterIndex]
+                                                          .dataEntrega ==
                                                       dataAtual ||
-                                                  _livros[index].dataEntrega ==
+                                                  _livros[reverterIndex]
+                                                          .dataEntrega ==
                                                       dataUmDiaAntes ||
-                                                  _livros[index].dataEntrega ==
+                                                  _livros[reverterIndex]
+                                                          .dataEntrega ==
                                                       dataSemEntregar) ...[
                                                 Text(
                                                   'Data de devolução: ' +
-                                                      _livros[index]
+                                                      _livros[reverterIndex]
                                                           .dataEntrega
                                                           .toString(),
                                                   style: GoogleFonts.catamaran(
@@ -170,7 +176,7 @@ class Mostrar {
                                               ] else ...[
                                                 Text(
                                                   'Data de entrega: ' +
-                                                      _livros[index]
+                                                      _livros[reverterIndex]
                                                           .dataEntrega
                                                           .toString(),
                                                   style: GoogleFonts.catamaran(
@@ -187,7 +193,7 @@ class Mostrar {
                                     ),
                                   );
                                 }
-                                return const Text('');
+                                return const Text("");
                               },
                             ),
                           ),
@@ -195,7 +201,11 @@ class Mostrar {
                       ),
                     );
                   } else {
-                    return const Text("Sem dados");
+                    return const Center(
+                        child: Text(
+                      "Sem livros requisitados...",
+                      style: TextStyle(color: Colors.black),
+                    ));
                   }
               }
             },
@@ -245,106 +255,96 @@ class Mostrar {
                   _livrosPrateleira.addAll(listaDeLivros.livros);
 
                   return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _livrosPrateleira.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      //
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _livrosPrateleira.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        //
 
-                      switch (_livrosPrateleira[index].numColecao) {
-                        case "0":
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  //** Redireciona o utilizador para a página de detalhes do livro */
-                                  builder: (context) => LivroDetalhado(
-                                    index: index,
-                                  ),
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                //** Redireciona o utilizador para a página de detalhes do livro */
+                                builder: (context) => LivroDetalhado(
+                                  index: index,
                                 ),
-                              );
-                            },
+                              ),
+                            );
+                          },
 
-                            //** Widgets que vão desenvolver formato dos livros a serem apresentados
-                            //** no página home */
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 2, vertical: 8),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 122.0,
-                                    margin: const EdgeInsets.only(left: 16.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          width: 121.66,
-                                          height: 190.5,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            image: DecorationImage(
-                                              //** Capa */
-                                              image: NetworkImage(
-                                                _livrosPrateleira[index]
-                                                    .imagePath
-                                                    .toString(),
-                                              ),
-                                              fit: BoxFit.cover,
+                          //** Widgets que vão desenvolver formato dos livros a serem apresentados
+                          //** no página home */
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 2, vertical: 8),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 122.0,
+                                  margin: const EdgeInsets.only(left: 16.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 121.66,
+                                        height: 190.5,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          image: DecorationImage(
+                                            //** Capa */
+                                            image: NetworkImage(
+                                              _livrosPrateleira[index]
+                                                  .imagePath
+                                                  .toString(),
                                             ),
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
+                                      ),
 
-                                        const SizedBox(height: 12.0),
+                                      const SizedBox(height: 12.0),
 
-                                        //** Titulo */
-                                        Text(
-                                            _livrosPrateleira[index]
-                                                .titulo
-                                                .toString(),
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 15,
-                                            )),
+                                      //** Titulo */
+                                      Text(
+                                          _livrosPrateleira[index]
+                                              .titulo
+                                              .toString(),
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 15,
+                                          )),
 
-                                        const SizedBox(height: 5.0),
+                                      const SizedBox(height: 5.0),
 
-                                        //** Autor */
-                                        Text(_livrosPrateleira[index]
-                                            .autor
-                                            .toString()),
+                                      //** Autor */
+                                      Text(_livrosPrateleira[index]
+                                          .autor
+                                          .toString()),
 
-                                        const SizedBox(height: 5.0),
+                                      const SizedBox(height: 5.0),
 
-                                        //** isRequisitado */
+                                      //** isRequisitado */
 
-                                        if (_livrosPrateleira[index]
-                                                .isRequisitado ==
-                                            true) ...[
-                                          const Text(
-                                            'Requisitado',
-                                            style:
-                                                TextStyle(color: Colors.green),
-                                          ),
-                                        ],
+                                      if (_livrosPrateleira[index]
+                                              .isRequisitado ==
+                                          true) ...[
+                                        const Text(
+                                          'Requisitado',
+                                          style: TextStyle(color: Colors.green),
+                                        ),
                                       ],
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          );
-                        default:
-                          return const Text('');
-                      }
-
-                      //
-                    },
-                  );
+                          ),
+                        );
+                      });
                 }
               }
               return const Text("Sem dados...");

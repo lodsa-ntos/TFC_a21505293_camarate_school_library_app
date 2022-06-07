@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
                 const DrawerHeader(
                     decoration: BoxDecoration(color: Colors.blue), child: null),
                 ListTile(
-                    title: const Text('Obras requisitadas'),
+                    title: const Text('Histórico'),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -108,32 +108,6 @@ class _HomeState extends State<Home> {
                     width: double.infinity,
                     height: 333.0,
                     child: Mostrar().livrosSeccaoAmarela,
-                  ),
-                ),
-
-                _categoria("Filosofia e Psicologia"),
-
-                espacamento,
-
-                //? CATEGORIA LIVROS FILOSOFIA E PSICOLOGIA
-                SingleChildScrollView(
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 333.0,
-                    child: Mostrar().livrosSeccaoBeje,
-                  ),
-                ),
-
-                _categoria("Religião e Teologia"),
-
-                espacamento,
-
-                //? CATEGORIA LIVROS RELIGIÃO E TEOLOGIA
-                SingleChildScrollView(
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 333.0,
-                    child: Mostrar().livrosSeccaoLaranja,
                   ),
                 ),
               ],

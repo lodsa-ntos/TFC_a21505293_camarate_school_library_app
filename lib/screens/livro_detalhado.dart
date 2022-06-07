@@ -144,7 +144,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaDataRequisicao;
   DatabaseReference? _referenciaDataEntrega;
   DatabaseReference? _referenciaIncrementar;
-  DatabaseReference? _referenciaDataDevolucao;
+  DatabaseReference? _referenciaGuardarLivroRequisitado;
+  DataSnapshot? dataSnapshot;
 
   BaseDeDados baseDeDados = BaseDeDados();
 
@@ -201,10 +202,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .child(widget.livroARequisitar.id.toString())
             .child('contarVezesRequisitadas');
 
-        _referenciaDataDevolucao = FirebaseDatabase.instance
-            .ref('livros')
-            .child(widget.livroARequisitar.id.toString())
-            .child('dataDevolucao');
+        _referenciaGuardarLivroRequisitado =
+            FirebaseDatabase.instance.ref('historico').child('dataDevolucao');
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
@@ -268,10 +267,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           setState(() {
                             //? atualiza o estado de requisição para devolvido
                             _referenciaRequisicao?.set(false);
-
-                            //? Regista a data de Entrega
-                            _referenciaDataDevolucao
-                                ?.set(dataEntrega.toString());
 
                             //? o livro fica devolvido
                             widget.livroARequisitar.isRequisitado = false;
@@ -337,7 +332,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
     historico.idLivro = widget.livroARequisitar.id;
 
-    historico.dataEntrega = widget.livroARequisitar.dataEntrega;
+    historico.dataEntrega = widget.livroARequisitar.dataDevolucao;
 
     //? Enviar os dados de requisição para a referencia do historico para a base de dados
     await refHistoricoBD.child('historico').push().set(historico.toJson());
