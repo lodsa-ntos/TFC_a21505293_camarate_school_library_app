@@ -88,7 +88,7 @@ class HistoricoDeRequisicao extends StatelessWidget {
                               _obrasBD.add(hsitoricoBD);
                             });
 
-                            List<Historico> novaLista =
+                            List<Historico> reverterLista =
                                 _obrasBD.reversed.toList();
 
                             //? INTERFACE PARA UTILIZADOR
@@ -140,8 +140,8 @@ class HistoricoDeRequisicao extends StatelessWidget {
                                         if (_obrasBD[i].uidRequisitante ==
                                             utilizador!.uid) ...[
                                           DataRow.byIndex(
-                                            index:
-                                                _obrasBD.indexOf(novaLista[i]),
+                                            index: _obrasBD
+                                                .indexOf(reverterLista[i]),
                                             cells: <DataCell>[
                                               //* TÍtulo do livro
                                               DataCell(Text(
