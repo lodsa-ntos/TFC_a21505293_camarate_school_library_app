@@ -268,6 +268,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             //? atualiza o estado de requisição para devolvido
                             _referenciaRequisicao?.set(false);
 
+                            //? Variavel dataEntrega do historico recebe a atual da devolução
                             historico.dataEntrega = dataDevolucao;
 
                             //? atualizar data de devolução
@@ -340,8 +341,10 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
     historico.dataEntrega = widget.livroARequisitar.dataDevolucao;
 
+    //? Obter a chave aleatoria de ids gerados pela base de dados
     String? chave = refHistoricoBD.push().key;
 
+    //? Atribuir o valor da chave a variavel id do Historico
     historico.id = chave;
 
     //? Enviar os dados de requisição para a referencia do historico para a base de dados
