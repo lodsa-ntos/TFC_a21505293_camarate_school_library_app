@@ -28,7 +28,6 @@ class HistoricoModel {
 }
 
 class Historico {
-  String? idLivro;
   String? dataRequisicao;
   String? requisitante;
   String? tituloLivro;
@@ -37,7 +36,6 @@ class Historico {
   String? id;
 
   Historico({
-    this.idLivro,
     this.dataRequisicao,
     this.requisitante,
     this.tituloLivro,
@@ -49,7 +47,6 @@ class Historico {
   // Transformar os dados da Pessoa num mapa de pares chave/valor.
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> dadosHistorico = <String, dynamic>{};
-    dadosHistorico["idLivro"] = idLivro;
     dadosHistorico["dataRequisicao"] = dataRequisicao;
     dadosHistorico["requisitante"] = requisitante;
     dadosHistorico["tituloLivro"] = tituloLivro;
@@ -63,7 +60,6 @@ class Historico {
   // Receber dados do firebase e convertê-los num mapa de pares chave/valor com informação da Pessoa
   factory Historico.fromJson(Map<String, dynamic> json) {
     return Historico(
-      idLivro: json['idLivro'] ?? '',
       dataRequisicao: json['dataRequisicao'] ?? '',
       requisitante: json['requisitante'] ?? '',
       tituloLivro: json['tituloLivro'] ?? '',

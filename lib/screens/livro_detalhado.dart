@@ -337,8 +337,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
     historico.uidRequisitante = livro.uidLivro;
 
-    historico.idLivro = widget.livroARequisitar.id.toString();
-
     historico.dataEntrega = widget.livroARequisitar.dataDevolucao;
 
     //? Obter a chave aleatoria de ids gerados pela base de dados

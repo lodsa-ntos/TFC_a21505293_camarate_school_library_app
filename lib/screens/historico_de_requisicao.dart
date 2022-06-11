@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 BaseDeDados baseDeDados = BaseDeDados();
 
-DatabaseReference refDB = FirebaseDatabase.instance.ref("historico");
+DatabaseReference refDB = FirebaseDatabase.instance.ref();
 
 class HistoricoDeRequisicao extends StatelessWidget {
   const HistoricoDeRequisicao({Key? key}) : super(key: key);
@@ -39,7 +39,7 @@ class HistoricoDeRequisicao extends StatelessWidget {
                   margin: const EdgeInsets.only(left: 3.0, right: 5.0),
                   child: StreamBuilder(
                     //? Referência
-                    stream: refDB.onValue,
+                    stream: refDB.child('historico').orderByChild('id').onValue,
 
                     // Chamar os dados da base de dados com [ AsyncSnapshot snapshot ]
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
