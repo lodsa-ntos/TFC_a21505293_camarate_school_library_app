@@ -271,7 +271,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             //? Variavel dataEntrega do historico recebe a atual da devolução
                             historico.dataEntrega = dataDevolucao;
 
-                            //? atualizar data de devolução
+                            //? atualizar a data de devolução para o histórico
                             refHistoricoBD
                                 .child("historico")
                                 .child(historico.id.toString())
