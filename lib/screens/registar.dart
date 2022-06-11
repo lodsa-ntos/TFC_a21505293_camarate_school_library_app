@@ -1,8 +1,6 @@
 import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:camarate_school_library/screens/home.dart';
 import 'package:camarate_school_library/screens/login.dart';
-import 'package:camarate_school_library/util/formulario_professor.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/gestures.dart';
@@ -12,7 +10,6 @@ import 'package:provider/provider.dart';
 
 import '../services/auth_services.dart';
 import '../styles/style_login_screen.dart';
-import '../util/formulario_aluno.dart';
 import '../util/validator.dart';
 
 class _RegistarState extends State<Registar> {

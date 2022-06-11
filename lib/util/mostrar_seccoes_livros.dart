@@ -12,6 +12,8 @@ import '../screens/livro_detalhado.dart';
 
 import 'package:intl/intl.dart';
 
+FirebaseDatabase refDB = FirebaseDatabase.instance;
+
 class Mostrar {
   //? StreamBuilder para carregar livros que foram requisitados
   final livrosRequisitados = Consumer<LivroRequisitadoModel>(
@@ -23,14 +25,14 @@ class Mostrar {
         const Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
-            'Livros Requisitados',
+            'Livros requisitados',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
           ),
         ),
         Container(
           margin: const EdgeInsets.only(left: 3.0, right: 5.0),
           child: StreamBuilder(
-            stream: FirebaseDatabase.instance.ref("livros").onValue,
+            stream: refDB.ref('livros').onValue,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -78,8 +80,6 @@ class Mostrar {
                         .map((rawProduct) => Livro.fromJson(rawProduct))
                         .toList();
 
-                    List<Livro> novaLista = _livros.reversed.toList();
-
                     //var ola = Livro.fromJson(snapshot.data.snapshot.value);
 
                     return Container(
@@ -91,22 +91,19 @@ class Mostrar {
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
-                              itemCount: novaLista.length,
+                              itemCount: _livros.length,
                               itemBuilder: (context, index) {
-                                int reverterIndex = _livros.length - 1 - index;
-
                                 //* Construir livro requisitado na interface
-                                if (_livros[reverterIndex].uidLivro ==
+                                if (_livros[index].uidLivro ==
                                         utilizador!.uid &&
-                                    _livros[reverterIndex].isRequisitado ==
-                                        true) {
+                                    _livros[index].isRequisitado == true) {
                                   return InkWell(
                                     onTap: () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         //? Redireciona o utilizador para a página de detalhes do livro */
                                         builder: (context) => LivroDetalhado(
-                                          index: reverterIndex,
+                                          index: index,
                                         ),
                                       ),
                                     ),
@@ -131,7 +128,7 @@ class Mostrar {
                                                           8.0),
                                                   image: DecorationImage(
                                                     image: NetworkImage(
-                                                      _livros[reverterIndex]
+                                                      _livros[index]
                                                           .imagePath
                                                           .toString(),
                                                     ),
@@ -143,7 +140,7 @@ class Mostrar {
                                                 height: 12.0,
                                               ),
                                               Text(
-                                                _livros[reverterIndex]
+                                                _livros[index]
                                                     .titulo
                                                     .toString(),
                                                 style: const TextStyle(
@@ -153,18 +150,15 @@ class Mostrar {
                                               const SizedBox(
                                                 height: 5.0,
                                               ),
-                                              if (_livros[reverterIndex]
-                                                          .dataEntrega ==
+                                              if (_livros[index].dataEntrega ==
                                                       dataAtual ||
-                                                  _livros[reverterIndex]
-                                                          .dataEntrega ==
+                                                  _livros[index].dataEntrega ==
                                                       dataUmDiaAntes ||
-                                                  _livros[reverterIndex]
-                                                          .dataEntrega ==
+                                                  _livros[index].dataEntrega ==
                                                       dataSemEntregar) ...[
                                                 Text(
                                                   'Data de devolução: ' +
-                                                      _livros[reverterIndex]
+                                                      _livros[index]
                                                           .dataEntrega
                                                           .toString(),
                                                   style: GoogleFonts.catamaran(
@@ -176,7 +170,7 @@ class Mostrar {
                                               ] else ...[
                                                 Text(
                                                   'Data de entrega: ' +
-                                                      _livros[reverterIndex]
+                                                      _livros[index]
                                                           .dataEntrega
                                                           .toString(),
                                                   style: GoogleFonts.catamaran(
@@ -219,7 +213,10 @@ class Mostrar {
   final livrosSeccaoAmarela = Consumer<LivroRequisitadoModel>(
     builder: (context, requisitadoModel, child) {
       return StreamBuilder(
-        stream: FirebaseDatabase.instance.ref("livros").onValue, // async work
+        //
+        stream: FirebaseDatabase.instance.ref("livros").onValue,
+
+        //
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -250,7 +247,7 @@ class Mostrar {
                   LivroModel listaDeLivros =
                       LivroModel.fromJson(dadosBaseDeDados);
 
-                  List<Livro> _livrosPrateleira = [];
+                  List<dynamic> _livrosPrateleira = [];
 
                   _livrosPrateleira.addAll(listaDeLivros.livros);
 
@@ -358,7 +355,7 @@ class Mostrar {
   final livrosSeccaoBeje = Consumer<LivroRequisitadoModel>(
     builder: (context, requisitadoModel, child) {
       return StreamBuilder(
-        stream: FirebaseDatabase.instance.ref("livros").onValue, // async work
+        stream: FirebaseDatabase.instance.ref("livros").onValue,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -509,7 +506,7 @@ class Mostrar {
   final livrosSeccaoLaranja = Consumer<LivroRequisitadoModel>(
     builder: (context, requisitadoModel, child) {
       return StreamBuilder(
-        stream: FirebaseDatabase.instance.ref("livros").onValue, // async work
+        stream: FirebaseDatabase.instance.ref("livros").onValue,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -660,7 +657,7 @@ class Mostrar {
   final livrosSeccaoCastanho = Consumer<LivroRequisitadoModel>(
     builder: (context, requisitadoModel, child) {
       return StreamBuilder(
-        stream: FirebaseDatabase.instance.ref("livros").onValue, // async work
+        stream: FirebaseDatabase.instance.ref("livros").onValue,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:

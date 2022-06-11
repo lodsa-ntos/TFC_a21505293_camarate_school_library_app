@@ -11,7 +11,7 @@ class LivroModel {
     return LivroModel(livros: verificarLivros(json));
   }
 
-  static List<Livro> verificarLivros(livroJSON) {
+  static List<Livro> verificarLivros(List<dynamic> livroJSON) {
     /// jsonEncode tranforma os dados JSON em string
     /// jsonDecode descodifica os dados e coloca no formato de Lista dynamic
 
@@ -27,7 +27,7 @@ class LivroModel {
 }
 
 class Livro {
-  String? id;
+  int? id;
   String? titulo;
   String? autor;
   String? isbn;
@@ -82,24 +82,22 @@ class Livro {
     return map;
   }
 
-  factory Livro.fromJson(Map<String, dynamic> json) {
-    return Livro(
-      id: json['id'] ?? '',
-      titulo: json['titulo'] ?? '',
-      autor: json['autor'] ?? '',
-      isbn: json['isbn'] ?? '',
-      editora: json['editora'] ?? '',
-      imagePath: json['imagePath'] ?? '',
-      numRegisto: json['numRegisto'] ?? '',
-      ano: json['ano']?.toInt() ?? 0,
-      isRequisitado: json['isRequisitado'] ?? false,
-      dataRequisicao: json['dataRequisicao'] ?? '',
-      dataEntrega: json['dataEntrega'] ?? '',
-      uidLivro: json['uidLivro'] ?? '',
-      numColecao: json['numColecao'] ?? '',
-      contarVezesRequisitadas: json['contarVezesRequisitadas'] ?? 0,
-      dataDevolucao: json['dataDevolucao'] ?? '',
-    );
+  Livro.fromJson(Map<String, dynamic> json) {
+    id = json['id']?.toInt() ?? 0;
+    titulo = json['titulo'] ?? '';
+    autor = json['autor'] ?? '';
+    isbn = json['isbn'] ?? '';
+    editora = json['editora'] ?? '';
+    imagePath = json['imagePath'] ?? '';
+    numRegisto = json['numRegisto'] ?? '';
+    ano = json['ano']?.toInt() ?? 0;
+    isRequisitado = json['isRequisitado'] ?? false;
+    dataRequisicao = json['dataRequisicao'] ?? '';
+    dataEntrega = json['dataEntrega'] ?? '';
+    uidLivro = json['uidLivro'] ?? '';
+    numColecao = json['numColecao'] ?? '';
+    contarVezesRequisitadas = json['contarVezesRequisitadas'] ?? 0;
+    dataDevolucao = json['dataDevolucao'] ?? '';
   }
 }
 

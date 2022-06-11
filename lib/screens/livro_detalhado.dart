@@ -12,6 +12,12 @@ import 'package:intl/intl.dart';
 
 import '../models/pessoa.dart';
 
+//? referência para criar os dados do historico na base de dados
+DatabaseReference refHistoricoBD = FirebaseDatabase.instance.ref();
+
+//? _Alcançar atributos da classe Historico com referencias do livro requisitado
+Historico historico = Historico();
+
 /// Classe para apresentar os widgets que compoêm o formato para representarem
 /// os detalhes dos livros
 ///
@@ -144,8 +150,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaDataRequisicao;
   DatabaseReference? _referenciaDataEntrega;
   DatabaseReference? _referenciaIncrementar;
-  DatabaseReference? _referenciaGuardarLivroRequisitado;
-  DataSnapshot? dataSnapshot;
 
   BaseDeDados baseDeDados = BaseDeDados();
 
@@ -162,8 +166,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
       builder: (context, requisitadoModel, child) {
         var dataAtual = DateTime.now().toLocal();
         var formato = DateFormat('dd-MM-yyyy – HH:mm');
-        String dataRequisicao =
-            formato.format(dataAtual.add(const Duration(hours: 1)));
+        String dataRequisicao = formato.format(dataAtual);
 
         var formatoDevolucao = DateFormat('dd-MM-yyyy');
 
@@ -201,9 +204,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .ref('livros')
             .child(widget.livroARequisitar.id.toString())
             .child('contarVezesRequisitadas');
-
-        _referenciaGuardarLivroRequisitado =
-            FirebaseDatabase.instance.ref('historico').child('dataDevolucao');
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
@@ -268,6 +268,14 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             //? atualiza o estado de requisição para devolvido
                             _referenciaRequisicao?.set(false);
 
+                            historico.dataEntrega = dataDevolucao;
+
+                            //? atualizar data de devolução
+                            refHistoricoBD
+                                .child("historico")
+                                .child(historico.id.toString())
+                                .update({'dataEntrega': historico.dataEntrega});
+
                             //? o livro fica devolvido
                             widget.livroARequisitar.isRequisitado = false;
 
@@ -307,35 +315,40 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   }
 
   void criarHistoricoDeRequisicao() async {
+    var dataAtual = DateTime.now().toLocal();
+    var formato = DateFormat('dd-MM-yyyy – HH:mm');
+    String dataRequisicao = formato.format(dataAtual);
+
     //? referência para alcançar os dados do utilizador na base de dados
     DatabaseReference _referenciaUtilizadorBD =
         FirebaseDatabase.instance.ref('utilizadores').child(utilizador!.uid);
 
-    //? referência para criar os dados do historico na base de dados
-    DatabaseReference refHistoricoBD = FirebaseDatabase.instance.ref();
-
     //? Obter os dados guardados pelo utilizador
     Map<String, dynamic> dadosUtilizador =
         await baseDeDados.getUtilizadoresBD(_referenciaUtilizadorBD);
-
-    //? _Criar o histórico do livro requisitado pelo utilizador atual
-    Historico historico = Historico();
 
     historico.requisitante =
         Pessoa.fromJson(dadosUtilizador).nomeCompletoPessoa;
 
     historico.tituloLivro = widget.livroARequisitar.titulo;
 
-    historico.dataRequisicao = widget.livroARequisitar.dataRequisicao;
+    historico.dataRequisicao = dataRequisicao.toString();
 
     historico.uidRequisitante = livro.uidLivro;
 
-    historico.idLivro = widget.livroARequisitar.id;
+    historico.idLivro = widget.livroARequisitar.id.toString();
 
     historico.dataEntrega = widget.livroARequisitar.dataDevolucao;
 
+    String? chave = refHistoricoBD.push().key;
+
+    historico.id = chave;
+
     //? Enviar os dados de requisição para a referencia do historico para a base de dados
-    await refHistoricoBD.child('historico').push().set(historico.toJson());
+    await refHistoricoBD
+        .child('historico')
+        .child(historico.id.toString())
+        .set(historico.toJson());
 
     // ignore: avoid_print
     print('O livro [ ' +

@@ -1,11 +1,16 @@
 import 'dart:convert';
 
+import 'package:camarate_school_library/database/base_de_dados.dart';
 import 'package:camarate_school_library/models/historico.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+BaseDeDados baseDeDados = BaseDeDados();
+
+DatabaseReference refDB = FirebaseDatabase.instance.ref("historico");
 
 class HistoricoDeRequisicao extends StatelessWidget {
   const HistoricoDeRequisicao({Key? key}) : super(key: key);
@@ -34,7 +39,7 @@ class HistoricoDeRequisicao extends StatelessWidget {
                   margin: const EdgeInsets.only(left: 3.0, right: 5.0),
                   child: StreamBuilder(
                     //? Referência
-                    stream: FirebaseDatabase.instance.ref("historico").onValue,
+                    stream: refDB.onValue,
 
                     // Chamar os dados da base de dados com [ AsyncSnapshot snapshot ]
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -113,13 +118,13 @@ class HistoricoDeRequisicao extends StatelessWidget {
                                     columns: const [
                                       DataColumn(
                                         label: Text(
-                                          'Título',
+                                          'Data de requisição',
                                           style: TextStyle(color: Colors.white),
                                         ),
                                       ),
                                       DataColumn(
                                         label: Text(
-                                          'Data de requisição',
+                                          'Título',
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(color: Colors.white),
                                         ),
@@ -139,21 +144,19 @@ class HistoricoDeRequisicao extends StatelessWidget {
                                       for (int i = 0; i < _obrasBD.length; i++)
                                         if (_obrasBD[i].uidRequisitante ==
                                             utilizador!.uid) ...[
-                                          DataRow.byIndex(
-                                            index: _obrasBD
-                                                .indexOf(reverterLista[i]),
-                                            cells: <DataCell>[
+                                          DataRow(
+                                            cells: [
                                               //* TÍtulo do livro
                                               DataCell(Text(
                                                 _obrasBD[i]
-                                                    .tituloLivro
+                                                    .dataRequisicao
                                                     .toString(),
                                               )),
 
                                               //* Data de requisicão
                                               DataCell(Text(
                                                 _obrasBD[i]
-                                                    .dataRequisicao
+                                                    .tituloLivro
                                                     .toString(),
                                               )),
 

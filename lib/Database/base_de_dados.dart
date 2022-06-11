@@ -12,7 +12,7 @@ class BaseDeDados {
   Map<String, dynamic> pessoas = <String, dynamic>{};
   Map<String, dynamic> obras = <String, dynamic>{};
 
-  //?_________________________________________Livros da base de dados_________________________________________________________
+  //?___________________________Livros da base de dados____________________________________
 
   Future<List<Livro>> getLivrosBD(DatabaseReference referenciaLivrosBD) async {
     //
@@ -40,7 +40,7 @@ class BaseDeDados {
     return livros;
   }
 
-  //?_________________________________________Utilizadores da base de dados_________________________________________________________
+  //?_________________________Utilizadores da base de dados________________________________
 
   Future<Map<String, dynamic>> getUtilizadoresBD(
       DatabaseReference referenciaUtilizadoresBD) async {
@@ -67,9 +67,9 @@ class BaseDeDados {
     return pessoas;
   }
 
-  //?_________________________________________Histórico da base de dados_________________________________________________________
+  //?___________________________Histórico da base de dados________________________________
 
-  Future<Map<String, dynamic>> getObrasRequisitadasBD(
+  Future<Map<String, dynamic>> getHistoricoBD(
       DatabaseReference referenciaHistoricoBD) async {
     //
     HistoricoModel listaDeObrasRequisitadas;

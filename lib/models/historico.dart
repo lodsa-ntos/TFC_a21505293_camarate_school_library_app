@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:firebase_database/firebase_database.dart';
+
 class HistoricoModel {
   Map<String, dynamic> obrasRequisitadas;
 
@@ -32,6 +34,7 @@ class Historico {
   String? tituloLivro;
   String? uidRequisitante;
   String? dataEntrega;
+  String? id;
 
   Historico({
     this.idLivro,
@@ -40,6 +43,7 @@ class Historico {
     this.tituloLivro,
     this.uidRequisitante,
     this.dataEntrega,
+    this.id,
   });
 
   // Transformar os dados da Pessoa num mapa de pares chave/valor.
@@ -51,6 +55,7 @@ class Historico {
     dadosHistorico["tituloLivro"] = tituloLivro;
     dadosHistorico["uidRequisitante"] = uidRequisitante;
     dadosHistorico["dataEntrega"] = dataEntrega;
+    dadosHistorico["id"] = id;
 
     return dadosHistorico;
   }
@@ -64,6 +69,18 @@ class Historico {
       tituloLivro: json['tituloLivro'] ?? '',
       uidRequisitante: json['uidRequisitante'] ?? '',
       dataEntrega: json['dataEntrega'] ?? '',
+      id: json['id'] ?? '',
+    );
+  }
+
+  factory Historico.fromSnapshot(DataSnapshot snapshot) {
+    return Historico(
+      id: snapshot.key!,
+      dataRequisicao: (snapshot.value as Map)['dataRequisicao'],
+      requisitante: (snapshot.value as Map)['requisitante'],
+      tituloLivro: (snapshot.value as Map)['tituloLivro'],
+      uidRequisitante: (snapshot.value as Map)['uidRequisitante'],
+      dataEntrega: (snapshot.value as Map)['dataEntrega'],
     );
   }
 }
