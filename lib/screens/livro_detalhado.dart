@@ -248,6 +248,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           //? Regista a data de Entrega
                           _referenciaDataEntrega?.set(dataEntrega.toString());
 
+                          _referenciaIdHistorico?.set(historico.id);
+
                           //? _Colocar o histórico do livro requisitado pelo utilizador atual na BD
                           criarHistoricoDeRequisicao();
 
@@ -277,12 +279,18 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             //? atualiza o estado de requisição para devolvido
                             _referenciaRequisicao?.set(false);
 
-                            //? atualizar a data de devolução para o histórico
-                            refHistoricoBD
-                                .child('historico')
-                                .child(historico.id.toString())
-                                .update(
-                                    {'dataEntrega': dataDevolucao}).asStream();
+                            if (widget.livroARequisitar.idHistorico ==
+                                historico.id) {
+                              historico.id =
+                                  widget.livroARequisitar.idHistorico;
+                              //? atualizar a data de devolução para o histórico
+                              refHistoricoBD
+                                  .child('historico')
+                                  .child(historico.id.toString())
+                                  .update({
+                                'dataEntrega': dataDevolucao
+                              }).asStream();
+                            }
 
                             //? o livro fica devolvido
                             widget.livroARequisitar.isRequisitado = false;
