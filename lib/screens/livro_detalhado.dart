@@ -253,7 +253,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                           _referenciaIdHistorico?.set(historico.id);
 
-                          //? _Colocar o histórico do livro requisitado pelo utilizador atual na BD
+                          //* _Colocar o histórico do livro requisitado pelo utilizador atual na BD
                           criarHistoricoDeRequisicao();
 
                           //? o livro fica requisitado
@@ -284,7 +284,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                             historico.id = widget.livroARequisitar.idHistorico;
 
-                            //? atualizar a data de devolução para o histórico
+                            //? atualizar a data de entrega para o histórico
                             refHistoricoBD
                                 .child('historico')
                                 .child(historico.id.toString())
