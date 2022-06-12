@@ -75,9 +75,11 @@ class Mostrar {
                     List<dynamic> dadosBaseDeDados =
                         jsonDecode(jsonEncode(snapshot.data.snapshot.value));
 
+                    dadosBaseDeDados.shuffle();
+
                     //? Lista para guardar os dados convertidos e decodificados
                     List<Livro> _livros = dadosBaseDeDados
-                        .map((rawProduct) => Livro.fromJson(rawProduct))
+                        .map((livroBD) => Livro.fromJson(livroBD))
                         .toList();
 
                     //var ola = Livro.fromJson(snapshot.data.snapshot.value);
