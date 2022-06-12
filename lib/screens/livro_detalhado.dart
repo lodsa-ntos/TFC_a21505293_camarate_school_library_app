@@ -217,6 +217,9 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
 
+        //? Atribuir o valor da chave a variavel id do Historico
+        historico.id = chave;
+
         return Column(
           children: [
             Row(
@@ -278,6 +281,8 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           setState(() {
                             //? atualiza o estado de requisição para devolvido
                             _referenciaRequisicao?.set(false);
+
+                            historico.id = widget.livroARequisitar.idHistorico;
 
                             if (widget.livroARequisitar.idHistorico ==
                                 historico.id) {
@@ -355,9 +360,6 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
     historico.idLivro = widget.livroARequisitar.id;
 
     historico.dataEntrega = widget.livroARequisitar.dataDevolucao;
-
-    //? Atribuir o valor da chave a variavel id do Historico
-    historico.id = chave;
 
     //? Enviar os dados de requisição para a referencia do historico para a base de dados
     await refHistoricoBD
