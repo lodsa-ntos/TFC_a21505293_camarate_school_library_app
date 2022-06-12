@@ -251,6 +251,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                           //? Regista a data de Entrega
                           _referenciaDataEntrega?.set(dataEntrega.toString());
 
+                          //? Atribuir id aleatorio do histótrico para o livro
                           _referenciaIdHistorico?.set(historico.id);
 
                           //* _Colocar o histórico do livro requisitado pelo utilizador atual na BD
