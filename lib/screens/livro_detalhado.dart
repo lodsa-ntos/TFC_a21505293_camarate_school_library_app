@@ -160,6 +160,9 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   Livro livro = Livro();
   Pessoa pessoa = Pessoa();
 
+  //? Obter a chave aleatoria de ids gerados pela base de dados
+  String? chave = refHistoricoBD.push().key;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<LivroRequisitadoModel>(
@@ -268,14 +271,12 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
                             //? atualiza o estado de requisição para devolvido
                             _referenciaRequisicao?.set(false);
 
-                            //? Variavel dataEntrega do historico recebe a atual da devolução
-                            historico.dataEntrega = dataDevolucao;
-
                             //? atualizar a data de devolução para o histórico
                             refHistoricoBD
-                                .child("historico")
+                                .child('historico')
                                 .child(historico.id.toString())
-                                .update({'dataEntrega': historico.dataEntrega});
+                                .update(
+                                    {'dataEntrega': dataDevolucao}).asStream();
 
                             //? o livro fica devolvido
                             widget.livroARequisitar.isRequisitado = false;
@@ -337,10 +338,9 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
     historico.uidRequisitante = livro.uidLivro;
 
-    historico.dataEntrega = widget.livroARequisitar.dataDevolucao;
+    historico.idLivro = widget.livroARequisitar.id;
 
-    //? Obter a chave aleatoria de ids gerados pela base de dados
-    String? chave = refHistoricoBD.push().key;
+    historico.dataEntrega = widget.livroARequisitar.dataDevolucao;
 
     //? Atribuir o valor da chave a variavel id do Historico
     historico.id = chave;
