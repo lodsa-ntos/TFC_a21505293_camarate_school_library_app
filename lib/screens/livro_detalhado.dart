@@ -284,18 +284,12 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
 
                             historico.id = widget.livroARequisitar.idHistorico;
 
-                            if (widget.livroARequisitar.idHistorico ==
-                                historico.id) {
-                              historico.id =
-                                  widget.livroARequisitar.idHistorico;
-                              //? atualizar a data de devolução para o histórico
-                              refHistoricoBD
-                                  .child('historico')
-                                  .child(historico.id.toString())
-                                  .update({
-                                'dataEntrega': dataDevolucao
-                              }).asStream();
-                            }
+                            //? atualizar a data de devolução para o histórico
+                            refHistoricoBD
+                                .child('historico')
+                                .child(historico.id.toString())
+                                .update(
+                                    {'dataEntrega': dataDevolucao}).asStream();
 
                             //? o livro fica devolvido
                             widget.livroARequisitar.isRequisitado = false;
