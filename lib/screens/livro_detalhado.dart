@@ -150,6 +150,7 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
   DatabaseReference? _referenciaDataRequisicao;
   DatabaseReference? _referenciaDataEntrega;
   DatabaseReference? _referenciaIncrementar;
+  DatabaseReference? _referenciaIdHistorico;
 
   BaseDeDados baseDeDados = BaseDeDados();
 
@@ -207,6 +208,11 @@ class _BotaoRequisitarState extends State<_BotaoRequisitar> {
             .ref('livros')
             .child(widget.livroARequisitar.id.toString())
             .child('contarVezesRequisitadas');
+
+        _referenciaIdHistorico = FirebaseDatabase.instance
+            .ref('livros')
+            .child(widget.livroARequisitar.id.toString())
+            .child('idHistorico');
 
         //? o uid do Livro recebe o uid do utilizador na requisição do livro
         livro.uidLivro = utilizador!.uid;
