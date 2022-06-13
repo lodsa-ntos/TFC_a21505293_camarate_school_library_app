@@ -25,6 +25,8 @@ class _MenuLateralState extends State<MenuLateral> {
       // Titulo Home no centro
       isTitleCentered: true,
 
+      slidePercent: 50,
+
       tittleAppBar: const Text('Camarate School Library'),
 
       //? Icon pesquisar
