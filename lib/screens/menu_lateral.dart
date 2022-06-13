@@ -3,26 +3,11 @@ import 'package:camarate_school_library/screens/pesquisar.dart';
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 
+import 'historico_de_requisicao.dart';
+
 class _MenuLateralState extends State<MenuLateral> {
   //? Lista para os campos do menu lateral
   List<ScreenHiddenDrawer> _screens = [];
-
-  @override
-  void initState() {
-    //* iniciar a lista com os campos para o menu lateral
-    _screens = [
-      ScreenHiddenDrawer(
-        ItemHiddenMenu(
-          name: 'Home',
-          baseStyle: const TextStyle(),
-          selectedStyle: const TextStyle(),
-          colorLineSelected: Colors.green,
-        ),
-        const Home(),
-      )
-    ];
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +25,8 @@ class _MenuLateralState extends State<MenuLateral> {
       // Titulo Home no centro
       isTitleCentered: true,
 
+      tittleAppBar: const Text('Camarate School Library'),
+
       //? Icon pesquisar
       actionsAppBar: <Widget>[
         IconButton(
@@ -56,6 +43,39 @@ class _MenuLateralState extends State<MenuLateral> {
         ),
       ],
     );
+  }
+
+  @override
+  void initState() {
+    //* iniciar a lista com os campos para o menu lateral
+    _screens = [
+      ScreenHiddenDrawer(
+        ItemHiddenMenu(
+          name: 'Home',
+          baseStyle: const TextStyle(),
+          selectedStyle: const TextStyle(),
+          colorLineSelected: Colors.green,
+        ),
+        const Home(),
+      ),
+      ScreenHiddenDrawer(
+        ItemHiddenMenu(
+          name: 'Histórico',
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              //? Redireciona o utilizador para a página Historico de requisicao
+              builder: (context) => const HistoricoDeRequisicao(),
+            ),
+          ),
+          baseStyle: const TextStyle(),
+          selectedStyle: const TextStyle(),
+          colorLineSelected: Colors.green,
+        ),
+        const HistoricoDeRequisicao(),
+      )
+    ];
+    super.initState();
   }
 }
 
