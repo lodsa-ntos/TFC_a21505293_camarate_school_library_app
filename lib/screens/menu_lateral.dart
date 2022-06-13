@@ -25,6 +25,7 @@ class _MenuLateralState extends State<MenuLateral> {
       // Titulo Home no centro
       isTitleCentered: true,
 
+      // Distância entre os nomes e o ecrã home dentro do menu lateral
       slidePercent: 50,
 
       tittleAppBar: const Text('Camarate School Library'),
@@ -51,6 +52,7 @@ class _MenuLateralState extends State<MenuLateral> {
   void initState() {
     //* iniciar a lista com os campos para o menu lateral
     _screens = [
+      //? Home
       ScreenHiddenDrawer(
         ItemHiddenMenu(
           name: 'Home',
@@ -60,6 +62,8 @@ class _MenuLateralState extends State<MenuLateral> {
         ),
         const Home(),
       ),
+
+      //? Histórico
       ScreenHiddenDrawer(
         ItemHiddenMenu(
           name: 'Histórico',
@@ -75,7 +79,29 @@ class _MenuLateralState extends State<MenuLateral> {
           colorLineSelected: Colors.green,
         ),
         const HistoricoDeRequisicao(),
-      )
+      ),
+
+      //? Ajuda
+      ScreenHiddenDrawer(
+        ItemHiddenMenu(
+          name: 'Ajuda',
+          baseStyle: const TextStyle(),
+          selectedStyle: const TextStyle(),
+          colorLineSelected: Colors.green,
+        ),
+        const Home(),
+      ),
+
+      //? Sobre nós
+      ScreenHiddenDrawer(
+        ItemHiddenMenu(
+          name: 'Sobre nós',
+          baseStyle: const TextStyle(),
+          selectedStyle: const TextStyle(),
+          colorLineSelected: Colors.green,
+        ),
+        const Home(),
+      ),
     ];
     super.initState();
   }
