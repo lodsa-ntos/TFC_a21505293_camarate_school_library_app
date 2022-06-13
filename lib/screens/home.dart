@@ -2,6 +2,7 @@ import 'package:camarate_school_library/models/view_models/livro_requisitado_vie
 import 'package:camarate_school_library/util/mostrar_seccoes_livros.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
 
 class _HomeState extends State<Home> {
@@ -12,6 +13,16 @@ class _HomeState extends State<Home> {
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
         return Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.menu, color: Colors.white),
+              onPressed: () {
+                ZoomDrawer.of(context)!.toggle();
+              },
+            ),
+            title: const Text('Histórico'),
+          ),
+
           /// Menu Lateral
 
           //? CONSTRUIR INTERFACE PARA O UTILIZADOR

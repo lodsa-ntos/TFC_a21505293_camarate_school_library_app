@@ -51,6 +51,7 @@ dependencies:
   fluttertoast: ^8.0.9
   uuid: ^3.0.6
   hidden_drawer_menu: ^3.0.1
+  flutter_zoom_drawer: ^3.0.2
 
 dependency_overrides:
   firebase_messaging_platform_interface: 3.1.6
