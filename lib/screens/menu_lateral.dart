@@ -16,6 +16,7 @@ class _MenuLateralState extends State<MenuLateral> {
           name: 'Home',
           baseStyle: const TextStyle(),
           selectedStyle: const TextStyle(),
+          colorLineSelected: Colors.green,
         ),
         const Home(),
       )
@@ -27,7 +28,8 @@ class _MenuLateralState extends State<MenuLateral> {
   Widget build(BuildContext context) {
     //
     return HiddenDrawerMenu(
-      backgroundColorMenu: Colors.blueAccent,
+      // Cor para dentro do menu lateral
+      backgroundColorMenu: Colors.blue,
       screens: _screens,
       initPositionSelected: 0,
 
