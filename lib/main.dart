@@ -1,9 +1,12 @@
+import 'dart:io';
+
+import 'package:camarate_school_library/screens/menu_lateral.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:camarate_school_library/screens/login.dart';
-import 'package:camarate_school_library/screens/home.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -50,14 +53,16 @@ class AutenticarUtilizador extends StatelessWidget {
     } else if (autenticacao.utilizador == null) {
       return const LoginScreen();
     } else {
-      return const Home();
+      return const MenuLateral();
     }
   }
 
   aCarregarPagina() {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: Platform.isAndroid
+            ? const CircularProgressIndicator()
+            : const CupertinoActivityIndicator(),
       ),
     );
   }

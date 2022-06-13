@@ -1,5 +1,4 @@
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
-import 'package:camarate_school_library/screens/pesquisar.dart';
 import 'package:camarate_school_library/util/mostrar_seccoes_livros.dart';
 
 import 'package:flutter/material.dart';
@@ -13,25 +12,6 @@ class _HomeState extends State<Home> {
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
         return Scaffold(
-          appBar: AppBar(
-            // icone de pesquisa
-            actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.search, color: Colors.white),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      //** Redireciona o utilizador para a página de detalhes do livro */
-                      builder: (context) => const PesquisaDeLivro(),
-                    ),
-                  );
-                },
-              ),
-            ],
-            title: const Text('Home'),
-          ),
-
           /// Menu Lateral
 
           //? CONSTRUIR INTERFACE PARA O UTILIZADOR

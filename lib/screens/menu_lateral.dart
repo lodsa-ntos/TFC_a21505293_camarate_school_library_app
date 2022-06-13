@@ -1,10 +1,15 @@
 import 'package:camarate_school_library/screens/home.dart';
+import 'package:camarate_school_library/screens/pesquisar.dart';
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 
 class _MenuLateralState extends State<MenuLateral> {
+  //? Lista para os campos do menu lateral
+  List<ScreenHiddenDrawer> _screens = [];
+
   @override
   void initState() {
+    //* iniciar a lista com os campos para o menu lateral
     _screens = [
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -25,10 +30,24 @@ class _MenuLateralState extends State<MenuLateral> {
       backgroundColorMenu: Colors.blueAccent,
       screens: _screens,
       initPositionSelected: 0,
+
+      //? Icon pesquisar
+      actionsAppBar: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.search, color: Colors.white),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                //? Redireciona o utilizador para a página de detalhes do livro
+                builder: (context) => const PesquisaDeLivro(),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
-
-  List<ScreenHiddenDrawer> _screens = [];
 }
 
 class MenuLateral extends StatefulWidget {
