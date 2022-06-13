@@ -35,7 +35,7 @@ class _MenuLateralState extends State<MenuLateral> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                //? Redireciona o utilizador para a página de detalhes do livro
+                //? Redireciona o utilizador para a página para pesquisar um livro
                 builder: (context) => const PesquisaDeLivro(),
               ),
             );
