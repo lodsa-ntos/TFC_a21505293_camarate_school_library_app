@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:camarate_school_library/database/base_de_dados.dart';
 import 'package:camarate_school_library/models/historico.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -49,9 +51,11 @@ class HistoricoDeRequisicao extends StatelessWidget {
                         case ConnectionState.waiting:
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const <Widget>[
-                              CircularProgressIndicator(),
-                              Text(" A carregar obras requisitados...")
+                            children: <Widget>[
+                              Platform.isAndroid
+                                  ? const CircularProgressIndicator()
+                                  : const CupertinoActivityIndicator(),
+                              const Text(" A carregar obras requisitados...")
                             ],
                           );
 

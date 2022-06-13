@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:camarate_school_library/screens/home.dart';
 import 'package:camarate_school_library/screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -36,9 +39,11 @@ class _RegistarState extends State<Registar> {
   //? Simular chamada de espera para criar utilizador
   final _aCriarUtilizador = Row(
     mainAxisAlignment: MainAxisAlignment.center,
-    children: const <Widget>[
-      CircularProgressIndicator(),
-      Text(" A criar utilizador... aguarde")
+    children: <Widget>[
+      Platform.isAndroid
+          ? const CircularProgressIndicator()
+          : const CupertinoActivityIndicator(),
+      const Text(" A criar utilizador... aguarde")
     ],
   );
 

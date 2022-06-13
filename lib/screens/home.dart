@@ -91,7 +91,7 @@ class _HomeState extends State<Home> {
                 //
                 //* APRESENTAR LIVROS REQUISITADOS - INTERFACE PARA O UTILIZADOR
 
-                Mostrar().livrosRequisitados,
+                ///Mostrar().livrosRequisitados,
 
                 //? Título [Prateleiras] na interface
                 prateleiras,

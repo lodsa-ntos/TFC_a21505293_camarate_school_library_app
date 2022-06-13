@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -38,9 +40,11 @@ class Mostrar {
                 case ConnectionState.waiting:
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const <Widget>[
-                      CircularProgressIndicator(),
-                      Text(" A carregar livros requisitados...")
+                    children: <Widget>[
+                      Platform.isAndroid
+                          ? const CircularProgressIndicator()
+                          : const CupertinoActivityIndicator(),
+                      const Text(" A carregar livros requisitados...")
                     ],
                   );
 
@@ -74,8 +78,6 @@ class Mostrar {
                     //? tRanformar os dados da base de dados numa lista dinamica
                     List<dynamic> dadosBaseDeDados =
                         jsonDecode(jsonEncode(snapshot.data.snapshot.value));
-
-                    dadosBaseDeDados.shuffle();
 
                     //? Lista para guardar os dados convertidos e decodificados
                     List<Livro> _livros = dadosBaseDeDados
@@ -224,9 +226,11 @@ class Mostrar {
             case ConnectionState.waiting:
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  CircularProgressIndicator(),
-                  Text(" A carregar livros...")
+                children: <Widget>[
+                  Platform.isAndroid
+                      ? const CircularProgressIndicator()
+                      : const CupertinoActivityIndicator(),
+                  const Text(" A carregar livros...")
                 ],
               );
 
@@ -363,9 +367,11 @@ class Mostrar {
             case ConnectionState.waiting:
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  CircularProgressIndicator(),
-                  Text(" A carregar livros...")
+                children: <Widget>[
+                  Platform.isAndroid
+                      ? const CircularProgressIndicator()
+                      : const CupertinoActivityIndicator(),
+                  const Text(" A carregar livros...")
                 ],
               );
 
@@ -514,9 +520,11 @@ class Mostrar {
             case ConnectionState.waiting:
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  CircularProgressIndicator(),
-                  Text(" A carregar livros...")
+                children: <Widget>[
+                  Platform.isAndroid
+                      ? const CircularProgressIndicator()
+                      : const CupertinoActivityIndicator(),
+                  const Text(" A carregar livros...")
                 ],
               );
 
@@ -665,9 +673,11 @@ class Mostrar {
             case ConnectionState.waiting:
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  CircularProgressIndicator(),
-                  Text(" A carregar livros...")
+                children: <Widget>[
+                  Platform.isAndroid
+                      ? const CircularProgressIndicator()
+                      : const CupertinoActivityIndicator(),
+                  const Text(" A carregar livros...")
                 ],
               );
 

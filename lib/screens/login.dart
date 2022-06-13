@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:camarate_school_library/screens/home.dart';
 import 'package:camarate_school_library/screens/registar.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -36,9 +39,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     var _aCarregarAutenticacao = Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const <Widget>[
-        CircularProgressIndicator(),
-        Text(" A autenticar... aguarde")
+      children: <Widget>[
+        Platform.isAndroid
+            ? const CircularProgressIndicator()
+            : const CupertinoActivityIndicator(),
+        const Text(" A autenticar... aguarde")
       ],
     );
 

@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:camarate_school_library/models/livro.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -67,9 +69,11 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
               case ConnectionState.waiting:
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
-                    CircularProgressIndicator(),
-                    Text(" A carregar livros...")
+                  children: <Widget>[
+                    Platform.isAndroid
+                        ? const CircularProgressIndicator()
+                        : const CupertinoActivityIndicator(),
+                    const Text(" A carregar livros...")
                   ],
                 );
 
