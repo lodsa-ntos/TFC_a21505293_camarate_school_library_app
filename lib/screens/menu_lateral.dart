@@ -30,8 +30,15 @@ class _MenuLateralState extends State<MenuLateral> {
     return HiddenDrawerMenu(
       // Cor para dentro do menu lateral
       backgroundColorMenu: Colors.blue,
+
+      // Lista dos campos do menu lateral
       screens: _screens,
+
+      // Posicionar a página inicial selecionado no menu (iniciar em 0)
       initPositionSelected: 0,
+
+      // Titulo Home no centro
+      isTitleCentered: true,
 
       //? Icon pesquisar
       actionsAppBar: <Widget>[
