@@ -2,6 +2,10 @@ import 'package:camarate_school_library/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:provider/provider.dart';
+
+import '../services/auth_services.dart';
+import 'login.dart';
 
 final ZoomDrawerController _controlarZoomMenuLateral = ZoomDrawerController();
 
@@ -16,7 +20,7 @@ class _MenuLateralState extends State<MenuLateral> {
       style: DrawerStyle.defaultStyle,
       showShadow: false,
       openCurve: Curves.fastOutSlowIn,
-      slideWidth: MediaQuery.of(context).size.width * 0.50,
+      slideWidth: MediaQuery.of(context).size.width * 0.55,
       duration: const Duration(milliseconds: 500),
       angle: 0.0,
       mainScreen: const Home(),
@@ -40,8 +44,11 @@ class _CamposMenuLateralState extends State<CamposMenuLateral> {
         child: SizedBox(
           height: size.height * 0.4,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const SizedBox(height: 100),
+
+              // Home
               Row(
                 children: const [
                   Icon(Icons.home_rounded, color: Colors.white),
@@ -52,6 +59,48 @@ class _CamposMenuLateralState extends State<CamposMenuLateral> {
                   )
                 ],
               ),
+
+              Row(
+                children: const [
+                  Icon(Icons.help, color: Colors.white),
+                  SizedBox(width: 10),
+                  Text('Ajuda', style: TextStyle(color: Colors.white))
+                ],
+              ),
+
+              Row(
+                children: const [
+                  Icon(Icons.receipt_long_rounded, color: Colors.white),
+                  SizedBox(width: 10),
+                  Text('Sobre nós', style: TextStyle(color: Colors.white))
+                ],
+              ),
+
+              const Divider(color: Colors.white),
+
+              // Terminar sessão
+              InkWell(
+                  child: Row(
+                    children: const [
+                      Icon(Icons.logout, color: Colors.white),
+                      SizedBox(width: 10),
+                      Text(
+                        'Terminar sessão',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ],
+                  ),
+                  onTap: () async {
+                    setState(() {});
+                    await context.read<AuthServices>().terminarSessao();
+                    await Navigator.pushAndRemoveUntil(
+                      (context),
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()),
+                      (route) => false,
+                    );
+                  }),
             ],
           ),
         ),
