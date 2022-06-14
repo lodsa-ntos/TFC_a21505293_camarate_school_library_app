@@ -14,7 +14,7 @@ class _MenuLateralState extends State<MenuLateral> {
       controller: _controlarZoomMenuLateral,
       borderRadius: 10.0,
       style: DrawerStyle.defaultStyle,
-      showShadow: true,
+      showShadow: false,
       openCurve: Curves.fastOutSlowIn,
       slideWidth: MediaQuery.of(context).size.width * 0.50,
       duration: const Duration(milliseconds: 500),
@@ -28,11 +28,33 @@ class _MenuLateralState extends State<MenuLateral> {
 class _CamposMenuLateralState extends State<CamposMenuLateral> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.blue,
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 50),
-        children: const [],
+      body: Padding(
+        padding: const EdgeInsets.only(
+          left: 30.0,
+          top: 30.0 * 2,
+          bottom: 30.0 * 3,
+        ),
+        child: SizedBox(
+          height: size.height * 0.4,
+          child: Column(
+            children: [
+              const SizedBox(height: 100),
+              Row(
+                children: const [
+                  Icon(Icons.home_rounded, color: Colors.white),
+                  SizedBox(width: 10),
+                  Text(
+                    'Home',
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
