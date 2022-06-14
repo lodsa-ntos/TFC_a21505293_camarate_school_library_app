@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
                 ZoomDrawer.of(context)!.toggle();
               },
             ),
-            title: const Text('Histórico'),
+            title: const Text('Home'),
           ),
 
           /// Menu Lateral

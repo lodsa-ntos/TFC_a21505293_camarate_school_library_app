@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:camarate_school_library/database/base_de_dados.dart';
 import 'package:camarate_school_library/models/historico.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
-import 'package:camarate_school_library/screens/menu_lateral.dart';
+import 'package:camarate_school_library/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,7 +31,7 @@ class HistoricoDeRequisicao extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     //? Redireciona o utilizador para a página Home
-                    builder: (context) => const MenuLateral(),
+                    builder: (context) => const Home(),
                   ),
                 );
               },
