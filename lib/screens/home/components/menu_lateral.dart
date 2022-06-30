@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:camarate_school_library/screens/ajuda/centro_de_ajuda.dart';
 import 'package:camarate_school_library/screens/contacto.dart';
+import 'package:camarate_school_library/screens/corpo_docente.dart';
 import 'package:camarate_school_library/screens/home/home.dart';
+import 'package:camarate_school_library/screens/procedimentos.dart';
 import 'package:camarate_school_library/screens/sobre/sobre.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -12,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../services/auth_services.dart';
 import '../../historico/historico_de_requisicao.dart';
@@ -125,22 +128,7 @@ class _CamposMenuLateralState extends State<CamposMenuLateral> {
                       },
                     ),
 
-                    //? Contacto
-                    InkWell(
-                      child: campoDoMenu(
-                          FluentIcons.location_24_regular, 'Contacto'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            //* Redireciona o utilizador para a página Sobre
-                            builder: (context) => const Conatacto(),
-                          ),
-                        );
-                      },
-                    ),
-
-                    //? Ajuda
+                    //? Centro de ajuda
                     InkWell(
                       child: campoDoMenu(
                           FluentIcons.chat_help_24_regular, 'Centro de ajuda'),
@@ -170,11 +158,51 @@ class _CamposMenuLateralState extends State<CamposMenuLateral> {
                       },
                     ),
 
-                    //? FAQs
+                    //? Corpo Docente
                     InkWell(
-                      child:
-                          campoDoMenu(FluentIcons.archive_24_regular, 'FAQs'),
-                      onTap: () {},
+                      child: campoDoMenu(FluentIcons.book_contacts_24_regular,
+                          'Corpo Docente'),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            //* Redireciona o utilizador para a página de Ajuda
+                            builder: (context) => const CorpoDocente(),
+                          ),
+                        );
+                      },
+                    ),
+
+                    //? Procedimentos
+                    InkWell(
+                      child: campoDoMenu(
+                        FluentIcons.clipboard_bullet_list_rtl_20_regular,
+                        'Procedimentos',
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            //* Redireciona o utilizador para a página de Ajuda
+                            builder: (context) => const Procedimentos(),
+                          ),
+                        );
+                      },
+                    ),
+
+                    //? Morada
+                    InkWell(
+                      child: campoDoMenu(FluentIcons.building_home_24_regular,
+                          'Estabelecimento'),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            //* Redireciona o utilizador para a página Sobre
+                            builder: (context) => const Estabelecimento(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -184,18 +212,47 @@ class _CamposMenuLateralState extends State<CamposMenuLateral> {
               const SizedBox(width: 10),
 
               //? Terminar sessão
-              InkWell(
-                child: campoDoMenu(FluentIcons.sign_out_24_regular, 'Logout'),
-                onTap: () async {
-                  setState(() {});
-                  await context.read<AuthServices>().terminarSessao();
-                  await Navigator.pushAndRemoveUntil(
-                    (context),
-                    MaterialPageRoute(
-                        builder: (context) => const LoginScreen()),
-                    (route) => false,
-                  );
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
+                    child: campoDoMenu(
+                        FluentIcons.sign_out_24_regular, 'Logout  |'),
+                    onTap: () async {
+                      setState(() {});
+                      await context.read<AuthServices>().terminarSessao();
+                      await Navigator.pushAndRemoveUntil(
+                        (context),
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()),
+                        (route) => false,
+                      );
+                    },
+                  ),
+                  SizedBox(width: 5),
+                  InkWell(
+                    onTap: () => launchUrl(
+                      Uri.parse('https://portalesc.wixsite.com/site'),
+                    ),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'assets/logotipo/logo_entidade.png',
+                          width: 20,
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'ESC',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Carmen',
+                            fontSize: 14,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
             ],
           ),
@@ -319,7 +376,7 @@ class _CamposMenuLateralState extends State<CamposMenuLateral> {
         const SizedBox(width: 10),
 
         //
-        if (titulo == 'Logout') ...[
+        if (titulo == 'Logout  |') ...[
           Text(
             titulo,
             overflow: TextOverflow.ellipsis,

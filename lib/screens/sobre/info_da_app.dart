@@ -73,7 +73,8 @@ class InformacaoDaApp extends StatelessWidget {
                   const SizedBox(height: 10.0),
                   InkWell(
                     onTap: () => launchUrl(
-                        Uri.parse('https://portalesc.wixsite.com/site')),
+                      Uri.parse('https://portalesc.wixsite.com/site'),
+                    ),
                     child: Image.asset(
                       'assets/logotipo/logo_entidade.jpg',
                       width: 80.0,
@@ -103,7 +104,7 @@ class InformacaoDaApp extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'Gilroy',
                         color: Color.fromRGBO(27, 68, 166, 1),
-                        fontSize: 20.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.w800,
                       ),
                       textAlign: TextAlign.center,

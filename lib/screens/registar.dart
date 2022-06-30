@@ -6,14 +6,12 @@ import 'package:camarate_school_library/screens/home/home.dart';
 import 'package:camarate_school_library/screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth_services.dart';
@@ -95,15 +93,6 @@ class _RegistarState extends State<Registar> {
     ],
   );
 
-  final FirebaseStorage storage = FirebaseStorage.instance;
-
-  File? foto;
-  bool isUpload = false;
-  double total = 0;
-
-  List<Reference> refs = [];
-  List<String> ficheiros = [];
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -141,100 +130,6 @@ class _RegistarState extends State<Registar> {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    const SizedBox(height: 30),
-                    foto == null
-                        ? Stack(
-                            children: [
-                              PhysicalModel(
-                                color: Colors.black,
-                                elevation: 3.0,
-                                shape: BoxShape.circle,
-                                child: CircleAvatar(
-                                  radius: 50,
-                                  backgroundColor: Colors.grey.shade400,
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: Icon(
-                                          FluentIcons.person_48_regular,
-                                          color: Colors.white,
-                                          size: 45,
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          pickAndUploadImage();
-                                        },
-                                        child: Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: PhysicalModel(
-                                            color: Colors.black,
-                                            elevation: 3.0,
-                                            shape: BoxShape.circle,
-                                            child: CircleAvatar(
-                                              radius: 18,
-                                              backgroundColor: Colors.white,
-                                              child: Icon(
-                                                FluentIcons
-                                                    .camera_add_24_regular,
-                                                color: Colors.grey.shade700,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        : Stack(
-                            children: [
-                              CircleAvatar(
-                                radius: 50,
-                                child: PhysicalModel(
-                                  color: Colors.black,
-                                  elevation: 3.0,
-                                  shape: BoxShape.circle,
-                                  child: CircleAvatar(
-                                    radius: 50,
-                                    backgroundImage: Image.file(
-                                      foto!,
-                                      fit: BoxFit.cover,
-                                    ).image,
-                                    child: Stack(
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            getFoto();
-                                          },
-                                          child: Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: PhysicalModel(
-                                              color: Colors.black,
-                                              elevation: 3.0,
-                                              shape: BoxShape.circle,
-                                              child: CircleAvatar(
-                                                radius: 18,
-                                                backgroundColor: Colors.white,
-                                                child: Icon(
-                                                  FluentIcons
-                                                      .camera_add_24_regular,
-                                                  color: Colors.grey.shade700,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
 
                     //? Formulário
                     const Padding(padding: EdgeInsets.only(bottom: 30)),
@@ -698,63 +593,6 @@ class _RegistarState extends State<Registar> {
         ),
       ),
     );
-  }
-
-  pickAndUploadImage() async {
-    File? file = await getFoto();
-    if (file != null) {
-      UploadTask task = await upload(file.path);
-
-      task.snapshotEvents.listen((TaskSnapshot snapshot) async {
-        if (snapshot.state == TaskState.running) {
-          setState(() {
-            isUpload = true;
-            total = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          });
-        } else if (snapshot.state == TaskState.success) {
-          ficheiros.add(await snapshot.ref.getDownloadURL());
-          refs.add(snapshot.ref);
-          setState(() => isUpload = false);
-        }
-      });
-    }
-  }
-
-  Future<File?> getFoto() async {
-    var carregarFoto =
-        // ignore: invalid_use_of_visible_for_testing_member
-        await ImagePicker.platform.pickImage(source: ImageSource.gallery);
-
-    setState(
-      () {
-        if (carregarFoto != null) {
-          foto = File(carregarFoto.path);
-        } else {
-          print('Nenhuma imagem selecionada');
-        }
-      },
-    );
-    return foto;
-  }
-
-  Future<UploadTask> upload(String path) async {
-    // Variável do tipo Pessoa para alcançar os atributos do professor
-    Pessoa _pessoa = Pessoa();
-    //? referência para criar os dados do historico na base de dados
-    DatabaseReference refHistoricoBD = FirebaseDatabase.instance.ref();
-    String? chave = refHistoricoBD.push().key;
-    //? Atribuir o valor da chave a variavel id do Historico
-    _pessoa.foto = chave;
-
-    File file = File(path);
-    try {
-      String ref =
-          'fotos/utilizador-${DateTime.now().toString() + (_pessoa.foto.toString())}.jpg';
-
-      return storage.ref(ref).putFile(file);
-    } on FirebaseException catch (e) {
-      throw Exception('Erro ao carregar: ${e.code}');
-    }
   }
 
   Future _submeterFormulario() async {

@@ -57,7 +57,7 @@ final biblioteca = Padding(
       Padding(
         padding: EdgeInsets.only(left: 5.0),
         child: Text(
-          'Biblioteca',
+          'Prateleira',
           style: TextStyle(
             fontFamily: 'Gilroy',
             fontSize: 25,

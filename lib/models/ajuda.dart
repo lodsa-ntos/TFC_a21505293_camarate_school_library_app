@@ -20,7 +20,7 @@ final List<Ajuda> perguntasERespostas = <Ajuda>[
     'Quando concluir a requisição na aplicação como obtenho o livro ?',
     <Ajuda>[
       Ajuda(
-          'Após a requisição deve derijir-se a biblioteca da escola para poder levantar o livro'),
+          'Após a requisição deve derigir-se a biblioteca da escola para poder levantar o livro'),
     ],
   ),
   Ajuda(

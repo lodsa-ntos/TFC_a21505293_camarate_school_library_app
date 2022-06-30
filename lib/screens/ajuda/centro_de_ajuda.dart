@@ -32,6 +32,8 @@ class CentroDeAjuda extends StatelessWidget {
       title: Text(
         'Centro de ajuda',
         style: TextStyle(
+          fontFamily: 'Gilroy',
+          fontWeight: FontWeight.bold,
           color: Theme.of(context).textTheme.headline6!.color,
         ),
       ),

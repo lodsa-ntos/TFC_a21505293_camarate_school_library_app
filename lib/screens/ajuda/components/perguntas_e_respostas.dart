@@ -14,13 +14,29 @@ class PerguntasERespostas extends StatelessWidget {
   // Esta função cria recursivamente as linhas da lista
   Widget _construirPerguntasERespostas(Ajuda ajuda) {
     if (ajuda.listaDeAjudas.isEmpty) {
-      return ListTile(
-        title: Text(ajuda.titulo),
+      return Container(
+        margin: EdgeInsets.only(top: 5, bottom: 33),
+        child: ListTile(
+          title: Text(
+            ajuda.titulo,
+            style: TextStyle(fontFamily: 'Carmen', height: 1.5),
+          ),
+        ),
       );
     }
     return ExpansionTile(
       key: PageStorageKey<Ajuda>(ajuda),
-      title: Text(ajuda.titulo),
+      title: Container(
+        margin: EdgeInsets.only(top: 15),
+        child: Text(
+          ajuda.titulo,
+          style: TextStyle(
+            fontFamily: 'Gilroy',
+            fontWeight: FontWeight.w600,
+            color: Color(0xff4285f4),
+          ),
+        ),
+      ),
       children: ajuda.listaDeAjudas
           .map<Widget>(_construirPerguntasERespostas)
           .toList(),
