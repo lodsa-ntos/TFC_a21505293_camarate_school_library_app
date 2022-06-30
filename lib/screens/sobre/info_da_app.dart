@@ -61,7 +61,7 @@ class InformacaoDaApp extends StatelessWidget {
                   Material(
                     type: MaterialType.transparency,
                     child: Text(
-                      'Versão 1.00',
+                      'Versão 1.0.0',
                       style: TextStyle(
                         fontFamily: 'Gilroy',
                         fontSize: 16,
