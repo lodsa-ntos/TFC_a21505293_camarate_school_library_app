@@ -31,7 +31,7 @@ class Sobre extends StatelessWidget {
           color: Theme.of(context).textTheme.headline6!.color,
         ),
       ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       elevation: 0,
     );
   }

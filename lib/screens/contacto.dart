@@ -7,6 +7,7 @@ class Estabelecimento extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           icon: SvgPicture.asset("assets/icons/voltar.svg"),
@@ -22,7 +23,7 @@ class Estabelecimento extends StatelessWidget {
             color: Theme.of(context).textTheme.headline6!.color,
           ),
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: SingleChildScrollView(
