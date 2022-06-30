@@ -10,7 +10,7 @@ class Validator {
     if (email.trim().isEmpty) {
       return "Este campo é obrigatório";
     } else if (!emailRegExp.hasMatch(email.trim())) {
-      return "Por favor, introduza um email válido";
+      return "Introduza um email válido";
     }
 
     return null;
@@ -40,7 +40,7 @@ class Validator {
     if (numCartao.trim().isEmpty) {
       return "Este campo é obrigatório";
     } else if (!_validNumero.hasMatch(numCartao.trim())) {
-      return "Por favor, introduza um número de cartão válido";
+      return "Introduza um número de cartão válido";
     }
 
     return null;
@@ -56,7 +56,7 @@ class Validator {
     if (nome.trim().isEmpty) {
       return "Este campo é obrigatório";
     } else if (!_validNomeCompleto.hasMatch(nome.trim())) {
-      return "Por favor, introduza um nome válido. Apenas o primeiro nome e so último";
+      return "Introduza um nome válido. Apenas o primeiro nome e so último";
     }
 
     return null;
@@ -105,7 +105,7 @@ class Validator {
     if (ano.trim().isEmpty) {
       return "Este campo é obrigatório";
     } else if (!_validNumero.hasMatch(ano.trim())) {
-      return "Por favor, introduza um ano válido.";
+      return "";
     }
 
     return null;
@@ -121,7 +121,7 @@ class Validator {
     if (turma.trim().isEmpty) {
       return "Este campo é obrigatório";
     } else if (!_validNumero.hasMatch(turma.trim())) {
-      return "Por favor, introduza a tua turma.";
+      return "Introduzaa tua turma.";
     }
 
     return null;

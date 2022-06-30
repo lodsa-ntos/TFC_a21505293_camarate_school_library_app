@@ -1,14 +1,19 @@
 import 'dart:io';
+import 'dart:async';
 
 import 'package:camarate_school_library/models/pessoa.dart';
-import 'package:camarate_school_library/screens/home.dart';
+import 'package:camarate_school_library/screens/home/home.dart';
 import 'package:camarate_school_library/screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth_services.dart';
@@ -19,10 +24,14 @@ class _RegistarState extends State<Registar> {
   //? Chave para identificar a validação do formulario
   final _chaveFormRegisto = GlobalKey<FormState>();
 
+  var _texto = '';
+
   //? Esconder a password
   bool esconderPassword = true;
 
   bool _isLoading = false;
+
+  FocusNode myFocusNode = new FocusNode();
 
   //? Controladores para guardar o texto dos campos
   final _emailInputController = TextEditingController();
@@ -32,6 +41,45 @@ class _RegistarState extends State<Registar> {
   final _numAlunoController = TextEditingController();
   final _anoController = TextEditingController();
   final _turmaController = TextEditingController();
+
+  final valorAno = ValueNotifier('');
+
+  final anoOpcoes = ['7º', '8º', '9º', '10º', '11º', '12º'];
+
+  final valorTurma = ValueNotifier('');
+
+  final turmaOpcoes = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
+  ];
+
+  final valorNumeroPessaos = ValueNotifier('');
+
+  final numOpcoes = [for (var i = 1; i <= 30; i++) i.toString()];
 
   //? Alcançar a instancia da abse de dados para autenticação do utilizador atual
   final _auth = FirebaseAuth.instance;
@@ -47,260 +95,672 @@ class _RegistarState extends State<Registar> {
     ],
   );
 
+  final FirebaseStorage storage = FirebaseStorage.instance;
+
+  File? foto;
+  bool isUpload = false;
+  double total = 0;
+
+  List<Reference> refs = [];
+  List<String> ficheiros = [];
+
   @override
   Widget build(BuildContext context) {
-//? variável do campo da password
-    final _decoracaoCampoDaPassword = InputDecoration(
-      contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      filled: true,
-      labelText: "Palavra-passe",
-      labelStyle: const TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-        color: Color.fromRGBO(127, 127, 127, 2),
-      ),
-      suffixIcon: InkWell(
-        onTap: () {
-          setState(() {
-            esconderPassword = !esconderPassword;
-          });
-        },
-        child: Icon(
-          esconderPassword ? Icons.visibility_off : Icons.visibility,
-        ),
-      ),
-      enabledBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(
-          width: 2.0,
-          color: Color.fromRGBO(204, 204, 204, 2),
-        ),
-      ),
-    );
-
-    return SafeArea(
-      child: Scaffold(
-        /// evitar que os widgets sejam redimensionados se o teclado aparecer
-        /// de repente e tapar tudo.
-        resizeToAvoidBottomInset: true,
-        body: SingleChildScrollView(
-          reverse: true,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Padding(padding: EdgeInsets.only(bottom: 45)),
-                const Text(
-                  "Regista-te", //? titulo
-                  textAlign: TextAlign.center,
-                  style: StyleRegistoScreen.estiloTituloRegisto,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 15),
-                Form(
-                  key: _chaveFormRegisto,
-                  child: Column(
-                    children: <Widget>[
-                      //? Número do cartão
-                      TextFormField(
-                        validator: (numCartao) =>
-                            Validator.validarNumeroCartao(numCartao: numCartao),
-
-                        // Obter o valor do email escrito pelo user
-                        controller: _numCartaoAlunoController,
-
-                        // Estilo dentro do campo de e-mail
-                        style: StyleRegistoScreen.estiloNumCartao,
-
-                        // Estilo da decoração do campo do e-mail
-                        decoration: StyleRegistoScreen.decoracaoNumCartao,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: SafeArea(
+        child: Scaffold(
+          /// evitar que os wid
+          /// gets sejam redimensionados se o teclado aparecer
+          /// de repente e tapar tudo.
+          resizeToAvoidBottomInset: true,
+          body: ListView(
+            padding: const EdgeInsets.only(left: 2.0, right: 2.0),
+            shrinkWrap: true,
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Padding(padding: EdgeInsets.only(bottom: 30)),
+                    Text(
+                      "Regista-te", //? titulo
+                      style: StyleRegistoScreen.estiloTituloRegisto,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      "E embarca nas viajens da leitura na tua biblioteca!", //? titulo
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
                       ),
-
-                      const SizedBox(height: 16.0),
-
-                      //? E-mail
-                      TextFormField(
-                        validator: (email) =>
-                            Validator.validarEmail(email: email),
-
-                        // Obter o valor do email escrito pelo user
-                        controller: _emailInputController,
-
-                        // Estilo dentro do campo de e-mail
-                        style: StyleRegistoScreen.estiloCampoDoEmail,
-
-                        // Estilo da decoração do campo do e-mail
-                        decoration: StyleRegistoScreen.decoracaoCampoDoEmail,
-                      ),
-
-                      const SizedBox(height: 16.0),
-
-                      //? Palavra-passe
-                      TextFormField(
-                        validator: (password) =>
-                            Validator.validarPasswordRegisto(
-                                password: password),
-
-                        // Esconder a palavra-passe
-                        obscureText: esconderPassword,
-
-                        // Obter o valor da password escrito pelo user
-                        controller: _passwordInputController,
-
-                        // Estilo dentro do campo da palavra-passe
-                        style: StyleRegistoScreen.estiloCampoDaPassword,
-
-                        decoration: _decoracaoCampoDaPassword,
-                      ),
-
-                      const SizedBox(height: 16.0),
-
-                      //? Nome próprio e apelido
-                      TextFormField(
-                        validator: (nome) =>
-                            Validator.validarNomeCompleto(nome: nome),
-
-                        // Obter o valor do email escrito pelo user
-                        controller: _nomeCompletoController,
-
-                        // Estilo dentro do campo de e-mail
-                        style: StyleRegistoScreen.estiloNomeCompleto,
-
-                        // Estilo da decoração do campo do e-mail
-                        decoration: StyleRegistoScreen.decoracaoNomeCompleto,
-                      ),
-
-                      const SizedBox(height: 16.0),
-
-                      //? Número do aluno
-                      TextFormField(
-                        validator: (numAluno) =>
-                            Validator.validarAno(ano: numAluno),
-
-                        keyboardType: TextInputType.number,
-
-                        maxLength: 2,
-
-                        // Obter o valor do email escrito pelo user
-                        controller: _numAlunoController,
-
-                        // Estilo dentro do campo de e-mail
-                        style: StyleRegistoScreen.estiloNumeroAluno,
-
-                        // Estilo da decoração do campo do e-mail
-                        decoration: StyleRegistoScreen.decoracaoNumeroAluno,
-                      ),
-
-                      const SizedBox(height: 16.0),
-
-                      //? Ano
-                      TextFormField(
-                        validator: (ano) => Validator.validarAno(ano: ano),
-
-                        // Obter o valor do email escrito pelo user
-                        controller: _anoController,
-
-                        keyboardType: TextInputType.number,
-
-                        maxLength: 2,
-
-                        // Estilo dentro do campo de e-mail
-                        style: StyleRegistoScreen.estiloAno,
-
-                        // Estilo da decoração do campo do e-mail
-                        decoration: StyleRegistoScreen.decoracaoAno,
-                      ),
-
-                      const SizedBox(height: 16.0),
-
-                      //? Turma
-                      TextFormField(
-                        validator: (turma) =>
-                            Validator.validarTurma(turma: turma),
-
-                        // Obter o valor do email escrito pelo user
-                        controller: _turmaController,
-
-                        // Estilo dentro do campo de e-mail
-                        style: StyleRegistoScreen.estiloTurma,
-
-                        // Estilo da decoração do campo do e-mail
-                        decoration: StyleRegistoScreen.decoracaoTurma,
-                      ),
-
-                      const Padding(padding: EdgeInsets.only(bottom: 15)),
-
-                      //? --> Botão Seguinte <--
-                      _isLoading
-                          ? _aCriarUtilizador
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: MaterialButton(
-                                      height: 50,
-                                      textColor: Colors.white,
-                                      color: Colors.blue,
-                                      child: const Text(
-                                        "Seguinte",
-                                        style: StyleRegistoScreen
-                                            .estiloBotaoIniciarSessao,
+                    ),
+                    const SizedBox(height: 30),
+                    foto == null
+                        ? Stack(
+                            children: [
+                              PhysicalModel(
+                                color: Colors.black,
+                                elevation: 3.0,
+                                shape: BoxShape.circle,
+                                child: CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.grey.shade400,
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Icon(
+                                          FluentIcons.person_48_regular,
+                                          color: Colors.white,
+                                          size: 45,
+                                        ),
                                       ),
-                                      onPressed: () async {
-                                        if (_chaveFormRegisto.currentState!
-                                            .validate()) {
-                                          registarAluno();
-                                        }
-                                      }),
+                                      InkWell(
+                                        onTap: () {
+                                          pickAndUploadImage();
+                                        },
+                                        child: Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: PhysicalModel(
+                                            color: Colors.black,
+                                            elevation: 3.0,
+                                            shape: BoxShape.circle,
+                                            child: CircleAvatar(
+                                              radius: 18,
+                                              backgroundColor: Colors.white,
+                                              child: Icon(
+                                                FluentIcons
+                                                    .camera_add_24_regular,
+                                                color: Colors.grey.shade700,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
-
-                      const Padding(padding: EdgeInsets.only(bottom: 35)),
-
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          text: "Já tens uma conta? ",
-                          style: const TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const LoginScreen(),
+                              ),
+                            ],
+                          )
+                        : Stack(
+                            children: [
+                              CircleAvatar(
+                                radius: 50,
+                                child: PhysicalModel(
+                                  color: Colors.black,
+                                  elevation: 3.0,
+                                  shape: BoxShape.circle,
+                                  child: CircleAvatar(
+                                    radius: 50,
+                                    backgroundImage: Image.file(
+                                      foto!,
+                                      fit: BoxFit.cover,
+                                    ).image,
+                                    child: Stack(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            getFoto();
+                                          },
+                                          child: Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: PhysicalModel(
+                                              color: Colors.black,
+                                              elevation: 3.0,
+                                              shape: BoxShape.circle,
+                                              child: CircleAvatar(
+                                                radius: 18,
+                                                backgroundColor: Colors.white,
+                                                child: Icon(
+                                                  FluentIcons
+                                                      .camera_add_24_regular,
+                                                  color: Colors.grey.shade700,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                    //? Formulário
+                    const Padding(padding: EdgeInsets.only(bottom: 30)),
+                    Form(
+                      key: _chaveFormRegisto,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Número do cartão',
+                            style: GoogleFonts.roboto(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromRGBO(127, 127, 127, 2),
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          TextFormField(
+                            validator: (numCartao) =>
+                                Validator.validarNumeroCartao(
+                                    numCartao: numCartao),
+
+                            onChanged: (text) => setState(() => _texto),
+
+                            // Obter o valor do email escrito pelo user
+                            controller: _numCartaoAlunoController,
+
+                            keyboardType: TextInputType.text,
+
+                            style: StyleRegistoScreen.estiloNumCartao,
+
+                            cursorColor: Colors.grey.shade500,
+
+                            cursorHeight: 22,
+                            cursorWidth: 1.7,
+                            textAlign: TextAlign.start,
+
+                            textCapitalization: TextCapitalization.words,
+                            textInputAction: TextInputAction.next,
+
+                            // Estilo da decoração do campo do e-mail
+                            decoration: StyleRegistoScreen.decoracaoNumCartao,
+                          ),
+
+                          const Padding(padding: EdgeInsets.only(bottom: 15)),
+
+                          Text(
+                            'Nome completo',
+                            style: GoogleFonts.roboto(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromRGBO(127, 127, 127, 2),
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          TextFormField(
+                            validator: (nome) =>
+                                Validator.validarNomeCompleto(nome: nome),
+
+                            onChanged: (text) => setState(() => _texto),
+
+                            // Obter o valor do email escrito pelo user
+                            controller: _nomeCompletoController,
+
+                            keyboardType: TextInputType.text,
+
+                            style: StyleRegistoScreen.estiloNomeCompleto,
+
+                            cursorColor: Colors.grey.shade500,
+
+                            cursorHeight: 22,
+                            cursorWidth: 1.7,
+                            textAlign: TextAlign.start,
+
+                            textCapitalization: TextCapitalization.words,
+                            textInputAction: TextInputAction.next,
+
+                            // Estilo da decoração do campo do e-mail
+                            decoration:
+                                StyleRegistoScreen.decoracaoNomeCompleto,
+                          ),
+
+                          const Padding(padding: EdgeInsets.only(bottom: 15)),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Ano',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromRGBO(127, 127, 127, 2),
+                                    ),
+                                  ),
+                                  SizedBox(height: 5),
+                                  ValueListenableBuilder(
+                                    valueListenable: valorAno,
+                                    builder: (BuildContext context,
+                                        String value, _) {
+                                      return SizedBox(
+                                        width: 80,
+                                        height: 55,
+                                        child: DropdownButtonFormField(
+                                          isDense: true,
+                                          isExpanded: true,
+                                          icon: Icon(FluentIcons
+                                              .caret_down_12_regular),
+                                          hint: Text('7º'),
+                                          value: (value.isEmpty) ? null : value,
+                                          onChanged: (escolha) {
+                                            valorAno.value = escolha.toString();
+                                            _anoController.text =
+                                                valorAno.value.toString();
+                                          },
+                                          items: anoOpcoes
+                                              .map(
+                                                (opcao) => DropdownMenuItem(
+                                                  value: opcao,
+                                                  child: Text(opcao),
+                                                ),
+                                              )
+                                              .toList(),
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.grey.shade400),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                              const Padding(
+                                  padding: EdgeInsets.only(bottom: 15)),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Turma',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromRGBO(127, 127, 127, 2),
+                                    ),
+                                  ),
+                                  SizedBox(height: 5),
+                                  ValueListenableBuilder(
+                                    valueListenable: valorTurma,
+                                    builder: (BuildContext context,
+                                        String value, _) {
+                                      return SizedBox(
+                                        width: 100,
+                                        height: 55,
+                                        child: DropdownButtonFormField(
+                                          isDense: true,
+                                          isExpanded: true,
+                                          icon: Icon(FluentIcons
+                                              .caret_down_12_regular),
+                                          hint: Text('A'),
+                                          value: (value.isEmpty) ? null : value,
+                                          onChanged: (escolha) {
+                                            valorTurma.value =
+                                                escolha.toString();
+                                            _turmaController.text =
+                                                valorTurma.value.toString();
+                                          },
+                                          items: turmaOpcoes
+                                              .map(
+                                                (opcao) => DropdownMenuItem(
+                                                  value: opcao,
+                                                  child: Text(opcao),
+                                                ),
+                                              )
+                                              .toList(),
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.grey.shade400),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                              const Padding(
+                                  padding: EdgeInsets.only(bottom: 15)),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Nº',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromRGBO(127, 127, 127, 2),
+                                    ),
+                                  ),
+                                  SizedBox(height: 5),
+                                  ValueListenableBuilder(
+                                    valueListenable: valorNumeroPessaos,
+                                    builder: (BuildContext context,
+                                        String value, _) {
+                                      return SizedBox(
+                                        width: 80,
+                                        height: 55,
+                                        child: DropdownButtonFormField(
+                                          isDense: true,
+                                          isExpanded: true,
+                                          icon: Icon(FluentIcons
+                                              .caret_down_12_regular),
+                                          hint: Text('1'),
+                                          value: (value.isEmpty) ? null : value,
+                                          onChanged: (escolha) {
+                                            valorNumeroPessaos.value =
+                                                escolha.toString();
+                                            _numAlunoController.text =
+                                                valorNumeroPessaos.value
+                                                    .toString();
+                                          },
+                                          items: numOpcoes
+                                              .map(
+                                                (opcao) => DropdownMenuItem(
+                                                  value: opcao,
+                                                  child: Text(opcao),
+                                                ),
+                                              )
+                                              .toList(),
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.grey.shade400),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+
+                          const Padding(padding: EdgeInsets.only(bottom: 15)),
+
+                          Text(
+                            'E-mail',
+                            style: GoogleFonts.roboto(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromRGBO(127, 127, 127, 2),
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          TextFormField(
+                            validator: (email) =>
+                                Validator.validarEmail(email: email),
+
+                            onChanged: (text) => setState(() => _texto),
+
+                            // Obter o valor do email escrito pelo user
+                            controller: _emailInputController,
+
+                            keyboardType: TextInputType.emailAddress,
+
+                            style: StyleRegistoScreen.estiloCampoDoEmail,
+
+                            cursorColor: Colors.grey.shade500,
+
+                            cursorHeight: 22,
+                            cursorWidth: 1.7,
+                            textAlign: TextAlign.start,
+
+                            textCapitalization: TextCapitalization.words,
+                            textInputAction: TextInputAction.next,
+
+                            // Estilo da decoração do campo do e-mail
+                            decoration:
+                                StyleRegistoScreen.decoracaoCampoDoEmail,
+                          ),
+
+                          const Padding(padding: EdgeInsets.only(bottom: 15)),
+
+                          Text(
+                            'Palavra-passe',
+                            style: GoogleFonts.roboto(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromRGBO(127, 127, 127, 2),
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          TextFormField(
+                            validator: (password) =>
+                                Validator.validarPasswordRegisto(
+                                    password: password),
+
+                            onChanged: (text) => setState(() => _texto),
+
+                            // Esconder a palavra-passe
+                            obscureText: esconderPassword,
+
+                            keyboardType: TextInputType.visiblePassword,
+
+                            // Obter o valor da password escrito pelo user
+                            controller: _passwordInputController,
+
+                            // Estilo dentro do campo da palavra-passe
+                            style: StyleLoginScreen.estiloCampoDaPassword,
+
+                            cursorColor: Colors.grey.shade500,
+
+                            cursorHeight: 22,
+                            cursorWidth: 1.7,
+                            textAlign: TextAlign.start,
+
+                            textCapitalization: TextCapitalization.words,
+                            textInputAction: TextInputAction.next,
+
+                            // Estilo da decoração do campo do e-mail
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 5,
+                                horizontal: 10,
+                              ),
+                              labelStyle: GoogleFonts.roboto(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromRGBO(127, 127, 127, 2),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey.shade400),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              suffixIcon: InkWell(
+                                onTap: () {
+                                  setState(
+                                    () {
+                                      esconderPassword = !esconderPassword;
+                                    },
                                   );
                                 },
-                              text: ' Inicia sessão.',
-                              style: const TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.blue,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
+                                child: Icon(
+                                  esconderPassword
+                                      ? FluentIcons.eye_off_24_regular
+                                      : FluentIcons.eye_24_regular,
+                                  color: esconderPassword
+                                      ? Colors.grey.shade500
+                                      : Color(0xff4285f4),
+                                ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+
+                          const Padding(padding: EdgeInsets.only(bottom: 20)),
+
+                          //? --> Botão Seguinte <--
+                          _isLoading
+                              ? _aCriarUtilizador
+                              : Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: MaterialButton(
+                                        height: 50,
+                                        textColor: Colors.white,
+                                        color: Colors.blue,
+                                        child: const Text(
+                                          "Seguinte",
+                                          style: StyleLoginScreen
+                                              .estiloBotaoIniciarSessao,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        onPressed: _numCartaoAlunoController
+                                                    .value.text.isNotEmpty &&
+                                                _nomeCompletoController
+                                                    .value.text.isNotEmpty &&
+                                                _anoController
+                                                    .value.text.isNotEmpty &&
+                                                _turmaController
+                                                    .value.text.isNotEmpty &&
+                                                _numAlunoController
+                                                    .value.text.isNotEmpty &&
+                                                _emailInputController
+                                                    .value.text.isNotEmpty &&
+                                                _passwordInputController
+                                                    .value.text.isNotEmpty
+                                            ? _submeterFormulario
+                                            : null,
+                                        disabledColor: Colors.blue.shade100,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                          const Padding(padding: EdgeInsets.only(bottom: 30)),
+
+                          Center(
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                text: "Já tens uma conta? ",
+                                style: TextStyle(
+                                  color: Colors.grey.shade800,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LoginScreen(),
+                                          ),
+                                        );
+                                      },
+                                    text: ' Inicia sessão.',
+                                    style: const TextStyle(
+                                      color: Color(0xff2D55AB),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const Padding(padding: EdgeInsets.only(bottom: 50)),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
     );
+  }
+
+  pickAndUploadImage() async {
+    File? file = await getFoto();
+    if (file != null) {
+      UploadTask task = await upload(file.path);
+
+      task.snapshotEvents.listen((TaskSnapshot snapshot) async {
+        if (snapshot.state == TaskState.running) {
+          setState(() {
+            isUpload = true;
+            total = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          });
+        } else if (snapshot.state == TaskState.success) {
+          ficheiros.add(await snapshot.ref.getDownloadURL());
+          refs.add(snapshot.ref);
+          setState(() => isUpload = false);
+        }
+      });
+    }
+  }
+
+  Future<File?> getFoto() async {
+    var carregarFoto =
+        // ignore: invalid_use_of_visible_for_testing_member
+        await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+
+    setState(
+      () {
+        if (carregarFoto != null) {
+          foto = File(carregarFoto.path);
+        } else {
+          print('Nenhuma imagem selecionada');
+        }
+      },
+    );
+    return foto;
+  }
+
+  Future<UploadTask> upload(String path) async {
+    // Variável do tipo Pessoa para alcançar os atributos do professor
+    Pessoa _pessoa = Pessoa();
+    //? referência para criar os dados do historico na base de dados
+    DatabaseReference refHistoricoBD = FirebaseDatabase.instance.ref();
+    String? chave = refHistoricoBD.push().key;
+    //? Atribuir o valor da chave a variavel id do Historico
+    _pessoa.foto = chave;
+
+    File file = File(path);
+    try {
+      String ref =
+          'fotos/utilizador-${DateTime.now().toString() + (_pessoa.foto.toString())}.jpg';
+
+      return storage.ref(ref).putFile(file);
+    } on FirebaseException catch (e) {
+      throw Exception('Erro ao carregar: ${e.code}');
+    }
+  }
+
+  Future _submeterFormulario() async {
+    return {
+      if (_chaveFormRegisto.currentState!.validate()) {registarAluno()}
+    };
   }
 
   //* Registar Aluno na app
@@ -334,22 +794,22 @@ class _RegistarState extends State<Registar> {
     User? utilizador = _auth.currentUser;
 
     // Variável do tipo Pessoa para alcançar os atributos do professor
-    Pessoa aluno = Pessoa();
+    Pessoa _pessoa = Pessoa();
 
     // Guardar todos os dados do aluno
-    aluno.emailPessoa = utilizador!.email;
-    aluno.uidPessoa = utilizador.uid;
-    aluno.numCartaoPessoa = _numCartaoAlunoController.text.trim();
-    aluno.passwordPessoa = _passwordInputController.text.trim();
-    aluno.nomeCompletoPessoa = _nomeCompletoController.text.trim();
-    aluno.numPessoa = _numAlunoController.text.trim();
-    aluno.ano = _anoController.text.trim();
-    aluno.turma = _turmaController.text.trim();
+    _pessoa.emailPessoa = utilizador!.email;
+    _pessoa.uidPessoa = utilizador.uid;
+    _pessoa.numCartaoPessoa = _numCartaoAlunoController.text.trim();
+    _pessoa.passwordPessoa = _passwordInputController.text.trim();
+    _pessoa.nomeCompletoPessoa = _nomeCompletoController.text.trim();
+    _pessoa.numPessoa = _numAlunoController.text.trim();
+    _pessoa.ano = _anoController.text.trim();
+    _pessoa.turma = _turmaController.text.trim();
 
     // Chamada de espera de forma assincrona com o firebase para criar uma colecção de utilizadores
     // ... na base de dados realtime database e preencher o JSON com os dados fornecidos pelo utilizador
     //... e enviar para a base de dados
-    await databaseRef.child(utilizador.uid).set(aluno.toJson());
+    await databaseRef.child(utilizador.uid).set(_pessoa.toJson());
 
     // mensagem de sucesso para user interface
     Fluttertoast.showToast(

@@ -35,6 +35,7 @@ class Pessoa {
   String? turma;
   String? emailPessoa;
   String? passwordPessoa;
+  String? foto;
 
   // Construtor
   Pessoa({
@@ -46,6 +47,7 @@ class Pessoa {
     this.turma,
     this.emailPessoa,
     this.passwordPessoa,
+    this.foto,
   });
 
   // Transformar os dados da Pessoa num mapa de pares chave/valor.
@@ -59,6 +61,7 @@ class Pessoa {
     dadosPessoa["turma"] = turma;
     dadosPessoa["emailPessoa"] = emailPessoa;
     dadosPessoa["passwordPessoa"] = passwordPessoa;
+    dadosPessoa["foto"] = foto;
 
     return dadosPessoa;
   }
@@ -74,6 +77,7 @@ class Pessoa {
       turma: json['turma'] ?? '',
       emailPessoa: json['emailPessoa'] ?? '',
       passwordPessoa: json['passwordPessoa'] ?? '',
+      foto: json['foto'] ?? '',
     );
   }
 }

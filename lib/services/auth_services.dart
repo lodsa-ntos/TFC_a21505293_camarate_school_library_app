@@ -1,9 +1,6 @@
-import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthServices with ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -15,7 +12,7 @@ class AuthServices with ChangeNotifier {
   bool isLoading = true;
 
   AuthServices() {
-    /// Metodo para verificar toda a inicialização de login do utilizador
+    // Metodo para verificar toda a inicialização de login do utilizador
     _verificarAutenticacao();
   }
 
@@ -29,6 +26,7 @@ class AuthServices with ChangeNotifier {
 
   _getUtilizador() async {
     utilizador = _firebaseAuth.currentUser;
+
     notifyListeners();
   }
 
@@ -37,6 +35,8 @@ class AuthServices with ChangeNotifier {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: senha);
+
+      utilizador!.reload();
       _getUtilizador();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -56,15 +56,17 @@ class AuthServices with ChangeNotifier {
       );
       _getUtilizador();
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        throw AuthException(
-            'Desculpa, mas o teu e-mail ou tua palavra-passe não pertence a nenhuma conta. Verifica, e tenta novamente.');
-      } else if (e.code == 'invalid-email') {
-        throw AuthException(
-            'O teu e-mail parece estar incorreto. Verifica-a novamente.');
-      } else if (e.code == 'wrong-password') {
-        throw AuthException(
-            'A tua palavra-passe estava incorreta. Verifica-a novamente.');
+      switch (e.code) {
+        case 'user-not-found':
+        case 'invalid-email':
+        case 'wrong-password':
+          throw AuthException(
+            'O e-mail ou a palavra-passe que inseriste não parecem pertencer a uma conta. '
+            'Verifica o e-mail ou a palavra-passe e tenta novamente.',
+          );
+
+        default:
+          'Não existem registos. Por favor crie uma nova conta.';
       }
     }
   }
@@ -73,6 +75,24 @@ class AuthServices with ChangeNotifier {
   Future terminarSessao() async {
     await _firebaseAuth.signOut();
     _getUtilizador();
+  }
+
+  Future ReporPassword(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-email') {
+        throw AuthException(
+          'O teu e-mail parece estar incorreto. Verifica-a novamente.',
+        );
+      }
+
+      if (e.code == 'user-not-found') {
+        throw AuthException(
+          'Não existem registos. Verifica e tenta novamente.',
+        );
+      }
+    }
   }
 }
 

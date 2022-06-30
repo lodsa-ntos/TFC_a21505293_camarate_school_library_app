@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:camarate_school_library/screens/menu_lateral.dart';
+import 'package:camarate_school_library/screens/home/components/menu_lateral.dart';
+import 'package:camarate_school_library/screens/iniciar_app.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
-import 'package:camarate_school_library/screens/login.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,7 +33,7 @@ class CamarateSchoolLibraryApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: AutenticarUtilizador(),
     );
@@ -51,7 +51,7 @@ class AutenticarUtilizador extends StatelessWidget {
     if (autenticacao.isLoading) {
       return aCarregarPagina();
     } else if (autenticacao.utilizador == null) {
-      return const LoginScreen();
+      return const IniciarApp();
     } else {
       return const MenuLateral();
     }

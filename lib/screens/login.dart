@@ -1,12 +1,16 @@
 import 'dart:io';
 
-import 'package:camarate_school_library/screens/home.dart';
+import 'package:camarate_school_library/repor%20password/repor_palavra_passe.dart';
+import 'package:camarate_school_library/screens/home/components/menu_lateral.dart';
 import 'package:camarate_school_library/screens/registar.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
+import 'package:camarate_school_library/util/navegador.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
@@ -23,17 +27,25 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   //? Controladores para guardar o texto dos campos de texto do e-mail e da password.
-  final TextEditingController _emailInputController = TextEditingController();
-  final TextEditingController _passwordInputController =
-      TextEditingController();
+  final _emailInputController = TextEditingController();
+  final _passwordInputController = TextEditingController();
 
   bool esconderPassword = true;
   bool _isLoading = false;
+
+  var _texto = '';
 
   //? Chave para identificar a validação do formulario
   final _chaveFormLogin = GlobalKey<FormState>();
 
   Pessoa pessoa = Pessoa();
+
+  @override
+  void dispose() {
+    _emailInputController.dispose();
+    _passwordInputController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,177 +59,264 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
 
-    //? variável do campo da password
-    final _decoracaoCampoDaPassword = InputDecoration(
-      contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      filled: true,
-      labelText: "Palavra-passe",
-      labelStyle: const TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-        color: Color.fromRGBO(127, 127, 127, 2),
-      ),
-      suffixIcon: InkWell(
-        onTap: () {
-          setState(() {
-            esconderPassword = !esconderPassword;
-          });
-        },
-        child: Icon(
-          esconderPassword ? Icons.visibility_off : Icons.visibility,
-        ),
-      ),
-      enabledBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(
-          width: 2.0,
-          color: Color.fromRGBO(204, 204, 204, 2),
-        ),
-      ),
-    );
-
-    return SafeArea(
-      child: Scaffold(
-        /// evitar que os widgets sejam redimensionados se o teclado aparecer
-        /// de repente e tapar tudo.
-        resizeToAvoidBottomInset: true,
-        body: SingleChildScrollView(
-          reverse: true,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Padding(padding: EdgeInsets.only(bottom: 150)),
-                const Text(
-                  "Login", //? titulo
-                  textAlign: TextAlign.center,
-                  style: StyleLoginScreen.estiloTituloLogin,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 45),
-                Form(
-                  key: _chaveFormLogin,
-                  child: Column(
-                    children: <Widget>[
-                      //* E-mail
-                      TextFormField(
-                        validator: (email) =>
-                            Validator.validarEmail(email: email),
-
-                        // Obter o valor do email escrito pelo user
-                        controller: _emailInputController,
-
-                        keyboardType: TextInputType.emailAddress,
-
-                        // Estilo dentro do campo de e-mail
-                        style: StyleLoginScreen.estiloCampoDoEmail,
-
-                        // Estilo da decoração do campo do e-mail
-                        decoration: StyleLoginScreen.decoracaoCampoDoEmail,
-                      ),
-
-                      const SizedBox(height: 16.0),
-
-                      //* Palavra-passe
-                      TextFormField(
-                        validator: (password) =>
-                            Validator.validarPassword(password: password),
-
-                        // Esconder a palavra-passe
-                        obscureText: esconderPassword,
-
-                        keyboardType: TextInputType.visiblePassword,
-
-                        // Obter o valor da password escrito pelo user
-                        controller: _passwordInputController,
-
-                        // Estilo dentro do campo da palavra-passe
-                        style: StyleLoginScreen.estiloCampoDaPassword,
-
-                        decoration: _decoracaoCampoDaPassword,
-                      ),
-
-                      const Padding(padding: EdgeInsets.only(bottom: 15)),
-
-                      //* --> Botão Iniciar Sessão <--
-                      _isLoading
-                          ? _aCarregarAutenticacao
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: MaterialButton(
-                                      height: 50,
-                                      textColor: Colors.white,
-                                      color: Colors.blue,
-                                      child: const Text(
-                                        "Entrar",
-                                        style: StyleLoginScreen
-                                            .estiloBotaoIniciarSessao,
-                                      ),
-                                      onPressed: () async {
-                                        if (_chaveFormLogin.currentState!
-                                            .validate()) {
-                                          fazerLogin();
-                                          // ignore: avoid_print
-                                          print(
-                                            'E-mail: ${_emailInputController.text}',
-                                          );
-                                          // ignore: avoid_print
-                                          print(
-                                            'Password: ${_passwordInputController.text}',
-                                          );
-                                        }
-                                      }),
-                                ),
-                              ],
-                            ),
-
-                      const Padding(padding: EdgeInsets.only(bottom: 35)),
-
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          text: "Não tens uma conta? ",
-                          style: const TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          /// evitar que os widgets sejam redimensionados se o teclado aparecer
+          /// de repente e tapar tudo.
+          resizeToAvoidBottomInset: true,
+          body: SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            reverse: true,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Padding(padding: EdgeInsets.only(bottom: 50)),
+                  Image.asset(
+                    'assets/logotipo/ic_launcher_adaptive_fore.png',
+                    filterQuality: FilterQuality.high,
+                    width: 75,
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "Biblioteca Escolar", //? titulo
+                    textAlign: TextAlign.center,
+                    style: StyleLoginScreen.estiloTituloBibliotecaEscolar,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "Camarate", //? titulo
+                    textAlign: TextAlign.center,
+                    style: StyleLoginScreen.estiloSubTituloCamarate,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 45),
+                  Form(
+                    key: _chaveFormLogin,
+                    child: Column(
+                      children: <Widget>[
+                        //* E-mail
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            border: Border.all(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.circular(5),
                           ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const Registar(),
-                                    ),
-                                  );
+                          child: TextFormField(
+                            validator: (email) =>
+                                Validator.validarEmail(email: email),
+
+                            onChanged: (text) => setState(() => _texto),
+
+                            // Obter o valor do email escrito pelo user
+                            controller: _emailInputController,
+
+                            keyboardType: TextInputType.emailAddress,
+
+                            // Estilo dentro do campo de e-mail
+                            style: StyleLoginScreen.estiloCampoDoEmail,
+
+                            cursorColor: Colors.grey.shade500,
+
+                            textCapitalization: TextCapitalization.words,
+                            textInputAction: TextInputAction.next,
+
+                            cursorHeight: 22,
+                            cursorWidth: 1.7,
+                            textAlign: TextAlign.start,
+
+                            // Estilo da decoração do campo do e-mail
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 10),
+                              labelText: "E-mail",
+                              labelStyle: GoogleFonts.roboto(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromRGBO(127, 127, 127, 2),
+                              ),
+                              border: InputBorder.none,
+                              //filled: true,
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 16.0),
+
+                        //* Palavra-passe
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            border: Border.all(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: TextFormField(
+                            validator: (password) =>
+                                Validator.validarPassword(password: password),
+
+                            onChanged: (text) => setState(() => _texto),
+
+                            // Esconder a palavra-passe
+                            obscureText: esconderPassword,
+
+                            keyboardType: TextInputType.visiblePassword,
+
+                            // Obter o valor da password escrito pelo user
+                            controller: _passwordInputController,
+
+                            // Estilo dentro do campo da palavra-passe
+                            style: StyleLoginScreen.estiloCampoDaPassword,
+
+                            cursorColor: Colors.grey.shade500,
+
+                            cursorHeight: 22,
+                            cursorWidth: 1.7,
+                            textAlign: TextAlign.start,
+
+                            textCapitalization: TextCapitalization.words,
+
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 5,
+                                horizontal: 10,
+                              ),
+                              labelText: "Palavra-passe",
+                              labelStyle: GoogleFonts.roboto(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromRGBO(127, 127, 127, 2),
+                              ),
+                              suffixIcon: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    esconderPassword = !esconderPassword;
+                                  });
                                 },
-                              text: ' Regista-te.',
+                                child: Icon(
+                                  esconderPassword
+                                      ? FluentIcons.eye_off_24_regular
+                                      : FluentIcons.eye_24_regular,
+                                  color: esconderPassword
+                                      ? Colors.grey.shade500
+                                      : Color(0xff4285f4),
+                                ),
+                              ),
+                              border: InputBorder.none,
+                              //filled: true,
+                            ),
+                          ),
+                        ),
+
+                        const Padding(padding: EdgeInsets.only(bottom: 15)),
+
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                ReporPass(widget: ReporPalavraPasse()),
+                              );
+                            },
+                            child: Text(
+                              "Esqueceste-te da palavra-passe?",
                               style: const TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.blue,
+                                color: Color(0xff2D55AB),
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ],
+
+                        const Padding(padding: EdgeInsets.only(bottom: 30)),
+
+                        //* --> Botão Iniciar Sessão <--
+                        _isLoading
+                            ? _aCarregarAutenticacao
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: MaterialButton(
+                                      height: 50,
+                                      textColor: Colors.white,
+                                      color: Colors.blue,
+                                      child: const Text(
+                                        "Iniciar sessão",
+                                        style: StyleLoginScreen
+                                            .estiloBotaoIniciarSessao,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      onPressed: _emailInputController
+                                                  .value.text.isNotEmpty &&
+                                              _passwordInputController
+                                                  .value.text.isNotEmpty
+                                          ? _submeterFormLogin
+                                          : null,
+                                      disabledColor: Colors.blue.shade100,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                        const Padding(padding: EdgeInsets.only(bottom: 25)),
+
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: "Não tens uma conta? ",
+                            style: TextStyle(
+                              color: Colors.grey.shade800,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const Registar(),
+                                      ),
+                                    );
+                                  },
+                                text: 'Regista-te.',
+                                style: const TextStyle(
+                                  color: Color(0xff2D55AB),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future _submeterFormLogin() async {
+    return {
+      fazerLogin(),
+    };
   }
 
   fazerLogin() async {
@@ -226,7 +325,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
       await context
           .read<AuthServices>()
-          .login(_emailInputController.text, _passwordInputController.text)
+          .login(_emailInputController.text.trim(),
+              _passwordInputController.text.trim())
           .then(
             (uid) => Fluttertoast.showToast(
               msg: "Logado com sucesso",
@@ -234,23 +334,61 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           );
 
-      await Navigator.pushAndRemoveUntil(
-        (context),
-        MaterialPageRoute(builder: (context) => const Home()),
-        (route) => false,
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          //** Redireciona o utilizador para a página de detalhes do livro */
+          builder: (context) => const MenuLateral(),
+        ),
       );
 
       //? Mensagens de erro
     } on AuthException catch (erro) {
       setState(() => _isLoading = false);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        duration: const Duration(seconds: 10),
-        content: Text(
-          erro.mensagem,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        backgroundColor: Colors.red,
-      ));
+
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return Container(
+            margin: EdgeInsets.only(left: 20, right: 20),
+            child: AlertDialog(
+              title: Text(
+                'E-mail ou palavra-passe ' + '\n' + 'incorretos',
+                style: TextStyle(fontWeight: FontWeight.w600),
+                textAlign: TextAlign.center,
+              ),
+              content: Text(erro.mensagem,
+                  style: TextStyle(height: 1.5), textAlign: TextAlign.center),
+              contentPadding: EdgeInsets.only(left: 28, right: 28, top: 10),
+              actions: [
+                Divider(color: Colors.grey),
+                Center(
+                  child: TextButton(
+                    child: Text(
+                      "Tentar novamente",
+                      style: TextStyle(color: Colors.black),
+                      textAlign: TextAlign.center,
+                    ),
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          //** Redireciona o utilizador para a página de detalhes do livro */
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+          );
+        },
+      );
     }
   }
 }
