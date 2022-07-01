@@ -39,7 +39,7 @@ class _IniciarAppState extends State<IniciarApp> {
                   TextStyle(fontFamily: 'Carmen', color: Colors.grey.shade700),
             ),
             SizedBox(height: 5.5),
-            Image.asset('assets/logotipo/logo_entidade.jpg', width: 25),
+            Image.asset('assets/logotipo/logo_entidade.png', width: 25),
             SizedBox(height: 5.5),
             Text(
               'Escola Secundária de Camarate',

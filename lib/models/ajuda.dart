@@ -12,14 +12,15 @@ final List<Ajuda> perguntasERespostas = <Ajuda>[
   Ajuda(
     'Quantos livros podem ser requisitados ?',
     <Ajuda>[
-      Ajuda('O número máximo de livros a requisitar é 2 documentos;.'),
+      Ajuda('O número máximo de livros a requisitar é 2 documentos.'),
     ],
   ),
   Ajuda(
     'Quando concluir a requisição na aplicação como obtenho o livro ?',
     <Ajuda>[
       Ajuda(
-          'Após a requisição deve derigir-se a biblioteca da escola para poder levantar o livro'),
+        'Após a requisição deve dirigir-se a biblioteca da escola para poder levantar o livro.',
+      ),
     ],
   ),
   Ajuda(
@@ -32,14 +33,16 @@ final List<Ajuda> perguntasERespostas = <Ajuda>[
     'Como pesquisar o livro pelo nome do autor ?',
     <Ajuda>[
       Ajuda(
-          'Ao entrar na página de pesquisa, abaixo da caixa de pesquisa, seleciona o filtro de autor, para poder fazer a pesquisar pelo nome do autor.'),
+        'Ao entrar na página de pesquisa, abaixo da caixa de pesquisa, seleciona o filtro de autor, para poder fazer a pesquisar pelo nome do autor.',
+      ),
     ],
   ),
   Ajuda(
     'Como funciona a renovação de um livro após devolução ?',
     <Ajuda>[
       Ajuda(
-          'O empréstimo só pode ser renovado mais uma vez por período igual ao primeiro.'),
+        'O empréstimo só pode ser renovado mais uma vez por período igual ao primeiro.',
+      ),
     ],
   ),
   Ajuda(

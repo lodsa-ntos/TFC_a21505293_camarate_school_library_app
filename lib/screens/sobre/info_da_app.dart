@@ -61,7 +61,7 @@ class InformacaoDaApp extends StatelessWidget {
                   Material(
                     type: MaterialType.transparency,
                     child: Text(
-                      'Versão 1.0.0',
+                      'Versão 1.0.0.22',
                       style: TextStyle(
                         fontFamily: 'Gilroy',
                         fontSize: 16,
@@ -76,7 +76,7 @@ class InformacaoDaApp extends StatelessWidget {
                       Uri.parse('https://portalesc.wixsite.com/site'),
                     ),
                     child: Image.asset(
-                      'assets/logotipo/logo_entidade.jpg',
+                      'assets/logotipo/logo_entidade.png',
                       width: 80.0,
                       height: 65.0,
                       fit: BoxFit.fill,

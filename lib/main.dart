@@ -26,6 +26,7 @@ Future<void> main() async {
       child: const CamarateSchoolLibraryApp(),
     ),
   );
+  HttpOverrides.global = MyHttpOverrides();
 }
 
 class CamarateSchoolLibraryApp extends StatelessWidget {
@@ -65,5 +66,14 @@ class AutenticarUtilizador extends StatelessWidget {
             : const CupertinoActivityIndicator(),
       ),
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

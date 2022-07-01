@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Estabelecimento extends StatelessWidget {
   const Estabelecimento({Key? key}) : super(key: key);
@@ -81,7 +82,7 @@ class Estabelecimento extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                SizedBox(height: 100),
+                SizedBox(height: 70),
                 Center(
                   child: Column(
                     children: [
@@ -157,6 +158,42 @@ class Estabelecimento extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],
+                  ),
+                ),
+                SizedBox(height: 40),
+                Align(
+                  alignment: Alignment.center,
+                  child: InkWell(
+                    onTap: () => launchUrl(
+                      Uri.parse('https://portalesc.wixsite.com/site'),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'from',
+                          style: TextStyle(
+                            fontFamily: 'Carmen',
+                            color: Colors.grey.shade700,
+                            fontSize: 13,
+                          ),
+                        ),
+                        SizedBox(height: 5.5),
+                        Image.asset('assets/logotipo/logo_entidade.png',
+                            width: 25),
+                        SizedBox(height: 5.5),
+                        Text(
+                          'Escola Secundária de Camarate',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontFamily: 'Carmen',
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff4285F4),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

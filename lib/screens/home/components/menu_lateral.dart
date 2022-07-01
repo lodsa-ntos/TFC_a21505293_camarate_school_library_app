@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:camarate_school_library/screens/ajuda/centro_de_ajuda.dart';
-import 'package:camarate_school_library/screens/contacto.dart';
+import 'package:camarate_school_library/screens/estabelecimento.dart';
 import 'package:camarate_school_library/screens/corpo_docente.dart';
 import 'package:camarate_school_library/screens/home/home.dart';
 import 'package:camarate_school_library/screens/procedimentos.dart';
@@ -98,163 +98,166 @@ class _CamposMenuLateralState extends State<CamposMenuLateral> {
         ),
         child: SizedBox(
           width: size.width * 0.45,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              //
-              //* Dados utilizador
-              perfilUtilizador(),
+          child: Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //
+                //* Dados utilizador
+                perfilUtilizador(),
 
-              SizedBox(
-                // Espaçamento entre os campos do menu lateral
-                height: size.height * 0.4,
-                child: Column(
+                SizedBox(
+                  // Espaçamento entre os campos do menu lateral
+                  height: size.height * 0.4,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      //
+                      //? Histórico
+                      InkWell(
+                        child: campoDoMenu(
+                            FluentIcons.book_24_regular, 'Histórico'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              //* Redireciona o utilizador para a página do Histórico
+                              builder: (context) =>
+                                  const HistoricoDeRequisicao(),
+                            ),
+                          );
+                        },
+                      ),
+
+                      //? Centro de ajuda
+                      InkWell(
+                        child: campoDoMenu(FluentIcons.chat_help_24_regular,
+                            'Centro de ajuda'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              //* Redireciona o utilizador para a página de Ajuda
+                              builder: (context) => const CentroDeAjuda(),
+                            ),
+                          );
+                        },
+                      ),
+
+                      //? Sobre nós
+                      InkWell(
+                        child: campoDoMenu(
+                            FluentIcons.mobile_optimized_24_regular, 'Sobre'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              //* Redireciona o utilizador para a página Sobre
+                              builder: (context) => const Sobre(),
+                            ),
+                          );
+                        },
+                      ),
+
+                      //? Corpo Docente
+                      InkWell(
+                        child: campoDoMenu(FluentIcons.book_contacts_24_regular,
+                            'Corpo Docente'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              //* Redireciona o utilizador para a página de Ajuda
+                              builder: (context) => const CorpoDocente(),
+                            ),
+                          );
+                        },
+                      ),
+
+                      //? Procedimentos
+                      InkWell(
+                        child: campoDoMenu(
+                          FluentIcons.clipboard_bullet_list_rtl_20_regular,
+                          'Procedimentos',
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              //* Redireciona o utilizador para a página de Ajuda
+                              builder: (context) => const Procedimentos(),
+                            ),
+                          );
+                        },
+                      ),
+
+                      //? Morada
+                      InkWell(
+                        child: campoDoMenu(FluentIcons.building_home_24_regular,
+                            'Estabelecimento'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              //* Redireciona o utilizador para a página Sobre
+                              builder: (context) => const Estabelecimento(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+
+                //const Divider(color: Colors.white),
+                const SizedBox(width: 10),
+
+                //? Terminar sessão
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    //
-                    //? Histórico
-                    InkWell(
-                      child:
-                          campoDoMenu(FluentIcons.book_24_regular, 'Histórico'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            //* Redireciona o utilizador para a página do Histórico
-                            builder: (context) => const HistoricoDeRequisicao(),
-                          ),
-                        );
-                      },
-                    ),
-
-                    //? Centro de ajuda
                     InkWell(
                       child: campoDoMenu(
-                          FluentIcons.chat_help_24_regular, 'Centro de ajuda'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
+                          FluentIcons.sign_out_24_regular, 'Logout  |'),
+                      onTap: () async {
+                        setState(() {});
+                        await context.read<AuthServices>().terminarSessao();
+                        await Navigator.pushAndRemoveUntil(
+                          (context),
                           MaterialPageRoute(
-                            //* Redireciona o utilizador para a página de Ajuda
-                            builder: (context) => const CentroDeAjuda(),
-                          ),
+                              builder: (context) => const LoginScreen()),
+                          (route) => false,
                         );
                       },
                     ),
-
-                    //? Sobre nós
+                    SizedBox(width: 5),
                     InkWell(
-                      child: campoDoMenu(
-                          FluentIcons.mobile_optimized_24_regular, 'Sobre'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            //* Redireciona o utilizador para a página Sobre
-                            builder: (context) => const Sobre(),
-                          ),
-                        );
-                      },
-                    ),
-
-                    //? Corpo Docente
-                    InkWell(
-                      child: campoDoMenu(FluentIcons.book_contacts_24_regular,
-                          'Corpo Docente'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            //* Redireciona o utilizador para a página de Ajuda
-                            builder: (context) => const CorpoDocente(),
-                          ),
-                        );
-                      },
-                    ),
-
-                    //? Procedimentos
-                    InkWell(
-                      child: campoDoMenu(
-                        FluentIcons.clipboard_bullet_list_rtl_20_regular,
-                        'Procedimentos',
+                      onTap: () => launchUrl(
+                        Uri.parse('https://portalesc.wixsite.com/site'),
                       ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            //* Redireciona o utilizador para a página de Ajuda
-                            builder: (context) => const Procedimentos(),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/logotipo/logo_entidade.png',
+                            width: 20,
                           ),
-                        );
-                      },
-                    ),
-
-                    //? Morada
-                    InkWell(
-                      child: campoDoMenu(FluentIcons.building_home_24_regular,
-                          'Estabelecimento'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            //* Redireciona o utilizador para a página Sobre
-                            builder: (context) => const Estabelecimento(),
-                          ),
-                        );
-                      },
-                    ),
+                          SizedBox(width: 5),
+                          Text(
+                            'ESC',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Carmen',
+                              fontSize: 14,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
                   ],
                 ),
-              ),
-
-              //const Divider(color: Colors.white),
-              const SizedBox(width: 10),
-
-              //? Terminar sessão
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
-                    child: campoDoMenu(
-                        FluentIcons.sign_out_24_regular, 'Logout  |'),
-                    onTap: () async {
-                      setState(() {});
-                      await context.read<AuthServices>().terminarSessao();
-                      await Navigator.pushAndRemoveUntil(
-                        (context),
-                        MaterialPageRoute(
-                            builder: (context) => const LoginScreen()),
-                        (route) => false,
-                      );
-                    },
-                  ),
-                  SizedBox(width: 5),
-                  InkWell(
-                    onTap: () => launchUrl(
-                      Uri.parse('https://portalesc.wixsite.com/site'),
-                    ),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          'assets/logotipo/logo_entidade.png',
-                          width: 20,
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          'ESC',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Carmen',
-                            fontSize: 14,
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
