@@ -107,10 +107,6 @@ flutter:
     - assets/logotipo/BEC.png
     - assets/logotipo/ic_launcher_adaptive_back.png
     - assets/logotipo/ic_launcher_adaptive_fore.png
-    - assets/images/introducao/requisitar.png
-    - assets/images/introducao/home.png
-    - assets/images/introducao/biblioteca.png
-    - assets/images/introducao/entrar.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
