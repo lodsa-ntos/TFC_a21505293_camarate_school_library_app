@@ -12,6 +12,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 ```
 git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_app.git
 ```
+
 #### Video de demonstração
 - Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/4XBF4MyBtRE).
 
