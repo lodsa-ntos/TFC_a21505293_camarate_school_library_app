@@ -1,6 +1,5 @@
+import 'package:camarate_school_library/Models/ajuda.dart';
 import 'package:flutter/material.dart';
-
-import '../../../models/ajuda.dart';
 
 class PerguntasERespostas extends StatelessWidget {
   const PerguntasERespostas(this.ajuda);

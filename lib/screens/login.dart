@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:camarate_school_library/repor%20password/repor_palavra_passe.dart';
-import 'package:camarate_school_library/screens/home/components/menu_lateral.dart';
+import 'package:camarate_school_library/Screens/repor_password/repor_palavra_passe.dart';
+import 'package:camarate_school_library/screens/menu_lateral/menu_lateral.dart';
 import 'package:camarate_school_library/screens/registar.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/util/navegador.dart';
@@ -11,7 +11,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-// ignore: implementation_imports
+
 import 'package:provider/src/provider.dart';
 
 import '../models/pessoa.dart';

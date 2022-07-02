@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:async';
 
 import 'package:camarate_school_library/models/pessoa.dart';
-import 'package:camarate_school_library/screens/home/components/menu_lateral.dart';
+import 'package:camarate_school_library/screens/menu_lateral/menu_lateral.dart';
 import 'package:camarate_school_library/screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';

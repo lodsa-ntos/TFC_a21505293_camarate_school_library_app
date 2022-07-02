@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Classe para navegar para a página de registo.
 class Navegador extends PageRouteBuilder {
   final Widget widget;
 
@@ -32,6 +33,7 @@ class Navegador extends PageRouteBuilder {
         );
 }
 
+// Classe para navegar para a página de recuperação da palavra-passe.
 class ReporPass extends PageRouteBuilder {
   final Widget widget;
 

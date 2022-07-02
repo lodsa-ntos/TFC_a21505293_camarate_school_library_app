@@ -1,7 +1,7 @@
+import 'package:camarate_school_library/Models/ajuda.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../models/ajuda.dart';
 import 'components/perguntas_e_respostas.dart';
 
 class CentroDeAjuda extends StatelessWidget {

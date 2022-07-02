@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:camarate_school_library/screens/home/components/menu_lateral.dart';
-import 'package:camarate_school_library/screens/iniciar_app.dart';
+import 'package:camarate_school_library/screens/menu_lateral/menu_lateral.dart';
+import 'package:camarate_school_library/screens/splash_screen.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 
@@ -14,18 +14,25 @@ Future<void> main() async {
   /// Necessário para usar canais para chamar o código nativo
   /// para inicializar o Firebase.
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Inicializa uma nova instância [FirebaseApp] por [nome] e [opções] e retorna o aplicação criada.
   await Firebase.initializeApp();
+
   runApp(
+    // Construir a árvore de providers para gerar a mudança em todos os widgets que formam a aplicação
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LivroRequisitadoModel()),
         ChangeNotifierProvider(create: (_) => AuthServices()),
       ],
 
-      //** APLICAÇÃO */
+      //** APLICAÇÃO
       child: const CamarateSchoolLibraryApp(),
     ),
   );
+
+  // O HttpOverrides facilita a substituição de [HttpClient] com uma implementação simulada.
+  // Permite carregar imgens network
   HttpOverrides.global = MyHttpOverrides();
 }
 
@@ -35,7 +42,9 @@ class CamarateSchoolLibraryApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // Tirar a marca do debug na applicação
       debugShowCheckedModeBanner: false,
+      // Restrição de entrada na aplicação, para identificar o utilizador
       home: AutenticarUtilizador(),
     );
   }
@@ -69,6 +78,8 @@ class AutenticarUtilizador extends StatelessWidget {
   }
 }
 
+// O HttpOverrides facilita a substituição de [HttpClient] com uma implementação simulada.
+// Permite carregar imgens network
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {

@@ -1,12 +1,12 @@
 import 'dart:convert';
 
+import 'package:camarate_school_library/Screens/menu_lateral/components/centro_de_ajuda/centro_de_ajuda.dart';
+import 'package:camarate_school_library/Screens/menu_lateral/components/sobre/sobre.dart';
 import 'package:camarate_school_library/models/pessoa.dart';
-import 'package:camarate_school_library/screens/ajuda/centro_de_ajuda.dart';
-import 'package:camarate_school_library/screens/estabelecimento.dart';
-import 'package:camarate_school_library/screens/corpo_docente.dart';
+import 'package:camarate_school_library/screens/menu_lateral/components/estabelecimento.dart';
+import 'package:camarate_school_library/screens/menu_lateral/components/corpo_docente.dart';
 import 'package:camarate_school_library/screens/home/home.dart';
-import 'package:camarate_school_library/screens/procedimentos.dart';
-import 'package:camarate_school_library/screens/sobre/sobre.dart';
+import 'package:camarate_school_library/screens/menu_lateral/components/procedimentos.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
@@ -16,9 +16,9 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../services/auth_services.dart';
-import '../../historico/historico_de_requisicao.dart';
-import '../../login.dart';
+import '../../services/auth_services.dart';
+import 'components/historico/historico_de_requisicao.dart';
+import '../login.dart';
 
 //? Controlador para abertura do menu
 ZoomDrawerController _controlarMenuLateral = ZoomDrawerController();
