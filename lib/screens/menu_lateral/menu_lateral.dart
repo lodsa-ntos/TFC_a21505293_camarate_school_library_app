@@ -321,7 +321,7 @@ class _CamposMenuLateralState extends State<CamposMenuLateral> {
                       const SizedBox(height: 3),
                       for (int i = 0; i < _utilizadoresBD.length; i++)
                         if (_utilizadoresBD[i].uidPessoa ==
-                            utilizador!.uid) ...[
+                            utilizador?.uid) ...[
                           Text(
                             _utilizadoresBD[i].nomeCompletoPessoa.toString(),
                             overflow: TextOverflow.ellipsis,

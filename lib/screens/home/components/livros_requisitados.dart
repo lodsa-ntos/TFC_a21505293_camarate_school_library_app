@@ -57,63 +57,68 @@ class MostrarLivrosRequisitados extends StatelessWidget {
                       );
 
                     default:
+                      if (snapshot.hasData &&
+                          !snapshot.hasError &&
+                          snapshot.data.snapshot.value != null) {
+                        // Alcançar a instância da base de dados para autenticação do utilizador atual
+                        final _auth = FirebaseAuth.instance;
 
-                      // Alcançar a instância da base de dados para autenticação do utilizador atual
-                      final _auth = FirebaseAuth.instance;
+                        // Utilizador actual
+                        User? utilizador = _auth.currentUser;
+                        List<dynamic> dadosBaseDeDados = jsonDecode(
+                            jsonEncode(snapshot.data.snapshot.value));
 
-                      // Utilizador actual
-                      User? utilizador = _auth.currentUser;
-                      List<dynamic> dadosBaseDeDados = jsonDecode(
-                          jsonEncode(snapshot.data.snapshot!.value ?? []));
+                        List<Livro> _livrosBD = dadosBaseDeDados
+                            .map((livroBD) => Livro.fromJson(livroBD))
+                            .toList();
 
-                      List<Livro> _livrosBD = dadosBaseDeDados
-                          .map((livroBD) => Livro.fromJson(livroBD))
-                          .toList();
-
-                      return snapshot.hasData
-                          ? SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Container(
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: List.generate(
-                                        _livrosBD.length,
-                                        (int index) {
-                                          if (_livrosBD[index].uidLivro ==
-                                                  utilizador!.uid &&
-                                              _livrosBD[index].isRequisitado ==
-                                                  true) {
-                                            return ConstruirAspetoLivrosRequisitados(
-                                              indexAspeto: index,
-                                              pressionar: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    //? Redireciona o utilizador para a página de detalhes do livro */
-                                                    builder: (context) =>
-                                                        LivroDetalhado(
-                                                      index: index,
+                        return snapshot.hasData
+                            ? SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Container(
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: List.generate(
+                                          _livrosBD.length,
+                                          (int index) {
+                                            if (_livrosBD[index].uidLivro ==
+                                                    utilizador!.uid &&
+                                                _livrosBD[index]
+                                                        .isRequisitado ==
+                                                    true) {
+                                              return ConstruirAspetoLivrosRequisitados(
+                                                indexAspeto: index,
+                                                pressionar: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      //? Redireciona o utilizador para a página de detalhes do livro */
+                                                      builder: (context) =>
+                                                          LivroDetalhado(
+                                                        index: index,
+                                                      ),
                                                     ),
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          }
+                                                  );
+                                                },
+                                              );
+                                            }
 
-                                          //! LISTA SEMPRE CHEIA NÃO PARA MOSTRAR MENSAGEM - ENCONTRAR SOLUÇÃO
-                                          return const Text('');
-                                        },
+                                            //! LISTA SEMPRE CHEIA NÃO PARA MOSTRAR MENSAGEM - ENCONTRAR SOLUÇÃO
+                                            return const Text('');
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            )
-                          : const Center(
-                              child: Text('Sem livros requisitados...'),
-                            );
+                              )
+                            : const Center(
+                                child: Text('Sem livros requisitados...'),
+                              );
+                      }
                   }
+                  return const Text('sem dados');
                 },
               ),
             ),
