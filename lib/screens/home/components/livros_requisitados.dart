@@ -73,7 +73,7 @@ class MostrarLivrosRequisitados extends StatelessWidget {
                       return snapshot.hasData
                           ? SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
-                              child: Expanded(
+                              child: Container(
                                 child: Column(
                                   children: [
                                     Row(

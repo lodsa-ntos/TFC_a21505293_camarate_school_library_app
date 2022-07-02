@@ -28,7 +28,7 @@ class Estabelecimento extends StatelessWidget {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Expanded(
+        child: Container(
           child: Padding(
             padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 30.0),
             child: Column(

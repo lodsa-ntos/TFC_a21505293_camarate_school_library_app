@@ -1,5 +1,5 @@
-import 'package:camarate_school_library/screens/home/components/ui_livros_prateleiras.dart';
-import 'package:camarate_school_library/screens/home/components/ui_livros_requisitados.dart';
+import 'package:camarate_school_library/Screens/home/components/livros_prateleira.dart';
+import 'package:camarate_school_library/Screens/home/components/livros_requisitados.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
@@ -25,12 +25,12 @@ class ConstruirInterfaceHome extends StatelessWidget {
 
           espacamento,
 
-          //? CATEGORIA LIVROS GENERALIDADES
+          //?  LIVROS Prateleira
           SingleChildScrollView(
             child: SizedBox(
               width: double.infinity,
               height: 345.0,
-              child: LivrosCategoriaZero(),
+              child: LivrosPrateleira(),
             ),
           ),
         ],

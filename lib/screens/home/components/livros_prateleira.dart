@@ -11,8 +11,8 @@ import '../../../models/livro.dart';
 import '../../../models/view_models/livro_requisitado_view_model.dart';
 import '../../detalhes_do_livro/livro_detalhado.dart';
 
-class LivrosCategoriaZero extends StatelessWidget {
-  const LivrosCategoriaZero({Key? key}) : super(key: key);
+class LivrosPrateleira extends StatelessWidget {
+  const LivrosPrateleira({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,7 @@ class LivrosCategoriaZero extends StatelessWidget {
                                 },
                                 child: Stack(
                                   children: [
-                                    SizedBox(
+                                    Container(
                                       width: 125.66,
                                       height: 170.5,
                                       child: ClipRRect(
