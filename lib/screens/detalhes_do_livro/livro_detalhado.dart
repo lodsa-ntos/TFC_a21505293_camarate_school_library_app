@@ -1,4 +1,3 @@
-import 'package:camarate_school_library/Screens/home/home.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 import 'package:camarate_school_library/screens/detalhes_do_livro/components/capa_do_livro.dart';
 import 'package:flutter/material.dart';
@@ -32,13 +31,7 @@ class LivroDetalhado extends StatelessWidget {
       leading: IconButton(
         icon: SvgPicture.asset("assets/icons/voltar.svg"),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              //** Redireciona o utilizador para a página home
-              builder: (context) => const Home(),
-            ),
-          );
+          Navigator.pop(context);
         },
       ),
       backgroundColor: Colors.transparent,
