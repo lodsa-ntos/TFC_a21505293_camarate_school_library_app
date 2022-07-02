@@ -4,7 +4,14 @@
 
 Aplicação android para permitir a eficiência na requisição de livros de uma biblioteca escolar, com o intuito em apoiar e fortalecer o projeto pedagógico das escolas. O objetivo é ajudar alunos e professores a encontrem livros sem complicações, em que só precisam inserir o título do livro ou o autor para acessar uma lista de livros relevantes para sua consulta de pesquisa, bem como fazer registros de empréstimos de livros e ser alertado sobre o fim para a devolução.
 
-> Passo 2
+
+#### Credenciais para entrar na aplicação
+
+> E-mail : entregafinal@gmail.com
+> 
+> Password : TFCfinal1@
+
+
 ### Instruções de instalação - Clonar o repositório
 
 1. Criar o local em que deseja ter o projeto clonado;
@@ -16,11 +23,6 @@ git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_ap
 #### Como clonar o repositório
 - Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/4XBF4MyBtRE).
 
-# Credenciais para entrar na aplicação
-
-> E-mail : entregafinal@gmail.com
-> 
-> Password : TFCfinal1@
 
 
 # Ferramentas necessárias para correr o projeto
@@ -32,7 +34,7 @@ git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_ap
 
 # Como correr o projeto
 
-> Passo 3
+> Passos
 ### Configurar o flutter no sistema do computador
 - Deverá fazer primeiramente o download e a instalação do [SDK Flutter](https://docs.flutter.dev/get-started/install/windows) no computador;
 
