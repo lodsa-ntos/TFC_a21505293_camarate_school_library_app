@@ -8,7 +8,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 
 
 > Demonstração
-- Vídeo de demonstração do projeto poderá seguir [aqui](https://www.youtube.com/watch?v=esxH4HMfb_U)
+- Vídeo de demonstração do projeto poderá seguir [aqui](https://www.youtube.com/watch?v=esxH4HMfb_U).
 
 ###### Credenciais para entrar na aplicação
 > 
