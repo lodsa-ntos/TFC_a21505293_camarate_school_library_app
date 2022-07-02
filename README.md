@@ -1,4 +1,4 @@
-<img align="left" src="https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_app/blob/main/assets/images/header/biclioCamarate.png?raw=true" width="1050px" >
+<img align="left" src="https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_app/blob/main/assets/images/header/biclioCamarate.png?raw=true" width="1000px" >
 
 
 
