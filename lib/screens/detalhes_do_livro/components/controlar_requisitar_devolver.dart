@@ -104,7 +104,7 @@ class _ControlarRequisitarEDevolverState
               children: [
                 //* REQUISITAR
                 SizedBox(
-                  width: 165,
+                  width: 150,
                   height: 45,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -166,7 +166,7 @@ class _ControlarRequisitarEDevolverState
 
                 //* DEVOLVER
                 SizedBox(
-                  width: 165,
+                  width: 150,
                   height: 45,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(

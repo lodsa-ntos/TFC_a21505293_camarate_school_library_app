@@ -12,7 +12,7 @@ final List<Ajuda> perguntasERespostas = <Ajuda>[
   Ajuda(
     'Quantos livros podem ser requisitados ?',
     <Ajuda>[
-      Ajuda('O número máximo de livros a requisitar é 2 documentos.'),
+      Ajuda('O número máximo de livros a requisitar é 2.'),
     ],
   ),
   Ajuda(
