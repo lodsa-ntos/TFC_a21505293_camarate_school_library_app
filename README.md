@@ -13,7 +13,7 @@ Aplicação android para permitir a eficiência na requisição de livros de uma
 git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_app.git
 ```
 
-#### Video de demonstração
+#### Como clonar o repositório
 - Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/4XBF4MyBtRE).
 
 # Credenciais para entrar na aplicação
@@ -53,5 +53,5 @@ git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_ap
 - De seguida, fazer download e instalar o [visual studio code](https://code.visualstudio.com/) e extinções do flutter e do dart;
 
 - Por último, abrir o cmd e correr o " flutter doctor --android-licenses", para instalar todas licenças do android;
-#### Video de demonstração
+#### Como configurar o flutter
 - Para uma instalação mais pormenorizada poderá seguir [aqui](https://youtu.be/Q6xtDV4KoMc).
