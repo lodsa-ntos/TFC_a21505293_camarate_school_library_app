@@ -68,6 +68,7 @@ class HistoricoDeRequisicao extends StatelessWidget {
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
+                              // Altera o loading, para os dispositivos android e ios
                               Platform.isAndroid
                                   ? const CircularProgressIndicator()
                                   : const CupertinoActivityIndicator(),

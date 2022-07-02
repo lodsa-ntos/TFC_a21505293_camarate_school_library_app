@@ -16,7 +16,7 @@ class HistoricoModel {
     /// jsonDecode descodifica os dados e coloca no formato de Lista dynamic
 
     /// Obter os dados da base de dados e guardar num formato de uma
-    /// lista dinamica
+    /// Map<String, dynamic>
     Map<String, dynamic> isObraRequisitada = jsonDecode(jsonEncode(obrasJSON));
 
     final _historico = Historico.fromJson(isObraRequisitada);
@@ -44,7 +44,7 @@ class Historico {
     this.id,
   });
 
-  // Transformar os dados da Pessoa num mapa de pares chave/valor.
+  // Transformar os dados da Historico num mapa de pares chave/valor.
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> dadosHistorico = <String, dynamic>{};
     dadosHistorico["idLivro"] = idLivro;
@@ -58,7 +58,7 @@ class Historico {
     return dadosHistorico;
   }
 
-  // Receber dados do firebase e convertê-los num mapa de pares chave/valor com informação da Pessoa
+  // Receber dados do firebase e convertê-los num mapa de pares chave/valor com informação do Historico
   factory Historico.fromJson(Map<String, dynamic> json) {
     return Historico(
       idLivro: json['idLivro']?.toInt() ?? 0,

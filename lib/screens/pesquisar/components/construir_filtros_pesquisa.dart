@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 //* Variavel para controlar as escolhas dos filtros
 int selecionarFiltro = 0;
 
-//* Classe para montar os menus do filtro de pesquisa
+//* Classe para montar o menu do filtro de pesquisa
 class _FiltrosDePesquisaState extends State<FiltrosDePesquisa> {
   @override
   Widget build(BuildContext context) {
@@ -37,6 +37,7 @@ class _FiltrosDePesquisaState extends State<FiltrosDePesquisa> {
                       ),
 
                       //* Comportamento quando um filtro é selecionado
+                      // quando não está selecionado fica sem o retangulo e a cor azul escuro
                       decoration: BoxDecoration(
                         // Alternar cor
                         color: selecionarFiltro == index

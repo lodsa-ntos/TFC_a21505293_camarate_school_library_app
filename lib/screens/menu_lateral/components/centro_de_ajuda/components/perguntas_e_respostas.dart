@@ -16,6 +16,7 @@ class PerguntasERespostas extends StatelessWidget {
       return Container(
         margin: EdgeInsets.only(top: 5, bottom: 33),
         child: ListTile(
+          // Respostas
           title: Text(
             ajuda.titulo,
             style: TextStyle(fontFamily: 'Carmen', height: 1.5),
@@ -27,6 +28,8 @@ class PerguntasERespostas extends StatelessWidget {
       key: PageStorageKey<Ajuda>(ajuda),
       title: Container(
         margin: EdgeInsets.only(top: 15),
+
+        // Perguntas
         child: Text(
           ajuda.titulo,
           style: TextStyle(

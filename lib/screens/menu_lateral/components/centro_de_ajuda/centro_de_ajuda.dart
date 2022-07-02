@@ -11,7 +11,11 @@ class CentroDeAjuda extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
+      // barra da página
       appBar: topoDaPaginaAjuda(context),
+
+      // Lista para carregar as perguntas e repostas
       body: ListView.builder(
         itemCount: perguntasERespostas.length,
         itemBuilder: (BuildContext context, int index) => PerguntasERespostas(

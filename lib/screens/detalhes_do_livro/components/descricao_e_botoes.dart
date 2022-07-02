@@ -4,10 +4,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/livro.dart';
-import 'botao_requisitar_devolver.dart';
+import 'controlar_requisitar_devolver.dart';
 
-class DescricaoDoLivro extends StatelessWidget {
-  const DescricaoDoLivro({
+class DescricaoEBotoes extends StatelessWidget {
+  const DescricaoEBotoes({
     Key? key,
     required this.indexDescricao,
   }) : super(key: key);
@@ -83,8 +83,8 @@ class DescricaoDoLivro extends StatelessWidget {
 
                       const SizedBox(height: 30),
 
-                      //*  _Botão Requisitar e Devolver */
-                      BotaoRequisitarEDevolver(
+                      //*  _Botão Requisitar e Devolver
+                      ControlarRequisitarEDevolver(
                         livroARequisitar: _livros[indexDescricao],
                       ),
                     ],

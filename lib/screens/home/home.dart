@@ -1,3 +1,4 @@
+import 'package:camarate_school_library/Screens/home/components/construir_interface_home.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
 
 import '../pesquisar/pesquisar.dart';
-import 'components/construir_user_interface.dart';
 
 class _HomeState extends State<Home> {
   @override
@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
             backgroundColor: Colors.transparent,
 
             //* CONSTRUIR INTERFACE PARA O UTILIZADOR
-            body: const ConstruirUserInterface(),
+            body: const ConstruirInterfaceHome(),
           ),
         );
       },

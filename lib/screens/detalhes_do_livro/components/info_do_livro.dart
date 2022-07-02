@@ -61,7 +61,7 @@ class InformacaoDoLivro extends StatelessWidget {
 
                       const SizedBox(height: 8),
 
-                      //** Titulo do livro */
+                      //** Titulo do livro
                       Text(
                         _livros[indexInformacao].titulo.toString(),
                         style: const TextStyle(
@@ -73,11 +73,14 @@ class InformacaoDoLivro extends StatelessWidget {
                       ),
 
                       const SizedBox(height: 20),
-                      //** Autor */
+
+                      //** Autor
                       Text(
                         _livros[indexInformacao].autor.toString(),
                         style: _estiloTextoLeve,
                       ),
+
+                      //** Ano
                       Text(
                         _livros[indexInformacao].ano.toString(),
                         style: const TextStyle(
@@ -89,6 +92,7 @@ class InformacaoDoLivro extends StatelessWidget {
 
                       const SizedBox(height: 20),
 
+                      //** Mostrar ícone se o livro for requisitado
                       if (_livros[indexInformacao].isRequisitado == true) ...[
                         Row(
                           children: [

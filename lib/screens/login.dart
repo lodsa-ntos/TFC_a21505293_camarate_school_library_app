@@ -49,9 +49,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //? Simular chamada de espera para autenticar utilizador
     var _aCarregarAutenticacao = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+        // Altera o loading, para os dispositivos android e ios
         Platform.isAndroid
             ? const CircularProgressIndicator()
             : const CupertinoActivityIndicator(),
@@ -59,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
 
+    // Impossibilita o utilizador de voltar para a página splash screen (primeira página da app)
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -235,6 +238,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
 
+                        // Distanciar
                         const Padding(padding: EdgeInsets.only(bottom: 30)),
 
                         //* --> Botão Iniciar Sessão <--
@@ -257,6 +261,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5),
                                       ),
+
+                                      // Aqui controlo a disponibilidade do botao
+                                      // Se os campos não estiverem preenchidos o botão fica indisponivel
                                       onPressed: _emailInputController
                                                   .value.text.isNotEmpty &&
                                               _passwordInputController
@@ -269,6 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ],
                               ),
 
+                        // Distanciar
                         const Padding(padding: EdgeInsets.only(bottom: 25)),
 
                         RichText(
@@ -313,6 +321,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  // Submeter pedido para o login
   Future _submeterFormLogin() async {
     return {
       fazerLogin(),
@@ -337,7 +346,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await Navigator.push(
         context,
         MaterialPageRoute(
-          //** Redireciona o utilizador para a página de detalhes do livro */
+          //** Redireciona o utilizador para a página home
           builder: (context) => const MenuLateral(),
         ),
       );
@@ -374,7 +383,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          //** Redireciona o utilizador para a página de detalhes do livro */
+                          //** Redireciona o utilizador para a página de login
                           builder: (context) => const LoginScreen(),
                         ),
                       );

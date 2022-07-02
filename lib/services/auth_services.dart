@@ -71,12 +71,13 @@ class AuthServices with ChangeNotifier {
     }
   }
 
-  /// MÉTODO SAIR
+  // MÉTODO SAIR
   Future terminarSessao() async {
     await _firebaseAuth.signOut();
     _getUtilizador();
   }
 
+  //  MÉTODO REPOR PALAVRA-PASSE
   Future ReporPassword(String email) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);

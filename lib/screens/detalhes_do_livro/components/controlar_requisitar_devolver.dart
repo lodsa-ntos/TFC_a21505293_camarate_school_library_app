@@ -1,9 +1,5 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +19,8 @@ Historico historico = Historico();
 //? Alcançar a instância da base de dados para autenticação do utilizador atual
 final _auth = FirebaseAuth.instance;
 
-class _BotaoRequisitarEDevolverState extends State<BotaoRequisitarEDevolver> {
+class _ControlarRequisitarEDevolverState
+    extends State<ControlarRequisitarEDevolver> {
   DatabaseReference? _referenciaRequisicao;
   DatabaseReference? _referenciaUID;
   DatabaseReference? _referenciaDataRequisicao;
@@ -47,20 +44,6 @@ class _BotaoRequisitarEDevolverState extends State<BotaoRequisitarEDevolver> {
   Widget build(BuildContext context) {
     return Consumer<LivroRequisitadoModel>(
       builder: (context, requisitadoModel, child) {
-        var _aCarregarAutenticacao = Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Platform.isAndroid
-                ? const CircularProgressIndicator()
-                : const CupertinoActivityIndicator(),
-            const Text(" A autenticar... aguarde")
-          ],
-        );
-
-        bool _isLoading = false;
-
-        Timer? _timer;
-
         var dataAtual = DateTime.now().toLocal();
         var formato = DateFormat('dd-MM-yyyy – HH:mm');
         String dataRequisicao = formato.format(dataAtual);
@@ -244,6 +227,7 @@ class _BotaoRequisitarEDevolverState extends State<BotaoRequisitarEDevolver> {
     );
   }
 
+  // Criar histórico
   void criarHistoricoDeRequisicao() async {
     var dataAtual = DateTime.now().toLocal();
     var formato = DateFormat('dd-MM-yyyy – HH:mm');
@@ -284,13 +268,13 @@ class _BotaoRequisitarEDevolverState extends State<BotaoRequisitarEDevolver> {
   }
 }
 
-class BotaoRequisitarEDevolver extends StatefulWidget {
+class ControlarRequisitarEDevolver extends StatefulWidget {
   final Livro livroARequisitar;
 
-  const BotaoRequisitarEDevolver({required this.livroARequisitar, Key? key})
+  const ControlarRequisitarEDevolver({required this.livroARequisitar, Key? key})
       : super(key: key);
 
   @override
-  State<BotaoRequisitarEDevolver> createState() =>
-      _BotaoRequisitarEDevolverState();
+  State<ControlarRequisitarEDevolver> createState() =>
+      _ControlarRequisitarEDevolverState();
 }

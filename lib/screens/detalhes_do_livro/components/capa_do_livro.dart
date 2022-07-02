@@ -1,11 +1,11 @@
 import 'dart:convert';
 
+import 'package:camarate_school_library/Screens/detalhes_do_livro/components/descricao_e_botoes.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/livro.dart';
 import '../../../util/configurar_tamanho.dart';
-import 'descricao_do_livro.dart';
 import 'info_do_livro.dart';
 
 // ignore: must_be_immutable
@@ -31,7 +31,7 @@ class CapaDoLivro extends StatelessWidget {
               top: 350,
               left: 0,
               right: 0,
-              child: DescricaoDoLivro(indexDescricao: index),
+              child: DescricaoEBotoes(indexDescricao: index),
             ),
             StreamBuilder(
               stream: FirebaseDatabase.instance.ref("livros").onValue,
@@ -60,6 +60,7 @@ class CapaDoLivro extends StatelessWidget {
 
                       _livros.addAll(listaDeLivros.livros);
 
+                      // Posicionar a capa a direita
                       return Positioned(
                         top: 40,
                         right: 15,
@@ -78,11 +79,15 @@ class CapaDoLivro extends StatelessWidget {
                               ),
                             ],
                           ),
+
+                          // Cria um clip retangular arredondado em cima a esquerda e em baixo a direita.
                           child: ClipRRect(
                             borderRadius: const BorderRadius.only(
                               bottomRight: Radius.circular(15.0),
                               topLeft: Radius.circular(15.0),
                             ),
+
+                            //* Capa
                             child: Image.network(
                               _livros[index].imagePath.toString(),
                               fit: BoxFit.cover,

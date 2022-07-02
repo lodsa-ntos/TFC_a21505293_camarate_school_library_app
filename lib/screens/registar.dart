@@ -75,17 +75,19 @@ class _RegistarState extends State<Registar> {
     'Z',
   ];
 
-  final valorNumeroPessaos = ValueNotifier('');
+  final valorNumeroPessoas = ValueNotifier('');
 
+  // Lista que vai gerar 30 números, para a escolha do utilizador no formulário
   final numOpcoes = [for (var i = 1; i <= 30; i++) i.toString()];
 
-  //? Alcançar a instancia da abse de dados para autenticação do utilizador atual
+  //? Alcançar a instancia da base de dados para autenticação do utilizador atual
   final _auth = FirebaseAuth.instance;
 
   //? Simular chamada de espera para criar utilizador
   final _aCriarUtilizador = Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[
+      // Altera o loading, para os dispositivos android e ios
       Platform.isAndroid
           ? const CircularProgressIndicator()
           : const CupertinoActivityIndicator(),
@@ -96,31 +98,47 @@ class _RegistarState extends State<Registar> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      // Remove o foco neste nó e depois vai mover o foco primário para outro nó, assim o teclado não atrapalha
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: SafeArea(
         child: Scaffold(
-          /// evitar que os wid
-          /// gets sejam redimensionados se o teclado aparecer
+          /// evitar que os widgets
+          /// sejam redimensionados se o teclado aparecer
           /// de repente e tapar tudo.
           resizeToAvoidBottomInset: true,
           body: ListView(
+            // Distanciar
             padding: const EdgeInsets.only(left: 2.0, right: 2.0),
+
+            // comportamento para que o ListView
+            // ocupe apenas o espaço necessário dos dados
+            // a serem mostrados na interface
             shrinkWrap: true,
+
+            // onDrag significa que o [ScrollView] descartará um teclado na ecrã quando um arrastar começar.
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             children: [
               Padding(
+                // Distanciar
                 padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    // Distanciar
                     const Padding(padding: EdgeInsets.only(bottom: 30)),
+
+                    // Título
                     Text(
                       "Regista-te", //? titulo
                       style: StyleRegistoScreen.estiloTituloRegisto,
                       overflow: TextOverflow.ellipsis,
                     ),
+
+                    // Distanciar
                     const SizedBox(height: 20),
+
+                    // Sub-título
                     Text(
                       "E embarca nas viajens da leitura na tua biblioteca!", //? titulo
                       overflow: TextOverflow.ellipsis,
@@ -131,460 +149,11 @@ class _RegistarState extends State<Registar> {
                       ),
                     ),
 
-                    //? Formulário
+                    // Distanciar
                     const Padding(padding: EdgeInsets.only(bottom: 30)),
-                    Form(
-                      key: _chaveFormRegisto,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'Número do cartão',
-                            style: GoogleFonts.roboto(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(127, 127, 127, 2),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          TextFormField(
-                            validator: (numCartao) =>
-                                Validator.validarNumeroCartao(
-                                    numCartao: numCartao),
 
-                            onChanged: (text) => setState(() => _texto),
-
-                            // Obter o valor do email escrito pelo user
-                            controller: _numCartaoAlunoController,
-
-                            keyboardType: TextInputType.text,
-
-                            style: StyleRegistoScreen.estiloNumCartao,
-
-                            cursorColor: Colors.grey.shade500,
-
-                            cursorHeight: 22,
-                            cursorWidth: 1.7,
-                            textAlign: TextAlign.start,
-
-                            textCapitalization: TextCapitalization.words,
-                            textInputAction: TextInputAction.next,
-
-                            // Estilo da decoração do campo do e-mail
-                            decoration: StyleRegistoScreen.decoracaoNumCartao,
-                          ),
-
-                          const Padding(padding: EdgeInsets.only(bottom: 15)),
-
-                          Text(
-                            'Nome completo',
-                            style: GoogleFonts.roboto(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(127, 127, 127, 2),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          TextFormField(
-                            validator: (nome) =>
-                                Validator.validarNomeCompleto(nome: nome),
-
-                            onChanged: (text) => setState(() => _texto),
-
-                            // Obter o valor do email escrito pelo user
-                            controller: _nomeCompletoController,
-
-                            keyboardType: TextInputType.text,
-
-                            style: StyleRegistoScreen.estiloNomeCompleto,
-
-                            cursorColor: Colors.grey.shade500,
-
-                            cursorHeight: 22,
-                            cursorWidth: 1.7,
-                            textAlign: TextAlign.start,
-
-                            textCapitalization: TextCapitalization.words,
-                            textInputAction: TextInputAction.next,
-
-                            // Estilo da decoração do campo do e-mail
-                            decoration:
-                                StyleRegistoScreen.decoracaoNomeCompleto,
-                          ),
-
-                          const Padding(padding: EdgeInsets.only(bottom: 15)),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Ano',
-                                    style: GoogleFonts.roboto(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color.fromRGBO(127, 127, 127, 2),
-                                    ),
-                                  ),
-                                  SizedBox(height: 5),
-                                  ValueListenableBuilder(
-                                    valueListenable: valorAno,
-                                    builder: (BuildContext context,
-                                        String value, _) {
-                                      return SizedBox(
-                                        width: 80,
-                                        height: 55,
-                                        child: DropdownButtonFormField(
-                                          isDense: true,
-                                          isExpanded: true,
-                                          icon: Icon(FluentIcons
-                                              .caret_down_12_regular),
-                                          hint: Text('7º'),
-                                          value: (value.isEmpty) ? null : value,
-                                          onChanged: (escolha) {
-                                            valorAno.value = escolha.toString();
-                                            _anoController.text =
-                                                valorAno.value.toString();
-                                          },
-                                          items: anoOpcoes
-                                              .map(
-                                                (opcao) => DropdownMenuItem(
-                                                  value: opcao,
-                                                  child: Text(opcao),
-                                                ),
-                                              )
-                                              .toList(),
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.grey.shade400),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                              const Padding(
-                                  padding: EdgeInsets.only(bottom: 15)),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Turma',
-                                    style: GoogleFonts.roboto(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color.fromRGBO(127, 127, 127, 2),
-                                    ),
-                                  ),
-                                  SizedBox(height: 5),
-                                  ValueListenableBuilder(
-                                    valueListenable: valorTurma,
-                                    builder: (BuildContext context,
-                                        String value, _) {
-                                      return SizedBox(
-                                        width: 100,
-                                        height: 55,
-                                        child: DropdownButtonFormField(
-                                          isDense: true,
-                                          isExpanded: true,
-                                          icon: Icon(FluentIcons
-                                              .caret_down_12_regular),
-                                          hint: Text('A'),
-                                          value: (value.isEmpty) ? null : value,
-                                          onChanged: (escolha) {
-                                            valorTurma.value =
-                                                escolha.toString();
-                                            _turmaController.text =
-                                                valorTurma.value.toString();
-                                          },
-                                          items: turmaOpcoes
-                                              .map(
-                                                (opcao) => DropdownMenuItem(
-                                                  value: opcao,
-                                                  child: Text(opcao),
-                                                ),
-                                              )
-                                              .toList(),
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.grey.shade400),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                              const Padding(
-                                  padding: EdgeInsets.only(bottom: 15)),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Nº',
-                                    style: GoogleFonts.roboto(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color.fromRGBO(127, 127, 127, 2),
-                                    ),
-                                  ),
-                                  SizedBox(height: 5),
-                                  ValueListenableBuilder(
-                                    valueListenable: valorNumeroPessaos,
-                                    builder: (BuildContext context,
-                                        String value, _) {
-                                      return SizedBox(
-                                        width: 80,
-                                        height: 55,
-                                        child: DropdownButtonFormField(
-                                          isDense: true,
-                                          isExpanded: true,
-                                          icon: Icon(FluentIcons
-                                              .caret_down_12_regular),
-                                          hint: Text('1'),
-                                          value: (value.isEmpty) ? null : value,
-                                          onChanged: (escolha) {
-                                            valorNumeroPessaos.value =
-                                                escolha.toString();
-                                            _numAlunoController.text =
-                                                valorNumeroPessaos.value
-                                                    .toString();
-                                          },
-                                          items: numOpcoes
-                                              .map(
-                                                (opcao) => DropdownMenuItem(
-                                                  value: opcao,
-                                                  child: Text(opcao),
-                                                ),
-                                              )
-                                              .toList(),
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.grey.shade400),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-
-                          const Padding(padding: EdgeInsets.only(bottom: 15)),
-
-                          Text(
-                            'E-mail',
-                            style: GoogleFonts.roboto(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(127, 127, 127, 2),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          TextFormField(
-                            validator: (email) =>
-                                Validator.validarEmail(email: email),
-
-                            onChanged: (text) => setState(() => _texto),
-
-                            // Obter o valor do email escrito pelo user
-                            controller: _emailInputController,
-
-                            keyboardType: TextInputType.emailAddress,
-
-                            style: StyleRegistoScreen.estiloCampoDoEmail,
-
-                            cursorColor: Colors.grey.shade500,
-
-                            cursorHeight: 22,
-                            cursorWidth: 1.7,
-                            textAlign: TextAlign.start,
-
-                            textCapitalization: TextCapitalization.words,
-                            textInputAction: TextInputAction.next,
-
-                            // Estilo da decoração do campo do e-mail
-                            decoration:
-                                StyleRegistoScreen.decoracaoCampoDoEmail,
-                          ),
-
-                          const Padding(padding: EdgeInsets.only(bottom: 15)),
-
-                          Text(
-                            'Palavra-passe',
-                            style: GoogleFonts.roboto(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(127, 127, 127, 2),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          TextFormField(
-                            validator: (password) =>
-                                Validator.validarPasswordRegisto(
-                                    password: password),
-
-                            onChanged: (text) => setState(() => _texto),
-
-                            // Esconder a palavra-passe
-                            obscureText: esconderPassword,
-
-                            keyboardType: TextInputType.visiblePassword,
-
-                            // Obter o valor da password escrito pelo user
-                            controller: _passwordInputController,
-
-                            // Estilo dentro do campo da palavra-passe
-                            style: StyleLoginScreen.estiloCampoDaPassword,
-
-                            cursorColor: Colors.grey.shade500,
-
-                            cursorHeight: 22,
-                            cursorWidth: 1.7,
-                            textAlign: TextAlign.start,
-
-                            textCapitalization: TextCapitalization.words,
-                            textInputAction: TextInputAction.next,
-
-                            // Estilo da decoração do campo do e-mail
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: 5,
-                                horizontal: 10,
-                              ),
-                              labelStyle: GoogleFonts.roboto(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromRGBO(127, 127, 127, 2),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.grey.shade400),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              suffixIcon: InkWell(
-                                onTap: () {
-                                  setState(
-                                    () {
-                                      esconderPassword = !esconderPassword;
-                                    },
-                                  );
-                                },
-                                child: Icon(
-                                  esconderPassword
-                                      ? FluentIcons.eye_off_24_regular
-                                      : FluentIcons.eye_24_regular,
-                                  color: esconderPassword
-                                      ? Colors.grey.shade500
-                                      : Color(0xff4285f4),
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          const Padding(padding: EdgeInsets.only(bottom: 20)),
-
-                          //? --> Botão Seguinte <--
-                          _isLoading
-                              ? _aCriarUtilizador
-                              : Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: MaterialButton(
-                                        height: 50,
-                                        textColor: Colors.white,
-                                        color: Colors.blue,
-                                        child: const Text(
-                                          "Seguinte",
-                                          style: StyleLoginScreen
-                                              .estiloBotaoIniciarSessao,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        onPressed: _numCartaoAlunoController
-                                                    .value.text.isNotEmpty &&
-                                                _nomeCompletoController
-                                                    .value.text.isNotEmpty &&
-                                                _anoController
-                                                    .value.text.isNotEmpty &&
-                                                _turmaController
-                                                    .value.text.isNotEmpty &&
-                                                _numAlunoController
-                                                    .value.text.isNotEmpty &&
-                                                _emailInputController
-                                                    .value.text.isNotEmpty &&
-                                                _passwordInputController
-                                                    .value.text.isNotEmpty
-                                            ? _submeterFormulario
-                                            : null,
-                                        disabledColor: Colors.blue.shade100,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-
-                          const Padding(padding: EdgeInsets.only(bottom: 30)),
-
-                          Center(
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                text: "Já tens uma conta? ",
-                                style: TextStyle(
-                                  color: Colors.grey.shade800,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const LoginScreen(),
-                                          ),
-                                        );
-                                      },
-                                    text: ' Inicia sessão.',
-                                    style: const TextStyle(
-                                      color: Color(0xff2D55AB),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const Padding(padding: EdgeInsets.only(bottom: 50)),
-                        ],
-                      ),
-                    ),
+                    // Formulário
+                    formularioDoRegisto(context),
                   ],
                 ),
               ),
@@ -595,21 +164,449 @@ class _RegistarState extends State<Registar> {
     );
   }
 
+  // Widget Formulário
+  Form formularioDoRegisto(BuildContext context) {
+    return Form(
+      key: _chaveFormRegisto,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Número do cartão',
+            style: GoogleFonts.roboto(
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: Color.fromRGBO(127, 127, 127, 2),
+            ),
+          ),
+          SizedBox(height: 5),
+          TextFormField(
+            validator: (numCartao) =>
+                Validator.validarNumeroCartao(numCartao: numCartao),
+
+            onChanged: (text) => setState(() => _texto),
+
+            // Obter o valor do email escrito pelo user
+            controller: _numCartaoAlunoController,
+
+            keyboardType: TextInputType.text,
+
+            style: StyleRegistoScreen.estiloNumCartao,
+
+            cursorColor: Colors.grey.shade500,
+
+            cursorHeight: 22,
+            cursorWidth: 1.7,
+            textAlign: TextAlign.start,
+
+            textCapitalization: TextCapitalization.words,
+            textInputAction: TextInputAction.next,
+
+            // Estilo da decoração do campo do e-mail
+            decoration: StyleRegistoScreen.decoracaoNumCartao,
+          ),
+
+          const Padding(padding: EdgeInsets.only(bottom: 15)),
+
+          Text(
+            'Nome completo',
+            style: GoogleFonts.roboto(
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: Color.fromRGBO(127, 127, 127, 2),
+            ),
+          ),
+          SizedBox(height: 5),
+          TextFormField(
+            validator: (nome) => Validator.validarNomeCompleto(nome: nome),
+
+            onChanged: (text) => setState(() => _texto),
+
+            // Obter o valor do email escrito pelo user
+            controller: _nomeCompletoController,
+
+            keyboardType: TextInputType.text,
+
+            style: StyleRegistoScreen.estiloNomeCompleto,
+
+            cursorColor: Colors.grey.shade500,
+
+            cursorHeight: 22,
+            cursorWidth: 1.7,
+            textAlign: TextAlign.start,
+
+            textCapitalization: TextCapitalization.words,
+            textInputAction: TextInputAction.next,
+
+            // Estilo da decoração do campo do e-mail
+            decoration: StyleRegistoScreen.decoracaoNomeCompleto,
+          ),
+
+          const Padding(padding: EdgeInsets.only(bottom: 15)),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Ano',
+                    style: GoogleFonts.roboto(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromRGBO(127, 127, 127, 2),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  ValueListenableBuilder(
+                    valueListenable: valorAno,
+                    builder: (BuildContext context, String value, _) {
+                      return SizedBox(
+                        width: 80,
+                        height: 55,
+                        child: DropdownButtonFormField(
+                          isDense: true,
+                          isExpanded: true,
+                          icon: Icon(FluentIcons.caret_down_12_regular),
+                          hint: Text('7º'),
+                          value: (value.isEmpty) ? null : value,
+                          onChanged: (escolha) {
+                            valorAno.value = escolha.toString();
+                            _anoController.text = valorAno.value.toString();
+                          },
+                          items: anoOpcoes
+                              .map(
+                                (opcao) => DropdownMenuItem(
+                                  value: opcao,
+                                  child: Text(opcao),
+                                ),
+                              )
+                              .toList(),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.grey.shade400),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              const Padding(padding: EdgeInsets.only(bottom: 15)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Turma',
+                    style: GoogleFonts.roboto(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromRGBO(127, 127, 127, 2),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  ValueListenableBuilder(
+                    valueListenable: valorTurma,
+                    builder: (BuildContext context, String value, _) {
+                      return SizedBox(
+                        width: 100,
+                        height: 55,
+                        child: DropdownButtonFormField(
+                          isDense: true,
+                          isExpanded: true,
+                          icon: Icon(FluentIcons.caret_down_12_regular),
+                          hint: Text('A'),
+                          value: (value.isEmpty) ? null : value,
+                          onChanged: (escolha) {
+                            valorTurma.value = escolha.toString();
+                            _turmaController.text = valorTurma.value.toString();
+                          },
+                          items: turmaOpcoes
+                              .map(
+                                (opcao) => DropdownMenuItem(
+                                  value: opcao,
+                                  child: Text(opcao),
+                                ),
+                              )
+                              .toList(),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.grey.shade400),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              const Padding(padding: EdgeInsets.only(bottom: 15)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Nº',
+                    style: GoogleFonts.roboto(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromRGBO(127, 127, 127, 2),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  ValueListenableBuilder(
+                    valueListenable: valorNumeroPessoas,
+                    builder: (BuildContext context, String value, _) {
+                      return SizedBox(
+                        width: 80,
+                        height: 55,
+                        child: DropdownButtonFormField(
+                          isDense: true,
+                          isExpanded: true,
+                          icon: Icon(FluentIcons.caret_down_12_regular),
+                          hint: Text('1'),
+                          value: (value.isEmpty) ? null : value,
+                          onChanged: (escolha) {
+                            valorNumeroPessoas.value = escolha.toString();
+                            _numAlunoController.text =
+                                valorNumeroPessoas.value.toString();
+                          },
+                          items: numOpcoes
+                              .map(
+                                (opcao) => DropdownMenuItem(
+                                  value: opcao,
+                                  child: Text(opcao),
+                                ),
+                              )
+                              .toList(),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.grey.shade400),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          const Padding(padding: EdgeInsets.only(bottom: 15)),
+
+          Text(
+            'E-mail',
+            style: GoogleFonts.roboto(
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: Color.fromRGBO(127, 127, 127, 2),
+            ),
+          ),
+          SizedBox(height: 5),
+          TextFormField(
+            validator: (email) => Validator.validarEmail(email: email),
+
+            onChanged: (text) => setState(() => _texto),
+
+            // Obter o valor do email escrito pelo user
+            controller: _emailInputController,
+
+            keyboardType: TextInputType.emailAddress,
+
+            style: StyleRegistoScreen.estiloCampoDoEmail,
+
+            cursorColor: Colors.grey.shade500,
+
+            cursorHeight: 22,
+            cursorWidth: 1.7,
+            textAlign: TextAlign.start,
+
+            textCapitalization: TextCapitalization.words,
+            textInputAction: TextInputAction.next,
+
+            // Estilo da decoração do campo do e-mail
+            decoration: StyleRegistoScreen.decoracaoCampoDoEmail,
+          ),
+
+          const Padding(padding: EdgeInsets.only(bottom: 15)),
+
+          Text(
+            'Palavra-passe',
+            style: GoogleFonts.roboto(
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: Color.fromRGBO(127, 127, 127, 2),
+            ),
+          ),
+          SizedBox(height: 5),
+          TextFormField(
+            validator: (password) =>
+                Validator.validarPasswordRegisto(password: password),
+
+            onChanged: (text) => setState(() => _texto),
+
+            // Esconder a palavra-passe
+            obscureText: esconderPassword,
+
+            keyboardType: TextInputType.visiblePassword,
+
+            // Obter o valor da password escrito pelo user
+            controller: _passwordInputController,
+
+            // Estilo dentro do campo da palavra-passe
+            style: StyleLoginScreen.estiloCampoDaPassword,
+
+            cursorColor: Colors.grey.shade500,
+
+            cursorHeight: 22,
+            cursorWidth: 1.7,
+            textAlign: TextAlign.start,
+
+            textCapitalization: TextCapitalization.words,
+            textInputAction: TextInputAction.next,
+
+            // Estilo da decoração do campo do e-mail
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 5,
+                horizontal: 10,
+              ),
+              labelStyle: GoogleFonts.roboto(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Color.fromRGBO(127, 127, 127, 2),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade400),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              suffixIcon: InkWell(
+                onTap: () {
+                  setState(
+                    () {
+                      esconderPassword = !esconderPassword;
+                    },
+                  );
+                },
+                child: Icon(
+                  esconderPassword
+                      ? FluentIcons.eye_off_24_regular
+                      : FluentIcons.eye_24_regular,
+                  color: esconderPassword
+                      ? Colors.grey.shade500
+                      : Color(0xff4285f4),
+                ),
+              ),
+            ),
+          ),
+
+          const Padding(padding: EdgeInsets.only(bottom: 20)),
+
+          //? --> Botão Seguinte <--
+          _isLoading
+              ? _aCriarUtilizador
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: MaterialButton(
+                        height: 50,
+                        textColor: Colors.white,
+                        color: Colors.blue,
+                        child: const Text(
+                          "Seguinte",
+                          style: StyleLoginScreen.estiloBotaoIniciarSessao,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+
+                        // Aqui controlo a disponibilidade do botao
+                        // Se os campos não estiverem preenchidos o botão fica indisponivel
+                        onPressed: _numCartaoAlunoController
+                                    .value.text.isNotEmpty &&
+                                _nomeCompletoController.value.text.isNotEmpty &&
+                                _anoController.value.text.isNotEmpty &&
+                                _turmaController.value.text.isNotEmpty &&
+                                _numAlunoController.value.text.isNotEmpty &&
+                                _emailInputController.value.text.isNotEmpty &&
+                                _passwordInputController.value.text.isNotEmpty
+                            ? _submeterFormulario
+                            : null,
+                        disabledColor: Colors.blue.shade100,
+                      ),
+                    ),
+                  ],
+                ),
+
+          const Padding(padding: EdgeInsets.only(bottom: 30)),
+
+          Center(
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: "Já tens uma conta? ",
+                style: TextStyle(
+                  color: Colors.grey.shade800,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+                children: <TextSpan>[
+                  TextSpan(
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
+                      },
+                    text: ' Inicia sessão.',
+                    style: const TextStyle(
+                      color: Color(0xff2D55AB),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const Padding(padding: EdgeInsets.only(bottom: 50)),
+        ],
+      ),
+    );
+  }
+
+  // Submeter registo se todos os campos preenchidos tiverem dados correctos
   Future _submeterFormulario() async {
     return {
       if (_chaveFormRegisto.currentState!.validate()) {registarAluno()}
     };
   }
 
-  //* Registar Aluno na app
+  //* Registar o utilizador na app
   registarAluno() async {
     setState(() => _isLoading = true);
     try {
       await context
           .read<AuthServices>()
           .registar(_emailInputController.text, _passwordInputController.text)
-          .then((value) => {saveUserAlunoNoFirestore()});
-      //* Mensagens de erro
+          .then((value) => {savedadosUserBD()});
+
+      // Mensagens de erro
     } on AuthException catch (erro) {
       setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -623,8 +620,8 @@ class _RegistarState extends State<Registar> {
     }
   }
 
-  //* Guardar os dados do Aluno na base de dados do firestore
-  saveUserAlunoNoFirestore() async {
+  //* Guardar os dados do utilizador na base de dados do realtime database
+  savedadosUserBD() async {
     // Instâcia par alcançar a base de dados firestore do firebase
     final databaseRef = FirebaseDatabase.instance.ref('utilizadores');
 
@@ -655,7 +652,7 @@ class _RegistarState extends State<Registar> {
       backgroundColor: Colors.orange,
     );
 
-    // Redireciona o utilizador para a página home
+    // redireciona o utilizador para a página home
     Navigator.pushAndRemoveUntil(
       (context),
       MaterialPageRoute(builder: (context) => const MenuLateral()),

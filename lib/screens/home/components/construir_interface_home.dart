@@ -3,8 +3,8 @@ import 'package:camarate_school_library/screens/home/components/ui_livros_requis
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
-class ConstruirUserInterface extends StatelessWidget {
-  const ConstruirUserInterface({Key? key}) : super(key: key);
+class ConstruirInterfaceHome extends StatelessWidget {
+  const ConstruirInterfaceHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

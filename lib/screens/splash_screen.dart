@@ -10,7 +10,7 @@ class _IniciarAppState extends State<IniciarApp> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          //** Redireciona o utilizador para a página de detalhes do livro */
+          //** Redireciona o utilizador para a página de Login depois de passar 3 segundos
           builder: (context) => const LoginScreen(),
         ),
       );
@@ -28,6 +28,8 @@ class _IniciarAppState extends State<IniciarApp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 120),
+
+            // Logo da página
             Image.asset(
               'assets/logotipo/ic_launcher_adaptive_fore.png',
               width: 150,
@@ -39,6 +41,8 @@ class _IniciarAppState extends State<IniciarApp> {
                   TextStyle(fontFamily: 'Carmen', color: Colors.grey.shade700),
             ),
             SizedBox(height: 5.5),
+
+            // Logo da entidade externa
             Image.asset('assets/logotipo/logo_entidade.png', width: 25),
             SizedBox(height: 5.5),
             Text(
