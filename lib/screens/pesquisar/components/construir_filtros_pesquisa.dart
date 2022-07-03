@@ -41,7 +41,7 @@ class _FiltrosDePesquisaState extends State<FiltrosDePesquisa> {
                       decoration: BoxDecoration(
                         // Alternar cor
                         color: selecionarFiltro == index
-                            ? const Color.fromRGBO(27, 68, 166, 1)
+                            ? const Color(0xff4285f4)
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(16.0),
                       ),
