@@ -3,7 +3,7 @@
    <uses-permission android:name="android.permission.CAMERA" />
    <uses-permission android:name="android.permission.FLASHLIGHT" />
    <application
-        android:label="camarate_school_library"
+        android:label="Biblioteca Escolar Camarate"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
