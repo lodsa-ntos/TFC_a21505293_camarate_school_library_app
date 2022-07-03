@@ -14,7 +14,7 @@
 > 
 > Password : TFCfinal1@
 
-###### Instalar aplicação Bibliteca Escolar Camarate 📲
+## Instalar aplicação Bibliteca Escolar Camarate 📲
 
 - Para testar a aplicação, o ficheiro .apk está disponível [aqui](https://www.mediafire.com/file/2uh45v78icd3h2i/Biblioteca-escolar-camarate-TFC.apk/file).
 
