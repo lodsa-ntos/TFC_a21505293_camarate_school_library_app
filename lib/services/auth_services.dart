@@ -84,13 +84,13 @@ class AuthServices with ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email') {
         throw AuthException(
-          'O teu e-mail parece estar incorreto. Verifica-a novamente.',
+          'O teu e-mail parece estar incorreto. Tente novamente.',
         );
       }
 
       if (e.code == 'user-not-found') {
         throw AuthException(
-          'Não existem registos. Verifica e tenta novamente.',
+          'Não existem registos do e-mail inserido. Tente novamente.',
         );
       }
     }
