@@ -14,6 +14,8 @@
 > 
 > Password : TFCfinal1@
 
+###### Download da aplicação
+- Link ficheiro .apk para download [aqui](https://www.mediafire.com/file/2uh45v78icd3h2i/Biblioteca-escolar-camarate-TFC.apk/file)
 
 # Instruções de instalação - Clonar o repositório
 
