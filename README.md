@@ -14,8 +14,14 @@
 > 
 > Password : TFCfinal1@
 
-###### Download da aplicação
-- Link ficheiro .apk para download [aqui](https://www.mediafire.com/file/2uh45v78icd3h2i/Biblioteca-escolar-camarate-TFC.apk/file)
+###### Instalar aplicação Bibliteca Escolar Camarate 📲
+
+- Para testar a aplicação o ficheiro .apk está disponível [aqui](https://www.mediafire.com/file/2uh45v78icd3h2i/Biblioteca-escolar-camarate-TFC.apk/file).
+
+> Demonstração instalar .apk Bibliteca Escolar Camarate
+- Vídeo de demonstração em breve.
+
+
 
 # Instruções de instalação - Clonar o repositório
 
@@ -30,7 +36,7 @@ git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_ap
 
 
 
-# Ferramentas necessárias para correr o projeto
+# Ferramentas necessárias para correr o projeto 👩‍
 - O [Android Studio](https://developer.android.com/studio) para disponibilizar dispositivos Android de forma a conseguir correr o projeto num emulador.
 
 - O [Visual Studio Code](https://code.visualstudio.com/) para visualizar o código-fonte e desenvolver o projeto
