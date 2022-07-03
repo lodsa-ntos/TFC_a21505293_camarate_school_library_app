@@ -14,6 +14,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    // A aplicação vai sempre estar a verficar a conetividade do utilizador com a internet
     Provider.of<Conectividade>(context, listen: false).verificarLigacao();
   }
 
