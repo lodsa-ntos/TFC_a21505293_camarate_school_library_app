@@ -36,7 +36,7 @@ git clone https://github.com/lodsa-ntos/TFC_a21505293_camarate_school_library_ap
 
 
 
-# Ferramentas necessárias para correr o projeto 👩‍
+# Ferramentas necessárias para correr o projeto 🖥️
 - O [Android Studio](https://developer.android.com/studio) para disponibilizar dispositivos Android de forma a conseguir correr o projeto num emulador.
 
 - O [Visual Studio Code](https://code.visualstudio.com/) para visualizar o código-fonte e desenvolver o projeto
