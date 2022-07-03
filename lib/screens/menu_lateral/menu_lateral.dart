@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:camarate_school_library/Models/view_models/conetividade.dart';
 import 'package:camarate_school_library/Screens/menu_lateral/components/centro_de_ajuda/centro_de_ajuda.dart';
 import 'package:camarate_school_library/Screens/menu_lateral/components/corpo_docente/corpo_docente.dart';
 import 'package:camarate_school_library/Screens/menu_lateral/components/estabelecimento/estabelecimento.dart';
 import 'package:camarate_school_library/Screens/menu_lateral/components/procedimentos/procedimentos.dart';
 import 'package:camarate_school_library/Screens/menu_lateral/components/sobre/sobre.dart';
+import 'package:camarate_school_library/Screens/sem_internet.dart';
 import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:camarate_school_library/screens/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,6 +27,12 @@ ZoomDrawerController _controlarMenuLateral = ZoomDrawerController();
 
 class _MenuLateralState extends State<MenuLateral> {
   @override
+  void initState() {
+    super.initState();
+    Provider.of<Conectividade>(context, listen: false).verificarLigacao();
+  }
+
+  @override
   Widget build(BuildContext context) {
     //
     //? Sombras a volta para a ecrã home quando o menu abrir
@@ -37,48 +45,61 @@ class _MenuLateralState extends State<MenuLateral> {
     ];
 
     //? Menu Lateral
-    return ZoomDrawer(
-      // seta do android para fechar o menu
-      androidCloseOnBackTap: true,
+    return Consumer<Conectividade>(
+      builder: (context, utilizador, child) {
+        if (utilizador.isOnline != null) {
+          return utilizador.isOnline ?? false
+              ? ZoomDrawer(
+                  // seta do android para fechar o menu
+                  androidCloseOnBackTap: true,
 
-      // mover campos do menu para esquerda quando fechar
-      moveMenuScreen: true,
+                  // mover campos do menu para esquerda quando fechar
+                  moveMenuScreen: true,
 
-      // tamanho ecrã home quando o menu abre
-      mainScreenScale: 0.28,
+                  // tamanho ecrã home quando o menu abre
+                  mainScreenScale: 0.28,
 
-      // cor total dentro do menu
-      menuBackgroundColor: const Color(0xff4285f4),
+                  // cor total dentro do menu
+                  menuBackgroundColor: const Color(0xff4285f4),
 
-      controller: _controlarMenuLateral,
+                  controller: _controlarMenuLateral,
 
-      // Bordas arredondadas ecrã home quando menu abre
-      borderRadius: 25.0,
+                  // Bordas arredondadas ecrã home quando menu abre
+                  borderRadius: 25.0,
 
-      style: DrawerStyle.defaultStyle,
+                  style: DrawerStyle.defaultStyle,
 
-      boxShadow: sombras,
+                  boxShadow: sombras,
 
-      drawerShadowsBackgroundColor: Colors.grey.shade300,
+                  drawerShadowsBackgroundColor: Colors.grey.shade300,
 
-      // espaçamento entro os campos do menu e o ecrã home
-      slideWidth: 255,
+                  // espaçamento entro os campos do menu e o ecrã home
+                  slideWidth: 255,
 
-      // duração abrir e fechar
-      duration: const Duration(milliseconds: 200),
+                  // duração abrir e fechar
+                  duration: const Duration(milliseconds: 200),
 
-      // rotação do angulo do menu
-      angle: 0.0,
+                  // rotação do angulo do menu
+                  angle: 0.0,
 
-      // efeito cor azul ao fechar e abrir
-      menuScreenOverlayColor: const Color.fromRGBO(27, 68, 166, 1),
+                  // efeito cor azul ao fechar e abrir
+                  menuScreenOverlayColor: const Color.fromRGBO(27, 68, 166, 1),
 
-      // Fechar o menu lateral
-      mainScreenTapClose: true,
+                  // Fechar o menu lateral
+                  mainScreenTapClose: true,
 
-      mainScreen: const Home(),
+                  mainScreen: const Home(),
 
-      menuScreen: const CamposMenuLateral(),
+                  menuScreen: const CamposMenuLateral(),
+                )
+              : SemInternet();
+        }
+        return Container(
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      },
     );
   }
 }

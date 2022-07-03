@@ -1,4 +1,6 @@
+import 'package:camarate_school_library/Models/view_models/conetividade.dart';
 import 'package:camarate_school_library/Screens/home/components/construir_interface_home.dart';
+import 'package:camarate_school_library/Screens/sem_internet.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 
 import 'package:flutter/material.dart';
@@ -10,20 +12,39 @@ import '../pesquisar/pesquisar.dart';
 
 class _HomeState extends State<Home> {
   @override
+  void initState() {
+    super.initState();
+    Provider.of<Conectividade>(context, listen: false).verificarLigacao();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Consumer<LivroRequisitadoModel>(
-      builder: (context, requisitadoModel, child) {
+    return Consumer<Conectividade>(
+      builder: (context, utilizador, child) {
+        if (utilizador.isOnline != null) {
+          return utilizador.isOnline ?? false
+              ? Consumer<LivroRequisitadoModel>(
+                  builder: (context, requisitadoModel, child) {
+                    return Container(
+                      decoration: corGradienteDaPagina,
+
+                      //
+                      child: Scaffold(
+                        appBar: construirBarraDaAplicacao(context),
+
+                        backgroundColor: Colors.transparent,
+
+                        //* CONSTRUIR INTERFACE PARA O UTILIZADOR
+                        body: const ConstruirInterfaceHome(),
+                      ),
+                    );
+                  },
+                )
+              : SemInternet();
+        }
         return Container(
-          decoration: corGradienteDaPagina,
-
-          //
-          child: Scaffold(
-            appBar: construirBarraDaAplicacao(context),
-
-            backgroundColor: Colors.transparent,
-
-            //* CONSTRUIR INTERFACE PARA O UTILIZADOR
-            body: const ConstruirInterfaceHome(),
+          child: Center(
+            child: CircularProgressIndicator(),
           ),
         );
       },

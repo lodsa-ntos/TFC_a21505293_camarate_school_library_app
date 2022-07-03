@@ -58,6 +58,7 @@ dependencies:
   progress_indicator_button: ^0.0.3
   auto_size_text: ^3.0.0
   mailto: ^2.0.0
+  connectivity_plus: ^2.3.5
 
 dependency_overrides:
   firebase_messaging_platform_interface: 3.1.6
@@ -107,6 +108,7 @@ flutter:
     - assets/logotipo/BEC.png
     - assets/logotipo/ic_launcher_adaptive_back.png
     - assets/logotipo/ic_launcher_adaptive_fore.png
+    - assets/images/noInternet/offline.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

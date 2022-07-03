@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:camarate_school_library/Models/view_models/conetividade.dart';
 import 'package:camarate_school_library/screens/menu_lateral/menu_lateral.dart';
 import 'package:camarate_school_library/screens/splash_screen.dart';
 import 'package:camarate_school_library/services/auth_services.dart';
@@ -22,6 +23,7 @@ Future<void> main() async {
     // Construir a árvore de providers para gerar a mudança em todos os widgets que formam a aplicação
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => Conectividade()),
         ChangeNotifierProvider(create: (_) => LivroRequisitadoModel()),
         ChangeNotifierProvider(create: (_) => AuthServices()),
       ],

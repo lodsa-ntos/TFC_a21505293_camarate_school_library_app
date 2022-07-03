@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:camarate_school_library/Models/view_models/conetividade.dart';
+import 'package:camarate_school_library/Screens/sem_internet.dart';
 import 'package:camarate_school_library/models/livro.dart';
 import 'package:camarate_school_library/models/view_models/livro_requisitado_view_model.dart';
 
@@ -34,6 +36,7 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
   void initState() {
     super.initState();
     _controladorDoTexto = TextEditingController()..addListener(_textoAlterado);
+    Provider.of<Conectividade>(context, listen: false).verificarLigacao();
   }
 
   /// libertar espaços da memória
@@ -308,56 +311,67 @@ class _PesquisaDeLivroState extends State<PesquisaDeLivro> {
         );
       },
     );
-    return Consumer<LivroRequisitadoModel>(
-      builder: (BuildContext context, LivroRequisitadoModel requisitadoModel,
-          Widget? child) {
-        return Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: SvgPicture.asset("assets/icons/voltar.svg"),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            title: Text(
-              'Pesquisar',
-              style: TextStyle(
-                fontFamily: 'Gilroy',
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).textTheme.headline6!.color,
-              ),
-            ),
-            backgroundColor: const Color(0xffF6F6F6),
-            elevation: 0,
-          ),
-          body: DecoratedBox(
-            decoration: const BoxDecoration(
-              color: Color(0xffF6F6F6),
-            ),
-            child: SafeArea(
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
+    return Consumer<Conectividade>(builder: (context, utilizador, child) {
+      if (utilizador.isOnline != null) {
+        return utilizador.isOnline ?? false
+            ? Consumer<LivroRequisitadoModel>(
+                builder: (BuildContext context,
+                    LivroRequisitadoModel requisitadoModel, Widget? child) {
+                  return Scaffold(
+                    appBar: AppBar(
+                      leading: IconButton(
+                        icon: SvgPicture.asset("assets/icons/voltar.svg"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      title: Text(
+                        'Pesquisar',
+                        style: TextStyle(
+                          fontFamily: 'Gilroy',
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).textTheme.headline6!.color,
+                        ),
+                      ),
+                      backgroundColor: const Color(0xffF6F6F6),
+                      elevation: 0,
+                    ),
+                    body: DecoratedBox(
+                      decoration: const BoxDecoration(
+                        color: Color(0xffF6F6F6),
+                      ),
+                      child: SafeArea(
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 10),
 
-                  //* Barra de pesquisa
-                  _barraDePesquisa(),
+                            //* Barra de pesquisa
+                            _barraDePesquisa(),
 
-                  const SizedBox(height: 15),
+                            const SizedBox(height: 15),
 
-                  //* Filtros para pesquisar
-                  const FiltrosDePesquisa(),
+                            //* Filtros para pesquisar
+                            const FiltrosDePesquisa(),
 
-                  const SizedBox(height: 20),
+                            const SizedBox(height: 20),
 
-                  //* Livros
-                  pesquisarLivrosBD,
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
+                            //* Livros
+                            pesquisarLivrosBD,
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              )
+            : SemInternet();
+      }
+      return Container(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    });
   }
 }
 

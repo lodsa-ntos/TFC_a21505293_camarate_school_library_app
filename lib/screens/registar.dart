@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:async';
 
+import 'package:camarate_school_library/Models/view_models/conetividade.dart';
+import 'package:camarate_school_library/Screens/sem_internet.dart';
 import 'package:camarate_school_library/models/pessoa.dart';
 import 'package:camarate_school_library/screens/menu_lateral/menu_lateral.dart';
 import 'package:camarate_school_library/screens/login.dart';
@@ -19,6 +21,12 @@ import '../styles/style_login_screen.dart';
 import '../util/validator.dart';
 
 class _RegistarState extends State<Registar> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<Conectividade>(context, listen: false).verificarLigacao();
+  }
+
   //? Chave para identificar a validação do formulario
   final _chaveFormRegisto = GlobalKey<FormState>();
 
@@ -97,71 +105,86 @@ class _RegistarState extends State<Registar> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      // Remove o foco neste nó e depois vai mover o foco primário para outro nó, assim o teclado não atrapalha
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: SafeArea(
-        child: Scaffold(
-          /// evitar que os widgets
-          /// sejam redimensionados se o teclado aparecer
-          /// de repente e tapar tudo.
-          resizeToAvoidBottomInset: true,
-          body: ListView(
-            // Distanciar
-            padding: const EdgeInsets.only(left: 2.0, right: 2.0),
+    return Consumer<Conectividade>(builder: (context, utilizador, child) {
+      if (utilizador.isOnline != null) {
+        return utilizador.isOnline ?? false
+            ? GestureDetector(
+                // Remove o foco neste nó e depois vai mover o foco primário para outro nó, assim o teclado não atrapalha
+                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                child: SafeArea(
+                  child: Scaffold(
+                    /// evitar que os widgets
+                    /// sejam redimensionados se o teclado aparecer
+                    /// de repente e tapar tudo.
+                    resizeToAvoidBottomInset: true,
+                    body: ListView(
+                      // Distanciar
+                      padding: const EdgeInsets.only(left: 2.0, right: 2.0),
 
-            // comportamento para que o ListView
-            // ocupe apenas o espaço necessário dos dados
-            // a serem mostrados na interface
-            shrinkWrap: true,
+                      // comportamento para que o ListView
+                      // ocupe apenas o espaço necessário dos dados
+                      // a serem mostrados na interface
+                      shrinkWrap: true,
 
-            // onDrag significa que o [ScrollView] descartará um teclado na ecrã quando um arrastar começar.
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            children: [
-              Padding(
-                // Distanciar
-                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Distanciar
-                    const Padding(padding: EdgeInsets.only(bottom: 30)),
+                      // onDrag significa que o [ScrollView] descartará um teclado na ecrã quando um arrastar começar.
+                      keyboardDismissBehavior:
+                          ScrollViewKeyboardDismissBehavior.onDrag,
+                      children: [
+                        Padding(
+                          // Distanciar
+                          padding:
+                              const EdgeInsets.only(left: 20.0, right: 20.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              // Distanciar
+                              const Padding(
+                                  padding: EdgeInsets.only(bottom: 30)),
 
-                    // Título
-                    Text(
-                      "Regista-te", //? titulo
-                      style: StyleRegistoScreen.estiloTituloRegisto,
-                      overflow: TextOverflow.ellipsis,
+                              // Título
+                              Text(
+                                "Regista-te", //? titulo
+                                style: StyleRegistoScreen.estiloTituloRegisto,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+
+                              // Distanciar
+                              const SizedBox(height: 20),
+
+                              // Sub-título
+                              Text(
+                                "E embarca nas viajens da leitura na tua biblioteca!", //? titulo
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+
+                              // Distanciar
+                              const Padding(
+                                  padding: EdgeInsets.only(bottom: 30)),
+
+                              // Formulário
+                              formularioDoRegisto(context),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-
-                    // Distanciar
-                    const SizedBox(height: 20),
-
-                    // Sub-título
-                    Text(
-                      "E embarca nas viajens da leitura na tua biblioteca!", //? titulo
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-
-                    // Distanciar
-                    const Padding(padding: EdgeInsets.only(bottom: 30)),
-
-                    // Formulário
-                    formularioDoRegisto(context),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          ),
+              )
+            : SemInternet();
+      }
+      return Container(
+        child: Center(
+          child: CircularProgressIndicator(),
         ),
-      ),
-    );
+      );
+    });
   }
 
   // Widget Formulário
