@@ -50,8 +50,7 @@ class _ControlarRequisitarEDevolverState
 
         var formatoDevolucao = DateFormat('dd-MM-yyyy');
 
-        String dataEntrega =
-            formatoDevolucao.format(dataAtual.add(const Duration(days: 10)));
+        String dataEntrega = formatoDevolucao.format(dataAtual);
 
         String dataDevolucao = formatoDevolucao.format(dataAtual);
 

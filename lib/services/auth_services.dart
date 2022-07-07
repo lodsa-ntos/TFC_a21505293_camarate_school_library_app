@@ -60,6 +60,7 @@ class AuthServices with ChangeNotifier {
         case 'user-not-found':
         case 'invalid-email':
         case 'wrong-password':
+        case "credential-already-in-use":
           throw AuthException(
             'O e-mail ou a palavra-passe que inseriste não parecem pertencer a uma conta. '
             'Verifica o e-mail ou a palavra-passe e tenta novamente.',

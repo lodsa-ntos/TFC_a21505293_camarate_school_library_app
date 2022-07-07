@@ -7,6 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 import '../../../models/livro.dart';
 import '../../../models/view_models/livro_requisitado_view_model.dart';
@@ -163,6 +164,17 @@ class ConstruirAspetoLivrosRequisitados extends StatelessWidget {
                 if (snapshot.hasData &&
                     !snapshot.hasError &&
                     snapshot.data.snapshot.value != null) {
+                  var data = DateTime.now().toLocal();
+                  var formato = DateFormat('dd-MM-yyyy');
+
+                  String dataAtual = formato.format(data.toLocal());
+
+                  String dataUmDiaAntes =
+                      formato.format(data.subtract(const Duration(days: 1)));
+
+                  String dataSemEntregar =
+                      formato.format(data.add(const Duration(days: 1)));
+
                   List<dynamic> dadosBaseDeDados =
                       jsonDecode(jsonEncode(snapshot.data.snapshot.value));
 
@@ -214,15 +226,32 @@ class ConstruirAspetoLivrosRequisitados extends StatelessWidget {
                         //
                         const SizedBox(height: 2),
 
-                        //? Data de entrega
-                        Text(
-                          'Data de entrega: \n' +
-                              _livros[indexAspeto].dataEntrega.toString(),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontFamily: 'Syabil',
+                        if (_livros[indexAspeto].dataEntrega.toString() ==
+                                dataAtual.toString() ||
+                            _livros[indexAspeto].dataEntrega.toString() ==
+                                dataUmDiaAntes.toString() ||
+                            _livros[indexAspeto].dataEntrega.toString() ==
+                                dataSemEntregar.toString()) ...[
+                          Text(
+                            'Data de entrega: \n' +
+                                _livros[indexAspeto].dataEntrega.toString(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontFamily: 'Syabil',
+                              color: Colors.red,
+                            ),
                           ),
-                        ),
+                        ] else ...[
+                          //? Data de entrega
+                          Text(
+                            'Data de entrega: \n' +
+                                _livros[indexAspeto].dataEntrega.toString(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontFamily: 'Syabil',
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   );
