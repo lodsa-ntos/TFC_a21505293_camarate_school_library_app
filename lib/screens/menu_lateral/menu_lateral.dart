@@ -350,7 +350,7 @@ class _CamposMenuLateralState extends State<CamposMenuLateral> {
                               color: Colors.white,
                               fontFamily: 'Gilroy',
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: 15,
                             ),
                           ),
                           const SizedBox(height: 2),
