@@ -16,7 +16,7 @@
 
 ## Instalar aplicação Bibliteca Escolar Camarate 📲
 
-- Para testar a aplicação, o ficheiro .apk está disponível [aqui](https://www.mediafire.com/file/2uh45v78icd3h2i/Biblioteca-escolar-camarate-TFC.apk/file).
+- Para testar a aplicação, o ficheiro .apk está disponível [aqui](https://www.mediafire.com/file/ud07ibgqheo590n/Biblioteca-escolar-camarate-TFC.apk/file).
 
 #### Demonstração como instalar .apk Bibliteca Escolar Camarate ✅
 - Vídeo de demonstração de como instalar o .apk da aplicação Biblioteca Escolar poderá seguir [aqui](https://www.youtube.com/watch?v=JCpLwZmxgZ8).
