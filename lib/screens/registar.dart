@@ -632,14 +632,16 @@ class _RegistarState extends State<Registar> {
       // Mensagens de erro
     } on AuthException catch (erro) {
       setState(() => _isLoading = false);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        duration: const Duration(seconds: 10),
-        content: Text(
-          erro.mensagem,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(seconds: 10),
+          content: Text(
+            erro.mensagem,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          backgroundColor: Colors.red,
         ),
-        backgroundColor: Colors.red,
-      ));
+      );
     }
   }
 
